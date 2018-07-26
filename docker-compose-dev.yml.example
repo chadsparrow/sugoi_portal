@@ -1,0 +1,31 @@
+version: '2'
+
+services :
+
+  mySQL :
+    restart: always
+    image: registry.gitlab.com/garneau-dev/docker/mysql:5.7.21
+    ports:
+    - "3326:3306"
+    volumes:
+    - /data/storage/custom-proofs.mySQL:/var/lib/mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_USER=customproofs
+    - MYSQL_PASSWORD=customproofs
+    - MYSQL_DATABASE=customproofs
+
+  app :
+    restart: always
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs:1.0.0
+    depends_on:
+      - mySQL
+    ports:
+    - "8104:80"
+    - "8448:443"
+    volumes:
+    - ./certs:/certs
+    - /data/logs/custom-proofs/apache2:/var/log/apache2
+    environment:
+    - XDEBUG_CONFIG=remote_host=10.0.3.3
+

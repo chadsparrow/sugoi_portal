@@ -1,0 +1,7 @@
+/path/to/application/logfile.log {
+    rotate 6
+    monthly
+    compress
+    missingok
+    notifempty
+}
