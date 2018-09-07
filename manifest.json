@@ -1,17 +1,17 @@
 {
-    "LGS_APP_NAME": "Sugoi_Custom_Proofs",
-    "LGS_APP_VER": "1.0.0",
-    "LGS_LOGGER_VER": "6.2.4",
-    "LGS_APP_SUBDOMAIN": "proofs2",
-    "LGS_APP_DOMAIN": "sugoi.com",
-    "LGS_DOCKER_REGISTRY": "registry.gitlab.com/garneau-dev/sugoi/custom-proofs",
-    "LGS_DOCKER_REGISTRY_LOGGER": "registry.gitlab.com/garneau-dev/sugoi/custom-proofs/logger",
-    "LGS_CONTAINER_NAME": "customproofs",
-    "LGS_HOST_BASE_DIR": "/data/sites",
-    "LGS_HOST_APP_DIR": "custom-proofs",
-    "LGS_HTTP_PORT_MAINTENANCE" : "8498",
-    "LGS_HTTP_PORT_APPLICATION" : "8448",
-    "LGS_APP_SUBNET_ID" : "19",
-    "LGS_YARN_RUN_TASK"  : ""
+  "LGS_APP_NAME": "Sugoi_Custom_Proofs",
+  "LGS_APP_VER": "1.0.0",
+  "LGS_LOGGER_VER": "6.2.4",
+  "LGS_APP_SUBDOMAIN": "proofs2",
+  "LGS_APP_DOMAIN": "sugoi.com",
+  "LGS_DOCKER_REGISTRY_SERVER": "registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server",
+  "LGS_DOCKER_REGISTRY_FRONTEND": "registry.gitlab.com/garneau-dev/sugoi/custom-proofs/frontend",
+  "LGS_DOCKER_REGISTRY_LOGGER": "registry.gitlab.com/garneau-dev/sugoi/custom-proofs/logger",
+  "LGS_CONTAINER_NAME": "customproofs",
+  "LGS_HOST_BASE_DIR": "/data/sites",
+  "LGS_HOST_APP_DIR": "custom-proofs",
+  "LGS_HTTP_PORT_MAINTENANCE": "8498",
+  "LGS_HTTP_PORT_APPLICATION": "8448",
+  "LGS_APP_SUBNET_ID": "19",
+  "LGS_YARN_RUN_TASK": ""
 }
-

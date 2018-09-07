@@ -1,48 +1,34 @@
-version: '3'
+# NEED TO FIX THIS
 
-networks :
-  default :
-    ipam :
+version: "3"
+
+networks:
+  default:
+    ipam:
       driver: default
       config:
-      - subnet: ${LGS_HOST_SUBNET}/24
+        - subnet: ${LGS_HOST_SUBNET}/24
 
-services :
-
+services:
   logger:
     restart: always
-    image:  ${LGS_LOGGER_IMAGE}
+    image: ${LGS_LOGGER_IMAGE}
     user: root
     volumes:
-    - /data/logs/${LGS_HOST_APP_DIR}:/logs
-    - /etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt:/certificate.crt
-    - ./filebeat-data:/usr/share/filebeat/data/
+      - /data/logs/${LGS_HOST_APP_DIR}:/logs
+      - /etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt:/certificate.crt
+      - ./filebeat-data:/usr/share/filebeat/data/
     environment:
-    - LGS_ENV=${LGS_ENV}
+      - LGS_ENV=${LGS_ENV}
 
-  mySQL :
+  server:
     restart: always
-    image: registry.gitlab.com/garneau-dev/docker/mysql:5.7.21
+    image: ${LGS_DOCKER_IMAGE1}
+    #depends_on:
+    #  - mySQL
     ports:
-    - "3326:3306"
+      - "8104:80"
+      - "8448:443"
     volumes:
-    - /data/storage/custom-proofs.mySQL:/var/lib/mysql
-    environment:
-    - MYSQL_ROOT_PASSWORD=password
-    - MYSQL_USER=customproofs
-    - MYSQL_PASSWORD=customproofs
-    - MYSQL_DATABASE=customproofs
-
-  app :
-    restart: always
-    image: ${LGS_DOCKER_IMAGE}
-    depends_on:
-      - mySQL
-    ports:
-    - "8104:80"
-    - "8448:443"
-    volumes:
-    - ./certs:/certs
-    - /data/logs/${LGS_HOST_APP_DIR}/apache2:/var/log/apache2
-
-
+      - ./certs:/certs
+      - /data/logs/${LGS_HOST_APP_DIR}/apache2:/var/log/apache2

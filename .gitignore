@@ -1,4 +1,4 @@
 .env
 docker-compose-dev.yml
-/storage
 /logs
+node_modules/

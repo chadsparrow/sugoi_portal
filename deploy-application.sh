@@ -55,7 +55,8 @@ printf "\nLOADING MANIFEST >>>\n"
        echo "ERROR: No app manifest found"
        exit 1
     fi
-    export LGS_DOCKER_IMAGE="${LGS_DOCKER_REGISTRY}:${LGS_APP_VER}"
+    export LGS_DOCKER_IMAGE1="${LGS_DOCKER_REGISTRY_SERVER}:${LGS_APP_VER}"
+    export LGS_DOCKER_IMAGE2="${LGS_DOCKER_REGISTRY_FRONTEND}:${LGS_APP_VER}"
     export LGS_LOGGER_IMAGE="${LGS_DOCKER_REGISTRY_LOGGER}:${LGS_LOGGER_VER}"
 
 printf "\n<<< LOADING DONE\n"
@@ -149,19 +150,22 @@ printf "\nSTART DEPLOYMENT >>>\n"
     printf "\nBUILDING IMAGE >>>\n"
         sleep 1
         docker login registry.gitlab.com -u ${GitLab_user} -p ${GitLab_password} && \
-        docker build -t ${LGS_DOCKER_IMAGE} --pull .
+        docker build -t ${LGS_DOCKER_IMAGE1} --pull .
+        docker build -t ${LGS_DOCKER_IMAGE2} --pull .
     printf "<<< BUILD DONE\n"
 
 
     printf "\nPUSHING IMAGE TO GITLAB >>>\n"
         sleep 1
-        docker push ${LGS_DOCKER_IMAGE}
+        docker push ${LGS_DOCKER_IMAGE1}
+        docker push ${LGS_DOCKER_IMAGE2}
     printf "<<< PUSH DONE\n"
 
     echo "BUILD FILEBEAT >>>"
     sleep 1
     if [ -f DockerfileFilebeat ]; then
-        docker build -t ${LGS_LOGGER_IMAGE} -f DockerfileFilebeat .
+        docker build -t ${LGS_LOGGER_IMAGE1} -f DockerfileFilebeat .
+        docker build -t ${LGS_LOGGER_IMAGE2} -f DockerfileFilebeat .
         docker push ${LGS_LOGGER_IMAGE}
     else
        echo "No DockerfileFilebeat found, No Filebeat image to build."
@@ -212,7 +216,8 @@ printf "\nSTART DEPLOYMENT >>>\n"
         sleep 1
         sshpass -p ${host_password} ssh lgdeployer@${LGS_HOST_IP} -t  "echo 'EXPORT ENV VARS ON HOST [ADD AS REQUIRED BY docker-compose.yml] >>>'
                                                                        export LGS_HOST_APP_DIR=${LGS_HOST_APP_DIR}
-                                                                       export LGS_DOCKER_IMAGE=${LGS_DOCKER_IMAGE}
+                                                                       export LGS_DOCKER_IMAGE1=${LGS_DOCKER_IMAGE1}
+                                                                       export LGS_DOCKER_IMAGE2=${LGS_DOCKER_IMAGE2}
                                                                        export LGS_LOGGER_IMAGE=${LGS_LOGGER_IMAGE}
                                                                        export LGS_CONTAINER_NAME=${LGS_CONTAINER_NAME}
                                                                        export LGS_HOST_SUBNET=${LGS_HOST_SUBNET}
@@ -220,7 +225,8 @@ printf "\nSTART DEPLOYMENT >>>\n"
                                                                        echo '<<<DONE ENV VAR EXPORT'
                                                                        echo 'PULL DOCKER IMAGE FROM GITLAB [ADD AS REQUIRED FOR SERVICES IN docker-compose.yml] >>>'
                                                                        docker login registry.gitlab.com -u ${GitLab_user} -p ${GitLab_password}
-                                                                       docker pull ${LGS_DOCKER_IMAGE}
+                                                                       docker pull ${LGS_DOCKER_IMAGE1}
+                                                                       docker pull ${LGS_DOCKER_IMAGE2}
                                                                        docker pull ${LGS_LOGGER_IMAGE}
                                                                        printf '<<< DONE PULL\n'
 

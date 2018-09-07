@@ -1,0 +1,15 @@
+{
+  "name": "sugoiproofs-restapi-server",
+  "version": "1.0.0",
+  "description": "Sugoi Proofs REST API Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Chad Sparrow",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4"
+  }
+}
