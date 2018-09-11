@@ -2,6 +2,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const Style = require("./models/Style");
+const configDB = require("./config/database");
 
 // Constants
 const PORT = 5000;
@@ -13,9 +14,10 @@ const app = express();
 // connect to mongoose
 mongoose
   .connect(
-    "mongodb://localhost/sugoi-proofs",
+    configDB.url,
     {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useMongoClient: true
     }
   )
   .then(() => console.log("MongoDB Connected..."))

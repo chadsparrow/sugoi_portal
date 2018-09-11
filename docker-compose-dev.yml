@@ -6,8 +6,6 @@ services:
   server:
     build: ./server
     image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
-    expose:
-      - 5000
     restart: always
     ports:
       - 5000:5000
@@ -15,6 +13,10 @@ services:
       # - ./certs:/certs
       # - ./logs/custom-proofs/apache2:/var/log/apache2
       - ./server:/usr/src/app
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
     #environment:
     #  - XDEBUG_CONFIG=remote_host=10.0.3.3
   ## Setup React Container
@@ -30,3 +32,6 @@ services:
   #     - ./frontend:/usr/src/app
   #   links:
   #     - server
+  mongodb:
+    restart: always
+    image: mongo:latest
