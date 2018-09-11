@@ -17,18 +17,16 @@ services:
       - ./server:/usr/src/app
     #environment:
     #  - XDEBUG_CONFIG=remote_host=10.0.3.3
-
   ## Setup React Container
-
-  frontend:
-    build: ./frontend
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/frontend
-    restart: always
-    expose:
-      - 4000
-    ports:
-      - 4000:3000
-    volumes:
-      - ./frontend:/usr/src/app
-    links:
-      - server
+  # frontend:
+  #   build: ./frontend
+  #   image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/frontend
+  #   restart: always
+  #   expose:
+  #     - 4000
+  #   ports:
+  #     - 4000:3000
+  #   volumes:
+  #     - ./frontend:/usr/src/app
+  #   links:
+  #     - server
