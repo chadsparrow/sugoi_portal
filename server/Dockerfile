@@ -14,6 +14,6 @@ RUN npm install
 # RUN npm install --only=production
 
 # Bundle server source
-#COPY . .
+#COPY . /usr/src/app/
 
 CMD ["npm","start"]
