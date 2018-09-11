@@ -1,0 +1,34 @@
+version: "2"
+
+## Setup Node.js container
+
+services:
+  server:
+    build: ./server
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
+    expose:
+      - 5000
+    restart: always
+    ports:
+      - 5000:5000
+    volumes:
+      # - ./certs:/certs
+      # - ./logs/custom-proofs/apache2:/var/log/apache2
+      - ./server:/usr/src/app
+    #environment:
+    #  - XDEBUG_CONFIG=remote_host=10.0.3.3
+
+  ## Setup React Container
+
+  frontend:
+    build: ./frontend
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/frontend
+    restart: always
+    expose:
+      - 4000
+    ports:
+      - 4000:3000
+    volumes:
+      - ./frontend:/usr/src/app
+    links:
+      - server
