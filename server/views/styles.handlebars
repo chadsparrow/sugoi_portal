@@ -1,0 +1,16 @@
+<div class="row">
+  {{#each styles}}
+  <div class="col-sm-3">
+    <div class="card card-body mb-2">
+      <h5 class="card-title">{{LGstyleNum}} - {{styleNum}} - PRS: {{personalized}}</h5>
+      <p class="card-text">{{styleName}}</p>
+      {{#if active}}
+      <h6><span class="badge badge-success">Active</span></h6>
+      {{else}}
+      {{/if}}
+    </div>
+  </div>
+  {{else}}
+  <p>No Styles to Show!</p>
+  {{/each}}
+</div>
