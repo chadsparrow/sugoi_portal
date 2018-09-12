@@ -5,7 +5,7 @@ const Style = require("./models/Style");
 const configDB = require("./config/database");
 
 // Constants
-const PORT = 5000;
+const PORT = 3000;
 const HOST = "localhost";
 
 // App
@@ -16,8 +16,7 @@ mongoose
   .connect(
     configDB.url,
     {
-      useNewUrlParser: true,
-      useMongoClient: true
+      useNewUrlParser: true
     }
   )
   .then(() => console.log("MongoDB Connected..."))
