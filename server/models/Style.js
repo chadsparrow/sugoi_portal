@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const StyleSchema = new Schema({
   active: Boolean,
   contrast: [String],
+  brand: String,
   gender: String,
   LGstyleNum: String,
   personalized: Boolean,

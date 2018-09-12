@@ -26,13 +26,18 @@ mongoose
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// // index route
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+app.use(express.static("public"));
+
+// index route
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
+// upload route
+//app.post("/upload", upload.single("file"), (req, res) => {});
 
 // styles route
-app.get("/", (req, res) => {
+app.get("/styles", (req, res) => {
   Style.find()
     .sort([["styleNum", "asc"]])
     .then(styles => {

@@ -1,14 +1,13 @@
-version: "2"
+version: "3"
 
 ## Setup Node.js container
-
 services:
   server:
     build: ./server
     image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
     restart: always
     ports:
-      - "80:3000"
+      - "3000:3000"
     volumes:
       # - ./certs:/certs
       # - ./logs/custom-proofs/apache2:/var/log/apache2
@@ -17,6 +16,7 @@ services:
       - mongo
     links:
       - mongo
+
     #environment:
     #  - XDEBUG_CONFIG=remote_host=10.0.3.3
   ## Setup React Container
@@ -39,4 +39,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./data/db:/data/db
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:

@@ -13,7 +13,7 @@ RUN npm install
 # RUN npm install --only=production
 
 # Bundle server source (may only be needed when complete)
-#COPY . .
+COPY . .
 
 EXPOSE 3000
 
