@@ -4,14 +4,17 @@
   "description": "Sugoi Proofs REST API Server",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -L server.js"
+    "start": "server.js",
+    "dev": "nodemon -L server.js"
   },
   "author": "Chad Sparrow",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
-    "mongoose": "^5.2.14",
+    "mongoose": "^5.2.14"
+  },
+  "devDependencies": {
     "nodemon": "^1.18.4"
   }
 }
