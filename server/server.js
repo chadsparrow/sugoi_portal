@@ -1,12 +1,9 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
-const Style = require("./models/Style");
-const configDB = require("./config/database");
+require("dotenv").config();
 
-// Constants
-const PORT = 3000;
-const HOST = "localhost";
+const Style = require("./models/Style");
 
 // App
 const app = express();
@@ -14,7 +11,7 @@ const app = express();
 // connect to mongoose
 mongoose
   .connect(
-    configDB.url,
+    process.env.DB_HOST,
     {
       useNewUrlParser: true
     }
@@ -47,6 +44,8 @@ app.get("/styles", (req, res) => {
     });
 });
 
-app.listen(PORT, (req, res) => {
-  console.log(`REST API running on http://${HOST}:${PORT}`);
+app.listen(process.env.APP_PORT, (req, res) => {
+  console.log(
+    `REST API running on http://${process.env.APP_HOST}:${process.env.APP_PORT}`
+  );
 });

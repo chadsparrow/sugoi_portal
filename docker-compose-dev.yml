@@ -16,6 +16,8 @@ services:
       - mongo
     links:
       - mongo
+    env_file:
+      - .env
   mongo:
     container_name: mongo
     restart: always
