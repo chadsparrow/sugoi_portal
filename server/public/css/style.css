@@ -1,0 +1,11 @@
+.table td.center {
+  text-align: center;
+}
+
+.table th.head-center {
+  text-align: center;
+}
+
+.table {
+  font-size: 14px;
+}

@@ -14,7 +14,8 @@ const StyleSchema = new Schema({
   quickdesign: Boolean,
   sizing: [String],
   styleName: String,
-  styleNum: String
+  styleNum: String,
+  fluo: Boolean
 });
 
 module.exports = mongoose.model("styles", StyleSchema);
