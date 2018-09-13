@@ -24,8 +24,8 @@ services:
   server:
     restart: always
     image: ${LGS_DOCKER_IMAGE1}
-    #depends_on:
-    #  - mySQL
+    depends_on:
+      - mySQL
     ports:
       - "8104:80"
       - "8448:443"

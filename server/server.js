@@ -1,7 +1,6 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
-require("dotenv").config();
 
 const Style = require("./models/Style");
 

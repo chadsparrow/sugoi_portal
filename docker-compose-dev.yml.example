@@ -1,31 +1,30 @@
-version: '2'
+version: "3"
 
-services :
-
-  mySQL :
+## Setup Node.js container
+services:
+  server:
+    build: ./server
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
     restart: always
-    image: registry.gitlab.com/garneau-dev/docker/mysql:5.7.21
     ports:
-    - "3326:3306"
+      - "3000:3000"
     volumes:
-    - ./storage/custom-proofs.mySQL:/var/lib/mysql
-    environment:
-    - MYSQL_ROOT_PASSWORD=password
-    - MYSQL_USER=customproofs
-    - MYSQL_PASSWORD=customproofs
-    - MYSQL_DATABASE=customproofs
-
-  app :
-    restart: always
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs:1.0.0
+      - ./certs:/certs
+      - ./server:/usr/src/app
     depends_on:
-      - mySQL
+      - mongo
+    links:
+      - mongo
+    env_file:
+      - .env
+  mongo:
+    container_name: mongo
+    restart: always
+    image: mongo
     ports:
-    - "8104:80"
-    - "8448:443"
+      - "27017:27017"
     volumes:
-    - ./certs:/certs
-    - ./logs/custom-proofs/apache2:/var/log/apache2
-    environment:
-    - XDEBUG_CONFIG=remote_host=10.0.3.3
+      - mongodbdata:/data/db
 
+volumes:
+  mongodbdata:
