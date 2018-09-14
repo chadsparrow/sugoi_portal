@@ -4,8 +4,7 @@
   "description": "Sugoi Proofs REST API Server",
   "main": "server.js",
   "scripts": {
-    "start": "server.js",
-    "dev": "nodemon -L server.js"
+    "start": "nodemon -L server.js"
   },
   "author": "Chad Sparrow",
   "license": "MIT",
