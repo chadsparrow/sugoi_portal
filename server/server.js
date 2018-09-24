@@ -1,3 +1,4 @@
+// initialize all modules used in app
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
@@ -6,9 +7,10 @@ const path = require("path");
 const fs = require("fs");
 const unzip = require("unzip");
 
+// includes model for mongodb
 const Style = require("./models/Style");
 
-// Set Storage engine
+// Set Storage engine for file uploads
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function(req, file, cb) {
@@ -24,7 +26,7 @@ const upload = multer({
   }
 }).single("myFile");
 
-// Check File Type
+// Checks File Type and mimetype before uploading
 function checkFileType(file, cb) {
   // Allowed extensions
   const filetypes = /zip/;
@@ -40,7 +42,7 @@ function checkFileType(file, cb) {
   }
 }
 
-// App
+// initializes the app using express
 const app = express();
 
 // MongoDB Connection
@@ -54,7 +56,7 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
 
-// EJS middleware
+// initializes EJS middleware
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -66,6 +68,8 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// upload route from upload form - calls multer upload zip to public/uploads
+// and extracts files from zip to put into public/3d_assets folder and deletes zip from public/uploads
 app.post("/upload", (req, res) => {
   upload(req, res, err => {
     if (err) {
@@ -112,7 +116,7 @@ app.post("/upload", (req, res) => {
   });
 });
 
-// styles route
+// styles route to show all the styles in mongodb
 app.get("/styles", (req, res) => {
   Style.find()
     .sort([["styleNum", "asc"]])
