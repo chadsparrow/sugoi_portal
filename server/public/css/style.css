@@ -7,5 +7,23 @@
 }
 
 .table {
+  font-size: 12px;
+}
+
+.navbar img {
+  width: 150px;
+}
+
+.navbar {
   font-size: 14px;
+}
+
+.alert a {
+  font-size: 18px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.alert {
+  cursor: pointer;
 }

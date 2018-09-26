@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card card-body">
+      <h3 class="text-center">Register Account</h3>
+      <form action="/users/register" method="POST">
+        <div class="form-group">
+          <label for="username">Email:</label>
+          <input type="email" class="form-control" name="username" style="text-transform:lowercase;" on keyup="javascript:this.value=this.value.toLowerCase();"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" name="password" required>
+        </div>
+        <div class="form-group">
+          <label for="role">Role:</label>
+          <label class="radio-inline ml-2"><input type="radio" name="role" value="user" checked> User</label>
+          <label class="radio-inline ml-2"><input type="radio" name="role" value="admin"> Admin</label>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        <a href="/styles" id="cancel" name="cancel" class="btn btn-danger">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
