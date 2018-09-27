@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const router = express.Router();
 
-const { ensureAuthenticated } = require("../helpers/auth");
+const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 
 // Load User Model
 require("../models/User");
@@ -25,12 +25,12 @@ router.post("/login", (req, res, next) => {
 });
 
 // User Register Form
-router.get("/register", ensureAuthenticated, (req, res) => {
+router.get("/register", ensureAdmin, (req, res) => {
   res.render("users/register");
 });
 
 // User Register Form POST
-router.post("/register", ensureAuthenticated, (req, res) => {
+router.post("/register", ensureAdmin, (req, res) => {
   let userName = req.body.username;
   userName = userName.toLowerCase();
 

@@ -4,6 +4,15 @@ module.exports = {
       return next();
     }
     req.flash("error_msg", "Not Authorized");
-    res.redirect("login");
+    res.redirect("/users/login");
+  },
+  ensureAdmin: function(req, res, next) {
+    if (req.isAuthenticated()) {
+      if (req.user.role == "admin") {
+        return next();
+      }
+      req.flash("error_msg", "Not Authorized");
+      res.redirect("/dashboard");
+    }
   }
 };

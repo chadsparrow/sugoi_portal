@@ -27,3 +27,13 @@
 .alert {
   cursor: pointer;
 }
+
+.dropdown-menu {
+  background-color: #343a40;
+}
+
+.dropdown-menu a {
+  font-size: 14px;
+  text-align: center;
+  padding: 4px;
+}

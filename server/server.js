@@ -10,7 +10,6 @@ const fs = require("fs");
 const flash = require("connect-flash");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-const cookieParser = require("cookie-parser");
 
 // initializes the app using express
 const app = express();
@@ -18,10 +17,8 @@ const app = express();
 // Load Routes
 const users = require("./routes/users");
 const styles = require("./routes/styles");
+const dashboards = require("./routes/dashboards");
 //const uploads = require("./routes/uploads");
-
-// Passport config
-require("./config/passport")(passport);
 
 // MongoDB Connection using .env in docker for credentials
 mongoose
@@ -38,17 +35,20 @@ mongoose
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+// Passport config
+require("./config/passport")(passport);
+
 //Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Express Session middleware
-app.use(cookieParser());
 app.use(
   session({
-    secret: "secret",
+    secret: "keyboard cat",
     resave: false,
-    saveUnintialized: false
+    saveUninitialized: false,
+    cookie: { expires: 3600000 }
   })
 );
 
@@ -65,6 +65,13 @@ app.use(function(req, res, next) {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
+  if (res.locals.user != null) {
+    if (req.user.role == "admin") {
+      res.locals.isAdmin = true;
+    } else {
+      res.locals.isAdmin = false;
+    }
+  }
   next();
 });
 
@@ -158,14 +165,10 @@ app.get("/", (req, res) => {
   res.render("users/login");
 });
 
-// Dashboard Route
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
-});
-
 // Use Routes
 app.use("/users", users);
 app.use("/styles", styles);
+app.use("/dashboard", dashboards);
 //app.use("/uploads", uploads);
 
 // Open port and listen for requests
