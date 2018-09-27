@@ -11,8 +11,8 @@ module.exports = {
       if (req.user.role == "admin") {
         return next();
       }
-      req.flash("error_msg", "Not Authorized");
-      res.redirect("/dashboard");
     }
+    req.flash("error_msg", "Admins only");
+    res.redirect("/users/login");
   }
 };
