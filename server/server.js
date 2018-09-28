@@ -17,8 +17,11 @@ const app = express();
 // Load Routes
 const users = require("./routes/users");
 const styles = require("./routes/styles");
-const dashboards = require("./routes/dashboards");
+const orders = require("./routes/orders");
 //const uploads = require("./routes/uploads");
+
+// Handlebars Helpers
+const { isAdmin } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
 mongoose
@@ -32,7 +35,15 @@ mongoose
   .catch(err => console.log(err));
 
 // initializes EJS middleware
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine(
+  "handlebars",
+  exphbs({
+    helpers: {
+      isAdmin: isAdmin
+    },
+    defaultLayout: "main"
+  })
+);
 app.set("view engine", "handlebars");
 
 // Passport config
@@ -65,13 +76,13 @@ app.use(function(req, res, next) {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
-  if (res.locals.user != null) {
-    if (req.user.role == "admin") {
-      res.locals.isAdmin = true;
-    } else {
-      res.locals.isAdmin = false;
-    }
-  }
+  // if (res.locals.user != null) {
+  //   if (req.user.role == "admin") {
+  //     res.locals.isAdmin = true;
+  //   } else {
+  //     res.locals.isAdmin = false;
+  //   }
+  // }
   next();
 });
 
@@ -168,7 +179,7 @@ app.get("/", (req, res) => {
 // Use Routes
 app.use("/users", users);
 app.use("/styles", styles);
-app.use("/dashboard", dashboards);
+app.use("/orders", orders);
 //app.use("/uploads", uploads);
 
 // Open port and listen for requests
