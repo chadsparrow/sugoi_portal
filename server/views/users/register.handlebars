@@ -12,13 +12,31 @@
           <label for="password">Password:</label>
           <input type="password" class="form-control" name="password" required>
         </div>
-        <div class="form-group">
-          <label for="role">Role:</label>
-          <label class="radio-inline ml-2"><input type="radio" name="role" value="user" checked> User</label>
-          <label class="radio-inline ml-2"><input type="radio" name="role" value="admin"> Admin</label>
+        <div class="row text-center rights">
+          <div class="col-12">
+            <p>Edit Rights</p>
+          </div>
+          <div class="form-check col-3">
+            <input type="checkbox" class="form-check-input" name="admin" id="admin">
+            <label class="form-check-label" for="admin">Admin</label>
+          </div>
+          <div class="form-check col-3">
+            <input type="checkbox" class="form-check-input" name="editOrders" id="editOrders">
+            <label class="form-check-label" for="editOrders">Edit Orders</label>
+          </div>
+          <div class="form-check col-3">
+            <input type="checkbox" class="form-check-input" name="editProofs" id="editProofs">
+            <label class="form-check-label" for="editProofs">Edit Proofs</label>
+          </div>
+          <div class="form-check col-3">
+            <input type="checkbox" class="form-check-input" name="editProd" id="editProd">
+            <label class="form-check-label" for="editProd">Edit Prod</label>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-        <a href="/orders" id="cancel" name="cancel" class="btn btn-danger">Cancel</a>
+        <div class="row col-12 mt-4">
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+          <a href="/orders" id="cancel" name="cancel" class="btn btn-danger">Cancel</a>
+        </div>
       </form>
     </div>
   </div>

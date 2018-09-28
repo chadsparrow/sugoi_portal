@@ -8,7 +8,7 @@ module.exports = {
   },
   ensureAdmin: function(req, res, next) {
     if (req.isAuthenticated()) {
-      if (req.user.role == "admin") {
+      if (req.user.admin == true) {
         return next();
       }
     }

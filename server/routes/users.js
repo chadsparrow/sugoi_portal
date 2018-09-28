@@ -34,6 +34,35 @@ router.post("/register", ensureAdmin, (req, res) => {
   let userName = req.body.username;
   userName = userName.toLowerCase();
 
+  let admin;
+  let editOrders;
+  let editProofs;
+  let editProd;
+
+  if (req.body.admin) {
+    admin = true;
+  } else {
+    admin = false;
+  }
+
+  if (req.body.editOrders) {
+    editOrders = true;
+  } else {
+    editOrders = false;
+  }
+
+  if (req.body.editProofs) {
+    editProofs = true;
+  } else {
+    editProofs = false;
+  }
+
+  if (req.body.editProd) {
+    editProd = true;
+  } else {
+    editProd = false;
+  }
+
   if (req.body.password.length < 6) {
     req.flash("error_msg", "Password needs to be at least 6 characters");
     res.render("users/register");
@@ -46,7 +75,10 @@ router.post("/register", ensureAdmin, (req, res) => {
         const newUser = new User({
           username: userName,
           password: req.body.password,
-          role: req.body.role
+          admin: admin,
+          editOrders: editOrders,
+          editProofs: editProofs,
+          editProd: editProd
         });
 
         bcrypt.genSalt(10, (err, salt) => {

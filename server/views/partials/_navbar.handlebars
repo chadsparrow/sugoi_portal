@@ -18,7 +18,9 @@
         <li class="nav-item dropdown navbar-dark">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">{{user.username}}</a>
           <ul class="dropdown-menu">
-            {{{isAdmin user.role}}}
+            {{#if user.admin}}
+            <li><a class="nav-link" href="/users/register">Register</a></li>
+            {{/if}}
             <li><a class="nav-link" href="/users/logout">Logout</a></li>
           </ul>
         </li>

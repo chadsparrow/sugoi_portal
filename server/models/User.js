@@ -11,8 +11,20 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  role: {
-    type: String,
+  admin: {
+    type: Boolean,
+    required: true
+  },
+  editOrders: {
+    type: Boolean,
+    required: true
+  },
+  editProofs: {
+    type: Boolean,
+    required: true
+  },
+  editProd: {
+    type: Boolean,
     required: true
   }
 });

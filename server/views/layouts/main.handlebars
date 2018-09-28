@@ -15,13 +15,16 @@
 </head>
 
 <body>
-  {{> _navbar}}
+  <main>
+    {{> _navbar}}
 
-  <div class="container">
-    {{> _msg}}
-    {{> _errors}}
-    {{{body}}}
-  </div>
+    <div class="container">
+      {{> _msg}}
+      {{> _errors}}
+      {{{body}}}
+    </div>
+  </main>
+
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -50,6 +53,14 @@
         $("#myTable tr").filter(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+      });
+
+      $('#admin').click(function () {
+        if ($('#admin').is(':checked')) {
+          $('.form-check-input').attr('checked', true);
+        } else {
+          $('.form-check-input').attr('checked', false);
+        }
       });
     });
   </script>

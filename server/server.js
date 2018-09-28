@@ -21,7 +21,7 @@ const orders = require("./routes/orders");
 //const uploads = require("./routes/uploads");
 
 // Handlebars Helpers
-const { isAdmin } = require("./helpers/hbs");
+//const { isAdmin } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
 mongoose
@@ -38,9 +38,7 @@ mongoose
 app.engine(
   "handlebars",
   exphbs({
-    helpers: {
-      isAdmin: isAdmin
-    },
+    //helpers: {},
     defaultLayout: "main"
   })
 );
@@ -76,13 +74,6 @@ app.use(function(req, res, next) {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
-  // if (res.locals.user != null) {
-  //   if (req.user.role == "admin") {
-  //     res.locals.isAdmin = true;
-  //   } else {
-  //     res.locals.isAdmin = false;
-  //   }
-  // }
   next();
 });
 
