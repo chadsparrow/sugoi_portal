@@ -1,7 +1,13 @@
 {{#if success_msg}}
-<div class="alert alert-success" id="alert">{{success_msg}}<a href="#"><span style="float:right" id="closeBtn">&times;</span></a></div>
+<div class="alert alert-success alert-dismissable fade show" role="alert"><strong>{{success_msg}}</strong><button type="button"
+    class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button></div>
 {{/if}}
 
 {{#if error_msg}}
-<div class="alert alert-danger" id="alert">{{error_msg}}<a href="#"><span style="float:right" id="closeBtn">&times;</span></a></div>
+<div class="alert alert-danger alert-dismissable fade show" role="alert"><strong>{{error_msg}}</strong><button type="button"
+    class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button></div>
 {{/if}}

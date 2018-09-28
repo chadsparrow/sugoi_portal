@@ -28,16 +28,6 @@ main {
   font-size: 14px;
 }
 
-.alert a {
-  font-size: 18px;
-  text-decoration: none;
-  color: #000000;
-}
-
-.alert {
-  cursor: pointer;
-}
-
 .dropdown-menu {
   background-color: #343a40;
 }
