@@ -1,39 +1,39 @@
-<h5>Styles</h5>
-<p>Search for any text in style numbers, style names, or brand:</p>
-<input class="form-control input-sm" id="myInput" type="text" placeholder="Search..">
-<br>
-
-<table id="fullTable" class="table table-sm table-hover mb-5">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">LG Style #</th>
-      <th scope="col">Old Style #</th>
-      <th scope="col">Style Name</th>
-      <th scope="col">Brand</th>
-      <th scope="col">Sizes</th>
-      <th scope="col" class="head-center">FLUO</th>
-      <th scope="col" class="head-center">PRS</th>
-    </tr>
-  </thead>
-  <tbody id="myTable">
-    {{#each styles}}
-    <tr>
-      <td>{{LGstyleNum}}</td>
-      <td>{{styleNum}}</td>
-      <td>{{styleName}}</td>
-      <td>{{brand}}</td>
-      <td>{{#each sizing}}<span class="badge badge-secondary mr-1">{{this}}</span>{{/each}}</td>
-      {{#if fluo}}
-      <td class="center"><i class="fas fas fa-check-circle fa-lg"></i></td>
-      {{else}}
-      <td></td>
-      {{/if}}
-      {{#if personalized}}
-      <td class="center"><i class="fas fas fa-check-circle fa-lg"></i></td>
-      {{else}}
-      <td></td>
-      {{/if}}
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<h3>Styles</h3>
+<label for="myInput" class="small">Search for text in any field:</label>
+<input class="form-control input-sm mb-2" id="myInput" type="text" placeholder="...">
+<div class="table-responsive">
+  <table class="table table-sm table-hover mb-5 table-condensed">
+    <thead class="thead-dark tableHeaders">
+      <tr>
+        <th>LG Style #</th>
+        <th>Old Style #</th>
+        <th>Style Name</th>
+        <th>Brand</th>
+        <th>Sizes</th>
+        <th class="head-center">FLUO</th>
+        <th class="head-center">PRS</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      {{#each styles}}
+      <tr>
+        <td>{{LGstyleNum}}</td>
+        <td>{{styleNum}}</td>
+        <td>{{styleName}}</td>
+        <td>{{brand}}</td>
+        <td>{{#each sizing}}<span class="badge badge-secondary">{{this}}</span>{{/each}}</td>
+        {{#if fluo}}
+        <td class="center"><i class="fas fa-check-circle"></i></td>
+        {{else}}
+        <td></td>
+        {{/if}}
+        {{#if personalized}}
+        <td class="center"><i class="fas fa-check-circle"></i></td>
+        {{else}}
+        <td></td>
+        {{/if}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
