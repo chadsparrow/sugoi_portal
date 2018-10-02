@@ -10,6 +10,7 @@ const fs = require("fs");
 const flash = require("connect-flash");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
+const bcrypt = require("bcryptjs");
 
 // initializes the app using express
 const app = express();
@@ -20,6 +21,8 @@ const styleRoutes = require("./routes/styles");
 const orderRoutes = require("./routes/orders");
 const indexRoutes = require("./routes/index");
 //const uploads = require("./routes/uploads");
+
+const User = require("./models/User");
 
 // Handlebars Helpers
 //const { isAdmin } = require("./helpers/hbs");
@@ -196,6 +199,42 @@ app.use((error, req, res, next) => {
 
 // Open port and listen for requests
 app.listen(process.env.APP_PORT, (req, res) => {
+  let userName = process.env.DB_SUPERUSER;
+  userName = userName.toLowerCase();
+  let password = process.env.DB_SUPERPASS;
+  let admin = true;
+  let editOrders = true;
+  let editProofs = true;
+  let editProd = true;
+  User.findOne({ username: userName }, function(err, user) {
+    if (!user) {
+      const newUser = new User({
+        username: userName,
+        password: password,
+        admin: admin,
+        editOrders: editOrders,
+        editProofs: editProofs,
+        editProd: editProd
+      });
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            .then(user => {
+              console.log("Root User Created!");
+            })
+            .catch(err => {
+              console.log(err);
+              return;
+            });
+        });
+      });
+    }
+  });
+
   console.log(
     `REST API running on http://${process.env.APP_HOST}:${process.env.APP_PORT}`
   );
