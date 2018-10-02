@@ -1,5 +1,4 @@
-<h3>Style</h3>
-<br>
+<h4>{{style.LGstyleNum}}</h4>
 <table class="striped highlight responsive-table">
   <thead class="black white-text">
     <tr>
@@ -13,24 +12,23 @@
     </tr>
   </thead>
   <tbody id="myTable">
-    {{#each styles}}
     <tr>
-      <td>{{LGstyleNum}}</td>
-      <td>{{styleNum}}</td>
-      <td>{{styleName}}</td>
-      <td>{{brand}}</td>
-      <td><span class="new badge" data-badge-caption=""><span>{{#each sizing}}{{this}} {{/each}}</span></span></td>
-      {{#if fluo}}
+      <td>{{style.LGstyleNum}}</td>
+      <td>{{style.styleNum}}</td>
+      <td>{{style.styleName}}</td>
+      <td>{{style.brand}}</td>
+      <td><span class="new badge" data-badge-caption=""><span>{{#each style.sizing}}{{this}} {{/each}}</span></span></td>
+      {{#if style.fluo}}
       <td class="center-align"><i class="fas fa-check-circle"></i></td>
       {{else}}
       <td></td>
       {{/if}}
-      {{#if personalized}}
+      {{#if style.personalized}}
       <td class="center-align"><i class="fas fa-check-circle"></i></td>
       {{else}}
       <td></td>
       {{/if}}
     </tr>
-    {{/each}}
+
   </tbody>
 </table>

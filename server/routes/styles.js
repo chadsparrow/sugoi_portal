@@ -12,21 +12,30 @@ router.get("/", (req, res) => {
       res.render("styles", {
         styles
       });
+    })
+    .catch(err => {
+      req.flash("error_msg", err);
+      res.redirect("/user/login");
     });
 });
 
 router.get("/:styleId", (req, res) => {
   const id = req.params.styleId;
-  Style.find({ LGstyleNum: id }).then(styles => {
-    if (styles.length == 0) {
-      req.flash("error_msg", "Style not found");
+  Style.findOne({ LGstyleNum: id })
+    .then(style => {
+      if (!style) {
+        req.flash("error_msg", "Style not found");
+        res.redirect("/styles");
+      } else {
+        res.render("stylesnofilter", {
+          style
+        });
+      }
+    })
+    .catch(err => {
+      req.flash("error_msg", err);
       res.redirect("/styles");
-    } else {
-      res.render("stylesnofilter", {
-        styles
-      });
-    }
-  });
+    });
 });
 
 module.exports = router;
