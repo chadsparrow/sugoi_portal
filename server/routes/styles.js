@@ -18,9 +18,14 @@ router.get("/", (req, res) => {
 router.get("/:styleId", (req, res) => {
   const id = req.params.styleId;
   Style.find({ LGstyleNum: id }).then(styles => {
-    res.render("stylesnofilter", {
-      styles
-    });
+    if (styles.length == 0) {
+      req.flash("error_msg", "Style not found");
+      res.redirect("/styles");
+    } else {
+      res.render("stylesnofilter", {
+        styles
+      });
+    }
   });
 });
 

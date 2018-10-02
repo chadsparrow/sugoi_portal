@@ -52,6 +52,9 @@ require("./config/passport")(passport);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Connect Flash
+app.use(flash());
+
 // Express Session middleware
 app.use(
   session({
@@ -66,11 +69,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Connect Flash
-app.use(flash());
-
 // Global variables
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
@@ -169,6 +169,17 @@ app.use("/users", userRoutes);
 app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
 //app.use("/uploads", uploads);
+
+app.use((req, res, next) => {
+  const error = new Error("Page Not Found");
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.render("error", { error });
+});
 
 // Open port and listen for requests
 app.listen(process.env.APP_PORT, (req, res) => {
