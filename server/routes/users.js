@@ -25,12 +25,12 @@ router.post("/login", (req, res, next) => {
 });
 
 // User Register Form
-router.get("/register", ensureAdmin, (req, res) => {
+router.get("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
   res.render("users/register");
 });
 
 // User Register Form POST
-router.post("/register", ensureAdmin, (req, res) => {
+router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let userName = req.body.username;
   userName = userName.toLowerCase();
 

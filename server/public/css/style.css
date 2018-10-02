@@ -1,39 +1,25 @@
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-main {
-  flex: 1 0 auto;
-}
-
-.table td.center {
-  text-align: center;
-}
-
-.table th.head-center {
-  text-align: center;
-}
-
-.table {
+.fas {
   font-size: 12px;
 }
 
-.navbar img {
-  width: 125px;
+table {
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
-.navbar {
+.instructions {
+  margin-bottom: 50px;
+}
+
+.rights-header {
   font-size: 14px;
+  margin-bottom: 10px;
 }
 
-.dropdown-menu {
-  background-color: #343a40;
+.rights {
+  margin-bottom: 40px;
 }
 
-.dropdown-menu a {
+.nav-wrapper a {
   font-size: 14px;
-  text-align: center;
-  padding: 4px;
 }

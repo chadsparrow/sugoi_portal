@@ -20,6 +20,10 @@ router.get("/add", ensureAuthenticated, (req, res) => {
   res.render("orders/add");
 });
 
+router.post("/add", ensureAuthenticated, (req, res) => {
+  res.render("orders/add");
+});
+
 router.get("/:orderNum", (req, res) => {
   res.send("Loaded order: " + req.params.orderNum);
 });

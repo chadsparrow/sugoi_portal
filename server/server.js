@@ -15,9 +15,10 @@ const exphbs = require("express-handlebars");
 const app = express();
 
 // Load Routes
-const users = require("./routes/users");
-const styles = require("./routes/styles");
-const orders = require("./routes/orders");
+const userRoutes = require("./routes/users");
+const styleRoutes = require("./routes/styles");
+const orderRoutes = require("./routes/orders");
+const indexRoutes = require("./routes/index");
 //const uploads = require("./routes/uploads");
 
 // Handlebars Helpers
@@ -162,15 +163,11 @@ app.use(express.static("public"));
 //   });
 // });
 
-// Initial Load Route
-app.get("/", (req, res) => {
-  res.render("users/login");
-});
-
 // Use Routes
-app.use("/users", users);
-app.use("/styles", styles);
-app.use("/orders", orders);
+app.use("/", indexRoutes);
+app.use("/users", userRoutes);
+app.use("/styles", styleRoutes);
+app.use("/orders", orderRoutes);
 //app.use("/uploads", uploads);
 
 // Open port and listen for requests

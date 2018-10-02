@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+{{!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
   <div class="container">
     <a class="navbar-brand mr-2" href="https://custom.sugoi.com/" target="_blank"><img src="/images/sugoi_custom_logo.png"></a>
     <a class="navbar-brand mr-2" href="https://www.sombriocartel.com/en-US/custom" target="_blank"><img src="/images/sombrio_custom_logo.png"></a>
@@ -16,8 +16,8 @@
           <a class="nav-link" href="/orders"><i class="fas fa-box-open"></i> Orders</a>
         </li>
         <li class="nav-item dropdown navbar-dark">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">{{#if user.admin}}<i
-              class="fas fa-user-shield"></i>{{else}}<i class="fas fa-user"></i>{{/if}} {{user.username}}</a>
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">{{#if
+            user.admin}}<i class="fas fa-user-shield"></i>{{else}}<i class="fas fa-user"></i>{{/if}} {{user.username}}</a>
           <ul class="dropdown-menu">
             {{#if user.admin}}
             <li><a class="nav-link" href="/users/register"><i class="fas fa-user-plus"></i> Register User</a></li>
@@ -33,4 +33,76 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> --}}
+
+<div class="navbar-fixed">
+  <nav class="black">
+    <div class="container">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Sugoi/Sombrio Orders</a>
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a href="/styles"><i class="fas fa-tshirt"></i> Styles</a>
+          </li>
+          {{#if user}}
+          <li>
+            <a href="/orders"><i class="fas fa-box-open"></i> Orders</a>
+          </li>
+
+          {{#if user.admin}}
+          <li>
+            <a href="/users/register"><i class="fas fa-user-plus"></i> Register User</a>
+          </li>
+          {{/if}}
+          <li>
+            <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+          {{else}}
+          <li>
+            <a href="/users/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<ul class="sidenav" id="mobile-nav">
+  {{#if user}}
+  <li class="center-align">
+    {{#if user.admin}}
+    <div class="chip">
+      <i class="fas fa-user-shield"></i>
+      {{user.username}}
+    </div>
+    {{else}}
+    <div class="chip">
+      <i class="fas fa-user"></i>
+      {{user.username}}
+    </div>
+    {{/if}}
+  </li>
+  {{/if}}
+  <li>
+    <a href="/styles"><i class="fas fa-tshirt"></i> Styles</a>
+  </li>
+  {{#if user}}
+  <li>
+    <a href="/orders"><i class="fas fa-box-open"></i> Orders</a>
+  </li>
+  <li class="divider"></li>
+  {{#if user.admin}}
+  <li>
+    <a href="/users/register"><i class="fas fa-user-plus"></i> Register User</a>
+  </li>
+  {{/if}}
+  <li>
+    <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </li>
+  {{else}}
+  <li>
+    <a href="/users/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+  </li>
+  {{/if}}
+</ul>

@@ -15,7 +15,7 @@ module.exports = function(passport) {
           username: username
         }).then(user => {
           if (!user) {
-            return done(null, false, { message: "User not found." });
+            return done(null, false, { message: "User not found" });
           }
 
           // Match password
@@ -25,7 +25,7 @@ module.exports = function(passport) {
               return done(null, user);
             } else {
               return done(null, false, {
-                message: "Email and/or Password Incorrect."
+                message: "Email/Password Incorrect"
               });
             }
           });

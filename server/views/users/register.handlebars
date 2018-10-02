@@ -1,43 +1,59 @@
-<div class="row">
-  <div class="col-md-6 mx-auto">
-    <div class="card card-body">
-      <h3 class="text-center">Register Account</h3>
-      <form action="/users/register" method="POST">
-        <div class="form-group">
-          <label for="username"><i class="fas fa-envelope-square"></i> Email:</label>
-          <input type="email" class="form-control" name="username" style="text-transform:lowercase;" on keyup="javascript:this.value=this.value.toLowerCase();"
-            required>
+<section class="section center">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <div class="card black">
+          <div class="card-content white-text">
+            <span class="card-title">Register User</span>
+            <div class="card-action">
+              <div class="row">
+                <form action="/users/register" method="post" class="col s12">
+                  <div class="input-field col s12">
+                    <input type="email" name="username" placeholder="enter email address" style="text-transform: lowercase;"
+                      on keyup="javascript:this.value=this.value.toLowerCase();" class="white-text validate">
+                    <label for="username"><i class="fas fa-envelope-square"></i> Email:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="password" name="password" placeholder="enter password" class="white-text validate">
+                    <label for="password"><i class="fas fa-key"></i> Password:</label>
+                  </div>
+                  <div class="row rights">
+                    <div class="col s12 rights-header">
+                      <p><i class="fas fa-user-edit"></i> Edit Rights</p>
+                    </div>
+                    <div class="col s3">
+                      <label>
+                        <input type="checkbox" class="form-check-input" name="admin" id="admin" />
+                        <span style="font-size: 12px;">Admin</span>
+                      </label>
+                    </div>
+                    <div class="col s3">
+                      <label><input type="checkbox" class="form-check-input" name="editOrders" id="editOrders" />
+                        <span style="font-size: 12px;">Edit Orders</span></label>
+
+                    </div>
+                    <div class="col s3">
+                      <label><input type="checkbox" class="form-check-input" name="editProofs" id="editProofs" />
+                        <span style="font-size: 12px;">Edit Proofs</span></label>
+
+                    </div>
+                    <div class="col s3">
+                      <label><input type="checkbox" class="form-check-input" name="editProd" id="editProd" />
+                        <span style="font-size: 12px;">Edit Prod.</span></label>
+
+                    </div>
+                  </div>
+                  <button class="btn waves-effect waves-light black-text" type="submit" name="action"><i class="fas fa-check-square"></i>
+                    Submit
+                  </button>
+                  <a href="/orders" id="cancel" name="cancel" class="btn waves-effect waves-light red black-text"><i
+                      class="fas fa-times"></i> Cancel</a>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="password"><i class="fas fa-key"></i> Password:</label>
-          <input type="password" class="form-control" name="password" required>
-        </div>
-        <div class="row text-center rights">
-          <div class="col-12">
-            <p><i class="fas fa-user-edit"></i> Edit Rights</p>
-          </div>
-          <div class="form-check col-3">
-            <input type="checkbox" class="form-check-input" name="admin" id="admin">
-            <label class="form-check-label" for="admin">Admin</label>
-          </div>
-          <div class="form-check col-3">
-            <input type="checkbox" class="form-check-input" name="editOrders" id="editOrders">
-            <label class="form-check-label" for="editOrders">Edit Orders</label>
-          </div>
-          <div class="form-check col-3">
-            <input type="checkbox" class="form-check-input" name="editProofs" id="editProofs">
-            <label class="form-check-label" for="editProofs">Edit Proofs</label>
-          </div>
-          <div class="form-check col-3">
-            <input type="checkbox" class="form-check-input" name="editProd" id="editProd">
-            <label class="form-check-label" for="editProd">Edit Prod</label>
-          </div>
-        </div>
-        <div class="row col-12 mt-4">
-          <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-check-square"></i> Submit</button>
-          <a href="/orders" id="cancel" name="cancel" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</a>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+</section>

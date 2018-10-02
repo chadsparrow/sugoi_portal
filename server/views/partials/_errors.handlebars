@@ -1,14 +1,20 @@
+{{#if success_msg}}
+
+<body onload="M.toast({html: '{{success_msg}}', displayLength: 4000, classes: 'green rounded'})"></body>
+{{/if}}
+
+{{#if error_msg}}
+
+<body onload="M.toast({html: '{{error_msg}}', displayLength: 4000, classes: 'red rounded'})"></body>
+{{/if}}
+
 {{#if error}}
-<div class="alert alert-danger alert-dismissable fade show" role="alert"><strong>{{error}}</strong><button type="button"
-    class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button></div>
+
+<body onload="M.toast({html: '{{error}}', displayLength: 4000, classes: 'red rounded'})"></body>
 {{/if}}
 
 {{#each errors}}
-<div class="alert alert-danger alert-dismissable fade show" role="alert"><strong>{{text}}</strong><button type="button"
-    class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button></div>
+
+<body onload="M.toast({html: '{{errors}}', displayLength: 4000, classes: 'red rounded'})"></body>
 {{else}}
 {{/each}}

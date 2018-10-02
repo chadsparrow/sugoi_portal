@@ -15,4 +15,13 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:styleId", (req, res) => {
+  const id = req.params.styleId;
+  Style.find({ LGstyleNum: id }).then(styles => {
+    res.render("stylesnofilter", {
+      styles
+    });
+  });
+});
+
 module.exports = router;

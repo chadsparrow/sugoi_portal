@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Create Schema
+// Create Order Schema
 const OrderSchema = new Schema({
   orderNum: {
     type: String,
@@ -53,9 +53,18 @@ const OrderSchema = new Schema({
     type: String,
     required: true
   },
-  instructions: {
-    type: String
-  },
+  instructions: [
+    {
+      date: Date,
+      instruction: String
+    }
+  ],
+  proofs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Proof"
+    }
+  ],
   currentArtist: {
     type: String
   },
@@ -71,9 +80,12 @@ const OrderSchema = new Schema({
   sentVendor: {
     type: Date
   },
-  artNotes: {
-    type: String
-  },
+  artNotes: [
+    {
+      date: Date,
+      note: String
+    }
+  ],
   qty: {
     type: Number
   },
