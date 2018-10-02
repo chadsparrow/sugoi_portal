@@ -206,31 +206,37 @@ app.listen(process.env.APP_PORT, (req, res) => {
   let editOrders = true;
   let editProofs = true;
   let editProd = true;
-  User.findOne({ username: userName }, function(err, user) {
-    if (!user) {
-      const newUser = new User({
-        username: userName,
-        password: password,
-        admin: admin,
-        editOrders: editOrders,
-        editProofs: editProofs,
-        editProd: editProd
-      });
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => {
-              console.log("Root User Created!");
-            })
-            .catch(err => {
-              console.log(err);
-              return;
+  User.findOne({ admin: true }, function(err, user) {
+    if (!user) {
+      console.log("No Admin User Found - creating root@sugoi.com user...");
+      User.findOne({ username: userName }, function(err, user) {
+        if (!user) {
+          const newUser = new User({
+            username: userName,
+            password: password,
+            admin: admin,
+            editOrders: editOrders,
+            editProofs: editProofs,
+            editProd: editProd
+          });
+
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => {
+                  console.log("Root User Created!");
+                })
+                .catch(err => {
+                  console.log(err);
+                  return;
+                });
             });
-        });
+          });
+        }
       });
     }
   });
