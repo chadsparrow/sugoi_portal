@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 //const multer = require("multer");
 const path = require("path");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 const passport = require("passport");
 const fs = require("fs");
 //const unzip = require("unzip");
@@ -47,6 +48,7 @@ app.engine(
     defaultLayout: "main"
   })
 );
+
 app.set("view engine", "handlebars");
 
 // Passport config
@@ -55,6 +57,9 @@ require("./config/passport")(passport);
 //Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Method Override
+app.use(methodOverride("_method"));
 
 // Connect Flash
 app.use(flash());

@@ -63,8 +63,8 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
     editProd = false;
   }
 
-  if (req.body.password.length < 6) {
-    req.flash("error_msg", "Password needs to be at least 6 characters");
+  if (req.body.password.length < 8) {
+    req.flash("error_msg", "Password needs to be at least 8 characters");
     res.render("users/register");
   } else {
     User.findOne({ username: userName }, function(err, user) {
@@ -107,6 +107,43 @@ router.get("/logout", ensureAuthenticated, (req, res) => {
   req.logout();
   req.flash("success_msg", "You are logged out!");
   res.redirect("/users/login");
+});
+
+// User Password Form
+router.get("/password", ensureAuthenticated, (req, res) => {
+  res.render("users/password");
+});
+
+// User Password Post
+router.put("/password", ensureAuthenticated, (req, res) => {
+  let pass = req.body.password;
+  let userName = req.body.username;
+
+  if (pass.length < 8) {
+    req.flash("error_msg", "Password needs to be at least 8 characters");
+    res.redirect("/users/password");
+  } else {
+    User.findOne({ username: userName }, function(err, foundObject) {
+      if (err) throw err;
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(pass, salt, (err, hash) => {
+          if (err) throw err;
+          foundObject.password = hash;
+          foundObject.username = userName;
+          foundObject
+            .save()
+            .then(user => {
+              req.flash("success_msg", "Password Updated");
+              res.redirect("/orders/");
+            })
+            .catch(err => {
+              console.log(err);
+              return;
+            });
+        });
+      });
+    });
+  }
 });
 
 module.exports = router;

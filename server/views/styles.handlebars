@@ -1,43 +1,37 @@
-<h4>Styles</h4>
-<div class="row">
-  <div class="col s12">
-    <div class="input-field">
-      <input type="text" class="white black-text" name="myInput" id="myInput" placeholder="Enter search text to filter table">
-      <label for="myInput">Filter table</label>
-    </div>
-  </div>
+<div style="margin-top: 20px; margin-bottom: 50px;">
+  <table class="display nowrap" id="styleTable">
+    <thead>
+      <tr>
+        <th>LG Style #</th>
+        <th>Old Style #</th>
+        <th>Style Name</th>
+        <th>Brand</th>
+        <th>Sizes</th>
+        <th class="center-align">FLUO</th>
+        <th class="center-align">PRS</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      {{#each styles}}
+      <tr>
+        <td style="font-size: 12px;">{{LGstyleNum}}</td>
+        <td style="font-size: 12px;">{{styleNum}}</td>
+        <td style="font-size: 12px;">{{styleName}}</td>
+        <td style="font-size: 12px;">{{brand}}</td>
+        <td style="font-size: 12px;"><span class="new badge" data-badge-caption=""><span>{{#each sizing}}{{this}}
+              {{/each}}</span></span></td>
+        {{#if fluo}}
+        <td class="center-align" style="font-weight: bold;">X</td>
+        {{else}}
+        <td></td>
+        {{/if}}
+        {{#if personalized}}
+        <td class="center-align" style="font-weight: bold;">X</td>
+        {{else}}
+        <td></td>
+        {{/if}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
-<table class="striped highlight responsive-table" id="datatable">
-  <thead class="black white-text">
-    <tr>
-      <th>LG Style #</th>
-      <th>Old Style #</th>
-      <th>Style Name</th>
-      <th>Brand</th>
-      <th>Sizes</th>
-      <th class="center-align">FLUO</th>
-      <th class="center-align">PRS</th>
-    </tr>
-  </thead>
-  <tbody id="myTable">
-    {{#each styles}}
-    <tr>
-      <td>{{LGstyleNum}}</td>
-      <td>{{styleNum}}</td>
-      <td>{{styleName}}</td>
-      <td>{{brand}}</td>
-      <td><span class="new badge" data-badge-caption=""><span>{{#each sizing}}{{this}} {{/each}}</span></span></td>
-      {{#if fluo}}
-      <td class="center-align"><i class="fas fa-check-circle"></i></td>
-      {{else}}
-      <td></td>
-      {{/if}}
-      {{#if personalized}}
-      <td class="center-align"><i class="fas fa-check-circle"></i></td>
-      {{else}}
-      <td></td>
-      {{/if}}
-    </tr>
-    {{/each}}
-  </tbody>
-</table>

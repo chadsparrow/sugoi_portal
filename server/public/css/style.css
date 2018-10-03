@@ -2,11 +2,6 @@
   font-size: 12px;
 }
 
-table {
-  font-size: 12px;
-  margin-bottom: 20px;
-}
-
 .instructions {
   margin-bottom: 50px;
 }
@@ -30,4 +25,13 @@ table {
 
 #dropdown1 a {
   font-size: 12px;
+}
+
+.break {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+tr {
+  height: 30px;
 }
