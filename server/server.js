@@ -22,10 +22,11 @@ const orderRoutes = require("./routes/orders");
 const indexRoutes = require("./routes/index");
 //const uploads = require("./routes/uploads");
 
+// Load User model to create root user if no admin exists in DB
 const User = require("./models/User");
 
 // Handlebars Helpers
-//const { isAdmin } = require("./helpers/hbs");
+const { getHandle } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
 mongoose
@@ -42,7 +43,7 @@ mongoose
 app.engine(
   "handlebars",
   exphbs({
-    //helpers: {},
+    helpers: { getHandle: getHandle },
     defaultLayout: "main"
   })
 );

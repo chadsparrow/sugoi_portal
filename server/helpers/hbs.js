@@ -1,9 +1,7 @@
 module.exports = {
-  // isAdmin: function(role) {
-  //   if (role === "admin") {
-  //     return "<li><a class='nav-link' href='/users/register'>Register User</a></li>";
-  //   } else {
-  //     return "";
-  //   }
-  // }
+  getHandle: function(username) {
+    let userArray = username.split("@");
+    username = userArray[0];
+    return username;
+  }
 };
