@@ -74,11 +74,14 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
   if (req.body.password.length < 8) {
     req.flash("error_msg", "Password needs to be at least 8 characters");
-    res.render("users/register");
+    res.redirect("/users/register");
+  } else if (req.body.password !== req.body.password2) {
+    req.flash("error_msg", "Password needs to match");
+    res.redirect("/users/register");
   } else {
     User.findOne({ username: userName }, function(err, user) {
       if (user) {
-        req.flash("error_msg", "User already registered!");
+        req.flash("error_msg", "User already registered");
         res.redirect("/users/register");
       } else {
         const newUser = new User({
@@ -97,8 +100,8 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
             newUser
               .save()
               .then(user => {
-                req.flash("success_msg", "User registered!");
-                res.redirect("/users/register");
+                req.flash("success_msg", "User registered");
+                res.redirect("/orders/");
               })
               .catch(err => {
                 console.log(err);
@@ -114,7 +117,7 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
 // Logout User
 router.get("/logout", ensureAuthenticated, (req, res) => {
   req.logout();
-  req.flash("success_msg", "You are logged out!");
+  req.flash("success_msg", "Logged out");
   res.redirect("/users/login");
 });
 
@@ -126,19 +129,23 @@ router.get("/password", ensureAuthenticated, (req, res) => {
 // User Password Post
 router.put("/password", ensureAuthenticated, (req, res) => {
   let pass = req.body.password;
+  let pass2 = req.body.password2;
   let userName = req.body.username;
 
   if (pass.length < 8) {
     req.flash("error_msg", "Password needs to be at least 8 characters");
     res.redirect("/users/password");
+  } else if (pass !== pass2) {
+    req.flash("error_msg", "Password fields need to match");
+    res.redirect("/users/password");
   } else {
     User.findOne({ username: userName }, function(err, foundObject) {
       if (err) throw err;
+
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(pass, salt, (err, hash) => {
           if (err) throw err;
           foundObject.password = hash;
-          foundObject.username = userName;
           foundObject
             .save()
             .then(user => {
