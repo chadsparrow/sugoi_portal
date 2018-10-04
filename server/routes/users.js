@@ -15,6 +15,15 @@ router.get("/login", (req, res) => {
   res.render("users/login");
 });
 
+router.get("/login/:userName/:key", (req, res) => {
+  const userName = req.params.userName;
+  const key = req.params.key;
+  res.render("users/loginwparams", {
+    key,
+    userName
+  });
+});
+
 // User Login POST
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
