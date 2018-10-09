@@ -1,37 +1,54 @@
 <div style="margin-top: 20px; margin-bottom: 50px;">
-  <table class="display" id="orderTable">
+  <table class="display nowrap" id="orderTable">
     <thead>
       <tr>
-        <th>LG Style #</th>
-        <th>Old Style #</th>
-        <th>Style Name</th>
-        <th>Brand</th>
-        <th>Sizes</th>
-        <th class="center-align">FLUO</th>
-        <th class="center-align">PRS</th>
+        <th data-priority="1">Order</th>
+        <th data-priority="3">Status</th>
+        <th data-priority="4">Priority</th>
+        <th>Request Date</th>
+        <th>Event Date</th>
+        <th>Latest In-Hand Date</th>
+        <th data-priority="6">ISR</th>
+        <th data-priority="5">Client</th>
+        <th data-priority="7">Artist</th>
+        <th>QC</th>
+        <th>Sent to ISR</th>
+        <th>Upload Date</th>
+        <th>Sent to Vendor</th>
+        <th data-priority="8">Notes</th>
+        <th data-priority="2">View/Edit</th>
       </tr>
     </thead>
     <tbody id="myTable">
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px;">{{LGstyleNum}}</td>
-        <td style="font-size: 12px;">{{styleNum}}</td>
-        <td style="font-size: 12px;">{{styleName}}</td>
-        <td style="font-size: 12px;">{{brand}}</td>
-        <td style="font-size: 12px;"><span class="new badge" data-badge-caption=""><span>{{#each sizing}}{{this}}
-              {{/each}}</span></span></td>
-        {{#if fluo}}
-        <td class="center-align" style="font-weight: bold;">X</td>
-        {{else}}
-        <td></td>
-        {{/if}}
-        {{#if personalized}}
-        <td class="center-align" style="font-weight: bold;">X</td>
-        {{else}}
-        <td></td>
-        {{/if}}
+        <td style="font-size: 12px;">{{orderNum}}</td>
+        <td style="font-size: 12px;">
+          {{{setStatusDiv currentStatus}}}
+        </td>
+        <td style="font-size: 12px;">{{#if priority}}<div class="chip pink white-text" style="font-size: 10px;">{{priority}}</div>{{/if}}</td>
+        <td style="font-size: 12px;">{{formatDate requestDate "MMM Do YYYY"}}</td>
+        <td style="font-size: 12px;">{{#if eventDate}}{{formatDate eventDate "MMM Do YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{#if latestInHand}}{{formatDate latestInHand "MMM Do YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{isr}}</td>
+        <td style="font-size: 12px;">{{client}}</td>
+        <td style="font-size: 12px;">{{currentArtist}}</td>
+        <td style="font-size: 12px;">{{currentQC}}</td>
+        <td style="font-size: 12px;">{{#if emailSent}}{{formatDate emailSent "MMM Do YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM Do YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM Do YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{artNotes}}</td>
+        <td style="font-size: 12px;"><a class="waves-effect waves-light btn-small" href="/orders/{{hashedOrder}}">View</a><a
+            class="waves-effect waves-light btn-small green">Edit</a></td>
       </tr>
       {{/each}}
     </tbody>
   </table>
+  {{#if user.editOrders}}
+  <div class="fixed-action-btn">
+    <a class="btn-floating waves-effect waves-light btn-large red" href="orders/add">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+  {{/if}}
 </div>

@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Initial Load Route
 router.get("/", (req, res) => {
-  res.render("users/login");
+  res.render("/orders");
 });
 
 module.exports = router;

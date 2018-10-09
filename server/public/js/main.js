@@ -26,9 +26,14 @@ $(document).ready(function() {
     ]
   });
 
+  var groupColumn = 1;
   $("#orderTable").dataTable({
     responsive: true,
-    pageLength: 10,
+    pageLength: 20,
+    rowGroup: {
+      dataSrc: 1
+    },
+    order: [[1, "asc"], [3, "asc"]],
     oLanguage: {
       sSearch: "Search",
       sSearchPlaceholder: "Enter search text",

@@ -27,11 +27,19 @@
   font-size: 12px;
 }
 
-.break {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+.select-dropdown li span {
+  font-size: 14px;
 }
 
-tr {
-  height: 30px;
+.select-dropdown.dropdown-content {
+  max-height: 400px;
+  overflow-y: auto !important;
+}
+
+thead {
+  font-size: 12px;
+}
+
+.status {
+  min-width: 100px;
 }

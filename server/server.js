@@ -27,7 +27,12 @@ const indexRoutes = require("./routes/index");
 const User = require("./models/User");
 
 // Handlebars Helpers
-const { getHandle } = require("./helpers/hbs");
+const {
+  getHandle,
+  select,
+  formatDate,
+  setStatusDiv
+} = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
 mongoose
@@ -44,7 +49,12 @@ mongoose
 app.engine(
   "handlebars",
   exphbs({
-    helpers: { getHandle: getHandle },
+    helpers: {
+      getHandle,
+      select,
+      formatDate,
+      setStatusDiv
+    },
     defaultLayout: "main"
   })
 );

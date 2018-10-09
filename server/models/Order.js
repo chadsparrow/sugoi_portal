@@ -10,24 +10,25 @@ const OrderSchema = new Schema({
   currentStatus: {
     type: String,
     enum: [
-      "Waiting for Proof",
-      "Proof Started",
-      "Proof - Waiting on Someone else",
-      "Proof Ready for QC",
-      "Proof Complete",
-      "Waiting for Revision",
-      "Revision - Waiting on Someone else",
-      "Revision Started",
-      "Revision Ready for QC",
-      "Revision Complete",
-      "Waiting for Output",
-      "Output - Waiting on Someone else",
-      "Output Started",
-      "Output Ready for QC",
-      "Waiting for PNT",
-      "PNT Ready for QC",
-      "Uploaded",
-      "CANCELLED"
+      "1. Waiting for Proof",
+      "2. Proof Started",
+      "3. Proof - Waiting on Someone else",
+      "4. Proof Ready for QC",
+      "5. Proof Complete",
+      "6. Waiting for Revision",
+      "7. Revision - Waiting on Someone else",
+      "8. Revision Started",
+      "9. Revision Ready for QC",
+      "10. Revision Complete",
+      "11. Waiting for Output",
+      "12. Output - Waiting on Someone else",
+      "13. Output Started",
+      "14. Output Ready for QC",
+      "15. Waiting for PNT",
+      "16. PNT Ready for QC",
+      "17. Uploaded",
+      "18. Sent to Vendor",
+      "19. CANCELLED"
     ],
     required: true
   },
@@ -37,13 +38,16 @@ const OrderSchema = new Schema({
   },
   requestDate: {
     type: Date,
-    required: true
+    required: true,
+    default: Date.now
   },
   eventDate: {
-    type: Date
+    type: Date,
+    default: null
   },
-  lastestInHand: {
-    type: Date
+  latestInHand: {
+    type: Date,
+    default: null
   },
   isr: {
     type: String,
@@ -55,14 +59,13 @@ const OrderSchema = new Schema({
   },
   instructions: [
     {
-      date: Date,
-      instruction: String
-    }
-  ],
-  proofs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Proof"
+      date: {
+        type: Date,
+        default: Date.now
+      },
+      instruction: {
+        type: String
+      }
     }
   ],
   currentArtist: {
@@ -72,18 +75,25 @@ const OrderSchema = new Schema({
     type: String
   },
   emailSent: {
-    type: Date
+    type: Date,
+    default: null
   },
   uploadDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   sentVendor: {
-    type: Date
+    type: Date,
+    default: null
   },
   artNotes: [
     {
-      date: Date,
-      note: String
+      date: {
+        type: Date
+      },
+      note: {
+        type: String
+      }
     }
   ],
   qty: {
@@ -97,7 +107,8 @@ const OrderSchema = new Schema({
     enum: ["CAD", "USA"]
   },
   latestShipDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   markEvent: {
     type: String
@@ -106,19 +117,24 @@ const OrderSchema = new Schema({
     type: String
   },
   vendorConfirmShip: {
-    type: Date
+    type: Date,
+    default: null
   },
   shipStatus: {
     type: String
   },
   estDeliveryDate: {
-    type: Date
+    type: Date,
+    default: null
   },
-  tracking: {
-    type: String
-  },
+  tracking: [
+    {
+      type: String
+    }
+  ],
   confirmDeliveryDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   confirmDeliveryStatus: {
     type: String
