@@ -36,43 +36,11 @@
             </div>
             <div class="col s12 m8">
               <div class="input-field col s12 m8">
-                <select name="currentStatus" readonly>
-                  {{#select currentStatus}}
-                  <option value="1. Waiting for Proof" selected>Waiting for Proof</option>
-                  <option value="2. Proof Started">Proof Started</option>
-                  <option value="3. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
-                  <option value="4. Proof Ready for QC">Proof Ready for QC</option>
-                  <option value="5. Proof Complete">Proof Complete</option>
-                  <option value="6. Waiting for Revision">Waiting for Revision</option>
-                  <option value="7. Revision - Waiting on Someone else">Revision - Waiting on Someone else</option>
-                  <option value="8. Revision Started">Revision Started</option>
-                  <option value="9. Revision Ready for QC">Revision Ready for QC</option>
-                  <option value="10. Revision Complete">Revision Complete</option>
-                  <option value="11. Waiting for Output">Waiting for Output</option>
-                  <option value="12. Output - Waiting on Someone else">Output - Waiting on Someone else</option>
-                  <option value="13. Output Started">Output Started</option>
-                  <option value="14. Output Ready for QC">Output Ready for QC</option>
-                  <option value="15. Waiting for PNT">Waiting for PNT</option>
-                  <option value="16. PNT Ready for QC">PNT Ready for QC</option>
-                  <option value="17. Uploaded">Uploaded</option>
-                  <option value="18. Sent to Vendor">Sent to Vendor</option>
-                  <option value="19. CANCELLED">CANCELLED</option>
-                  {{/select}}
-                </select>
+                <input type="text" name="currentStatus" value="{{order.currentStatus}}" readonly>
                 <label for="currentStatus">Status:</label>
               </div>
               <div class="input-field col s12 m4">
-                <select name="currentArtist" readonly>
-                  {{#select order.currentArtist}}
-                  <option value=""></option>
-                  <option value="Barbara">Lilla</option>
-                  <option value="Chad">Chad</option>
-                  <option value="Daniela">Daniela</option>
-                  <option value="Kelly">Kelly</option>
-                  <option value="Lilla">Lilla</option>
-                  <option value="Roy">Roy</option>
-                  {{/select}}
-                </select>
+                <input type="text" name="currentArtist" value="{{order.currentArtist}}" readonly>
                 <label for="currentArtist">Current Artist:</label>
               </div>
               <div class="col s12 instructionsBox">
@@ -89,6 +57,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="card-action left-align">
+          <a href="#" class="btn black">view proofs</a>
         </div>
         {{#if user.editOrders}}
         <div class="fixed-action-btn">

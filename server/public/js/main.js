@@ -17,7 +17,7 @@ $(document).ready(function() {
         "</select></div>"
     },
     bAutoWidth: false,
-    dom: "lrftBip",
+    dom: "lrftip",
     buttons: [
       {
         text: "Excel",
@@ -49,7 +49,7 @@ $(document).ready(function() {
         "</select></div>"
     },
     bAutoWidth: false,
-    dom: "lrftBip",
+    dom: "lrftip",
     buttons: [
       {
         text: "Excel",
