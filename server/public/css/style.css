@@ -40,6 +40,19 @@ thead {
   font-size: 12px;
 }
 
+.child {
+  font-size: 12px;
+}
+
 .status {
   min-width: 100px;
+}
+
+.instructionsBox {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.collection-item {
+  font-size: 12px;
 }

@@ -20,10 +20,8 @@
 
 <body>
   {{> _navbar}}
-  <div class="container">
-    {{> _errors}}
-    {{{body}}}
-  </div>
+  {{> _errors}}
+  {{{body}}}
 
 
 
@@ -50,6 +48,9 @@
       });
 
       $('.chips').chips();
+
+      $('.tooltipped').tooltip();
+
     });
   </script>
 

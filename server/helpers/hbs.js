@@ -15,13 +15,17 @@ module.exports = {
       );
   },
   formatDate: function(date, format) {
-    return moment(date).format(format);
+    if (date) {
+      return moment(date).format(format);
+    } else {
+      return null;
+    }
   },
   setStatusDiv: function(status) {
     switch (status) {
       case "1. Waiting for Proof":
         return (
-          "<div class='chip status amber accent-2' style='font-size: 10px;'>" +
+          "<div class='chip status red white-text' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
@@ -47,105 +51,133 @@ module.exports = {
           "</div>"
         );
         break;
-      case "5. Proof Complete":
+      case "5. Proof QC Complete":
+        return (
+          "<div class='chip status yellow accent-4' style='font-size: 10px;'>" +
+          status +
+          "</div>"
+        );
+        break;
+      case "6. Proof Complete":
         return (
           "<div class='chip status green accent-3' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "6. Waiting for Revision":
+      case "7. Waiting for Revision":
         return (
-          "<div class='chip status amber accent-2' style='font-size: 10px;'>" +
+          "<div class='chip status red white-text' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "7. Revision - Waiting on Someone else":
-        return (
-          "<div class='chip status light-blue lighten-2' style='font-size: 10px;'>" +
-          status +
-          "</div>"
-        );
-        break;
-      case "8. Revision Started":
+      case "8. Revision - Waiting on Someone else":
         return (
           "<div class='chip status light-blue lighten-2' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "9. Revision Ready for QC":
+      case "9. Revision Started":
+        return (
+          "<div class='chip status light-blue lighten-2' style='font-size: 10px;'>" +
+          status +
+          "</div>"
+        );
+        break;
+      case "10. Revision Ready for QC":
         return (
           "<div class='chip status yellow accent-2' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "10. Revision Complete":
+      case "11. Revision QC Complete":
+        return (
+          "<div class='chip status yellow accent-4' style='font-size: 10px;'>" +
+          status +
+          "</div>"
+        );
+        break;
+      case "12. Revision Complete":
         return (
           "<div class='chip status green accent-3' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "11. Waiting for Output":
+      case "13. Waiting for Output":
         return (
-          "<div class='chip status amber accent-2' style='font-size: 10px;'>" +
+          "<div class='chip status red white-text' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "12. Output - Waiting on Someone else":
-        return (
-          "<div class='chip status light-blue lighten-2' style='font-size: 10px;'>" +
-          status +
-          "</div>"
-        );
-        break;
-      case "13. Output Started":
+      case "14. Output - Waiting on Someone else":
         return (
           "<div class='chip status light-blue lighten-2' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "14. Output Ready for QC":
+      case "15. Output Started":
+        return (
+          "<div class='chip status light-blue lighten-2' style='font-size: 10px;'>" +
+          status +
+          "</div>"
+        );
+        break;
+      case "16. Output Ready for QC":
         return (
           "<div class='chip status yellow accent-2' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "15. Waiting for PNT":
+      case "17. Output QC Complete":
         return (
-          "<div class='chip status amber accent-2' style='font-size: 10px;'>" +
+          "<div class='chip status yellow accent-4' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "16. PNT Ready for QC":
+      case "18. Waiting for PNT":
+        return (
+          "<div class='chip status red white-text' style='font-size: 10px;'>" +
+          status +
+          "</div>"
+        );
+        break;
+      case "19. PNT Ready for QC":
         return (
           "<div class='chip status yellow accent-2' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "17. Uploaded":
+      case "20. PNT QC Complete":
+        return (
+          "<div class='chip status yellow accent-4' style='font-size: 10px;'>" +
+          status +
+          "</div>"
+        );
+        break;
+      case "21. Uploaded":
         return (
           "<div class='chip status green darken-2 white-text' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "18. Sent to Vendor":
+      case "22. Sent to Vendor":
         return (
           "<div class='chip status light-blue darken-4 white-text' style='font-size: 10px;'>" +
           status +
           "</div>"
         );
         break;
-      case "19. CANCELLED":
+      case "23. CANCELLED":
         return (
           "<div class='chip status grey lighten-2 grey-text' style='font-size: 10px;'>" +
           status +
@@ -153,5 +185,8 @@ module.exports = {
         );
         break;
     }
+  },
+  getInstructions: function(instructions) {
+    return instructions.reverse();
   }
 };

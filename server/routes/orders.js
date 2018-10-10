@@ -46,8 +46,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let instruction = req.body.instruction;
   let instructions = [];
   let currentArtist = "";
-  let currentQC = "";
-  let emailSent = null;
+  let currentQC = [];
   let uploadDate = null;
   let sentVendor = null;
   let artNotes = [];
@@ -64,7 +63,11 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let totalLeadTime = 0;
 
   if (instruction) {
-    instructions.push({ instruction: instruction });
+    instructions.push({
+      instruction: instruction,
+      instructionType: "Initial",
+      user: isr
+    });
   }
 
   Order.findOne({ orderNum: orderNum }, function(err, order) {
@@ -82,11 +85,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         client: client,
         instructions: instructions,
         currentArtist: currentArtist,
-        currentQC: currentQC,
-        emailSent: emailSent,
         uploadDate: uploadDate,
         sentVendor: sentVendor,
-        artNotes: artNotes,
         qty: qty,
         netValue: netValue,
         markEvent: markEvent,
@@ -114,8 +114,24 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
-router.get("/:orderNum", (req, res) => {
-  res.send("Loaded order: " + req.params.orderNum);
+router.get("/view/:orderNum", (req, res) => {
+  Order.findOne({
+    _id: req.params.orderNum
+  }).then(order => {
+    res.render("orders/view", {
+      order
+    });
+  });
+});
+
+router.get("/edit/:orderNum", (req, res) => {
+  Order.findOne({
+    _id: req.params.orderNum
+  }).then(order => {
+    res.render("orders/edit", {
+      order
+    });
+  });
 });
 
 module.exports = router;

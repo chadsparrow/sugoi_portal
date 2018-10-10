@@ -14,21 +14,25 @@ const OrderSchema = new Schema({
       "2. Proof Started",
       "3. Proof - Waiting on Someone else",
       "4. Proof Ready for QC",
-      "5. Proof Complete",
-      "6. Waiting for Revision",
-      "7. Revision - Waiting on Someone else",
-      "8. Revision Started",
-      "9. Revision Ready for QC",
-      "10. Revision Complete",
-      "11. Waiting for Output",
-      "12. Output - Waiting on Someone else",
-      "13. Output Started",
-      "14. Output Ready for QC",
-      "15. Waiting for PNT",
-      "16. PNT Ready for QC",
-      "17. Uploaded",
-      "18. Sent to Vendor",
-      "19. CANCELLED"
+      "5. Proof QC Complete",
+      "6. Proof Complete",
+      "7. Waiting for Revision",
+      "8. Revision - Waiting on Someone else",
+      "9. Revision Started",
+      "10. Revision Ready for QC",
+      "11. Revision QC Complete",
+      "12. Revision Complete",
+      "13. Waiting for Output",
+      "14. Output - Waiting on Someone else",
+      "15. Output Started",
+      "16. Output Ready for QC",
+      "17. Output QC Complete",
+      "18. Waiting for PNT",
+      "19. PNT Ready for QC",
+      "20. PNT QC Complete",
+      "21. Uploaded",
+      "22. Sent to Vendor",
+      "23. CANCELLED"
     ],
     required: true
   },
@@ -65,18 +69,18 @@ const OrderSchema = new Schema({
       },
       instruction: {
         type: String
+      },
+      instructionType: {
+        type: String,
+        enum: ["Initial", "Proof", "Revision", "QC", "Misc"]
+      },
+      user: {
+        type: String
       }
     }
   ],
   currentArtist: {
     type: String
-  },
-  currentQC: {
-    type: String
-  },
-  emailSent: {
-    type: Date,
-    default: null
   },
   uploadDate: {
     type: Date,
@@ -86,16 +90,6 @@ const OrderSchema = new Schema({
     type: Date,
     default: null
   },
-  artNotes: [
-    {
-      date: {
-        type: Date
-      },
-      note: {
-        type: String
-      }
-    }
-  ],
   qty: {
     type: Number
   },

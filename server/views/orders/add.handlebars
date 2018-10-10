@@ -66,10 +66,10 @@
                     <div class="input-field col s12">
                       <select name="isr">
                         {{#select isr}}
-                        <option value="AHOOGEVEEN">AHOOGEVEEN</option>
-                        <option value="DOSULLIVAN">DOSULLIVAN</option>
-                        <option value="RPILLER">RPILLER</option>
-                        <option value="RPILLER">SROBINSON</option>
+                        <option value="Adam">Adam</option>
+                        <option value="Dean">Dean</option>
+                        <option value="Reed">Reed</option>
+                        <option value="Sheila">Sheila</option>
                         {{/select}}
                       </select>
                       <label for="isr">* ISR:</label>
@@ -84,8 +84,9 @@
                 </div>
                 <div class="col s12 m6">
                   <div class="input-field col s12">
-                    <textarea name="instruction" class="materialize-textarea" placeholder="type in instructions here...">{{instruction}}</textarea>
-                    <label for="instruction">Art Directions:</label>
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea name="instruction" class="materialize-textarea" placeholder="type instructions here...">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
+                    <label for="instruction">Initial Instructions:</label>
                   </div>
                 </div>
                 <div class="col s12">

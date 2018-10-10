@@ -1,31 +1,33 @@
-<section class="section center">
-  <div class="container">
-    <div class="row">
-      <div class="col s12">
-        <div class="card black">
-          <div class="card-content white-text">
-            <span class="card-title">Account Login</span>
-            <div class="card-action">
-              <div class="row">
-                <form action="/users/login" method="post" class="col s12">
-                  <div class="input-field col s12">
-                    <input type="email" name="username" value="{{userName}}" class="white-text" readonly>
-                    <label for="username"><i class="fas fa-envelope-square"></i> Email:</label>
-                  </div>
-                  <div class="input-field col s12">
-                    <input type="password" name="password" value="{{key}}" class="white-text" readonly>
-                    <label for="password"><i class="fas fa-key"></i> Password:</label>
-                  </div>
-                  <button class="btn waves-effect waves-light black-text" type="submit" name="action" autofocus><i
-                      class="fas fa-check-square"></i>
-                    Submit
-                  </button>
-                </form>
+<div class="container">
+  <section class="section center">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="card black">
+            <div class="card-content white-text">
+              <span class="card-title">Account Login</span>
+              <div class="card-action">
+                <div class="row">
+                  <form action="/users/login" method="post" class="col s12">
+                    <div class="input-field col s12">
+                      <input type="email" name="username" value="{{userName}}" class="white-text" readonly>
+                      <label for="username"><i class="fas fa-envelope-square"></i> Email:</label>
+                    </div>
+                    <div class="input-field col s12">
+                      <input type="password" name="password" value="{{key}}" class="white-text" readonly>
+                      <label for="password"><i class="fas fa-key"></i> Password:</label>
+                    </div>
+                    <button class="btn waves-effect waves-light black-text" type="submit" name="action" autofocus><i
+                        class="fas fa-check-square"></i>
+                      Submit
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

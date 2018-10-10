@@ -1,4 +1,4 @@
-<div style="margin-top: 20px; margin-bottom: 50px;">
+<div class="container" style="margin-top: 20px; margin-bottom: 50px;">
   <table class="display nowrap" id="orderTable">
     <thead>
       <tr>
@@ -11,11 +11,8 @@
         <th data-priority="6">ISR</th>
         <th data-priority="5">Client</th>
         <th data-priority="7">Artist</th>
-        <th>QC</th>
-        <th>Sent to ISR</th>
         <th>Upload Date</th>
         <th>Sent to Vendor</th>
-        <th data-priority="8">Notes</th>
         <th data-priority="2">View/Edit</th>
       </tr>
     </thead>
@@ -33,20 +30,18 @@
         <td style="font-size: 12px;">{{isr}}</td>
         <td style="font-size: 12px;">{{client}}</td>
         <td style="font-size: 12px;">{{currentArtist}}</td>
-        <td style="font-size: 12px;">{{currentQC}}</td>
-        <td style="font-size: 12px;">{{#if emailSent}}{{formatDate emailSent "MMM Do YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM Do YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM Do YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;">{{artNotes}}</td>
-        <td style="font-size: 12px;"><a class="waves-effect waves-light btn-small" href="/orders/{{hashedOrder}}">View</a><a
-            class="waves-effect waves-light btn-small green">Edit</a></td>
+        <td style="font-size: 12px;"><a class="waves-effect waves-light btn-small" href="/orders/view/{{_id}}">View</a><a
+            class="waves-effect waves-light btn-small green" href="/orders/edit/{{_id}}">Edit</a></td>
       </tr>
       {{/each}}
     </tbody>
   </table>
   {{#if user.editOrders}}
   <div class="fixed-action-btn">
-    <a class="btn-floating waves-effect waves-light btn-large red" href="orders/add">
+    <a class="btn-floating waves-effect waves-light btn-large grey tooltipped" data-position="left" data-tooltip="Add Order"
+      href="orders/add">
       <i class="large material-icons">add</i>
     </a>
   </div>

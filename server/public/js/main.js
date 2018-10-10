@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $("#styleTable").dataTable({
     responsive: true,
-    pageLength: 10,
+    pageLength: -1,
     oLanguage: {
       sSearch: "Search",
       sSearchPlaceholder: "Enter search text",

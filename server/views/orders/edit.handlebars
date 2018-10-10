@@ -1,0 +1,125 @@
+<div class="container">
+  <section class="section center">
+    <form action="#" method="POST">
+      <div class="row">
+        <div class="card col s12">
+          <div class="card-content">
+            <span class="card-title">Edit Order</span>
+            <div class="row">
+              <div class="col s12 m4">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input type="text" name="orderNum" value="{{order.orderNum}}" readonly>
+                    <label for="orderNum">Order #:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="text" name="client" placeholder="enter client name" class="validate" value="{{order.client}}"
+                      required>
+                    <label for="orderNum">Client:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <select name="priority">
+                      {{#select order.priority}}
+                      <option value=""></option>
+                      <option value="RUSH">RUSH</option>
+                      <option value="VIP">VIP</option>
+                      {{/select}}
+                    </select>
+                    <label for="priority">Priority:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="text" name="requestDate" value="{{formatDate order.requestDate "MMM Do YYYY"}}"
+                      readonly>
+                    <label for="requestDate">Request Date:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="text" class="datepicker" name="eventDate" value="{{formatDate order.eventDate "MMM Do YYYY"}}">
+                    <label for="eventDate">Event Date:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="text" class="datepicker" name="latestInHand" value="{{formatDate order.latestInHand "MMM Do YYYY"}}">
+                    <label for="latestInHand">Latest In-Hand Date:</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m8">
+                <div class="input-field col s12 m8">
+                  <select name="currentStatus">
+                    {{#select currentStatus}}
+                    <option value="1. Waiting for Proof" selected>Waiting for Proof</option>
+                    <option value="2. Proof Started">Proof Started</option>
+                    <option value="3. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
+                    <option value="4. Proof Ready for QC">Proof Ready for QC</option>
+                    <option value="5. Proof Complete">Proof Complete</option>
+                    <option value="6. Waiting for Revision">Waiting for Revision</option>
+                    <option value="7. Revision - Waiting on Someone else">Revision - Waiting on Someone else</option>
+                    <option value="8. Revision Started">Revision Started</option>
+                    <option value="9. Revision Ready for QC">Revision Ready for QC</option>
+                    <option value="10. Revision Complete">Revision Complete</option>
+                    <option value="11. Waiting for Output">Waiting for Output</option>
+                    <option value="12. Output - Waiting on Someone else">Output - Waiting on Someone else</option>
+                    <option value="13. Output Started">Output Started</option>
+                    <option value="14. Output Ready for QC">Output Ready for QC</option>
+                    <option value="15. Waiting for PNT">Waiting for PNT</option>
+                    <option value="16. PNT Ready for QC">PNT Ready for QC</option>
+                    <option value="17. Uploaded">Uploaded</option>
+                    <option value="18. Sent to Vendor">Sent to Vendor</option>
+                    <option value="19. CANCELLED">CANCELLED</option>
+                    {{/select}}
+                  </select>
+                  <label for="currentStatus">Status:</label>
+                </div>
+                <div class="input-field col s12 m4">
+                  <select name="currentArtist">
+                    {{#select order.currentArtist}}
+                    <option value=""></option>
+                    <option value="Barbara">Lilla</option>
+                    <option value="Chad">Chad</option>
+                    <option value="Daniela">Daniela</option>
+                    <option value="Kelly">Kelly</option>
+                    <option value="Lilla">Lilla</option>
+                    <option value="Roy">Roy</option>
+                    {{/select}}
+                  </select>
+                  <label for="currentArtist">Current Artist:</label>
+                </div>
+                <div class="col s12">
+                  <span>Order History</span>
+                  <div class="collection left-align instructionsBox">
+                    {{#each (getInstructions order.instructions)}}
+                    <div class="collection-item">
+                      <small class="green-text">{{this.instructionType}} - {{formatDate this.date "MMMM Do YYYY"}} -
+                        {{this.user}}</small><br>
+                      {{this.instruction}}
+                    </div>
+                    {{/each}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-action">
+              <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+                  class="fas fa-check-square"></i>
+                Submit
+              </button>
+              <a href="/orders" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
+                Cancel</a>
+            </div>
+          </div>
+
+
+          <div class="fixed-action-btn">
+            <a class="btn-floating btn-large grey">
+              <i class="large material-icons">add</i>
+            </a>
+            <ul>
+              <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Add Note"><i class="material-icons">add_comment</i></a></li>
+              <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Add QC"><i class="material-icons">gavel</i></a></li>
+              <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Add Instruction"><i class="material-icons">edit</i></a></li>
+            </ul>
+          </div>
+
+        </div>
+    </form>
+  </section>
+</div>
