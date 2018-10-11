@@ -13,7 +13,7 @@
         <th data-priority="7">Artist</th>
         <th>Upload Date</th>
         <th>Sent to Vendor</th>
-        <th data-priority="2">View/Edit</th>
+        <th data-priority="2"></th>
       </tr>
     </thead>
     <tbody id="myTable">
@@ -24,16 +24,15 @@
           {{{setStatusDiv currentStatus}}}
         </td>
         <td style="font-size: 12px;">{{#if priority}}<div class="chip pink white-text" style="font-size: 10px;">{{priority}}</div>{{/if}}</td>
-        <td style="font-size: 12px;">{{formatDate requestDate "MMM Do YYYY"}}</td>
-        <td style="font-size: 12px;">{{#if eventDate}}{{formatDate eventDate "MMM Do YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;">{{#if latestInHand}}{{formatDate latestInHand "MMM Do YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{formatDate requestDate "MMM DD, YYYY"}}</td>
+        <td style="font-size: 12px;">{{#if eventDate}}{{formatDate eventDate "MMM DD, YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{#if latestInHand}}{{formatDate latestInHand "MMM DD, YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">{{isr}}</td>
         <td style="font-size: 12px;">{{client}}</td>
         <td style="font-size: 12px;">{{currentArtist}}</td>
-        <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM Do YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM Do YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;"><a class="waves-effect waves-light btn-small" href="/orders/view/{{_id}}">View</a><a
-            class="waves-effect waves-light btn-small green" href="/orders/edit/{{_id}}">Edit</a></td>
+        <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM DD, YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM DD, YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;"><a class="black waves-block waves-effect waves-light btn-small" href="/orders/view/{{_id}}">View</a></td>
       </tr>
       {{/each}}
     </tbody>

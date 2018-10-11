@@ -51,22 +51,36 @@ thead {
 .instructionsBox {
   max-height: 400px;
   overflow-y: auto;
-}
-
-.collection-item {
+  color: black;
   font-size: 12px;
 }
 
+.collapsible-header {
+  background-color: lightgrey;
+  font-size: 12px;
+  padding: 10px;
+}
+.collapsible-body {
+  background-color: white;
+  padding: 10px;
+  text-align: justify;
+}
 .small {
-  width: 300px;
+  width: 275px;
   height: 390px !important;
   margin: 10px;
 }
-
 #proofWindow {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 10px;
+  justify-content: space-evenly;
+}
+
+.activator {
+  cursor: pointer;
+}
+
+.card-reveal {
+  font-size: 14px;
 }

@@ -1,218 +1,246 @@
-<div class="row">
-  <div class="col s12 l3" style="padding: 15px;">
-    <div class="card black white-text" style="font-size: 14px;">
-      <div class="card-content">
-        <div class="row">
-          <div class="col s12">
-            <span class="card-title">Order Details - {{order.orderNum}}</span>
+<div class="orderContainer">
+  <div class="row">
+    <div class="col s12 l3">
+      <div class=" card black white-text" style="font-size: 14px;">
+        <div class="card-content">
+          <div class="row">
+            <div class="col s12">
+              <span class="card-title">Order Details - {{order.orderNum}}</span>
+            </div>
+            <div class="divider"></div>
+            <div class="col s12">
+              <span class="grey-text">Client: </span>{{order.client}}
+            </div>
+            <div class="col s12">
+              <span class="grey-text">Entered: </span>{{formatDate order.requestDate "MMM DD, YYYY"}}
+            </div>
+            {{#if order.eventDate}}
+            <div class="col s12">
+              <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "MMM DD, YYYY"}}
+            </div>
+            {{/if}}
+            {{#if order.latestInHand}}
+            <div class="col s12">
+              <span class="grey-text">Needed In-Hand: </span>{{formatDate order.latestInHand "MMM DD, YYYY"}}
+            </div>
+            {{/if}}
+            {{#if user}}
+            {{#if order.currentArtist}}
+            <div class="col s12">
+              <br>
+              <span class="grey-text">Current Artist: </span>{{order.currentArtist}}
+            </div>
+            {{/if}}
+            <div class="col s12 center-align">
+              <br>
+              <span class="grey-text">Order History</span>
+            </div>
+
+            <div class="col s12 instructionsBox">
+              <ul class="collapsible">
+                {{#each (getInstructions order.instructions)}}
+                <li>
+                  <div class="collapsible-header">
+                    {{this.instructionType}} - {{formatDate this.date "MMM DD, YYYY"}} - {{this.user}}
+                  </div>
+                  <div class="collapsible-body left-align">
+                    {{this.instruction}}
+                  </div>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="card-action center-align">
+          <div class="section">
+            <h6>Current Status</h6>
           </div>
           <div class="divider"></div>
-          <div class="col s12">
-            <span class="grey-text">Client: </span>{{order.client}}
-          </div>
-          <div class="col s12">
-            <span class="grey-text">Entered: </span>{{formatDate order.requestDate "MMM Do YYYY"}}
-          </div>
-          <div class="col s12">
-            <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "MMM Do YYYY"}}
-          </div>
-          <div class="col s12">
-            <span class="grey-text">Needed In-Hand: </span>{{formatDate order.latestInHand "MMM Do YYYY"}}
-          </div>
-          {{#if user}}
-          <div class="col s12">
-            <br>
-            <span class="grey-text">Current Artist: </span>{{order.currentArtist}}
-          </div>
-          <div class="col s12 center-align">
-            <br>
-            <span class="grey-text">Order History</span>
-          </div>
-          <div class="col s12 instructionsBox center-align">
-            <div class="collection black-text left-align">
-              {{#each (getInstructions order.instructions)}}
-              <div class="collection-item">
-                <small class="black-text">{{this.instructionType}} - {{formatDate this.date "MMMM Do YYYY"}} -
-                  {{this.user}}</small>
-                <br>
-                {{this.instruction}}
-              </div>
-              {{/each}}
-            </div>
-          </div>
-          {{/if}}
-        </div>
-      </div>
-      <div class="card-action center-align">
-        <div class="row">
-          <div class="col s12">
+          <div class="section">
             {{{setStatusDiv order.currentStatus}}}
           </div>
         </div>
-
+      </div>
+    </div>
+    <div class="col s12 l9">
+      <div id="proofWindow">
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
+        <!--  CARD  -->
+        <div class="card small hoverable">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="#"><img src="/3d_assets/2.jpg"></a>
+          </div>
+          <div class="card-content">
+            <span class="grey-text text-darken-4">Style #<i class="grey-text material-icons right activator tooltipped"
+                data-position="left" data-tooltip="Click for more info">info</i></span><br>
+            <small class="grey-text text-darken-2">Style Name</small><br>
+            <small class="grey-text text-darken-2">Item #</small>
+          </div>
+          <div class="card-action">
+            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text">Item #<i class="material-icons right">close</i></span>
+            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          </div>
+        </div>
+        <!-- CARD END -->
       </div>
     </div>
   </div>
-  <div class="col s12 l9">
-    <div id="proofWindow">
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn-small grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!--  CARD  -->
-      <div class="card small hoverable">
-        <div class="card-image waves-effect waves-block waves-light">
-          <img class="activator" src="/3d_assets/2.jpg">
-        </div>
-        <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Item #<i class="grey-text material-icons right">info</i></span>
-          <small class="grey-text">Style # - Style Name</small>
-        </div>
-        <div class="card-action">
-          <a href="#" class="btn grey">VIEW 3D</a>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text">Style #<i class="material-icons right">close</i></span>
-          <p>Color, zipper, thread, and more info here once clicked on...</p>
-        </div>
-      </div>
-      <!-- CARD END -->
-    </div>
+  {{#if user.editOrders}}
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">edit</i>
+    </a>
+    <ul>
+      {{#if user.editProofs}}
+      <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">gavel</i></a></li>
+      {{/if}}
+      <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Add Notes/Instructions"><i class="material-icons">add_comment</i></a></li>
+      <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Edit Order Details"><i class="material-icons">view_list</i></a></li>
+    </ul>
   </div>
+  {{/if}}
 </div>
-{{#if user.editOrders}}
-<div class="fixed-action-btn">
-  <a class="btn-floating btn-large grey">
-    <i class="large material-icons">edit</i>
-  </a>
-  <ul>
-    {{#if user.editProofs}}
-    <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">gavel</i></a></li>
-    {{/if}}
-    <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Add Notes/Instructions"><i class="material-icons">add_comment</i></a></li>
-    <li><a class="btn-floating black tooltipped" data-position="left" data-tooltip="Edit Order Details"><i class="material-icons">view_list</i></a></li>
-  </ul>
-</div>
-{{/if}}
