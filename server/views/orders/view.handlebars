@@ -9,33 +9,36 @@
               <div class="divider"></div>
             </div>
             <div class="col s6 center-align">
-              <span class="grey-text">Client: </span><br>{{order.client}}
+              <span class="grey-text">Client:</span><br>{{order.client}}
             </div>
             <div class="col s6 center-align">
-              <span class="grey-text">Entered: </span><br>{{formatDate order.requestDate "MMM DD, YYYY"}}
+              <span class="grey-text">Entered:</span><br>{{formatDate order.requestDate "MMM DD, YYYY"}}
             </div>
+
             {{#if order.eventDate}}
             <div class="col s6 center-align">
-              <span class="grey-text">Event Date: </span><br>{{formatDate order.eventDate "MMM DD, YYYY"}}
+              <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "MMM DD, YYYY"}}
             </div>
             {{/if}}
+
             {{#if order.latestInHand}}
             <div class="col s6 center-align">
-              <span class="grey-text">Needed In-Hand: </span><br>{{formatDate order.latestInHand "MMM DD, YYYY"}}
+              <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "MMM DD, YYYY"}}
             </div>
             {{/if}}
+
             {{#if user}}
             {{#if order.currentArtist}}
             <div class="section center-align">
               <div class="divider"></div>
-              <span class="grey-text">Current Artist: </span><br>{{order.currentArtist}}
+              <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
             </div>
             {{/if}}
+
             <div class="col s12 center-align">
               <br>
               <span class="grey-text">Order History</span>
             </div>
-
             <div class="col s12 instructionsBox">
               <ul class="collapsible">
                 {{#each (getInstructions order.instructions)}}
