@@ -4,31 +4,31 @@
       <div class=" card black white-text" style="font-size: 12px;">
         <div class="card-content">
           <div class="row">
-            <div class="col s12">
-              <span class="card-title">Order Details - {{order.orderNum}}</span>
+            <div class="section">
+              <span class="card-title center-align">Order Details - {{order.orderNum}}</span>
+              <div class="divider"></div>
             </div>
-            <div class="divider"></div>
-            <div class="col s12">
-              <span class="grey-text">Client: </span>{{order.client}}
+            <div class="col s6 center-align">
+              <span class="grey-text">Client: </span><br>{{order.client}}
             </div>
-            <div class="col s12">
-              <span class="grey-text">Entered: </span>{{formatDate order.requestDate "MMM DD, YYYY"}}
+            <div class="col s6 center-align">
+              <span class="grey-text">Entered: </span><br>{{formatDate order.requestDate "MMM DD, YYYY"}}
             </div>
             {{#if order.eventDate}}
-            <div class="col s12">
-              <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "MMM DD, YYYY"}}
+            <div class="col s6 center-align">
+              <span class="grey-text">Event Date: </span><br>{{formatDate order.eventDate "MMM DD, YYYY"}}
             </div>
             {{/if}}
             {{#if order.latestInHand}}
-            <div class="col s12">
-              <span class="grey-text">Needed In-Hand: </span>{{formatDate order.latestInHand "MMM DD, YYYY"}}
+            <div class="col s6 center-align">
+              <span class="grey-text">Needed In-Hand: </span><br>{{formatDate order.latestInHand "MMM DD, YYYY"}}
             </div>
             {{/if}}
             {{#if user}}
             {{#if order.currentArtist}}
-            <div class="col s12">
-              <br>
-              <span class="grey-text">Current Artist: </span>{{order.currentArtist}}
+            <div class="section center-align">
+              <div class="divider"></div>
+              <span class="grey-text">Current Artist: </span><br>{{order.currentArtist}}
             </div>
             {{/if}}
             <div class="col s12 center-align">
@@ -53,6 +53,7 @@
             {{/if}}
           </div>
         </div>
+        {{#if user}}
         <div class="card-action center-align">
           <div class="section">
             <h6>Current Status</h6>
@@ -62,6 +63,7 @@
             {{{setStatusDiv order.currentStatus}}}
           </div>
         </div>
+        {{/if}}
       </div>
     </div>
     <div class="col s12 l9">
