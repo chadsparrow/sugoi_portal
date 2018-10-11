@@ -56,3 +56,17 @@ thead {
 .collection-item {
   font-size: 12px;
 }
+
+.small {
+  width: 300px;
+  height: 390px !important;
+  margin: 10px;
+}
+
+#proofWindow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+}
