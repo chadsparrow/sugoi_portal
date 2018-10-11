@@ -120,5 +120,15 @@ module.exports = {
   },
   getInstructions: function(instructions) {
     return instructions.reverse();
+  },
+  checkForQCStatus: function(status) {
+    if (
+      status === "19. PNT Ready for QC" ||
+      status === "16. Output Ready for QC" ||
+      status === "10. Revision Ready for QC" ||
+      status === "4. Proof Ready for QC"
+    ) {
+      return true;
+    }
   }
 };

@@ -33,7 +33,7 @@ $(document).ready(function() {
     rowGroup: {
       dataSrc: 1
     },
-    order: [[1, "asc"], [3, "asc"]],
+    order: [[1, "desc"], [3, "asc"]],
     oLanguage: {
       sSearch: "Search",
       sSearchPlaceholder: "Enter search text",

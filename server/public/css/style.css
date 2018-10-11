@@ -29,6 +29,10 @@ html {
   font-size: 14px;
 }
 
+.navbar-fixed {
+  margin-bottom: 5px;
+}
+
 .dropdown-trigger a {
   font-size: 14px;
 }
@@ -58,6 +62,7 @@ thead {
   text-align: center;
   min-width: 125px;
   font-size: 12px;
+  font-weight: 900;
 }
 
 .instructionsBox {
