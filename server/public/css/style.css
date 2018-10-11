@@ -3,6 +3,11 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
+.brand-logo > span,
+.brand-logo > img {
+  vertical-align: middle;
+}
+
 .fas {
   font-size: 12px;
 }
@@ -50,7 +55,9 @@ thead {
 }
 
 .status {
-  min-width: 100px;
+  text-align: center;
+  min-width: 125px;
+  font-size: 12px;
 }
 
 .instructionsBox {

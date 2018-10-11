@@ -43,11 +43,13 @@
               <ul class="collapsible">
                 {{#each (getInstructions order.instructions)}}
                 <li>
-                  <div class="collapsible-header">
-                    {{this.instructionType}} - {{formatDate this.date "MMM DD, YYYY"}} - {{this.user}}
+                  <div class="collapsible-header valign-wrapper">
+                    <i class="material-icons right">more_horiz</i>{{this.instructionType}} - {{formatDate this.date
+                    "MMM DD, YYYY"}} -
+                    {{this.user}}
                   </div>
-                  <div class="collapsible-body left-align">
-                    {{this.instruction}}
+                  <div class="collapsible-body">
+                    <span>{{this.instruction}}</span>
                   </div>
                 </li>
                 {{/each}}
