@@ -32,29 +32,29 @@
                     <div class="input-field col s12">
                       <select name="currentStatus">
                         {{#select currentStatus}}
-                        <option value="1. Waiting for Proof" selected>Waiting for Proof</option>
-                        <option value="2. Proof Started">Proof Started</option>
-                        <option value="3. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
-                        <option value="4. Proof Ready for QC">Proof Ready for QC</option>
-                        <option value="5. Proof QC Complete">Proof QC Complete</option>
-                        <option value="6. Proof Complete">Proof Complete</option>
-                        <option value="7. Waiting for Revision">Waiting for Revision</option>
-                        <option value="8. Revision - Waiting on Someone else">Revision - Waiting on Someone else</option>
-                        <option value="9. Revision Started">Revision Started</option>
-                        <option value="10. Revision Ready for QC">Revision Ready for QC</option>\
-                        <option value="11. Revision QC Complete">Revision QC Complete</option>
-                        <option value="12. Revision Complete">Revision Complete</option>
-                        <option value="13. Waiting for Output">Waiting for Output</option>
-                        <option value="14. Output - Waiting on Someone else">Output - Waiting on Someone else</option>
-                        <option value="15. Output Started">Output Started</option>
-                        <option value="16. Output Ready for QC">Output Ready for QC</option>
-                        <option value="17. Output QC Complete">Output QC Complete</option>
-                        <option value="18. Waiting for PNT">Waiting for PNT</option>
-                        <option value="19. PNT Ready for QC">PNT Ready for QC</option>
-                        <option value="20. PNT QC Complete">PNT QC Complete</option>
-                        <option value="21. Uploaded">Uploaded</option>
-                        <option value="22. Sent to Vendor">Sent to Vendor</option>
-                        <option value="23. CANCELLED">CANCELLED</option>
+                        <option value="A. Waiting for Proof" selected>Waiting for Proof</option>
+                        <option value="B. Proof Started">Proof Started</option>
+                        <option value="C. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
+                        <option value="D. Proof Ready for QC">Proof Ready for QC</option>
+                        <option value="E. Proof QC Complete">Proof QC Complete</option>
+                        <option value="F. Proof Complete">Proof Complete</option>
+                        <option value="G. Waiting for Revision">Waiting for Revision</option>
+                        <option value="H. Revision - Waiting on Someone else">Revision - Waiting on Someone else</option>
+                        <option value="I. Revision Started">Revision Started</option>
+                        <option value="J. Revision Ready for QC">Revision Ready for QC</option>\
+                        <option value="K. Revision QC Complete">Revision QC Complete</option>
+                        <option value="L. Revision Complete">Revision Complete</option>
+                        <option value="M. Waiting for Output">Waiting for Output</option>
+                        <option value="N. Output - Waiting on Someone else">Output - Waiting on Someone else</option>
+                        <option value="O. Output Started">Output Started</option>
+                        <option value="P. Output Ready for QC">Output Ready for QC</option>
+                        <option value="Q. Output QC Complete">Output QC Complete</option>
+                        <option value="R. Waiting for PNT">Waiting for PNT</option>
+                        <option value="S. PNT Ready for QC">PNT Ready for QC</option>
+                        <option value="T. PNT QC Complete">PNT QC Complete</option>
+                        <option value="U. Uploaded">Uploaded</option>
+                        <option value="V. Sent to Vendor">Sent to Vendor</option>
+                        <option value="W. CANCELLED">CANCELLED</option>
                         {{/select}}
                       </select>
                       <label for="currentStatus">* Status:</label>
@@ -98,7 +98,8 @@
                       class="fas fa-check-square"></i>
                     Submit
                   </button>
-                  <a href="/orders" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
+                  <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
+                      class="fas fa-times"></i>
                     Cancel</a>
                 </div>
               </div>

@@ -13,7 +13,11 @@ html {
 }
 
 .instructions {
-  margin-bottom: 50px;
+  width: 100%;
+}
+
+.detailsBox {
+  margin-top: 10px;
 }
 
 .rights-header {
@@ -66,7 +70,7 @@ thead {
 }
 
 .instructionsBox {
-  max-height: 400px;
+  max-height: 450px;
   overflow-y: auto;
   color: black;
   font-size: 12px;
@@ -83,9 +87,9 @@ thead {
   text-align: justify;
 }
 .small {
-  width: 275px;
-  height: 390px !important;
-  margin: 10px;
+  width: 175px;
+  height: 340px !important;
+  margin: 10px 5px;
 }
 #proofWindow {
   display: flex;

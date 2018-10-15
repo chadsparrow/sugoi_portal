@@ -1,19 +1,25 @@
 <div class="container">
   <section class="section center">
     <div class="container">
-      <form action="#" method="POST">
+      <form action="/orders/edit/{{order._id}}?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
         <div class="row">
           <div class="card col s12">
             <div class="card-content">
-              <span class="card-title">Edit Order</span>
+              <span class="card-title">Edit Order Details</span>
               <div class="row">
                 <div class="col s12">
                   <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 m3">
                       <input type="text" name="orderNum" value="{{order.orderNum}}" readonly>
                       <label for="orderNum">Order #:</label>
                     </div>
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 m9">
+                      <input type="text" name="client" placeholder="enter client name" class="validate" value="{{order.client}}"
+                        required>
+                      <label for="orderNum">Client:</label>
+                    </div>
+                    <div class="input-field col s12 m2">
                       <select name="priority">
                         {{#select order.priority}}
                         <option value=""></option>
@@ -23,48 +29,7 @@
                       </select>
                       <label for="priority">Priority:</label>
                     </div>
-                    <div class="input-field col s12">
-                      <input type="text" name="requestDate" value="{{formatDate order.requestDate "MMM Do YYYY"}}"
-                        readonly>
-                      <label for="requestDate">Request Date:</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <input type="text" class="datepicker" name="eventDate" value="{{formatDate order.eventDate "MMM Do YYYY"}}">
-                      <label for="eventDate">Event Date:</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <input type="text" class="datepicker" name="latestInHand" value="{{formatDate order.latestInHand "MMM Do YYYY"}}">
-                      <label for="latestInHand">Latest In-Hand Date:</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                      <select name="currentStatus">
-                        {{#select currentStatus}}
-                        <option value="1. Waiting for Proof" selected>Waiting for Proof</option>
-                        <option value="2. Proof Started">Proof Started</option>
-                        <option value="3. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
-                        <option value="4. Proof Ready for QC">Proof Ready for QC</option>
-                        <option value="5. Proof Complete">Proof Complete</option>
-                        <option value="6. Waiting for Revision">Waiting for Revision</option>
-                        <option value="7. Revision - Waiting on Someone else">Revision - Waiting on Someone else</option>
-                        <option value="8. Revision Started">Revision Started</option>
-                        <option value="9. Revision Ready for QC">Revision Ready for QC</option>
-                        <option value="10. Revision Complete">Revision Complete</option>
-                        <option value="11. Waiting for Output">Waiting for Output</option>
-                        <option value="12. Output - Waiting on Someone else">Output - Waiting on Someone else</option>
-                        <option value="13. Output Started">Output Started</option>
-                        <option value="14. Output Ready for QC">Output Ready for QC</option>
-                        <option value="15. Waiting for PNT">Waiting for PNT</option>
-                        <option value="16. PNT Ready for QC">PNT Ready for QC</option>
-                        <option value="17. Uploaded">Uploaded</option>
-                        <option value="18. Sent to Vendor">Sent to Vendor</option>
-                        <option value="19. CANCELLED">CANCELLED</option>
-                        {{/select}}
-                      </select>
-                      <label for="currentStatus">Status:</label>
-                    </div>
-
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 m5">
                       <select name="currentArtist">
                         {{#select order.currentArtist}}
                         <option value=""></option>
@@ -78,12 +43,44 @@
                       </select>
                       <label for="currentArtist">Current Artist:</label>
                     </div>
-                    <div class="input-field col s12">
-                      <input type="text" name="client" placeholder="enter client name" class="validate" value="{{order.client}}"
-                        required>
-                      <label for="orderNum">Client:</label>
+                    <div class="input-field col s12 m5">
+                      <select name="currentStatus">
+                        {{#select currentStatus}}
+                        <option value="A. Waiting for Proof" selected>Waiting for Proof</option>
+                        <option value="B. Proof Started">Proof Started</option>
+                        <option value="C. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
+                        <option value="D. Proof Ready for QC">Proof Ready for QC</option>
+                        <option value="E. Proof QC Complete">Proof QC Complete</option>
+                        <option value="F. Proof Complete">Proof Complete</option>
+                        <option value="G. Waiting for Revision">Waiting for Revision</option>
+                        <option value="H. Revision - Waiting on Someone else">Revision - Waiting on Someone else</option>
+                        <option value="I. Revision Started">Revision Started</option>
+                        <option value="J. Revision Ready for QC">Revision Ready for QC</option>\
+                        <option value="K. Revision QC Complete">Revision QC Complete</option>
+                        <option value="L. Revision Complete">Revision Complete</option>
+                        <option value="M. Waiting for Output">Waiting for Output</option>
+                        <option value="N. Output - Waiting on Someone else">Output - Waiting on Someone else</option>
+                        <option value="O. Output Started">Output Started</option>
+                        <option value="P. Output Ready for QC">Output Ready for QC</option>
+                        <option value="Q. Output QC Complete">Output QC Complete</option>
+                        <option value="R. Waiting for PNT">Waiting for PNT</option>
+                        <option value="S. PNT Ready for QC">PNT Ready for QC</option>
+                        <option value="T. PNT QC Complete">PNT QC Complete</option>
+                        <option value="U. Uploaded">Uploaded</option>
+                        <option value="V. Sent to Vendor">Sent to Vendor</option>
+                        <option value="W. CANCELLED">CANCELLED</option>
+                        {{/select}}
+                      </select>
+                      <label for="currentStatus">Status:</label>
                     </div>
-
+                    <div class="input-field col s12 m6">
+                      <input type="text" class="datepicker" name="eventDate" value="{{order.eventDate}}">
+                      <label for="eventDate">Event Date:</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                      <input type="text" class="datepicker" name="latestInHand" value="{{order.latestInHand}}">
+                      <label for="latestInHand">Latest In-Hand Date:</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -92,7 +89,8 @@
                     class="fas fa-check-square"></i>
                   Submit
                 </button>
-                <a href="/orders" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
+                <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
+                    class="fas fa-times"></i>
                   Cancel</a>
               </div>
             </div>

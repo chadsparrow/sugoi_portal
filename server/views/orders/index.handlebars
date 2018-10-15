@@ -32,7 +32,13 @@
         <td style="font-size: 12px;">{{currentArtist}}</td>
         <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM DD, YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM DD, YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;"><a class="black waves-block waves-effect waves-light btn-small" href="/orders/view/{{_id}}">View</a></td>
+        <td style="font-size: 12px;"><a class="black waves-block waves-effect waves-light btn btn-small" href="/orders/view/{{_id}}"><i
+              class="material-icons">
+              remove_red_eye
+            </i></a><a class="green waves-block waves-effect waves-light btn btn-small" href="/orders/edit/{{_id}}"><i
+              class="material-icons">
+              edit
+            </i></a></td>
       </tr>
       {{/each}}
     </tbody>

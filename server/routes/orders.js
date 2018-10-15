@@ -46,10 +46,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let instruction = req.body.instruction;
   let instructions = [];
   let currentArtist = "";
-  let currentQC = [];
   let uploadDate = null;
   let sentVendor = null;
-  let artNotes = [];
   let qty = 0;
   let netValue = 0;
   let markEvent = "";
@@ -114,9 +112,9 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
-router.get("/view/:orderNum", (req, res) => {
+router.get("/view/:id", (req, res) => {
   Order.findOne({
-    _id: req.params.orderNum
+    _id: req.params.id
   }).then(order => {
     res.render("orders/view", {
       order
@@ -124,13 +122,45 @@ router.get("/view/:orderNum", (req, res) => {
   });
 });
 
-router.get("/edit/:orderNum", (req, res) => {
+router.get("/edit/:id", (req, res) => {
   Order.findOne({
-    _id: req.params.orderNum
+    _id: req.params.id
   }).then(order => {
     res.render("orders/edit", {
       order
     });
+  });
+});
+
+router.put("/edit/:id", (req, res) => {
+  let id = req.params.id;
+  let client = req.body.client;
+  let priority = req.body.priority;
+  let currentArtist = req.body.currentArtist;
+  let currentStatus = req.body.currentStatus;
+  let eventDate = req.body.eventDate;
+  let latestInHand = req.body.latestInHand;
+
+  Order.findOne({ _id: id }, function(err, foundOrder) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundOrder.client = client;
+      foundOrder.priority = priority;
+      foundOrder.currentArtist = currentArtist;
+      foundOrder.currentStatus = currentStatus;
+      foundOrder.eventDate = eventDate;
+      foundOrder.latestInHand = latestInHand;
+
+      foundOrder.save(function(err, updatedOrder) {
+        if (err) {
+          console.log(err);
+        } else {
+          req.flash("success_msg", "Order Updated");
+          res.redirect("/orders");
+        }
+      });
+    }
   });
 });
 
