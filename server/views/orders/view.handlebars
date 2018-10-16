@@ -46,17 +46,17 @@
           {{/if}}
           <div class="col s12 center-align">
             <br>
-            <h6>Order History</h6>
+            <h6>Order Notes</h6>
             <div class="instructionsBox center-align">
               <ul class="collapsible">
                 {{#each (getInstructions order.instructions)}}
                 <li>
-                  <div class="collapsible-header valign-wrapper">
-                    <i class="material-icons right">more_horiz</i>{{formatDate this.date "MMM DD, YYYY"}} -
+                  <div class="collapsible-header valign-wrapper {{{catNotes this.instructionType}}}">
+                    <i class="material-icons right">expand_more</i>{{formatDate this.date "MMM DD, YYYY"}} -
                     {{this.user}}
                     - {{this.instructionType}}
                   </div>
-                  <div class="collapsible-body">
+                  <div class="collapsible-body white">
                     <span>{{this.instruction}}</span>
                   </div>
                 </li>
@@ -237,24 +237,24 @@
   {{#if user}}
   {{#if user.editOrders}}
   <div class="fixed-action-btn">
-    <a href="/orders/edit/{{order._id}}" class="btn-floating btn-large red tooltipped" data-position="left"
+    <a href="/orders/edit/{{order._id}}" class="btn-floating btn-large green tooltipped" data-position="left"
       data-tooltip="Edit Order Details">
       <i class="large material-icons">edit</i>
     </a>
     <ul>
       {{#if user.editProofs}}
       {{#if (checkForQCStatus order.currentStatus)}}
-      <li><a class="btn-floating cyan tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">gavel</i></a></li>
+      <li><a class="btn-floating green tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">gavel</i></a></li>
       {{/if}}
       {{/if}}
       <li>
-        <a href="#" class="btn-floating cyan tooltipped" data-position="left" data-tooltip="Add Notes/Instructions">
+        <a href="#" class="btn-floating green tooltipped" data-position="left" data-tooltip="Add Notes/Instructions">
           <i class="material-icons">add_comment</i>
         </a>
       </li>
       {{#if (checkForRevisionStatus order.currentStatus)}}
       <li>
-        <a href="#" class="btn-floating cyan tooltipped" data-position="left" data-tooltip="Request Revision">
+        <a href="#" class="btn-floating green tooltipped" data-position="left" data-tooltip="Request Revision">
           <i class="material-icons">flag</i>
         </a>
       </li>

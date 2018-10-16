@@ -77,15 +77,20 @@ thead {
 }
 
 .collapsible-header {
-  background-color: lightgrey;
   font-size: 12px;
   padding: 10px;
 }
 .collapsible-body {
-  background-color: white;
   padding: 10px;
   text-align: justify;
 }
+
+.collapsible li.active i {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+
 .small {
   width: 175px;
   height: 340px !important;
