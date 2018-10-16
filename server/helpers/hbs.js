@@ -123,11 +123,16 @@ module.exports = {
   },
   checkForQCStatus: function(status) {
     if (
-      status === "19. PNT Ready for QC" ||
-      status === "16. Output Ready for QC" ||
-      status === "10. Revision Ready for QC" ||
-      status === "4. Proof Ready for QC"
+      status === "S. PNT Ready for QC" ||
+      status === "P. Output Ready for QC" ||
+      status === "J. Revision Ready for QC" ||
+      status === "D. Proof Ready for QC"
     ) {
+      return true;
+    }
+  },
+  checkForRevisionStatus: function(status) {
+    if (status === "F. Proof Complete" || status === "L. Revision Complete") {
       return true;
     }
   }

@@ -33,19 +33,37 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-// User Register Form
-router.get("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  res.render("users/register");
+//User Admin Page
+router.get("/admin", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  User.find()
+    .sort([["username", "asc"]])
+    .then(employees => {
+      res.render("users/admin", {
+        employees
+      });
+    })
+    .catch(err => {
+      req.flash("error_msg", err);
+      res.redirect("/orders");
+    });
 });
 
-// User Register Form POST
-router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let userName = req.body.username;
-  userName = userName.toLowerCase();
+router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  User.findOne({
+    _id: req.params.id
+  }).then(employee => {
+    res.render("users/edit", {
+      employee
+    });
+  });
+});
 
+router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  let id = req.params.id;
   let admin;
   let editOrders;
   let editProofs;
+  let viewProd;
   let editProd;
 
   if (req.body.admin) {
@@ -64,6 +82,94 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
     editProofs = true;
   } else {
     editProofs = false;
+  }
+
+  if (req.body.viewProd) {
+    viewProd = true;
+  } else {
+    viewProd = false;
+  }
+
+  if (req.body.editProd) {
+    editProd = true;
+  } else {
+    editProd = false;
+  }
+
+  User.findOne({ _id: id }, function(err, foundEmployee) {
+    if (err) {
+      console.log(err);
+    } else {
+      foundEmployee.admin = admin;
+      foundEmployee.editOrders = editOrders;
+      foundEmployee.editProofs = editProofs;
+      foundEmployee.viewProd = viewProd;
+      foundEmployee.editProd = editProd;
+
+      foundEmployee.save(function(err, updatedEmployee) {
+        if (err) {
+          console.log(err);
+        } else {
+          req.flash("success_msg", "Employee Updated");
+          res.redirect("/users/admin");
+        }
+      });
+    }
+  });
+});
+
+router.get("/delete/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  let id = req.params.id;
+  User.findOneAndRemove({ _id: id }, function(err) {
+    if (err) {
+      console.log(err);
+      req.flash("error_msg", err);
+      res.redirect("/users/admin");
+    } else {
+      req.flash("success_msg", "Employee Deleted");
+      res.redirect("/users/admin");
+    }
+  });
+});
+
+// User Register Form
+router.get("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  res.render("users/register");
+});
+
+// User Register Form POST
+router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  let userName = req.body.username;
+  userName = userName.toLowerCase();
+
+  let admin;
+  let editOrders;
+  let editProofs;
+  let viewProd;
+  let editProd;
+
+  if (req.body.admin) {
+    admin = true;
+  } else {
+    admin = false;
+  }
+
+  if (req.body.editOrders) {
+    editOrders = true;
+  } else {
+    editOrders = false;
+  }
+
+  if (req.body.editProofs) {
+    editProofs = true;
+  } else {
+    editProofs = false;
+  }
+
+  if (req.body.viewProd) {
+    viewProd = true;
+  } else {
+    viewProd = false;
   }
 
   if (req.body.editProd) {
@@ -90,6 +196,7 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
           admin: admin,
           editOrders: editOrders,
           editProofs: editProofs,
+          viewProd: viewProd,
           editProd: editProd
         });
 
@@ -101,7 +208,7 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
               .save()
               .then(user => {
                 req.flash("success_msg", "User registered");
-                res.redirect("/orders/");
+                res.redirect("/users/admin");
               })
               .catch(err => {
                 console.log(err);

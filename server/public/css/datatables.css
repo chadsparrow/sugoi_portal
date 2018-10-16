@@ -52,7 +52,7 @@ div.material-table .table-header input {
 
 div.material-table .table-header i {
   color: rgba(0, 0, 0, 0.54);
-  font-size: 24px;
+  font-size: 16px;
 }
 
 div.material-table .table-footer {
@@ -108,7 +108,7 @@ div.material-table .table-footer .select-wrapper {
 
 div.material-table .table-footer .dataTables_info,
 div.material-table .table-footer .dataTables_length {
-  margin-right: 32px;
+  margin-right: 16px;
 }
 
 div.material-table .table-footer .material-pagination {
@@ -118,7 +118,7 @@ div.material-table .table-footer .material-pagination {
 }
 
 div.material-table .table-footer .material-pagination li:first-child {
-  margin-right: 24px;
+  margin-right: 16px;
 }
 
 div.material-table .table-footer .material-pagination li a {
@@ -166,7 +166,7 @@ div.material-table table tr td a {
 }
 
 div.material-table table tr td a i {
-  font-size: 18px;
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.54);
 }
 
@@ -198,7 +198,7 @@ div.material-table table th.sorting_desc:after {
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -206,7 +206,6 @@ div.material-table table th.sorting_desc:after {
   word-wrap: normal;
   font-feature-settings: "liga";
   -webkit-font-feature-settings: "liga";
-  -webkit-font-smoothing: antialiased;
   content: "arrow_back";
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);

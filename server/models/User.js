@@ -24,6 +24,10 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true
   },
+  viewProd: {
+    type: Boolean,
+    required: true
+  },
   editProd: {
     type: Boolean,
     required: true

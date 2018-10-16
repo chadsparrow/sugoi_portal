@@ -19,14 +19,14 @@
           <ul id="dropdown1" class="dropdown-content">
             {{#if user.admin}}
             <li>
-              <a href="/users/register"><i class="fas fa-user-plus"></i> Register User</a>
+              <a href="/users/admin"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
             </li>
             {{/if}}
             <li>
-              <a href="/users/password"><i class="fas fa-key"></i> Change Password</a>
+              <a href="/users/password"><i class="material-icons">vpn_key</i>Change Password</a>
             </li>
             <li>
-              <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+              <a href="/users/logout"><i class="material-icons">power_off</i> Logout</a>
             </li>
             {{else}}
             <li>
@@ -56,27 +56,27 @@
   </li>
   {{/if}}
   <li>
-    <a href="/styles"><i class="fas fa-tshirt"></i> Styles</a>
+    <a href="/styles"><i class="material-icons">style</i>Styles</a>
   </li>
   {{#if user}}
   <li>
-    <a href="/orders"><i class="fas fa-box-open"></i> Orders</a>
+    <a href="/orders"><i class="material-icons">color_lens</i>Orders</a>
   </li>
   <li class="divider"></li>
   {{#if user.admin}}
   <li>
-    <a href="/users/register"><i class="fas fa-user-plus"></i> Register User</a>
+    <a href="/users/register"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
   </li>
   {{/if}}
   <li>
-    <a href="/users/password"><i class="fas fa-key"></i> Change Password</a>
+    <a href="/users/password"><i class="material-icons">vpn_key</i>Change Password</a>
   </li>
   <li>
-    <a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="/users/logout"><i class="material-icons">power_off</i>Logout</a>
   </li>
   {{else}}
   <li>
-    <a href="/users/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+    <a href="/users/login"><i class="fas fa-sign-in-alt"></i> Staff Login</a>
   </li>
   {{/if}}
 </ul>

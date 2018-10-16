@@ -33,7 +33,8 @@ const {
   formatDate,
   setStatusDiv,
   getInstructions,
-  checkForQCStatus
+  checkForQCStatus,
+  checkForRevisionStatus
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
@@ -57,7 +58,8 @@ app.engine(
       formatDate,
       setStatusDiv,
       getInstructions,
-      checkForQCStatus
+      checkForQCStatus,
+      checkForRevisionStatus
     },
     defaultLayout: "main"
   })

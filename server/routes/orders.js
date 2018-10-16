@@ -132,7 +132,7 @@ router.get("/edit/:id", (req, res) => {
   });
 });
 
-router.put("/edit/:id", (req, res) => {
+router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let id = req.params.id;
   let client = req.body.client;
   let priority = req.body.priority;
@@ -157,7 +157,7 @@ router.put("/edit/:id", (req, res) => {
           console.log(err);
         } else {
           req.flash("success_msg", "Order Updated");
-          res.redirect("/orders");
+          res.redirect("/orders/view/" + id);
         }
       });
     }
