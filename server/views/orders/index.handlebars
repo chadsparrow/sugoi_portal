@@ -13,13 +13,13 @@
         <th data-priority="7">Artist</th>
         <th>Upload Date</th>
         <th>Sent to Vendor</th>
-        <th data-priority="2"></th>
+        <th data-priority="2">View/Edit</th>
       </tr>
     </thead>
     <tbody id="myTable">
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px;">{{orderNum}}</td>
+        <td style="font-size: 16px; background-color: black; color: white;">{{orderNum}}</td>
         <td style="font-size: 12px;">
           {{{setStatusDiv currentStatus}}}
         </td>
@@ -33,13 +33,11 @@
         <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM DD, YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM DD, YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">
-          <span>
-            <a class="black-text" href="/orders/view/{{_id}}">
+          <span class="right">
+            <a class="black-text btn-flat btn-small" href="/orders/view/{{_id}}">
               <i class="material-icons">remove_red_eye</i>
             </a>
-          </span>
-          <span>
-            <a class="green-text" href="/orders/edit/{{_id}}">
+            <a class="green-text btn-flat btn-small" href="/orders/edit/{{_id}}">
               <i class="material-icons">edit</i>
             </a>
           </span>
