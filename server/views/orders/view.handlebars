@@ -44,6 +44,7 @@
             <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
           </div>
           {{/if}}
+          {{#if order.instructions}}
           <div class="col s12 center-align">
             <br>
             <h6>Order Notes</h6>
@@ -52,18 +53,23 @@
                 {{#each (getInstructions order.instructions)}}
                 <li>
                   <div class="collapsible-header valign-wrapper {{{catNotes this.instructionType}}}">
-                    <i class="material-icons right">expand_more</i>{{formatDate this.date "MMM DD, YYYY"}} -
-                    {{this.user}}
-                    - {{this.instructionType}}
+                    <div class="col s9 left-align valign-wrapper">
+                      <i class="material-icons left">expand_more</i>{{formatDate this.date "MMM DD, YYYY"}} -
+                      {{this.user}} - {{this.instructionType}}
+                    </div>
+                    <div class="col s3 right-align valign-wrapper">
+                      <a class="white-text" href="/orders/note-edit/{{this._id}}">
+                        <i class="material-icons right">edit</i>
+                      </a>
+                    </div>
                   </div>
-                  <div class="collapsible-body white">
-                    <span>{{this.instruction}}</span>
-                  </div>
+                  <div class="collapsible-body white">{{this.instruction}}</div>
                 </li>
                 {{/each}}
               </ul>
             </div>
           </div>
+          {{/if}}
         </div>
         {{/if}}
       </div>
@@ -244,17 +250,19 @@
     <ul>
       {{#if user.editProofs}}
       {{#if (checkForQCStatus order.currentStatus)}}
-      <li><a class="btn-floating green tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">touch_app</i></a></li>
+      <li><a class="btn-floating red tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">touch_app</i></a></li>
       {{/if}}
       {{/if}}
       <li>
-        <a href="#" class="btn-floating green tooltipped" data-position="left" data-tooltip="Add Notes/Instructions">
+        <a href="#modal2" class="btn-floating grey lighten-1 tooltipped modal-trigger" data-position="left"
+          data-tooltip="Add Notes/Instructions">
           <i class="material-icons">add_comment</i>
         </a>
       </li>
       {{#if (checkForRevisionStatus order.currentStatus)}}
       <li>
-        <a href="#" class="btn-floating green tooltipped" data-position="left" data-tooltip="Request Revision">
+        <a href="#modal1" class="btn-floating light-blue lighten-2 waves-effect waves-light tooltipped modal-trigger"
+          data-position="left" data-tooltip="Request Revision">
           <i class="material-icons">flag</i>
         </a>
       </li>
@@ -263,4 +271,83 @@
   </div>
   {{/if}}
   {{/if}}
+
+  <!-- Add Revision Modal -->
+  <div id="modal1" class="modal">
+    <form action="/orders/revision/{{order._id}}?_method=PUT" method="post">
+      <div class="container">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="modal-content">
+          <div class="row">
+            <div class="input-field col s12">
+              <select name="isr">
+                <option value="AHOOGEVEN">Adam</option>
+                <option value="DOSULLIVAN">Dean</option>
+                <option value="RPILLER">Reed</option>
+                <option value="SROBINSON">Sheila</option>
+              </select>
+              <label for="isr">Revision Requested By:</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea name="instruction" class="materialize-textarea" placeholder="type instructions here..."
+                required></textarea>
+              <label for="instruction">Revision Instructions:</label>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+            class="fas fa-check-square"></i>
+          Submit
+        </button>
+        <a href="#" id="cancel" name="cancel" class="modal-action modal-close btn waves-effect waves-light red"><i
+            class="fas fa-times"></i>
+          Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Add Notes Modal -->
+  <div class="container">
+    <div class="container"></div>
+    <div id="modal2" class="modal">
+
+      <form action="/orders/notes/{{order._id}}?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="modal-content">
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input style="text-transform: uppercase;" placeholder="enter name..." name="noteUser" type="text" class="validate"
+                value="{{getHandle
+              user.username}}" required>
+              <label for="noteUser">Note By:</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea name="instruction" class="materialize-textarea" required></textarea>
+              <label for="instruction">Enter Note Details:</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+              class="fas fa-check-square"></i>
+            Submit
+          </button>
+          <a href="#" id="cancel" name="cancel" class="modal-action modal-close btn waves-effect waves-light red"><i
+              class="fas fa-times"></i>
+            Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 </div>

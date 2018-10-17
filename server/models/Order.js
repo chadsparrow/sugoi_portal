@@ -68,11 +68,12 @@ const OrderSchema = new Schema({
         default: Date.now
       },
       instruction: {
-        type: String
+        type: String,
+        trim: true
       },
       instructionType: {
         type: String,
-        enum: ["Initial", "Proof", "Revision", "QC", "Misc"]
+        enum: ["Initial", "Revision", "QC", "Note", "System"]
       },
       user: {
         type: String

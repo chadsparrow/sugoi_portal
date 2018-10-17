@@ -42,6 +42,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let eventDate = req.body.eventDate;
   let latestInHand = req.body.latestInHand;
   let isr = req.body.isr;
+  isr = isr.toUpperCase();
   let client = req.body.client;
   let instruction = req.body.instruction;
   let instructions = [];
@@ -163,5 +164,132 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     }
   });
 });
+
+router.get(
+  "/note-edit/:noteid",
+  [ensureAuthenticated, ensureEditOrders],
+  (req, res) => {
+    let noteid = req.params.noteid;
+    Order.findOne({ "instructions._id": noteid }).then(order => {
+      let note = order.instructions.id(noteid);
+      res.render("orders/note-edit", {
+        note
+      });
+    });
+  }
+);
+
+router.put(
+  "/note-edit/:noteid",
+  [ensureAuthenticated, ensureEditOrders],
+  (req, res) => {
+    let noteid = req.params.noteid;
+    let instruction = req.body.instruction;
+    let isr = req.body.isr;
+    isr = isr.toUpperCase();
+    let instructionType = req.body.instructionType;
+
+    Order.findOne({ "instructions._id": noteid }).then(foundOrder => {
+      let note = foundOrder.instructions.id(noteid);
+      let id = foundOrder.id;
+      if (instruction) {
+        note.instruction = instruction;
+        note.isr = isr;
+        note.instructionType = instructionType;
+
+        foundOrder.save(function(err, updatedOrder) {
+          if (err) {
+            console.log(err);
+          } else {
+            req.flash("success_msg", "Note Updated");
+            res.redirect("/orders/view/" + id);
+          }
+        });
+      } else {
+        req.flash("error_msg", "Blank Request Ignored");
+        res.redirect("/orders/view/" + id);
+      }
+    });
+  }
+);
+
+router.put(
+  "/revision/:id",
+  [ensureAuthenticated, ensureEditOrders],
+  (req, res) => {
+    let id = req.params.id;
+    let instruction = req.body.instruction;
+    let instructionType = "Revision";
+    let revUser = req.body.isr;
+    revUser = revUser.toUpperCase();
+    let currentStatus = "G. Waiting for Revision";
+
+    Order.findOne({ _id: id }, function(err, foundOrder) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (instruction) {
+          foundOrder.instructions.push({
+            instruction: instruction,
+            instructionType: instructionType,
+            user: revUser
+          });
+
+          foundOrder.currentStatus = currentStatus;
+
+          foundOrder.save(function(err, updatedOrder) {
+            if (err) {
+              console.log(err);
+            } else {
+              req.flash("success_msg", "Revision Requested");
+              res.redirect("/orders/view/" + id);
+            }
+          });
+        } else {
+          req.flash("error_msg", "Blank Request Ignored");
+          res.redirect("/orders/view/" + id);
+        }
+      }
+    });
+  }
+);
+
+router.put(
+  "/notes/:id",
+  [ensureAuthenticated, ensureEditOrders],
+  (req, res) => {
+    let id = req.params.id;
+    let instruction = req.body.instruction;
+    let instructionType = "Note";
+    let noteUser = req.body.noteUser;
+    noteUser = noteUser.toUpperCase();
+
+    Order.findOne({ _id: id }, function(err, foundOrder) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (instruction) {
+          foundOrder.instructions.push({
+            instruction: instruction,
+            instructionType: instructionType,
+            user: noteUser
+          });
+
+          foundOrder.save(function(err, updatedOrder) {
+            if (err) {
+              console.log(err);
+            } else {
+              req.flash("success_msg", "Note Added");
+              res.redirect("/orders/view/" + id);
+            }
+          });
+        } else {
+          req.flash("error_msg", "Blank Request Ignored");
+          res.redirect("/orders/view/" + id);
+        }
+      }
+    });
+  }
+);
 
 module.exports = router;

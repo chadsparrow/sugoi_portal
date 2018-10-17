@@ -83,9 +83,10 @@ thead {
 .collapsible-body {
   padding: 10px;
   text-align: justify;
+  white-space: pre-line;
 }
 
-.collapsible li.active i {
+.collapsible li.active i.left {
   -ms-transform: rotate(180deg); /* IE 9 */
   -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
   transform: rotate(180deg);

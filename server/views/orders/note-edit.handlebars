@@ -1,0 +1,52 @@
+<section class="section center">
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="card col s12">
+          <div class="card-content">
+            <span class="card-title">Edit Note</span>
+            <div class="card-action">
+              <form action="/orders/note-edit/{{note._id}}?_method=PUT" method="post">
+                {{!-- <form action="#" method="post"> --}}
+                  <input type="hidden" name="_method" value="PUT">
+                  <div class="row">
+                    <div class="input-field col s12 m6">
+                      <input placeholder="enter name..." name="noteUser" type="text" class="validate" value="{{note.user}}"
+                        required>
+                      <label for="noteUser">Note By:</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                      <select name="instructionType">
+                        {{#select note.instructionType}}
+                        <option value="Initial">Initial</option>
+                        <option value="Revision">Revision</option>
+                        <option value="QC">QC</option>
+                        <option value="Note">Note</option>
+                        {{/select}}
+                      </select>
+                      <label for="instructionType">Note Category</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea name="instruction" class="materialize-textarea" required>{{note.instruction}}</textarea>
+                      <label for="instruction">Note:</label>
+                    </div>
+
+                  </div>
+
+                  <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+                      class="fas fa-check-square"></i>
+                    Submit
+                  </button>
+                  <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
+                      class="fas fa-times"></i>
+                    Cancel</a>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

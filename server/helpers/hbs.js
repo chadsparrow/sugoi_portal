@@ -139,19 +139,19 @@ module.exports = {
   catNotes: function(type) {
     switch (type) {
       case "Initial":
-        return "yellow accent-2";
+        return "grey lighten-1";
         break;
       case "Revision":
         return "light-blue lighten-2";
         break;
-      case "Art Note":
+      case "QC":
         return "green white-text";
         break;
-      case "QC":
-        return "yellow accent-4";
-        break;
       case "Note":
-        return "red white-text";
+        return "grey lighten-1";
+        break;
+      case "System":
+        return "grey lighten-1";
         break;
     }
   }
