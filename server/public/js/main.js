@@ -71,11 +71,13 @@ $(document).ready(function() {
       leftColumns: 1,
       rightColumns: 1
     },
-    fixedHeader: {
-      header: true,
-      headerOffset: 64,
-      footer: false
-    },
+    columnDefs: [
+      {
+        targets: 4,
+        data: "netValue",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      }
+    ],
     scrollX: true,
     scrollCollapse: true,
     pageLength: 20,

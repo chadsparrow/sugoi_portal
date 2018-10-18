@@ -11,7 +11,8 @@ const {
 // includes model for mongodb
 const Order = require("../models/Order");
 
-// styles route to show all the styles in mongodb
+// @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
+// SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {
   Order.find().then(orders => {
     res.render("orders/index", {
@@ -20,14 +21,8 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/prod", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  Order.find().then(orders => {
-    res.render("orders/prod", {
-      orders
-    });
-  });
-});
-
+// @DESC - GETS ADD A NEW ORDER PAGE
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   const orderNum = "";
   const accountNum = "";
@@ -37,6 +32,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   const latestInHand = null;
   const isr = "";
   const instruction = "";
+  const vendor = "";
   res.render("orders/add", {
     orderNum,
     accountNum,
@@ -45,10 +41,13 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     eventDate,
     latestInHand,
     isr,
-    instruction
+    instruction,
+    vendor
   });
 });
 
+// @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let orderNum = req.body.orderNum;
   orderNum = orderNum.toString();
@@ -65,6 +64,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let currentArtist = "";
   let uploadDate = null;
   let sentVendor = null;
+  let vendor = req.body.vendor;
   let qty = 0;
   let netValue = 0;
   let markEvent = "";
@@ -104,6 +104,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         instructions: instructions,
         currentArtist: currentArtist,
         uploadDate: uploadDate,
+        vendor: vendor,
         sentVendor: sentVendor,
         qty: qty,
         netValue: netValue,
@@ -134,6 +135,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
+// @DESC - GETS ORDER FROM ORDERS COLLECTION BASED ON ID#
+// SEC - PUBLIC ACCESS
 router.get("/view/:id", (req, res) => {
   Order.findOne({
     _id: req.params.id
@@ -144,6 +147,8 @@ router.get("/view/:id", (req, res) => {
   });
 });
 
+// @DESC - GETS ORDER EDIT PAGE FOR ORDER BASED ON ID#
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({
     _id: req.params.id
@@ -154,6 +159,8 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
+// @DESC - UPDATES ORDER IN ORDER COLLECTION BASED ON ID#
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let id = req.params.id;
   let client = req.body.client;
@@ -162,6 +169,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let currentStatus = req.body.currentStatus;
   let eventDate = req.body.eventDate;
   let latestInHand = req.body.latestInHand;
+  let vendor = req.body.vendor;
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
@@ -179,6 +187,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.currentStatus = currentStatus;
       foundOrder.eventDate = eventDate;
       foundOrder.latestInHand = latestInHand;
+      foundOrder.vendor = vendor;
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
@@ -192,6 +201,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
+// @DESC - GETS NOTE EDIT PAGE BASED ON NOTE ID#
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get(
   "/note-edit/:noteid",
   [ensureAuthenticated, ensureEditOrders],
@@ -206,6 +217,8 @@ router.get(
   }
 );
 
+// @DESC - UPDATES NOTE (INSTRUCTIONS) IN ORDERS COLLECTION BASED ON ORDER ID#
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.put(
   "/note-edit/:noteid",
   [ensureAuthenticated, ensureEditOrders],
@@ -240,6 +253,8 @@ router.put(
   }
 );
 
+// @DESC - EDITS NOTES BY PUSHING NEW ONE TO ARRAY BASED ON ORDER ID#
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.put(
   "/revision/:id",
   [ensureAuthenticated, ensureEditOrders],
@@ -281,6 +296,8 @@ router.put(
   }
 );
 
+// @DESC - EDITS NOTES BY PUSHING NEW ONE TO ARRAY BASED ON ORDER ID#
+// SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.put(
   "/notes/:id",
   [ensureAuthenticated, ensureEditOrders],

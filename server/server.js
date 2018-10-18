@@ -21,6 +21,7 @@ const userRoutes = require("./routes/users");
 const styleRoutes = require("./routes/styles");
 const orderRoutes = require("./routes/orders");
 const indexRoutes = require("./routes/index");
+const prodRoutes = require("./routes/prod");
 //const uploads = require("./routes/uploads");
 
 // Load User model to create root user if no admin exists in DB
@@ -35,8 +36,7 @@ const {
   getInstructions,
   checkForQCStatus,
   checkForRevisionStatus,
-  catNotes,
-  statusStrip
+  catNotes
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
@@ -62,8 +62,7 @@ app.engine(
       getInstructions,
       checkForQCStatus,
       checkForRevisionStatus,
-      catNotes,
-      statusStrip
+      catNotes
     },
     defaultLayout: "main"
   })
@@ -210,6 +209,7 @@ app.use("/", indexRoutes);
 app.use("/users", userRoutes);
 app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
+app.use("/prod", prodRoutes);
 //app.use("/uploads", uploads);
 
 app.use((req, res, next) => {
@@ -232,6 +232,7 @@ app.listen(process.env.APP_PORT, (req, res) => {
   let editOrders = true;
   let editProofs = true;
   let editProd = true;
+  let viewProd = true;
 
   User.findOne({ admin: true }, function(err, user) {
     if (!user) {
@@ -244,7 +245,8 @@ app.listen(process.env.APP_PORT, (req, res) => {
             admin: admin,
             editOrders: editOrders,
             editProofs: editProofs,
-            editProd: editProd
+            editProd: editProd,
+            viewProd: viewProd
           });
 
           bcrypt.genSalt(10, (err, salt) => {

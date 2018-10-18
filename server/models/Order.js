@@ -91,6 +91,10 @@ const OrderSchema = new Schema({
     type: Date,
     default: null
   },
+  vendor: {
+    type: String,
+    required: true
+  },
   sentVendor: {
     type: Date,
     default: null

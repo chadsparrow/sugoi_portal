@@ -20,11 +20,6 @@
                       <label for="orderNum">* Order #:</label>
                     </div>
                     <div class="input-field col s12 m6">
-                      <input type="text" name="accountNum" maxlength="10" value="{{accountNum}}" placeholder="enter account number"
-                        class="validate" required>
-                      <label for="orderNum">* Account #:</label>
-                    </div>
-                    <div class="input-field col s12 m6">
                       <select name="priority">
                         {{#select priority}}
                         <option value=""></option>
@@ -65,35 +60,51 @@
                       <label for="currentStatus">* Status:</label>
                     </div>
                     <div class="input-field col s12 m6">
+                      <i class="material-icons prefix">calendar_today</i>
                       <input type="text" class="datepicker" name="eventDate">
                       <label for="eventDate">Event Date:</label>
                     </div>
                     <div class="input-field col s12 m6">
+                      <i class="material-icons prefix">calendar_today</i>
                       <input type="text" class="datepicker" name="latestInHand">
                       <label for="latestInHand">Latest In-Hand Date:</label>
                     </div>
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 m6">
                       <select name="isr">
                         {{#select isr}}
-                        <option value="Adam">Adam</option>
-                        <option value="Dean">Dean</option>
-                        <option value="Reed">Reed</option>
-                        <option value="Sheila">Sheila</option>
+                        <option value="ADAM">Adam</option>
+                        <option value="DEAN">Dean</option>
+                        <option value="REED">Reed</option>
+                        <option value="SHEILA">Sheila</option>
                         {{/select}}
                       </select>
                       <label for="isr">* ISR:</label>
                     </div>
+                    <div class="input-field col s12 m6">
+                      <select name="vendor">
+                        {{#select vendor}}
+                        <option value="CCN">CCN</option>
+                        <option value="PNR">PNR</option>
+                        <option value="MEX">MEX</option>
+                        {{/select}}
+                      </select>
+                      <label for="vendor">* Vendor:</label>
+                    </div>
+
                     <div class="input-field col s12">
                       <input type="text" name="client" placeholder="enter client name" class="validate" value="{{client}}"
                         required>
                       <label for="client">* Client:</label>
                     </div>
+                    <div class="input-field col s12">
+                      <input type="text" name="accountNum" maxlength="10" value="{{accountNum}}" placeholder="enter account number"
+                        class="validate" required>
+                      <label for="orderNum">* Account #:</label>
+                    </div>
                   </div>
-
                 </div>
                 <div class="col s12 m6">
                   <div class="input-field col s12">
-                    <i class="material-icons prefix">mode_edit</i>
                     <textarea name="instruction" class="materialize-textarea" placeholder="type instructions here...">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
                     <label for="instruction">Initial Instructions:</label>
                   </div>

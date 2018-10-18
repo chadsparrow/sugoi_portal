@@ -20,7 +20,7 @@
                         required>
                       <label for="orderNum">Client:</label>
                     </div>
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 m6">
                       <select name="priority">
                         {{#select order.priority}}
                         <option value=""></option>
@@ -30,17 +30,29 @@
                       </select>
                       <label for="priority">Priority:</label>
                     </div>
+                    <div class="input-field col s12 m6">
+                      <select name="vendor">
+                        {{#select order.vendor}}
+                        <option value="CCN">CCN</option>
+                        <option value="PNR">PNR</option>
+                        <option value="MEX">MEX</option>
+                        {{/select}}
+                      </select>
+                      <label for="vendor">Vendor:</label>
+                    </div>
                     <div class="input-field col s12">
+                      <i class="material-icons prefix">calendar_today</i>
                       <input type="text" class="datepicker" name="eventDate" value="{{order.eventDate}}">
                       <label for="eventDate">Event Date:</label>
                     </div>
                     <div class="input-field col s12">
+                      <i class="material-icons prefix">calendar_today</i>
                       <input type="text" class="datepicker" name="latestInHand" value="{{order.latestInHand}}">
                       <label for="latestInHand">Latest In-Hand Date:</label>
                     </div>
                   </div>
                 </div>
-                <div class="col s12 m6">
+                <div class="col s12 m6 grey lighten-2">
                   <h6>Art Status</h6>
                   <div class="input-field col s12">
                     <select name="currentArtist">
