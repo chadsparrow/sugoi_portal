@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
+const {
+  ensureAuthenticated,
+  ensureEditOrders,
+  ensureViewProd,
+  ensureEditProd
+} = require("../helpers/auth");
 
 // includes model for mongodb
 const Order = require("../models/Order");
@@ -15,8 +20,17 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/prod", [ensureAuthenticated, ensureViewProd], (req, res) => {
+  Order.find().then(orders => {
+    res.render("orders/prod", {
+      orders
+    });
+  });
+});
+
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   const orderNum = "";
+  const accountNum = "";
   const priority = "";
   const currentStatus = "";
   const eventDate = null;
@@ -25,6 +39,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   const instruction = "";
   res.render("orders/add", {
     orderNum,
+    accountNum,
     priority,
     currentStatus,
     eventDate,
@@ -37,6 +52,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let orderNum = req.body.orderNum;
   orderNum = orderNum.toString();
+  let accountNum = req.body.accountNum;
   let priority = req.body.priority;
   let currentStatus = req.body.currentStatus;
   let eventDate = req.body.eventDate;
@@ -52,14 +68,16 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let qty = 0;
   let netValue = 0;
   let markEvent = "";
-  let mutishipPrePack = "";
+  let multishipPrePack = "";
   let shipStatus = "";
-  let tracking = [];
+  let tracking = "";
   let confirmDeliveryStatus = "";
   let shippingNotes = "";
   let prodLeadTime = 0;
   let shippingLeadTime = 0;
   let totalLeadTime = 0;
+  let jbaPONum = "";
+  let jbaGNRNum = "";
 
   if (instruction) {
     instructions.push({
@@ -76,6 +94,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       const newOrder = new Order({
         orderNum: orderNum,
+        accountNum: accountNum,
         currentStatus: currentStatus,
         priority: priority,
         eventDate: eventDate,
@@ -89,14 +108,16 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         qty: qty,
         netValue: netValue,
         markEvent: markEvent,
-        mutishipPrePack: mutishipPrePack,
+        multishipPrePack: multishipPrePack,
         shipStatus: shipStatus,
         tracking: tracking,
         confirmDeliveryStatus: confirmDeliveryStatus,
         shippingNotes: shippingNotes,
         prodLeadTime: prodLeadTime,
         shippingLeadTime: shippingLeadTime,
-        totalLeadTime: totalLeadTime
+        totalLeadTime: totalLeadTime,
+        jbaPONum: jbaPONum,
+        jbaGNRNum: jbaGNRNum
       });
 
       newOrder
@@ -123,7 +144,7 @@ router.get("/view/:id", (req, res) => {
   });
 });
 
-router.get("/edit/:id", (req, res) => {
+router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {
@@ -149,6 +170,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.client = client;
       foundOrder.priority = priority;
       foundOrder.currentArtist = currentArtist;
+      if (currentStatus === "U. Uploaded") {
+        foundOrder.uploadDate = Date.now();
+        foundOrder.sentVendor = null;
+      } else if (currentStatus === "V. Sent to Vendor") {
+        foundOrder.sentVendor = Date.now();
+      }
       foundOrder.currentStatus = currentStatus;
       foundOrder.eventDate = eventDate;
       foundOrder.latestInHand = latestInHand;

@@ -7,6 +7,10 @@ const OrderSchema = new Schema({
     type: String,
     required: true
   },
+  accountNum: {
+    type: String,
+    required: true
+  },
   currentStatus: {
     type: String,
     enum: [
@@ -108,7 +112,7 @@ const OrderSchema = new Schema({
   markEvent: {
     type: String
   },
-  mutishipPrePack: {
+  multishipPrePack: {
     type: String
   },
   vendorConfirmShip: {
@@ -122,16 +126,20 @@ const OrderSchema = new Schema({
     type: Date,
     default: null
   },
-  tracking: [
-    {
-      type: String
-    }
-  ],
+  tracking: {
+    type: String
+  },
   confirmDeliveryDate: {
     type: Date,
     default: null
   },
   confirmDeliveryStatus: {
+    type: String
+  },
+  jbaPONum: {
+    type: String
+  },
+  jbaGNRNum: {
     type: String
   },
   shippingNotes: {

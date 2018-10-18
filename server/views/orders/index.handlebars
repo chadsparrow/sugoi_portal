@@ -1,37 +1,56 @@
-<div class="container" style="margin-top: 20px; margin-bottom: 50px;">
+<div class="main-loader">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; margin-bottom: 50px;">
   <table class="display nowrap" id="orderTable">
     <thead>
       <tr>
-        <th data-priority="1">Order</th>
-        <th data-priority="3">Status</th>
-        <th data-priority="4">Priority</th>
-        <th>Request Date</th>
-        <th>Event Date</th>
-        <th>Latest In-Hand Date</th>
-        <th data-priority="6">ISR</th>
-        <th data-priority="5">Client</th>
-        <th data-priority="7">Artist</th>
-        <th>Upload Date</th>
-        <th>Sent to Vendor</th>
-        <th data-priority="2">View/Edit</th>
+        <th data-priority="1" class="center-align">Order</th>
+        <th data-priority="3" class="center-align">Status</th>
+        <th data-priority="4" class="center-align">Priority</th>
+        <th class="center-align">Request Date</th>
+        <th class="center-align">Event Date</th>
+        <th class="center-align">Latest In-Hand Date</th>
+        <th data-priority="6" class="center-align">ISR</th>
+        <th data-priority="5" class="center-align">Client</th>
+        <th data-priority="7" class="center-align">Artist</th>
+        <th class="center-align">Upload Date</th>
+        <th class="center-align">Sent to Vendor</th>
+        <th data-priority="2" class="center-align">View/Edit</th>
       </tr>
     </thead>
     <tbody id="myTable">
       {{#each orders}}
       <tr>
-        <td style="font-size: 16px; background-color: black; color: white;">{{orderNum}}</td>
-        <td style="font-size: 12px;">
-          {{{setStatusDiv currentStatus}}}
+        <td style="font-size: 14px;" class='black white-text'>{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
         </td>
-        <td style="font-size: 12px;">{{#if priority}}<div class="chip pink white-text" style="font-size: 10px;">{{priority}}</div>{{/if}}</td>
-        <td style="font-size: 12px;">{{formatDate requestDate "MMM DD, YYYY"}}</td>
-        <td style="font-size: 12px;">{{#if eventDate}}{{formatDate eventDate "MMM DD, YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;">{{#if latestInHand}}{{formatDate latestInHand "MMM DD, YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;">{{isr}}</td>
-        <td style="font-size: 12px;">{{client}}</td>
-        <td style="font-size: 12px;">{{currentArtist}}</td>
-        <td style="font-size: 12px;">{{#if uploadDate}}{{formatDate uploadDate "MMM DD, YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;">{{#if sentVendor}}{{formatDate sentVendor "MMM DD, YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate requestDate "MMM DD, YYYY"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "MMM DD,
+          YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand "MMM DD,
+          YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
+        <td style="font-size: 12px;" class="center-align">{{client}}</td>
+        <td style="font-size: 12px;" class="center-align">{{currentArtist}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate "MMM DD,
+          YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor "MMM DD,
+          YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;">
           <span class="right">
             <a class="black-text btn-flat btn-small" href="/orders/view/{{_id}}">

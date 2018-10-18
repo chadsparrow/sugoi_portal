@@ -40,7 +40,7 @@
         {{#if user}}
         <div class="row">
           {{#if order.currentArtist}}
-          <div class="col s12 center-align">
+          <div class="black white-text col s12 center-align">
             <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
           </div>
           {{/if}}
@@ -323,8 +323,8 @@
           <div class="row">
             <div class="input-field col s12 m6">
               <input style="text-transform: uppercase;" placeholder="enter name..." name="noteUser" type="text" class="validate"
-                value="{{getHandle
-              user.username}}" required>
+                {{#if user}} value="{{getHandle
+              user.username}}" {{/if}} required>
               <label for="noteUser">Note By:</label>
             </div>
           </div>

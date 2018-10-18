@@ -19,5 +19,19 @@ module.exports = {
     }
     req.flash("error_msg", "Not Authorized");
     res.redirect("/users/login");
+  },
+  ensureViewProd: function(req, res, next) {
+    if (req.user.viewProd == true) {
+      return next();
+    }
+    req.flash("error_msg", "Not Authorized");
+    res.redirect("/users/login");
+  },
+  ensureEditProd: function(req, res, next) {
+    if (req.user.editProd == true) {
+      return next();
+    }
+    req.flash("error_msg", "Not Authorized");
+    res.redirect("/users/login");
   }
 };

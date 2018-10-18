@@ -1,0 +1,104 @@
+<div class="main-loader">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; margin-bottom: 50px;">
+  <table class="display nowrap" id="prodTable">
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Client</th>
+        <th>Account #</th>
+        <th>Qty</th>
+        <th>Total Value</th>
+        <th>Currency</th>
+        <th>Created By</th>
+        <th>Sent to Vendor</th>
+        <th>Event Date</th>
+        <th>Latest In-Hand</th>
+        <th>Latest Ship Date</th>
+        <th>Mark as Event</th>
+        <th>MultiShip/Prepack</th>
+        <th>Conf. Ship Date</th>
+        <th>Status</th>
+        <th>Est. Delivery Date</th>
+        <th>Tracking #</th>
+        <th>Conf. Delivery Date</th>
+        <th>Conf. Delivery Status</th>
+        <th>JBA PO #</th>
+        <th>JBA GNR #</th>
+        <th>Notes</th>
+        <th>Prod. Lead</th>
+        <th>Shipping Lead</th>
+        <th>Total Lead</th>
+        <th>View/Edit</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      {{#each orders}}
+      <tr>
+        <td style="font-size: 12px; background-color: black; color: white;">{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{client}}</td>
+        <td style="font-size: 12px;" class="center-align">{{accountNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{qty}}</td>
+        <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
+        <td style="font-size: 12px;" class="center-align">{{currency}}</td>
+        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{markEvent}}</td>
+        <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
+        <td style="font-size: 12px;" class="center-align">{{tracking}}</td>
+        <!-- pull from Shippo API -->
+        <td style="font-size: 12px;" class="center-align">{{#if estDeliveryDate}}{{formatDate estDeliveryDate
+          "DD-MMM"}}{{/if}}</td>
+        <!-- pull from Shippo API -->
+        <td style="font-size: 12px;" class="center-align">{{confirmDeliveryStatus}}</td>
+        <!-- pull from Shippo API -->
+        <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{jbaPONum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{jbaGNRNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{notes}}</td>
+        <td style="font-size: 12px;" class="center-align">{{prodLeadTime}}</td>
+        <!-- Confirmed Ship Date - Sent to Vendor -->
+        <td style="font-size: 12px;" class="center-align">{{shippingLeadTime}}</td>
+        <!-- Confirmed Delivery Date - Confirmed Ship Date -->
+        <td style="font-size: 12px;" class="center-align">{{totalLeadTime}}</td>
+        <!-- Prod Lead Time + Shipping Lead Time -->
+        <td style="font-size: 12px;" class="center-align">
+          <span class="right">
+            <a class="black-text btn-flat btn-small" href="/orders/prod/{{_id}}">
+              <i class="material-icons">remove_red_eye</i>
+            </a>
+            {{#if ../user.editProd}}
+            <a class="green-text btn-flat btn-small" href="/orders/prod/edit/{{_id}}">
+              <i class="material-icons">edit</i>
+            </a>
+            {{/if}}
+          </span>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

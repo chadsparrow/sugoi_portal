@@ -12,6 +12,11 @@
           <li>
             <a href="/orders"><i class="fas fa-box-open"></i> Orders</a>
           </li>
+          {{#if user.viewProd}}
+          <li>
+            <a href="/orders/prod"><i class="fas fa-calendar-check"></i> Production</a>
+          </li>
+          {{/if}}
           <li>
             <a class='dropdown-trigger btn' href="#" data-target="dropdown1" style="width: 180px;">{{getHandle
               user.username}}</a>

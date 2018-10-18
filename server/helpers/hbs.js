@@ -24,97 +24,73 @@ module.exports = {
   setStatusDiv: function(status) {
     switch (status) {
       case "A. Waiting for Proof":
-        return "<div class='chip status red white-text'>" + status + "</div>";
+        return "red white-text";
         break;
       case "B. Proof Started":
-        return (
-          "<div class='chip status light-blue lighten-2'>" + status + "</div>"
-        );
+        return "light-blue lighten-2";
         break;
       case "C. Proof - Waiting on Someone else":
-        return (
-          "<div class='chip status light-blue lighten-2'>" + status + "</div>"
-        );
+        return "light-blue lighten-2";
         break;
       case "D. Proof Ready for QC":
-        return "<div class='chip status yellow accent-2'>" + status + "</div>";
+        return "yellow accent-2";
         break;
       case "E. Proof QC Complete":
-        return "<div class='chip status yellow accent-4'>" + status + "</div>";
+        return "yellow accent-4";
         break;
       case "F. Proof Complete":
-        return "<div class='chip status green accent-3'>" + status + "</div>";
+        return "green accent-3";
         break;
       case "G. Waiting for Revision":
-        return "<div class='chip status red white-text'>" + status + "</div>";
+        return "red white-text";
         break;
       case "H. Revision - Waiting on Someone else":
-        return (
-          "<div class='chip status light-blue lighten-2'>" + status + "</div>"
-        );
+        return "light-blue lighten-2";
         break;
       case "I. Revision Started":
-        return (
-          "<div class='chip status light-blue lighten-2'>" + status + "</div>"
-        );
+        return "light-blue lighten-2";
         break;
       case "J. Revision Ready for QC":
-        return "<div class='chip status yellow accent-2'>" + status + "</div>";
+        return "yellow accent-2";
         break;
       case "K. Revision QC Complete":
-        return "<div class='chip status yellow accent-4'>" + status + "</div>";
+        return "yellow accent-4";
         break;
       case "L. Revision Complete":
-        return "<div class='chip status green accent-3'>" + status + "</div>";
+        return "green accent-3";
         break;
       case "M. Waiting for Output":
-        return "<div class='chip status red white-text'>" + status + "</div>";
+        return "red white-text";
         break;
       case "N. Output - Waiting on Someone else":
-        return (
-          "<div class='chip status light-blue lighten-2'>" + status + "</div>"
-        );
+        return "light-blue lighten";
         break;
       case "O. Output Started":
-        return (
-          "<div class='chip status light-blue lighten-2'>" + status + "</div>"
-        );
+        return "light-blue lighten-2";
         break;
       case "P. Output Ready for QC":
-        return "<div class='chip status yellow accent-2'>" + status + "</div>";
+        return "yellow accent-2";
         break;
       case "Q. Output QC Complete":
-        return "<div class='chip status yellow accent-4'>" + status + "</div>";
+        return "yellow accent-4";
         break;
       case "R. Waiting for PNT":
-        return "<div class='chip status red white-text'>" + status + "</div>";
+        return "red white-text";
         break;
       case "S. PNT Ready for QC":
-        return "<div class='chip status yellow accent-2'>" + status + "</div>";
+        return "yellow accent-2";
         break;
       case "T. PNT QC Complete":
-        return "<div class='chip status yellow accent-4'>" + status + "</div>";
+        return "yellow accent-4";
         break;
       case "U. Uploaded":
-        return (
-          "<div class='chip status green darken-2 white-text'>" +
-          status +
-          "</div>"
-        );
+        return "green darken-2 white-text";
         break;
       case "V. Sent to Vendor":
-        return (
-          "<div class='chip status light-blue darken-4 white-text'>" +
-          status +
-          "</div>"
-        );
+        return "light-blue darken-4 white-text";
         break;
       case "W. CANCELLED":
-        return (
-          "<div class='chip status grey lighten-2 grey-text'>" +
-          status +
-          "</div>"
-        );
+        return "grey lighten-2 grey-text";
         break;
     }
   },
