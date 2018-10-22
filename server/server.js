@@ -1,5 +1,6 @@
 // initialize all modules used in app
 const express = require("express");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 //const multer = require("multer");
 const path = require("path");
@@ -15,6 +16,7 @@ const bcrypt = require("bcryptjs");
 
 // initializes the app using express
 const app = express();
+app.use(helmet());
 
 // Load Routes
 const userRoutes = require("./routes/users");
