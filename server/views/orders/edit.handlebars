@@ -20,6 +20,11 @@
                         required>
                       <label for="orderNum">Client:</label>
                     </div>
+                    <div class="input-field col s12">
+                      <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
+                        placeholder="enter account number" class="validate" required>
+                      <label for="orderNum">Account #:</label>
+                    </div>
                     <div class="input-field col s12 m6">
                       <select name="priority">
                         {{#select order.priority}}

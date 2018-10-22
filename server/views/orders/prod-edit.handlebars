@@ -47,7 +47,7 @@
                   <label for="qty">Qty:</label>
                 </div>
                 <div class="input-field col s6 l4">
-                  <input type="number" min="0.00" step="0.01" name="netValue" value="{{order.netValue}}">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" value="{{order.netValue}}">
                   <label for="netValue">Total Value:</label>
                 </div>
                 <div class="input-field col s12 l4">
@@ -105,8 +105,7 @@
                   <label for="shipStatus">Vendor Shipping Status:</label>
                 </div>
                 <div class="input-field col s12 l6">
-                  <input type="text" name="tracking" pattern="[0-9]{12}" maxlength="12" value="{{order.tracking}}"
-                    class="validate" placeholder="enter 12 digit tracking #">
+                  <input type="text" name="tracking" class="input-numeral" maxlength="12" value="{{order.tracking}}">
                   <label for="tracking">Tracking #:</label>
                 </div>
                 <div class="col s12 grey lighten-3" style="font-size: 14px;">
@@ -115,6 +114,7 @@
                       <h6>Live Shipping Information</h6>
                     </div>
                     <div class="col s12">
+                      <br>
                       <span class="grey-text">Estimated Delivery Date: </span>{{formatDate order.estDeliveryDate
                       "MM/DD/YYYY"}}
                     </div>

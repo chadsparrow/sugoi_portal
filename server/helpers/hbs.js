@@ -18,7 +18,7 @@ module.exports = {
     if (date) {
       let d = new Date(date);
       d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-      return moment(d).format(format);
+      return moment.utc(d).format(format);
     } else {
       return null;
     }

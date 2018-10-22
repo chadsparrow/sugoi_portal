@@ -1,4 +1,21 @@
 $(document).ready(function() {
+  $("#admin").click(function() {
+    if ($("#admin").is(":checked")) {
+      $(".form-check-input").attr("checked", true);
+    } else {
+      $(".form-check-input").attr("checked", false);
+    }
+  });
+
+  $(".input-date").datepicker({
+    minDate: new Date(),
+    setDefaultDate: true
+  });
+
+  function goBack() {
+    window.history.back();
+  }
+
   $("#styleTable").dataTable({
     initComplete: function(settings, json) {
       $(".main-loader").hide();
@@ -97,8 +114,8 @@ $(document).ready(function() {
         "</select></div>"
     },
     bAutoWidth: false,
-    dom: "r<'myFilter'f>tip",
-    buttons: ["excel"]
+    dom: "Brftip",
+    buttons: ["csv"]
   });
 
   $("#userTable").dataTable({
@@ -123,20 +140,50 @@ $(document).ready(function() {
     buttons: ["excel"]
   });
 
-  var cleave = new Cleave("#eventDate", {
-    date: true,
-    datePattern: ["m", "d", "Y"]
+  var accountNum = new Cleave("#accountNum", {
+    delimiter: "-",
+    blocks: [6, 3],
+    uppercase: true
   });
-  var cleave = new Cleave("#latestInHand", {
-    date: true,
-    datePattern: ["m", "d", "Y"]
+  $("#accountNum").keydown(function(e) {
+    // Allow: backspace, delete, tab, escape, enter and .
+    if (
+      $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+      // Allow: Ctrl+A, Command+A
+      (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+      // Allow: home, end, left, right, down, up
+      (e.keyCode >= 35 && e.keyCode <= 40)
+    ) {
+      // let it happen, don't do anything
+      return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if (
+      (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+      (e.keyCode < 96 || e.keyCode > 105)
+    ) {
+      e.preventDefault();
+    }
   });
-  var cleave = new Cleave("#latestShipDate", {
-    date: true,
-    datePattern: ["m", "d", "Y"]
-  });
-  var cleave = new Cleave("#vendorConfirmShip", {
-    date: true,
-    datePattern: ["m", "d", "Y"]
+
+  $("#orderNum").keydown(function(e) {
+    // Allow: backspace, delete, tab, escape, enter and .
+    if (
+      $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+      // Allow: Ctrl+A, Command+A
+      (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+      // Allow: home, end, left, right, down, up
+      (e.keyCode >= 35 && e.keyCode <= 40)
+    ) {
+      // let it happen, don't do anything
+      return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if (
+      (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+      (e.keyCode < 96 || e.keyCode > 105)
+    ) {
+      e.preventDefault();
+    }
   });
 });

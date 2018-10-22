@@ -5,7 +5,6 @@ const moment = require("moment");
 
 const {
   ensureAuthenticated,
-  ensureEditOrders,
   ensureViewProd,
   ensureEditProd
 } = require("../helpers/auth");
@@ -60,7 +59,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.qty = qty;
       foundOrder.netValue = netValue;
       foundOrder.currency = currency;
-      foundOrder.latestShipDate = latestShipDate;
+      if (latestShipDate) {
+        foundOrder.latestShipDate = moment(latestShipDate).format("MM/DD/YYYY");
+      }
+
       foundOrder.markEvent = markEvent;
       foundOrder.multishipPrePack = multishipPrePack;
       let sentVendor = foundOrder.sentVendor;
