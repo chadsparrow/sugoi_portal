@@ -122,4 +122,21 @@ $(document).ready(function() {
     dom: "r<'myFilter'f>tip",
     buttons: ["excel"]
   });
+
+  var cleave = new Cleave("#eventDate", {
+    date: true,
+    datePattern: ["m", "d", "Y"]
+  });
+  var cleave = new Cleave("#latestInHand", {
+    date: true,
+    datePattern: ["m", "d", "Y"]
+  });
+  var cleave = new Cleave("#latestShipDate", {
+    date: true,
+    datePattern: ["m", "d", "Y"]
+  });
+  var cleave = new Cleave("#vendorConfirmShip", {
+    date: true,
+    datePattern: ["m", "d", "Y"]
+  });
 });

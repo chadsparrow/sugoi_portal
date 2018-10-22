@@ -1,0 +1,153 @@
+<div class="container">
+  <section class="section">
+    <form action="/prod/edit/{{order._id}}?_method=PUT" method="post">
+      <input type="hidden" name="_method" value="PUT">
+      <div class="row">
+        <div class="card col s12">
+          <div class="card-content">
+            <span class="card-title">Edit Production Details</span>
+            <br>
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="col s12 grey lighten-3" style="padding: 10px; font-size: 12px; margin-bottom: 20px;">
+                  <div class="row">
+                    <div class="col s12">
+                      <span class="grey-text">Order #: </span>{{order.orderNum}}
+                    </div>
+                    <div class="col s12">
+                      <span class="grey-text">Client: </span>{{order.client}}
+                    </div>
+                    <div class="col s12 m4">
+                      <span class="grey-text">Account #: </span>{{order.accountNum}}
+                    </div>
+                    <div class="col s12 m8">
+                      <span class="grey-text">Created By: </span>{{order.isr}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 m6 l4">
+                      <span class="grey-text">Vendor: </span>{{order.vendor}}
+                    </div>
+                    <div class="col s12 m6 l4">
+                      <span class="grey-text">Priority: </span>{{order.priority}}
+                    </div>
+                    <div class="col s12 m6 l4">
+                      <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "MM/DD/YYYY"}}
+                    </div>
+                    <div class="col s12 m6 l4">
+                      <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "MM/DD/YYYY"}}
+                    </div>
+                    <div class="col s12 m6">
+                      <span class="grey-text">Latest In-Hand: </span>{{formatDate order.latestInHand "MM/DD/YYYY"}}
+                    </div>
+                  </div>
+                </div>
+                <div class="input-field col s6 l4">
+                  <input type="number" name="qty" value="{{order.qty}}">
+                  <label for="qty">Qty:</label>
+                </div>
+                <div class="input-field col s6 l4">
+                  <input type="number" min="0.00" step="0.01" name="netValue" value="{{order.netValue}}">
+                  <label for="netValue">Total Value:</label>
+                </div>
+                <div class="input-field col s12 l4">
+                  <select name="currency">
+                    {{#select order.currency}}
+                    <option value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                    {{/select}}
+                  </select>
+                  <label for="currency">Currency:</label>
+                </div>
+                <div class="input-field col s12 l6">
+                  <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
+                      "MM/DD/YYYY"}}">
+                  <label for="latestShipDate">Latest Ship Date:</label>
+                </div>
+                <div class="input-field col s12 l6">
+                  <select name="markEvent">
+                    {{#select order.markEvent}}
+                    <option value=""></option>
+                    <option value="EVENT">Event</option>
+                    {{/select}}
+                  </select>
+                  <label for="markEvent">Mark Event:</label>
+                </div>
+                <div class="input-field col s12 l6">
+                  <select name="multishipPrePack">
+                    {{#select order.multishipPrePack}}
+                    <option value=""></option>
+                    <option value="Multi-Ship">Multi-Ship</option>
+                    <option value="Pre-Pack">Pre-Pack</option>
+                    <option value="Personalized">Personalized</option>
+                    {{/select}}
+                  </select>
+                  <label for="multishipPrePack">MultiShip/Prepack:</label>
+                </div>
+                <div class="input-field col s12 l6">
+                  <input type="text" class="input-date" name="vendorConfirmShip" id="vendorConfirmShip" value="{{formatDate order.vendorConfirmShip "MM/DD/YYYY"}}">
+                  <label for="vendorConfirmShip">Confirmed Ship Date:</label>
+                </div>
+
+                <div class="input-field col s12 l6">
+                  <input type="text" name="jbaPONum" value="{{order.jbaPONum}}">
+                  <label for="jbaPONum">JBA PO #:</label>
+                </div>
+                <div class="input-field col s12 l6">
+                  <input type="text" name="jbaGNRNum" value="{{order.jbaGNRNum}}">
+                  <label for="jbaGNRNum">JBA GNR #:</label>
+                </div>
+              </div>
+
+              <div class="col s12 m6">
+                <div class="input-field col s12 l6">
+                  <input type="text" name="shipStatus" value="{{order.shipStatus}}">
+                  <label for="shipStatus">Vendor Shipping Status:</label>
+                </div>
+                <div class="input-field col s12 l6">
+                  <input type="text" name="tracking" pattern="[0-9]{12}" maxlength="12" value="{{order.tracking}}"
+                    class="validate" placeholder="enter 12 digit tracking #">
+                  <label for="tracking">Tracking #:</label>
+                </div>
+                <div class="col s12 grey lighten-3" style="font-size: 14px;">
+                  <div class="row">
+                    <div class="col s12">
+                      <h6>Live Shipping Information</h6>
+                    </div>
+                    <div class="col s12">
+                      <span class="grey-text">Estimated Delivery Date: </span>{{formatDate order.estDeliveryDate
+                      "MM/DD/YYYY"}}
+                    </div>
+                    <div class="col s12">
+                      <br>
+                      <span class="grey-text">Confirmed Delivery Status: </span>{{order.confirmDeliveryStatus}}
+                    </div>
+                    <div class="col s12">
+                      <br>
+                      <span class="grey-text">Confirmed Delivery Date: </span>{{formatDate order.confirmDeliveryDate
+                      "MM/DD/YYYY"}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-field col s12">
+                  <textarea name="shippingNotes" class="materialize-textarea">{{order.shippingNotes}}</textarea>
+                  <label for="shippingNotes">Production Notes:</label>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-action center-align">
+              <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+                  class="fas fa-check-square"></i>
+                Submit
+              </button>
+              <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
+                  class="fas fa-times"></i>
+                Cancel</a>
+            </div>
+          </div>
+        </div>
+    </form>
+  </section>
+</div>

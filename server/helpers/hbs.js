@@ -16,7 +16,9 @@ module.exports = {
   },
   formatDate: function(date, format) {
     if (date) {
-      return moment(date).format(format);
+      let d = new Date(date);
+      d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+      return moment(d).format(format);
     } else {
       return null;
     }

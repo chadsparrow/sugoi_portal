@@ -21,19 +21,19 @@
             <span class="grey-text">Client:</span><br>{{order.client}}
           </div>
           <div class="col s6 center-align">
-            <span class="grey-text">Entered:</span><br>{{formatDate order.requestDate "MMM DD, YYYY"}}
+            <span class="grey-text">Entered:</span><br>{{formatDate order.requestDate "MM/DD/YYYY"}}
           </div>
         </div>
         <div class="row">
           {{#if order.eventDate}}
           <div class="col s6 center-align">
-            <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "MMM DD, YYYY"}}
+            <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "MM/DD/YYYY"}}
           </div>
           {{/if}}
 
           {{#if order.latestInHand}}
           <div class="col s6 center-align">
-            <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "MMM DD, YYYY"}}
+            <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "MM/DD/YYYY"}}
           </div>
           {{/if}}
         </div>
@@ -54,7 +54,7 @@
                 <li>
                   <div class="collapsible-header valign-wrapper {{{catNotes this.instructionType}}}">
                     <div class="col s9 left-align valign-wrapper">
-                      <i class="material-icons left">expand_more</i>{{formatDate this.date "MMM DD, YYYY"}} -
+                      <i class="material-icons left">expand_more</i>{{formatDate this.date "MM/DD/YYYY"}} -
                       {{this.user}} - {{this.instructionType}}
                     </div>
                     <div class="col s3 right-align valign-wrapper">

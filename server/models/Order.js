@@ -107,7 +107,7 @@ const OrderSchema = new Schema({
   },
   currency: {
     type: String,
-    enum: ["CAD", "USA"]
+    enum: ["CAD", "USD"]
   },
   latestShipDate: {
     type: Date,

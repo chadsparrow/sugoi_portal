@@ -42,12 +42,14 @@
                     </div>
                     <div class="input-field col s12">
                       <i class="material-icons prefix">calendar_today</i>
-                      <input type="text" class="datepicker" name="eventDate" value="{{order.eventDate}}">
+                      <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate
+                      "MM/DD/YYYY"}}">
                       <label for="eventDate">Event Date:</label>
                     </div>
                     <div class="input-field col s12">
                       <i class="material-icons prefix">calendar_today</i>
-                      <input type="text" class="datepicker" name="latestInHand" value="{{order.latestInHand}}">
+                      <input type="text" class="input-date" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand
+                      "MM/DD/YYYY"}}">
                       <label for="latestInHand">Latest In-Hand Date:</label>
                     </div>
                   </div>
@@ -100,6 +102,18 @@
                     <label for="currentStatus">Status:</label>
                   </div>
                 </div>
+                {{#if order.uploadDate}}
+                <div class="col s6 left-align">
+                  <br>
+                  <span class="grey-text">Upload Date:</span><br>{{formatDate order.uploadDate "MM/DD/YYYY"}}
+                </div>
+                {{/if}}
+                {{#if order.sentVendor}}
+                <div class="col s6 left-align">
+                  <br>
+                  <span class="grey-text">Sent to Vendor:</span><br>{{formatDate order.sentVendor "MM/DD/YYYY"}}
+                </div>
+                {{/if}}
               </div>
               <div class="card-action">
                 <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
