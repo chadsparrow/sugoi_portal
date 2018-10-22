@@ -76,8 +76,8 @@ $(document).ready(function() {
         "</select></div>"
     },
     bAutoWidth: false,
-    dom: "r<'myFilter'f>tip",
-    buttons: ["excel"]
+    dom: "Brftip",
+    buttons: ["csv"]
   });
 
   $("#prodTable").dataTable({
