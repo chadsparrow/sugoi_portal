@@ -10,6 +10,7 @@ const {
 
 // includes model for mongodb
 const Order = require("../models/Order");
+const Proof = require("../models/Proof");
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN

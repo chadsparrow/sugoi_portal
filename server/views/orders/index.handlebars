@@ -72,6 +72,14 @@
       href="orders/add">
       <i class="large material-icons">add</i>
     </a>
+    <ul>
+      {{#if user.editProofs}}
+      <li>
+        <a href="/proofs/upload" class="btn-floating blue tooltipped" data-position="left" data-tooltip="Upload Proofs"><i
+            class="material-icons">art_track</i></a>
+      </li>
+      {{/if}}
+    </ul>
   </div>
   {{/if}}
 </div>
