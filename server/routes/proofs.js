@@ -5,33 +5,48 @@ const multer = require("multer");
 const path = require("path");
 const unzip = require("unzip");
 
+const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
+
 // includes model for mongodb
 const Order = require("../models/Order");
 const Proof = require("../models/Proof");
 
-// Set Storage engine for file uploads
-const storage = multer.diskStorage({
-  destination: "./public/uploads/",
-  filename: function(req, file, cb) {
-    cb(null, path.basename(file.originalname));
+router.get(
+  "/uploadform",
+  [ensureAuthenticated, ensureEditProofs],
+  (req, res) => {
+    res.render("proofs/upload");
+  }
+);
+
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      path.basename(file.originalname, path.extname(file.originalname)) +
+        "_" +
+        Date.now() +
+        path.extname(file.originalname)
+    );
   }
 });
 
-// Init Upload Variable
-const upload = multer({
+let upload = multer({
   storage: storage,
-  fileFilter: function(req, file, cb) {
+  fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
   }
 }).single("ziptoUpload");
 
-// Checks File Type and mimetype before uploading
 function checkFileType(file, cb) {
-  // Allowed extensions
+  // allowed exts
   const filetypes = /zip/;
-  // Check Extension
+  // check the ext
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  //Check MimeType
+  // check mimetype
   const mimetype = filetypes.test(file.mimetype);
 
   if (mimetype && extname) {
@@ -41,53 +56,48 @@ function checkFileType(file, cb) {
   }
 }
 
-router.get("/upload", (req, res) => {
-  res.render("proofs/upload");
-});
-
 // upload route from upload form - calls multer upload zip to public/uploads
 // and extracts files from zip to put into public/3d_assets folder and deletes zip from public/uploads
-router.post("/upload", (req, res) => {
+router.post("/upload", ensureAuthenticated, (req, res) => {
   upload(req, res, err => {
     if (err) {
       req.flash("error_msg", err);
-      res.redirect("/proofs/upload");
+      res.redirect("/proofs/uploadform");
     } else {
       if (req.file == undefined) {
-        req.flash("error_msg", "Please choose a ZIP file");
-        res.redirect("/proofs/upload");
+        req.flash("error_msg", "Please Choose a ZIP file!");
+        res.redirect("/proofs/uploadform");
       } else {
-        let folderName = req.file.filename.split(".");
-        if (folderName[1] === "zip") {
-          folderName = folderName[0];
-          fs.createReadStream("./public/uploads/" + req.file.filename).pipe(
-            unzip.Extract({
-              path: "./public/3d_assets/" + folderName
-            })
-          );
-          fs.unlinkSync("./public/uploads/" + req.file.filename);
-          req.flash("success_msg", "ZIP Uploaded and Expanded");
-          res.redirect("/orders");
-        }
-
-        // READ JSON FILE FROM  EXPANDED FOLDER AND IMPORT INTO MONGO "PROOFS" COLLECTION
-        //   // let filePath = "./public/3d_assets/" + folderName +"/"+ folderName +".json";
-        //   // Read the file and send to the callback - FOR JSON ONLY
-        //   // let obj = fs.readFileSync (filePath);
-        //   // let person = JSON.parse(obj);
+        let orderNumber = req.file.filename.split("_");
+        orderNumber = orderNumber[0];
+        let zipFilePath = "./" + req.file.path;
+        let destPath = "./public/3d_assets/" + orderNumber;
+        fs.createReadStream(zipFilePath).pipe(
+          unzip.Extract({
+            path: destPath
+          })
+        );
+        fs.unlinkSync("./public/uploads/" + req.file.filename); // CAUSING ERRORS ON ZOME ZIPS
+        req.flash("success_msg", "File Uploaded and Extracted");
+        res.redirect("/orders");
       }
-      //   // Declare variables
-      //   //let filePath = "./public/uploads/" + req.file.filename;
-      //   // Read the file and send to the callback - FOR JSON ONLY
-      //   // let obj = fs.readFileSync (filePath);
-      //   // let person = JSON.parse(obj);
-      //   // res.render("index", {
-      //   //   msg: "File Uploaded",
-      //   //   file: req.file.filename,
-      //   //   data: JSON.stringify(person)
-      //   // });
     }
   });
+  // READ JSON FILE FROM  EXPANDED FOLDER AND IMPORT INTO MONGO "PROOFS" COLLECTION
+  //   // let filePath = "./public/3d_assets/" + folderName +"/"+ folderName +".json";
+  //   // Read the file and send to the callback - FOR JSON ONLY
+  //   // let obj = fs.readFileSync (filePath);
+  //   // let person = JSON.parse(obj);
+  //   // Declare variables
+  //   //let filePath = "./public/uploads/" + req.file.filename;
+  //   // Read the file and send to the callback - FOR JSON ONLY
+  //   // let obj = fs.readFileSync (filePath);
+  //   // let person = JSON.parse(obj);
+  //   // res.render("index", {
+  //   //   msg: "File Uploaded",
+  //   //   file: req.file.filename,
+  //   //   data: JSON.stringify(person)
+  //   // });
 });
 
 module.exports = router;

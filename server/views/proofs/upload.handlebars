@@ -1,3 +1,19 @@
+<div class="main-loader" style="display: none;" id="loaderDiv">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="container">
     <h3>Zip Upload</h3>
@@ -5,13 +21,13 @@
       <div class="file-field input-field">
         <div class="btn grey">
           <span>File</span>
-          <input name="ziptoUpload" type="file">
+          <input name="ziptoUpload" type="file" accept=".zip">
         </div>
         <div class="file-path-wrapper">
           <input class="file-path validate" type="text" placeholder="choose zip file">
         </div>
       </div>
-      <button type="submit" class="btn">Upload</button>
+      <button type="submit" class="btn" onclick="showLoader()">Upload</button>
     </form>
   </div>
 </div>

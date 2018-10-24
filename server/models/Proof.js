@@ -7,25 +7,15 @@ const ProofSchema = new Schema({
     type: String,
     required: true
   },
-  itemNumber: {
-    type: String,
-    required: true
-  },
   client: {
     type: String,
     required: true
   },
-  prfDate: {
-    type: Date,
+  isr: {
+    type: String,
     required: true
   },
-  soRef: {
-    type: String
-  },
-  cwoRef: {
-    type: String
-  },
-  isr: {
+  itemNumber: {
     type: String,
     required: true
   },
@@ -33,7 +23,15 @@ const ProofSchema = new Schema({
     type: String,
     required: true
   },
-  fit: {
+  styleName: {
+    type: String,
+    required: true
+  },
+  gender: {
+    type: String,
+    required: true
+  },
+  sizes: {
     type: String,
     required: true
   },
@@ -45,11 +43,7 @@ const ProofSchema = new Schema({
     type: String,
     required: true
   },
-  brand: {
-    type: String,
-    required: true
-  },
-  sizes: {
+  fit: {
     type: String,
     required: true
   },
@@ -62,8 +56,22 @@ const ProofSchema = new Schema({
   features: {
     type: String
   },
+  brand: {
+    type: String,
+    required: true
+  },
   artist: {
     type: String
+  },
+  soRef: {
+    type: String
+  },
+  cwoRef: {
+    type: String
+  },
+  prfDate: {
+    type: Date,
+    required: true
   },
   thread: {
     type: String

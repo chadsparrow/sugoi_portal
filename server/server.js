@@ -140,8 +140,10 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
+const port = process.env.APP_PORT || 3000;
+
 // Open port and listen for requests
-app.listen(process.env.APP_PORT, (req, res) => {
+app.listen(port, (req, res) => {
   let userName = process.env.DB_SUPERUSER;
   userName = userName.toLowerCase();
   let password = process.env.DB_SUPERPASS;
@@ -186,7 +188,5 @@ app.listen(process.env.APP_PORT, (req, res) => {
     }
   });
 
-  console.log(
-    `REST API running on http://${process.env.APP_HOST}:${process.env.APP_PORT}`
-  );
+  console.log(`Running on http://${process.env.APP_HOST}:${port}`);
 });
