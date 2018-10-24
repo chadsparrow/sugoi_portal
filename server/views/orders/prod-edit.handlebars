@@ -10,11 +10,12 @@
             <div class="row">
               <div class="col s12 m6">
                 <div class="col s12 grey lighten-3" style="padding: 10px; font-size: 12px; margin-bottom: 20px;">
+                  <h6>Order Information:</h6>
                   <div class="row">
-                    <div class="col s12">
+                    <div class="col s12 m4">
                       <span class="grey-text">Order #: </span>{{order.orderNum}}
                     </div>
-                    <div class="col s12">
+                    <div class="col s12 m8">
                       <span class="grey-text">Client: </span>{{order.client}}
                     </div>
                     <div class="col s12 m4">
@@ -24,17 +25,15 @@
                       <span class="grey-text">Created By: </span>{{order.isr}}
                     </div>
                   </div>
+                  <h6>Production Information:</h6>
                   <div class="row">
-                    <div class="col s12 m6 l4">
+                    <div class="col s12 m6">
                       <span class="grey-text">Vendor: </span>{{order.vendor}}
                     </div>
-                    <div class="col s12 m6 l4">
+                    <div class="col s12 m6">
                       <span class="grey-text">Priority: </span>{{order.priority}}
                     </div>
-                    <div class="col s12 m6 l4">
-                      <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "MM/DD/YYYY"}}
-                    </div>
-                    <div class="col s12 m6 l4">
+                    <div class="col s12 m6">
                       <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "MM/DD/YYYY"}}
                     </div>
                     <div class="col s12 m6">
@@ -100,6 +99,11 @@
               </div>
 
               <div class="col s12 m6">
+                <div class="row">
+                  <div class="col s12">
+                    <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "MM/DD/YYYY"}}
+                  </div>
+                </div>
                 <div class="input-field col s12 l6">
                   <input type="text" name="shipStatus" value="{{order.shipStatus}}">
                   <label for="shipStatus">Vendor Shipping Status:</label>
@@ -129,12 +133,10 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="input-field col s12">
                   <textarea name="shippingNotes" class="materialize-textarea">{{order.shippingNotes}}</textarea>
                   <label for="shippingNotes">Production Notes:</label>
                 </div>
-
               </div>
             </div>
             <div class="card-action center-align">
