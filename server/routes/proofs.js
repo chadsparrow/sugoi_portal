@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
+const fse = require("fs-extra");
 const multer = require("multer");
 const path = require("path");
 const unzip = require("unzip");
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
-// includes model for mongodb
-const Order = require("../models/Order");
 const Proof = require("../models/Proof");
 
 router.get(
@@ -72,12 +71,16 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
         orderNumber = orderNumber[0];
         let zipFilePath = "./" + req.file.path;
         let destPath = "./public/3d_assets/" + orderNumber;
+
+        fse.emptyDirSync(destPath);
+
         fs.createReadStream(zipFilePath).pipe(
           unzip.Extract({
             path: destPath
           })
         );
-        fs.unlinkSync("./public/uploads/" + req.file.filename); // CAUSING ERRORS ON ZOME ZIPS
+        fse.removeSync(zipFilePath);
+
         req.flash("success_msg", "File Uploaded and Extracted");
         res.redirect("/orders");
       }

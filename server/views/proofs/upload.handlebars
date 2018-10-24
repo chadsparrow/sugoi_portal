@@ -1,4 +1,4 @@
-<div class="main-loader" style="display: none;" id="loaderDiv">
+<div class="main-loader">
   <div class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
@@ -31,3 +31,13 @@
     </form>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    $('.main-loader').css('display', 'none');
+  });
+
+  function showLoader() {
+    $('.main-loader').css('display', 'block');
+  }
+</script>
