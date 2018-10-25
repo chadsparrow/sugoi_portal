@@ -1,6 +1,8 @@
 body,
 html {
   font-family: "Roboto", sans-serif;
+  width: 100%;
+  height: 100%;
 }
 
 .brand-logo > span,
@@ -27,6 +29,10 @@ html {
 
 .rights {
   margin-bottom: 40px;
+}
+
+.nav {
+  width: 100%;
 }
 
 .nav-wrapper a {
@@ -92,16 +98,42 @@ thead {
   transform: rotate(180deg);
 }
 
-.small {
-  width: 175px;
+.card.small {
+  width: 100%;
   height: 340px !important;
-  margin: 10px 5px;
 }
+
+.card-content {
+  padding: 10px !important;
+}
+
+.card-action {
+  padding: 10px !important;
+}
+
 #proofWindow {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 275px));
+  grid-auto-flow: row;
+  justify-content: center;
+}
+
+.QCHover {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  background-color: black;
+  border-radius: 20px;
+  color: white;
+}
+
+.QCHover:hover {
+  background-color: grey;
 }
 
 .activator {
@@ -127,7 +159,7 @@ thead {
   justify-content: center;
   background-color: white;
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: 99999999;
+  z-index: 50;
 }
 .myFilter {
   float: left;

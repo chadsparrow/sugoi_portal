@@ -110,7 +110,35 @@ const ProofSchema = new Schema({
   },
   proofMTLLink: {
     type: String
-  }
+  },
+  hasQCNote: {
+    type: Boolean,
+    default: false
+  },
+  qcnote: {
+    noteDate: {
+      type: Date
+    },
+    note: {
+      type: String
+    },
+    noteUser: {
+      type: String
+    }
+  },
+  qcnotearchive: [
+    {
+      noteDate: {
+        type: Date
+      },
+      note: {
+        type: String
+      },
+      noteUser: {
+        type: String
+      }
+    }
+  ]
 });
 
 module.exports = mongoose.model("proofs", ProofSchema);

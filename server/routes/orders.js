@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  ensureAuthenticated,
-  ensureEditOrders,
-  ensureViewProd,
-  ensureEditProd
-} = require("../helpers/auth");
+const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
 // includes model for mongodb
 const Order = require("../models/Order");
@@ -140,8 +135,11 @@ router.get("/view/:id", (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {
-    res.render("orders/view", {
-      order
+    Proof.find({ orderNum: order.orderNum }).then(proofs => {
+      res.render("orders/view", {
+        order,
+        proofs
+      });
     });
   });
 });
