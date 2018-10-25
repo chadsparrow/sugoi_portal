@@ -151,3 +151,8 @@ thead {
   max-height: 600px;
   overflow: auto;
 }
+
+div.dt-buttons {
+  margin-left: 2em;
+  margin-top: 1.5em;
+}

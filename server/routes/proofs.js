@@ -4,7 +4,7 @@ const fs = require("fs");
 const fse = require("fs-extra");
 const multer = require("multer");
 const path = require("path");
-const unzip = require("unzip");
+const StreamZip = require("node-stream-zip");
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
@@ -71,36 +71,83 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
         orderNumber = orderNumber[0];
         let zipFilePath = "./" + req.file.path;
         let destPath = "./public/3d_assets/" + orderNumber;
+        let jsonArray = [];
 
         fse.emptyDirSync(destPath);
 
-        fs.createReadStream(zipFilePath).pipe(
-          unzip.Extract({
-            path: destPath
-          })
-        );
-        fse.removeSync(zipFilePath);
+        const zip = new StreamZip({
+          file: zipFilePath,
+          storeEntries: true
+        });
 
-        req.flash("success_msg", "File Uploaded and Extracted");
-        res.redirect("/orders");
+        zip.on("error", err => {
+          req.flash("error_msg", err);
+          res.redirect("/proofs/uploadform");
+        });
+
+        zip.on("ready", () => {
+          zip.extract(null, destPath, (err, count) => {
+            zip.close();
+            fse.removeSync(zipFilePath);
+            Proof.deleteMany({ orderNum: orderNumber }, function(err) {});
+            jsonArray.forEach(jsonFile => {
+              fse
+                .readJson(jsonFile)
+                .then(jsonData => {
+                  const newProof = new Proof({
+                    orderNum: jsonData.orderNum,
+                    client: jsonData.client,
+                    isr: jsonData.isr,
+                    itemNumber: jsonData.itemNumber,
+                    styleNumber: jsonData.styleNumber,
+                    styleName: jsonData.styleName,
+                    gender: jsonData.gender,
+                    sizes: jsonData.sizes,
+                    fabric: jsonData.fabric,
+                    styleCollection: jsonData.styleCollection,
+                    fit: jsonData.fit,
+                    zap: jsonData.zap,
+                    chamois: jsonData.chamois,
+                    features: jsonData.features,
+                    brand: jsonData.brand,
+                    artist: jsonData.artist,
+                    soRef: jsonData.soRef,
+                    cwoRef: jsonData.cwoRef,
+                    prfDate: jsonData.prfDate,
+                    thread: jsonData.thread,
+                    zipper: jsonData.zipper,
+                    contrast: jsonData.contrast,
+                    colors: jsonData.colors,
+                    viewImgLink: jsonData.viewImgLink,
+                    pdfLink: jsonData.pdfLink,
+                    proofOBJLink: jsonData.proofOBJLink,
+                    proofMTLLink: jsonData.proofMTLLink
+                  });
+
+                  newProof.save(function(err, updateProof) {
+                    if (err) {
+                      console.log(err);
+                    }
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            });
+            req.flash("success_msg", "Proof Uploaded");
+            res.redirect("/orders");
+          });
+        });
+
+        zip.on("extract", (entry, file) => {
+          let entryName = entry.name;
+          if (entryName.search("proofJSON") != -1) {
+            jsonArray.push(file);
+          }
+        });
       }
     }
   });
-  // READ JSON FILE FROM  EXPANDED FOLDER AND IMPORT INTO MONGO "PROOFS" COLLECTION
-  //   // let filePath = "./public/3d_assets/" + folderName +"/"+ folderName +".json";
-  //   // Read the file and send to the callback - FOR JSON ONLY
-  //   // let obj = fs.readFileSync (filePath);
-  //   // let person = JSON.parse(obj);
-  //   // Declare variables
-  //   //let filePath = "./public/uploads/" + req.file.filename;
-  //   // Read the file and send to the callback - FOR JSON ONLY
-  //   // let obj = fs.readFileSync (filePath);
-  //   // let person = JSON.parse(obj);
-  //   // res.render("index", {
-  //   //   msg: "File Uploaded",
-  //   //   file: req.file.filename,
-  //   //   data: JSON.stringify(person)
-  //   // });
 });
 
 module.exports = router;

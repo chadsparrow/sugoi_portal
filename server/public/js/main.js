@@ -57,9 +57,6 @@ $(document).ready(function() {
       footer: false
     },
     pageLength: -1,
-    rowGroup: {
-      dataSrc: 1
-    },
     order: [[1, "asc"], [3, "asc"]],
     oLanguage: {
       sSearch: "Search",
@@ -76,7 +73,7 @@ $(document).ready(function() {
         "</select></div>"
     },
     bAutoWidth: false,
-    dom: "Brftip",
+    dom: "lBrftip",
     buttons: ["csv"]
   });
 
@@ -114,7 +111,7 @@ $(document).ready(function() {
         "</select></div>"
     },
     bAutoWidth: false,
-    dom: "Brftip",
+    dom: "lBrftip",
     buttons: ["csv"]
   });
 
@@ -138,12 +135,6 @@ $(document).ready(function() {
     bAutoWidth: false,
     dom: "r<'myFilter'f>tip",
     buttons: ["excel"]
-  });
-
-  var cleave = new Cleave("#accountNum", {
-    delimiter: "-",
-    blocks: [6, 3],
-    uppercase: true
   });
 
   $("#accountNum").keydown(function(e) {
