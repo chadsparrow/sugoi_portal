@@ -150,4 +150,12 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/:id", (req, res) => {
+  Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
+    res.render("proofs/view", {
+      foundProof
+    });
+  });
+});
+
 module.exports = router;

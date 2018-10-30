@@ -63,6 +63,13 @@
   <li>
     <a href="/orders"><i class="material-icons">color_lens</i>Orders</a>
   </li>
+  {{#if user.viewProd}}
+  <li>
+    <a href="/prod"><i class="material-icons">
+        assignment_turned_in
+      </i> Production</a>
+  </li>
+  {{/if}}
   <li class="divider"></li>
   {{#if user.admin}}
   <li>

@@ -4,6 +4,7 @@ version: "3"
 services:
   server:
     build: ./server
+    command: npm run dev
     image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
     restart: always
     ports:

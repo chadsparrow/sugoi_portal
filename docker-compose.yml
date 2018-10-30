@@ -1,35 +1,30 @@
-# NEED TO FIX THIS
-## CHANGE TO ALMOST SAME SETTINGS AS DEV
-
 version: "3"
 
-networks:
-  default:
-    ipam:
-      driver: default
-      config:
-        - subnet: ${LGS_HOST_SUBNET}/24
-
+## Setup Node.js container
 services:
-  logger:
-    restart: always
-    image: ${LGS_LOGGER_IMAGE}
-    user: root
-    volumes:
-      - /data/logs/${LGS_HOST_APP_DIR}:/logs
-      - /etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt:/certificate.crt
-      - ./filebeat-data:/usr/share/filebeat/data/
-    environment:
-      - LGS_ENV=${LGS_ENV}
-
   server:
+    build: ./server
+    command: npm run start
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
     restart: always
-    image: ${LGS_DOCKER_IMAGE1}
-    depends_on:
-      - mySQL
     ports:
-      - "8104:80"
-      - "8448:443"
+      - "3000:80"
     volumes:
-      - ./certs:/certs
-      - /data/logs/${LGS_HOST_APP_DIR}/apache2:/var/log/apache2
+      - ./server:/usr/src/app
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    env_file:
+      - .env
+  mongo:
+    container_name: mongo
+    restart: always
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:

@@ -96,6 +96,9 @@ module.exports = {
         break;
     }
   },
+  stripStatusCode: function(status) {
+    return status.substr(3);
+  },
   getInstructions: function(instructions) {
     return instructions.reverse();
   },

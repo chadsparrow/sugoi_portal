@@ -4,24 +4,35 @@
       <div class="detailsBox center-align">
         <div class="row black white-text">
           {{#if user}}
-          <div class="col s12 m6 center-align">
-            Order Details - {{order.orderNum}}
+          <div class="col s12 center-align" style="padding: 15px;">
+            <div class="col s12" style="margin-bottom: 5px;">
+              <span style="font-weight:100; font-size:1.5rem;">Order Details: {{order.orderNum}}</span>
+            </div>
+            <div class="col s12">
+              <a class="btn green waves-block waves-effect waves-light" href="/3d_assets/{{order.orderNum}}/{{order.orderNum}}.pdf">VIEW
+                FLAT PDF</a>
+            </div>
           </div>
-          <div class="col s12 m6 center-align">
-            {{order.currentStatus}}
+          <div class="col s12 center-align" style="padding: 10px;">
+            <span style="font-weight:300; font-size:1.25em;">Current Status: </span><span style="font-weight:600; font-size:1.5rem;">{{stripStatusCode
+              order.currentStatus}}</span>
           </div>
           {{else}}
-          <div class="col s12 center-align">
-            Order Details - {{order.orderNum}}
+          <div class="col s12 center-align" style="padding: 15px;">
+            <div class="col s12" style="margin-bottom: 5px;">
+              <span style="font-weight:100; font-size:1.5rem;">Order Details: {{order.orderNum}}</span>
+            </div>
+            <div class="col s12">
+              <a class="btn green waves-block waves-effect waves-light" href="/3d_assets/{{order.orderNum}}/{{order.orderNum}}.pdf">VIEW
+                FLAT PDF</a>
+            </div>
           </div>
           {{/if}}
         </div>
         <div class="row">
-          <div class="col s6 center-align">
-            <span class="grey-text">Client:</span><br>{{order.client}}
-          </div>
-          <div class="col s6 center-align">
-            <span class="grey-text">Entered:</span><br>{{formatDate order.requestDate "MM/DD/YYYY"}}
+          {{#if user}}
+          <div class="col s12 center-align">
+            <span class="grey-text">Entered: </span>{{formatDate order.requestDate "MM/DD/YYYY"}}
           </div>
         </div>
         <div class="row">
@@ -36,11 +47,12 @@
             <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "MM/DD/YYYY"}}
           </div>
           {{/if}}
+          {{/if}}
         </div>
         {{#if user}}
         <div class="row">
           {{#if order.currentArtist}}
-          <div class="black white-text col s12 center-align">
+          <div class="black white-text col s12 center-align" style="padding: 10px;">
             <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
           </div>
           {{/if}}
@@ -81,26 +93,43 @@
         <div class="card small hoverable">
           {{#if hasQCNote}}<a href="#" class="QCHover valign-wrapper center-align">QC</a>{{/if}}
           <div class="card-image waves-effect waves-block waves-light">
-            <a href="#"><img src="{{viewImgLink}}"></a>
+            <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}"></a>
           </div>
           <div class="card-content">
-            <span class="grey-text text-darken-4" style="font-size: 12px;">{{styleName}}</span>
-            <br>
+            <span class="card-title activator grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{styleName}}<i
+                class="material-icons right">more_vert</i></span>
             <small class="grey-text text-darken-2">{{styleNumber}}</small><br>
-            <small class="grey-text text-darken-2">{{itemNumber}}</small>
+            <small class="grey-text">{{itemNumber}}</small>
           </div>
           <div class="card-action">
-            <a href="#" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+            <a href="/proofs/{{_id}}" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
           </div>
-          <div class="card-reveal">
-            <i class="material-icons right card-title">close</i>
-            <br>
-            <p>Color, zipper, thread, and more info here once clicked on...</p>
+          <div class="card-reveal" style="font-size: 12px;">
+            <span class="card-title grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
+                class="material-icons right">close</i></span><br>
+            <span class="grey-text">{{styleNumber}}</span><br>
+            <span class="grey-text">{{styleName}}</span>
+            <hr>
+            <span class="grey-text">Fit:</span><span> {{fit}}</span><br>
+            <span class="grey-text">Fabric:</span><span> {{fabric}}</span><br>
+            <span class="grey-text">Collection:</span><span> {{styleCollection}}</span>
+            <hr>
+            <span class="grey-text">Proof Date:</span><span> {{formatDate prfDate "MM/DD/YYYY"}}</span><br>
+            <span class="grey-text">Art:</span><span> {{artist}}</span><br>
+            <span class="grey-text">SO# Reference:</span><span> {{soRef}}</span><br>
+            <span class="grey-text">CWO# Reference:</span><span> {{cwoRef}}</span><br>
+            <span class="grey-text">Thread:</span><span> {{thread}}</span><br>
+            <span class="grey-text">Zipper:</span><span> {{zipper}}</span><br>
+            <span class="grey-text">Contrast:</span><span> {{contrast}}</span>
+            <hr>
+            Please view the Flat PDF to view colours used in the artwork
           </div>
         </div>
         <!-- CARD END -->
         {{else}}
-        <h6>Proofs not available at this time</h6>
+        <span class="center-align grey-text" style="margin-top: 40px; font-weight:100; font-size:3rem;">
+          <p>Proofs available soon!</p>
+        </span>
         {{/each}}
       </div>
     </div>

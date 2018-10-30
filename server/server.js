@@ -1,5 +1,4 @@
 // initialize all modules used in app
-const express = require("express");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -8,7 +7,13 @@ const passport = require("passport");
 const flash = require("connect-flash");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-const bcrypt = require("bcryptjs");
+const path = require("path");
+const https = require("https");
+const fs = require("fs");
+const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
+const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
+const credentials = { key: privateKey, cert: certificate };
+const express = require("express");
 
 // initializes the app using express
 const app = express();
@@ -34,7 +39,8 @@ const {
   getInstructions,
   checkForQCStatus,
   checkForRevisionStatus,
-  catNotes
+  catNotes,
+  stripStatusCode
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
@@ -60,7 +66,8 @@ app.engine(
       getInstructions,
       checkForQCStatus,
       checkForRevisionStatus,
-      catNotes
+      catNotes,
+      stripStatusCode
     },
     defaultLayout: "main"
   })
@@ -105,7 +112,7 @@ app.use((req, res, next) => {
 });
 
 // Set static folder
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -140,53 +147,16 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
+if (process.env.NODE_ENV == "development") {
+  siteURL = "https://dev.sugoi.com";
+} else if (process.env.NODE_ENV == "production") {
+  siteURL = "https://proofs.sugoi.com";
+}
+
 const port = process.env.APP_PORT || 3000;
 
-// Open port and listen for requests
-app.listen(port, (req, res) => {
-  let userName = process.env.DB_SUPERUSER;
-  userName = userName.toLowerCase();
-  let password = process.env.DB_SUPERPASS;
-  let admin = true;
-  let editOrders = true;
-  let editProofs = true;
-  let editProd = true;
-  let viewProd = true;
+const httpsServer = https.createServer(credentials, app);
 
-  User.findOne({ admin: true }, function(err, user) {
-    if (!user) {
-      console.log("No Admin User Found - creating root@sugoi.com user...");
-      User.findOne({ username: userName }, function(err, user) {
-        if (!user) {
-          const newUser = new User({
-            username: userName,
-            password: password,
-            admin: admin,
-            editOrders: editOrders,
-            editProofs: editProofs,
-            editProd: editProd,
-            viewProd: viewProd
-          });
-
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              newUser
-                .save()
-                .then(user => {
-                  console.log("Root User Created!");
-                })
-                .catch(err => {
-                  console.log(err);
-                  return;
-                });
-            });
-          });
-        }
-      });
-    }
-  });
-
-  console.log(`Running on http://${process.env.APP_HOST}:${port}`);
+httpsServer.listen(port, (req, res) => {
+  console.log(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
 });

@@ -1,0 +1,167 @@
+<div class="main-loader">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="canvas"></div>
+
+<div id="main">
+  <button class="openbtn" onclick="openNav()"><i class="material-icons">
+      info
+    </i></button>
+</div>
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#"><span style="font-weight: 300;">Order Details:</span><br>{{foundProof.orderNum}}</a>
+  <a href="#"><span style="font-weight: 300;">Style #:</span><br>{{foundProof.styleNumber}}</a>
+  <a href="#"><span style="font-weight: 300;">Style Name:</span><br>{{foundProof.styleName}}</a>
+  <hr>
+  <a href="#"><span style="font-weight: 300;">Fit:</span><br>{{foundProof.fit}}</a>
+  <a href="#"><span style="font-weight: 300;">Fabric:</span><br>{{foundProof.fabric}}</a>
+  <a href="#"><span style="font-weight: 300;">Collection:</span><br>{{foundProof.styleCollection}}</a>
+  <a href="#"><span style="font-weight: 300;">Proof Date:</span><br>{{formatDate foundProof.prfDate "MM/DD/YYYY"}}</a>
+  <a href="#"><span style="font-weight: 300;">Art:</span><br>{{foundProof.artist}}</a>
+  <a href="#"><span style="font-weight: 300;">Thread:</span><br>{{foundProof.thread}}</a>
+  <a href="#"><span style="font-weight: 300;">Zipper:</span><br>{{foundProof.zipper}}</a>
+  <a href="#"><span style="font-weight: 300;">Contrast:</span><br>{{foundProof.contrast}}</a>
+  <hr>
+  <a href="#">Please view the Flat PDF to view colours used in the artwork</a>
+</div>
+
+<script>
+
+  var renderer, scene, camera, controls;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'left',
+      hoverEnabled: false
+    });
+  });
+
+  window.onload = function () {
+    init();
+    animate();
+  };
+
+  function init() {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.autoClear = false;
+    renderer.setClearColor(0x000000, 0.0);
+    document.getElementById("canvas").appendChild(renderer.domElement);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(
+      35,
+      window.innerWidth / window.innerHeight,
+      1,
+      10000
+    );
+    scene.add(camera);
+
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.rotateSpeed = 0.5;
+    controls.enableZoom = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = -0.4;
+    controls.enablePan = true;
+    controls.maxDistance = 2100;
+
+    var ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
+    //keyLight.position.set(-100, 0, 100);
+
+    var fillLight = new THREE.DirectionalLight(0xffffff, 0.15);
+    fillLight.position.set(0, -100, -100);
+
+    var backLight = new THREE.DirectionalLight(0xffffff, 0.15);
+    backLight.position.set(0, 0, 100); //.normalize();
+
+    scene.add(ambientLight);
+    scene.add(fillLight);
+    scene.add(backLight);
+
+    var mtlLoader = new THREE.MTLLoader();
+    mtlLoader.setTexturePath("/3d_assets/" + {{ foundProof.orderNum }} +"/");
+  mtlLoader.setPath("/3d_assets/" + {{ foundProof.orderNum }}+"/");
+  mtlLoader.load("{{foundProof.proofMTLLink}}", function (materials) {
+    materials.preload();
+
+    var objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.setPath("/3d_assets/" + {{ foundProof.orderNum }} + "/");
+  objLoader.load("{{foundProof.proofOBJLink}}", function (object) {
+    sideReplacer(object);
+    scene.add(object);
+    object.rotation.y = Math.PI / .85;
+    camera.position.set(500, 1500, 1600);
+
+    var boundingBox = new THREE.Box3();
+
+    boundingBox.setFromObject(object);
+    var center = boundingBox.getCenter();
+
+    // set camera to rotate around center of object
+    controls.target = center;
+
+    $('.main-loader').hide();
+  });
+
+  }, onProgressCallback, onErrorCallback)
+}
+
+  function onProgressCallback() { }
+  function onErrorCallback(err) {
+    $.redirect(`/proofs/${{{ foundProof._id }}}`);
+  }
+
+  function sideReplacer(obj) {
+    if (obj.material) {
+      obj.material.side = THREE.BackSide;
+    }
+    if (obj.children && obj.children.length > 0) {
+      for (var i in obj.children) {
+        sideReplacer(obj.children[i]);
+      }
+    }
+  }
+
+  var animate = function () {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  };
+
+  window.addEventListener('resize', onWindowResize, false);
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function openNav() {
+    document.getElementById("mySidebar").style.width = "300px";
+  }
+
+  /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+  }
+</script>
