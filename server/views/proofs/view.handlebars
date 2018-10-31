@@ -40,22 +40,30 @@
   <a href="#">Please view the Flat PDF to view colours used in the artwork</a>
 </div>
 
+<div id="resetButton" class="valign-wrapper">
+  <a href="#" class="btn-small white-text black" onclick="reset3D()">RESET 3D</a>
+  <img src="/images/mouse-left-click.png" style="width: 25px; height: 25px; margin: 0 6px 0 24px;">
+  Rotate Camera
+  <img src="/images/mouse-right-click.png" style="width: 25px; height: 25px; margin: 0 6px 0 12px;">
+  Pan Camera
+  <img src="/images/mouse-scrollwheel.png" style="width: 25px; height: 25px; margin: 0 6px 0 12px;">
+  Zoom Camera
+</div>
+
+<div id="backButton"><a href="/orders/view/{{mainOrder._id}}"><i class="material-icons large">chevron_left</i></a></div>
+
 <script>
 
   var renderer, scene, camera, controls;
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, {
-      direction: 'left',
-      hoverEnabled: false
-    });
-  });
 
   window.onload = function () {
     init();
     animate();
   };
+
+  window.onbeforeunload = function () {
+    scene.clear();
+  }
 
   function init() {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -77,13 +85,16 @@
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.25;
+    controls.dampingFactor = .3;
     controls.rotateSpeed = 0.5;
     controls.enableZoom = true;
+    controls.screenSpacePanning = false;
     controls.autoRotate = true;
     controls.autoRotateSpeed = -0.4;
     controls.enablePan = true;
-    controls.maxDistance = 2100;
+    controls.minDistance = 700;
+    controls.maxDistance = 1600;
+    controls.maxPolarAngle = Math.PI / 2;
 
     var ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
     //keyLight.position.set(-100, 0, 100);
@@ -101,14 +112,14 @@
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setTexturePath("/3d_assets/" + {{ foundProof.orderNum }} +"/");
   mtlLoader.setPath("/3d_assets/" + {{ foundProof.orderNum }}+"/");
+  mtlLoader.setMaterialOptions({ side: THREE.BackSide });
   mtlLoader.load("{{foundProof.proofMTLLink}}", function (materials) {
     materials.preload();
-
     var objLoader = new THREE.OBJLoader();
     objLoader.setMaterials(materials);
     objLoader.setPath("/3d_assets/" + {{ foundProof.orderNum }} + "/");
   objLoader.load("{{foundProof.proofOBJLink}}", function (object) {
-    sideReplacer(object);
+    //sideReplacer(object);
     scene.add(object);
     object.rotation.y = Math.PI / .85;
     camera.position.set(500, 1500, 1600);
@@ -120,8 +131,10 @@
 
     // set camera to rotate around center of object
     controls.target = center;
+    controls.saveState();
 
     $('.main-loader').hide();
+    document.getElementById("mySidebar").style.width = "275px";
   });
 
   }, onProgressCallback, onErrorCallback)
@@ -129,8 +142,9 @@
 
   function onProgressCallback() { }
   function onErrorCallback(err) {
-    $.redirect(`/proofs/${{{ foundProof._id }}}`);
+    //$.redirect(`/proofs/${{{ foundProof._id }}}`);
   }
+
 
   function sideReplacer(obj) {
     if (obj.material) {
@@ -149,7 +163,12 @@
     renderer.render(scene, camera);
   };
 
+  function reset3D() {
+    controls.reset();
+  }
+
   window.addEventListener('resize', onWindowResize, false);
+
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -157,7 +176,7 @@
   }
 
   function openNav() {
-    document.getElementById("mySidebar").style.width = "300px";
+    document.getElementById("mySidebar").style.width = "275px";
   }
 
   /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */

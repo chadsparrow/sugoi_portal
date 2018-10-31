@@ -27,9 +27,6 @@ const indexRoutes = require("./routes/index");
 const prodRoutes = require("./routes/prod");
 const proofRoutes = require("./routes/proofs");
 
-// Load User model to create root user if no admin exists in DB
-const User = require("./models/User");
-
 // Handlebars Helpers
 const {
   getHandle,
@@ -91,10 +88,14 @@ app.use(flash());
 // Express Session middleware
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "s3Cur3",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 28800000 }
+    cookie: {
+      maxAge: 28800000,
+      secure: true,
+      httpOnly: true
+    }
   })
 );
 
@@ -112,7 +113,11 @@ app.use((req, res, next) => {
 });
 
 // Set static folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  express.static(path.join(__dirname, "public"), {
+    maxage: "10m"
+  })
+);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -134,7 +139,6 @@ app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
 app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);
-//app.use("/uploads", uploads);
 
 app.use((req, res, next) => {
   const error = new Error("Page Not Found");

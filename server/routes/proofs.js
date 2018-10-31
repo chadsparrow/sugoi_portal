@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
 const fse = require("fs-extra");
 const multer = require("multer");
 const path = require("path");
@@ -9,6 +8,7 @@ const StreamZip = require("node-stream-zip");
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
 const Proof = require("../models/Proof");
+const Order = require("../models/Order");
 
 router.get(
   "/uploadform",
@@ -152,8 +152,13 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
 
 router.get("/:id", (req, res) => {
   Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
-    res.render("proofs/view", {
-      foundProof
+    if (err) throw err;
+    Order.findOne({ orderNum: foundProof.orderNum }, (err, mainOrder) => {
+      if (err) throw err;
+      res.render("proofs/view", {
+        foundProof,
+        mainOrder
+      });
     });
   });
 });

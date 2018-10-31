@@ -238,7 +238,7 @@ div.dt-buttons {
 /* The sidebar menu */
 .sidebar {
   height: 100%; /* 100% Full-height */
-  width: 300px; /* 0 width - change this with JavaScript */
+  width: 0px; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 20; /* Stay on top */
   top: 0;
@@ -251,7 +251,7 @@ div.dt-buttons {
 
 /* The sidebar links */
 .sidebar a {
-  padding: 8px 16px;
+  padding: 8px 30px;
   text-decoration: none;
   font-size: 12px;
   color: #fff;
@@ -261,15 +261,15 @@ div.dt-buttons {
 
 /* When you mouse over the navigation links, change their color */
 .sidebar a:hover {
-  color: #f1f1f1;
+  color: #c6e791;
 }
 
 /* Position and style the close button (top right corner) */
 .sidebar .closebtn {
   position: absolute;
   top: 60px;
-  right: 25px;
-  font-size: 24px;
+  right: 0px;
+  font-size: 36px;
   margin-left: 50px;
 }
 
@@ -277,7 +277,7 @@ div.dt-buttons {
 .openbtn {
   position: fixed; /* Stay in place */
   z-index: 20; /* Stay on top */
-  top: 50%;
+  top: 150px;
   right: 0px;
   font-size: 20px;
   cursor: pointer;
@@ -305,4 +305,27 @@ div.dt-buttons {
   .sidebar a {
     font-size: 18px;
   }
+}
+
+#resetButton {
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Stay on top */
+  bottom: 25px;
+  left: 25px;
+  font-size: 12px;
+  padding: 10px;
+}
+
+#backButton {
+  position: absolute;
+  z-index: 2;
+  top: 70px;
+}
+
+#backButton a {
+  color: black;
+}
+
+#backButton a:hover {
+  color: #444;
 }
