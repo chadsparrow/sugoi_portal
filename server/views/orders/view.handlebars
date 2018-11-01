@@ -32,28 +32,25 @@
         {{#if user}}
         <hr>
         <div class="row">
-          <div class="col s12 center-align">
+          <div class="col s12 center-align" style="padding: 6px 0;">
             <span class="grey-text">Entered: </span>{{formatDate order.requestDate "MM/DD/YYYY"}}
           </div>
-        </div>
-        <div class="row">
           {{#if order.eventDate}}
-          <div class="col s6 center-align">
+          <div class="col s6 center-align" style="padding: 6px 0;">
             <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "MM/DD/YYYY"}}
           </div>
           {{/if}}
           {{#if order.latestInHand}}
-          <div class="col s6 center-align">
+          <div class="col s6 center-align" style="padding: 6px 0;">
             <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "MM/DD/YYYY"}}
           </div>
           {{/if}}
+          {{#if order.currentArtist}}
+          <div class="col s6 center-align" style="padding: 6px 0;">
+            <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
+          </div>
+          {{/if}}
         </div>
-        {{#if order.currentArtist}}
-        <hr>
-        <div class="row">
-          <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
-        </div>
-        {{/if}}
         {{#if order.instructions}}
         <hr>
         <div class="row">
