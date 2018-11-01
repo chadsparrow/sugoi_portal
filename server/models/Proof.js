@@ -123,7 +123,8 @@ const ProofSchema = new Schema({
       type: String
     },
     noteUser: {
-      type: String
+      type: String,
+      uppercase: true
     }
   },
   qcnotearchive: [

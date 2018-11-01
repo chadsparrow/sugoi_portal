@@ -136,13 +136,12 @@
     document.getElementById("mySidebar").style.width = "275px";
   });
 
-  }, onProgressCallback, onErrorCallback)
+  }, onProgressCallback, function (err, proofID) {
+    $.redirect('/orders/view/{{mainOrder._id}}');
+  });
 }
 
   function onProgressCallback() { }
-  function onErrorCallback(err) {
-    //$.redirect(`/proofs/${{{ foundProof._id }}}`);
-  }
 
 
   function sideReplacer(obj) {

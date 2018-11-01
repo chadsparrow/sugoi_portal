@@ -51,6 +51,8 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
 
+mongoose.set("useFindAndModify", false);
+
 // initializes EJS middleware
 app.engine(
   "handlebars",
@@ -141,7 +143,7 @@ app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);
 
 app.use((req, res, next) => {
-  const error = new Error("Page Not Found");
+  const error = new Error("Resource Not Found");
   error.status = 404;
   next(error);
 });

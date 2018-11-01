@@ -1,26 +1,27 @@
 <div class="container">
+  <h4 class="center">QC Notes - {{mainOrder.orderNum}}</h4>
   <ul class="collapsible" style="margin-top: 20px !important; max-height: 600px; overflow-y: auto;">
     {{#each foundProofs}}
     <li>
       {{#if hasQCNote}}
-      <div class="collapsible-header red white-text" style="font-size: 18px; padding: 15px; display: block;"><span>{{itemNumber}}
+      <div class="collapsible-header red white-text" style="font-size: 14px; padding: 10px; display: block;"><span>{{itemNumber}}
           -
-          {{styleNumber}}</span><i class="material-icons right">
-          create
-        </i></div>
-      <div class="collapsible-body"><small>{{formatDate qcnote.noteDate
-          "MM/DD/YYYY"}} -
-          {{qcnote.noteUser}}</small><span>QC Note Here</span>
+          {{styleNumber}}<a class="right" href="/proofs/qc/archive/{{_id}}"><i class="material-icons white-text">
+              archive
+            </i></a><a class="right" href="/proofs/qc/edit/{{_id}}"><i class="material-icons white-text">create</i></a></span>
+      </div>
+      <div class="collapsible-body"><small class="grey-text">{{formatDate qcnote.noteDate
+          "MM/DD/YYYY"}} - {{qcnote.noteUser}}</small><br><span>{{qcnote.note}}</span>
       </div>
       {{else}}
-      <div class="collapsible-header green white-text" style="font-size: 18px; padding: 15px; display: block;"><span>{{itemNumber}}
-          -
-          {{styleNumber}}</span><i class="material-icons right">
-          create
-        </i></div>
-      <div class="collapsible-body"><span>No additional changes required</span></div>
+      <div class="collapsible-header green white-text" style="font-size: 14px; padding: 10px; display: block;"><span>{{itemNumber}}
+          - {{styleNumber}}<a class="right" href="/proofs/qc/edit/{{_id}}"><i class="material-icons white-text">create</i></a></span>
+      </div>
+      <div class="collapsible-body"><span>No changes required</span></div>
       {{/if}}
     </li>
     {{/each}}
   </ul>
 </div>
+
+<div id="backButton"><a href="/orders/view/{{mainOrder._id}}"><i class="material-icons large">chevron_left</i></a></div>

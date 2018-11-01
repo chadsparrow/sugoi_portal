@@ -169,9 +169,85 @@ router.get(
   (req, res) => {
     Proof.find({ orderNum: req.params.orderNum }, (err, foundProofs) => {
       if (err) throw err;
-      res.render("proofs/qc", {
-        foundProofs
+      Order.findOne({ orderNum: req.params.orderNum }, (err, mainOrder) => {
+        if (err) throw err;
+        res.render("proofs/qc", {
+          foundProofs,
+          mainOrder
+        });
       });
+    });
+  }
+);
+
+router.get(
+  "/qc/edit/:id",
+  [ensureAuthenticated, ensureEditProofs],
+  (req, res) => {
+    Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
+      if (err) throw err;
+      res.render("proofs/qc-edit", {
+        foundProof
+      });
+    });
+  }
+);
+
+router.put(
+  "/qc/edit/:id",
+  [ensureAuthenticated, ensureEditProofs],
+  (req, res) => {
+    const id = req.params.id;
+    const { note, noteUser } = req.body;
+    const hasQCNote = true;
+    const qcnote = {
+      noteDate: Date.now(),
+      noteUser: noteUser,
+      note: note
+    };
+
+    Proof.findOneAndUpdate(
+      { _id: id },
+      { hasQCNote: hasQCNote, qcnote: qcnote },
+      function(err, updatedProof) {
+        if (err) {
+          console.log(err);
+        } else {
+          req.flash("success_msg", "Proof QC Updated");
+          res.redirect("/proofs/qc/" + updatedProof.orderNum);
+        }
+      }
+    );
+  }
+);
+
+router.get(
+  "/qc/archive/:id",
+  [ensureAuthenticated, ensureEditProofs],
+  (req, res) => {
+    const id = req.params.id;
+    Proof.findOne({ _id: id }, function(err, foundProof) {
+      if (err) {
+        console.log(err);
+      } else {
+        foundProof.hasQCNote = false;
+        const qcnote = foundProof.qcnote;
+        foundProof.qcnotearchive.push(qcnote);
+        foundProof.qcnote = {
+          noteDate: null,
+          noteUser: null,
+          note: null
+        };
+
+        foundProof.save(function(err, updatedProof) {
+          if (err) {
+            console.log(err);
+          } else {
+            req.flash("success_msg", "Proof QC Archived");
+            res.redirect("/proofs/qc/" + updatedProof.orderNum);
+          }
+        });
+      }
     });
   }
 );

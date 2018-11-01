@@ -91,14 +91,16 @@
         {{#each proofs}}
         <!--  CARD  -->
         <div class="card small hoverable">
-          {{#if hasQCNote}}<a href="#" class="QCHover valign-wrapper center-align">QC</a>{{/if}}
+          {{#if hasQCNote}}<a href="/proofs/qc/{{orderNum}}" class="QCHover valign-wrapper center-align red">QC</a>{{/if}}
           <div class="card-image waves-effect waves-block waves-light">
-            <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}"></a>
+            <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}" onerror="this.src='/images/missing.jpg'"></a>
           </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{styleName}}<i
-                class="material-icons right">more_vert</i></span>
-            <small class="grey-text text-darken-2">{{styleNumber}}</small><br>
+          <div class="card-content" style="line-height: normal;">
+            <span class="card-title activator grey-text text-darken-4" style="font-weight:300; margin-bottom: 0px;"><svg
+                viewBox="0 0 200 18">
+                <text x="0" y="15">{{styleName}}</text>
+              </svg><i class="material-icons right">more_vert</i></span>
+            <small class="grey-text text-darken-2">{{#if styleCollection}}{{styleCollection}}<br>{{/if}}{{styleNumber}}</small><br>
             <small class="grey-text">{{itemNumber}}</small>
           </div>
           <div class="card-action">
@@ -246,4 +248,4 @@
   </div>
 </div>
 
-<div id="backButton"><a href="javascript:history.back()"><i class="material-icons large">chevron_left</i></a></div>
+<div id="backButton"><a href="/orders"><i class="material-icons large">chevron_left</i></a></div>

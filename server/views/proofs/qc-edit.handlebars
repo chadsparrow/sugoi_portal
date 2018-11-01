@@ -1,0 +1,36 @@
+<section class="section center">
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="card col s12">
+          <div class="card-content">
+            <span class="card-title">Edit QC Note<br>{{foundProof.itemNumber}} - {{foundProof.styleNumber}}</span>
+            <div class="card-action">
+              <form action="/proofs/qc/edit/{{foundProof._id}}?_method=PUT" method="post">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="row">
+                  <div class="input-field col s12 m6">
+                    <input placeholder="enter name..." name="noteUser" type="text" class="validate" value="{{foundProof.qcnote.noteUser}}"
+                      required>
+                    <label for="noteUser">QC By:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea name="note" class="materialize-textarea" required>{{foundProof.qcnote.note}}</textarea>
+                    <label for="note">QC Note:</label>
+                  </div>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+                    class="fas fa-check-square"></i>
+                  Submit
+                </button>
+                <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
+                    class="fas fa-times"></i>
+                  Cancel</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
