@@ -63,19 +63,23 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.netValue = netValue;
       foundOrder.currency = currency;
       if (latestShipDate) {
-        foundOrder.latestShipDate = moment(latestShipDate).format("MM/DD/YYYY");
+        foundOrder.latestShipDate = latestShipDate;
       }
 
       foundOrder.markEvent = markEvent;
       foundOrder.multishipPrePack = multishipPrePack;
       const sentVendor = foundOrder.sentVendor;
-      if (vendorConfirmShip) {
+      if (vendorConfirmShip && sentVendor) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
-        const date1 = moment(vendorConfirmShip);
-        const date2 = moment(sentVendor);
-        const diff = new DateDiff(date1, date2);
+        let date1 = moment(vendorConfirmShip);
+        let date2 = moment(sentVendor);
+        let diff = new DateDiff(date1, date2);
         const prodLeadTime = diff.days();
-        foundOrder.prodLeadTime = parseInt(prodLeadTime + 1);
+        foundOrder.prodLeadTime = parseInt(prodLeadTime);
+      } else if (vendorConfirmShip && !sentVendor) {
+        req.flash("error", "No Sent to Vendor Date");
+        res.redirect("/prod/edit/" + foundOrder._id);
+        return;
       }
 
       foundOrder.confirmDeliveryDate = confirmDeliveryDate;
@@ -83,9 +87,11 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.estDeliveryDate = estDeliveryDate;
 
       if (confirmDeliveryDate && vendorConfirmShip) {
-        foundOrder.shippingLeadTime = parseInt(
-          confirmDeliveryDate - vendorConfirmShip
-        );
+        let date1 = moment(confirmDeliveryDate);
+        let date2 = moment(vendorConfirmShip);
+        let diff = new DateDiff(date1, date2);
+        const shippingLeadTime = diff.days();
+        foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
       }
 
       if (tracking) {

@@ -87,42 +87,44 @@
         {{#each proofs}}
         <!--  CARD  -->
         <div class="card small hoverable">
-          {{#if hasQCNote}}<a href="/proofs/qc/{{orderNum}}" class="red"><i class="material-icons">
-              flag
-            </i>/a>{{/if}}
-            <div class="card-image waves-effect waves-block waves-light">
-              <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}" onerror="this.src='/images/missing.jpg'"></a>
-            </div>
-            <div class="card-content" style="line-height: normal;">
-              <span style="font-weight:300;">
-                <svg viewBox="0 0 200 18" style="margin-bottom: 5px;"><text x="0" y="15">{{styleName}}</text>
-                </svg><i class="material-icons right activator">more_vert</i></span>
-              <small class="grey-text text-darken-2">{{#if styleCollection}}{{styleCollection}}<br>{{/if}}{{styleNumber}}</small><br>
-              <small class="grey-text">{{itemNumber}}</small>
-            </div>
-            <div class="card-action">
-              <a href="/proofs/{{_id}}" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
-            </div>
-            <div class="card-reveal" style="font-size: 12px;">
-              <span class="card-title grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
-                  class="material-icons right">close</i></span><br>
-              <span class="grey-text">{{styleNumber}}</span><br>
-              <span class="grey-text">{{styleName}}</span>
-              <hr>
-              <span class="grey-text">Fit:</span><span> {{fit}}</span><br>
-              <span class="grey-text">Fabric:</span><span> {{fabric}}</span><br>
-              <span class="grey-text">Collection:</span><span> {{styleCollection}}</span>
-              <hr>
-              <span class="grey-text">Proof Date:</span><span> {{formatDate prfDate "MM/DD/YYYY"}}</span><br>
-              <span class="grey-text">Art:</span><span> {{artist}}</span><br>
-              <span class="grey-text">SO# Reference:</span><span> {{soRef}}</span><br>
-              <span class="grey-text">CWO# Reference:</span><span> {{cwoRef}}</span><br>
-              <span class="grey-text">Thread:</span><span> {{thread}}</span><br>
-              <span class="grey-text">Zipper:</span><span> {{zipper}}</span><br>
-              <span class="grey-text">Contrast:</span><span> {{contrast}}</span>
-              <hr>
-              Please view the Flat PDF to view colours used in the artwork
-            </div>
+          {{#if hasQCNote}}
+          <div class="QCHover">
+            <a href="/proofs/qc/{{orderNum}}" class="red-text right"><i class="material-icons">flag</i></a>
+          </div>
+          {{/if}}
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}" onerror="this.src='/images/missing.jpg'"></a>
+          </div>
+          <div class="card-content" style="line-height: normal;">
+            <span style="font-weight:300;">
+              <svg viewBox="0 0 200 18" style="margin-bottom: 5px;"><text x="0" y="15">{{styleName}}</text>
+              </svg><i class="material-icons right activator">more_vert</i></span>
+            <small class="grey-text text-darken-2">{{#if styleCollection}}{{styleCollection}}<br>{{/if}}{{styleNumber}}</small><br>
+            <small class="grey-text">{{itemNumber}}</small>
+          </div>
+          <div class="card-action">
+            <a href="/proofs/{{_id}}" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+          </div>
+          <div class="card-reveal" style="font-size: 12px;">
+            <span class="card-title grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
+                class="material-icons right">close</i></span><br>
+            <span class="grey-text">{{styleNumber}}</span><br>
+            <span class="grey-text">{{styleName}}</span>
+            <hr>
+            <span class="grey-text">Fit:</span><span> {{fit}}</span><br>
+            <span class="grey-text">Fabric:</span><span> {{fabric}}</span><br>
+            <span class="grey-text">Collection:</span><span> {{styleCollection}}</span>
+            <hr>
+            <span class="grey-text">Proof Date:</span><span> {{formatDate prfDate "MM/DD/YYYY"}}</span><br>
+            <span class="grey-text">Art:</span><span> {{artist}}</span><br>
+            <span class="grey-text">SO# Reference:</span><span> {{soRef}}</span><br>
+            <span class="grey-text">CWO# Reference:</span><span> {{cwoRef}}</span><br>
+            <span class="grey-text">Thread:</span><span> {{thread}}</span><br>
+            <span class="grey-text">Zipper:</span><span> {{zipper}}</span><br>
+            <span class="grey-text">Contrast:</span><span> {{contrast}}</span>
+            <hr>
+            Please view the Flat PDF to view colours used in the artwork
+          </div>
         </div>
         <!-- CARD END -->
         {{else}}
@@ -147,6 +149,10 @@
       <li><a href="/proofs/qc/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left" data-tooltip="QC Order"><i
             class="material-icons">touch_app</i></a></li>
       {{/if}}
+      <li><a href="/proofs/qc/archive/view/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
+          data-tooltip="QC Archive"><i class="material-icons">
+            format_list_bulleted
+          </i></a></li>
       {{/if}}
       <li>
         <a href="#modal2" class="btn-floating grey lighten-1 tooltipped modal-trigger" data-position="left"

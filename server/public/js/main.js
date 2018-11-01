@@ -137,6 +137,58 @@ $(document).ready(function() {
     buttons: ["excel"]
   });
 
+  $("#qcTable").dataTable({
+    initComplete: function(settings, json) {
+      $(".main-loader").hide();
+    },
+    columnDefs: [
+      { width: "10%", targets: 0 },
+      { width: "10%", targets: 1 },
+      { width: "15%", targets: 2 },
+      { width: "65%", targets: 3 }
+    ],
+    pageLength: 10,
+    order: [[0, "asc"]],
+    oLanguage: {
+      sSearch: "Search",
+      sSearchPlaceholder: "Enter search text",
+      sInfo: "_START_ -_END_ of _TOTAL_",
+      sLengthMenu:
+        '<span>Rows per page:</span><select class="browser-default">' +
+        '<option value="10">10</option>' +
+        '<option value="20">20</option>' +
+        '<option value="30">30</option>' +
+        '<option value="40">40</option>' +
+        '<option value="50">50</option>' +
+        '<option value="-1">All</option>' +
+        "</select></div>"
+    },
+    bAutoWidth: false,
+    dom: "lrftip"
+  });
+
+  $("#userTable").dataTable({
+    responsive: true,
+    pageLength: -1,
+    oLanguage: {
+      sSearch: "Search",
+      sSearchPlaceholder: "Enter search text",
+      sInfo: "_START_ -_END_ of _TOTAL_",
+      sLengthMenu:
+        '<span>Rows per page:</span><select class="browser-default">' +
+        '<option value="10">10</option>' +
+        '<option value="20">20</option>' +
+        '<option value="30">30</option>' +
+        '<option value="40">40</option>' +
+        '<option value="50">50</option>' +
+        '<option value="-1">All</option>' +
+        "</select></div>"
+    },
+    bAutoWidth: false,
+    dom: "r<'myFilter'f>tip",
+    buttons: ["excel"]
+  });
+
   $("#accountNum").keydown(function(e) {
     // Allow: backspace, delete, tab, escape, enter and .
     if (

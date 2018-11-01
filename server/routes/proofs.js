@@ -252,4 +252,19 @@ router.get(
   }
 );
 
+router.get(
+  "/qc/archive/view/:orderNum",
+  [ensureAuthenticated, ensureEditProofs],
+  (req, res) => {
+    const orderNum = req.params.orderNum;
+    Proof.find({ orderNum: orderNum }, function(err, foundProofs) {
+      if (err) throw err;
+      res.render("proofs/qc-archive", {
+        foundProofs,
+        orderNum
+      });
+    });
+  }
+);
+
 module.exports = router;
