@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col s12 l4">
       <div class="detailsBox center-align">
-        <div class="row black white-text">
+        <div class="row">
           {{#if user}}
           <div class="col s12 center-align" style="padding: 15px;">
             <div class="col s12" style="margin-bottom: 5px;">
@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="col s12 center-align" style="padding: 10px;">
-            <span style="font-weight:300; font-size:1.25em;">Current Status: </span><span style="font-weight:600; font-size:1.5rem;">{{stripStatusCode
+            <span style="font-weight:300; font-size:1.25em; margin-right: 5px;">Current Status:</span><br><span style="font-weight:600; font-size:1.5rem;">{{stripStatusCode
               order.currentStatus}}</span>
           </div>
           {{else}}
@@ -29,8 +29,9 @@
           </div>
           {{/if}}
         </div>
+        {{#if user}}
+        <hr>
         <div class="row">
-          {{#if user}}
           <div class="col s12 center-align">
             <span class="grey-text">Entered: </span>{{formatDate order.requestDate "MM/DD/YYYY"}}
           </div>
@@ -41,48 +42,46 @@
             <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "MM/DD/YYYY"}}
           </div>
           {{/if}}
-
           {{#if order.latestInHand}}
           <div class="col s6 center-align">
             <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "MM/DD/YYYY"}}
           </div>
           {{/if}}
-          {{/if}}
         </div>
-        {{#if user}}
+        {{#if order.currentArtist}}
+        <hr>
         <div class="row">
-          {{#if order.currentArtist}}
-          <div class="black white-text col s12 center-align" style="padding: 10px;">
-            <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
-          </div>
-          {{/if}}
-          {{#if order.instructions}}
-          <div class="col s12 center-align">
-            <br>
-            <h6>Order Notes</h6>
-            <div class="instructionsBox center-align">
-              <ul class="collapsible">
-                {{#each (getInstructions order.instructions)}}
-                <li>
-                  <div class="collapsible-header valign-wrapper {{{catNotes this.instructionType}}}">
-                    <div class="col s9 valign-wrapper">
-                      <i class="material-icons left">expand_more</i>{{formatDate this.date "MM/DD/YYYY"}} -
-                      {{this.user}} - {{this.instructionType}}
-                    </div>
-                    <div class="col s3 valign-wrapper">
-                      <a class="white-text" href="/orders/note-edit/{{this._id}}">
-                        <i class="material-icons right">edit</i>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="collapsible-body white">{{this.instruction}}</div>
-                </li>
-                {{/each}}
-              </ul>
-            </div>
-          </div>
-          {{/if}}
+          <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
         </div>
+        {{/if}}
+        {{#if order.instructions}}
+        <hr>
+        <div class="row">
+          <div class="col s12 center-align">
+            <h6>Order Notes</h5>
+              <div class="instructionsBox center-align">
+                <ul class="collapsible">
+                  {{#each (getInstructions order.instructions)}}
+                  <li>
+                    <div class="collapsible-header valign-wrapper {{{catNotes this.instructionType}}}">
+                      <div class="col s9 valign-wrapper">
+                        <i class="material-icons left">expand_more</i>{{formatDate this.date "MM/DD/YYYY"}} -
+                        {{this.user}} - {{this.instructionType}}
+                      </div>
+                      <div class="col s3 valign-wrapper">
+                        <a class="white-text" href="/orders/note-edit/{{this._id}}">
+                          <i class="material-icons right">edit</i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="collapsible-body white">{{this.instruction}}</div>
+                  </li>
+                  {{/each}}
+                </ul>
+              </div>
+          </div>
+        </div>
+        {{/if}}
         {{/if}}
       </div>
     </div>
@@ -91,41 +90,42 @@
         {{#each proofs}}
         <!--  CARD  -->
         <div class="card small hoverable">
-          {{#if hasQCNote}}<a href="/proofs/qc/{{orderNum}}" class="QCHover valign-wrapper center-align red">QC</a>{{/if}}
-          <div class="card-image waves-effect waves-block waves-light">
-            <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}" onerror="this.src='/images/missing.jpg'"></a>
-          </div>
-          <div class="card-content" style="line-height: normal;">
-            <span class="card-title activator grey-text text-darken-4" style="font-weight:300; margin-bottom: 0px;"><svg
-                viewBox="0 0 200 18">
-                <text x="0" y="15">{{styleName}}</text>
-              </svg><i class="material-icons right">more_vert</i></span>
-            <small class="grey-text text-darken-2">{{#if styleCollection}}{{styleCollection}}<br>{{/if}}{{styleNumber}}</small><br>
-            <small class="grey-text">{{itemNumber}}</small>
-          </div>
-          <div class="card-action">
-            <a href="/proofs/{{_id}}" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
-          </div>
-          <div class="card-reveal" style="font-size: 12px;">
-            <span class="card-title grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
-                class="material-icons right">close</i></span><br>
-            <span class="grey-text">{{styleNumber}}</span><br>
-            <span class="grey-text">{{styleName}}</span>
-            <hr>
-            <span class="grey-text">Fit:</span><span> {{fit}}</span><br>
-            <span class="grey-text">Fabric:</span><span> {{fabric}}</span><br>
-            <span class="grey-text">Collection:</span><span> {{styleCollection}}</span>
-            <hr>
-            <span class="grey-text">Proof Date:</span><span> {{formatDate prfDate "MM/DD/YYYY"}}</span><br>
-            <span class="grey-text">Art:</span><span> {{artist}}</span><br>
-            <span class="grey-text">SO# Reference:</span><span> {{soRef}}</span><br>
-            <span class="grey-text">CWO# Reference:</span><span> {{cwoRef}}</span><br>
-            <span class="grey-text">Thread:</span><span> {{thread}}</span><br>
-            <span class="grey-text">Zipper:</span><span> {{zipper}}</span><br>
-            <span class="grey-text">Contrast:</span><span> {{contrast}}</span>
-            <hr>
-            Please view the Flat PDF to view colours used in the artwork
-          </div>
+          {{#if hasQCNote}}<a href="/proofs/qc/{{orderNum}}" class="red"><i class="material-icons">
+              flag
+            </i>/a>{{/if}}
+            <div class="card-image waves-effect waves-block waves-light">
+              <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}" onerror="this.src='/images/missing.jpg'"></a>
+            </div>
+            <div class="card-content" style="line-height: normal;">
+              <span style="font-weight:300;">
+                <svg viewBox="0 0 200 18" style="margin-bottom: 5px;"><text x="0" y="15">{{styleName}}</text>
+                </svg><i class="material-icons right activator">more_vert</i></span>
+              <small class="grey-text text-darken-2">{{#if styleCollection}}{{styleCollection}}<br>{{/if}}{{styleNumber}}</small><br>
+              <small class="grey-text">{{itemNumber}}</small>
+            </div>
+            <div class="card-action">
+              <a href="/proofs/{{_id}}" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
+            </div>
+            <div class="card-reveal" style="font-size: 12px;">
+              <span class="card-title grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
+                  class="material-icons right">close</i></span><br>
+              <span class="grey-text">{{styleNumber}}</span><br>
+              <span class="grey-text">{{styleName}}</span>
+              <hr>
+              <span class="grey-text">Fit:</span><span> {{fit}}</span><br>
+              <span class="grey-text">Fabric:</span><span> {{fabric}}</span><br>
+              <span class="grey-text">Collection:</span><span> {{styleCollection}}</span>
+              <hr>
+              <span class="grey-text">Proof Date:</span><span> {{formatDate prfDate "MM/DD/YYYY"}}</span><br>
+              <span class="grey-text">Art:</span><span> {{artist}}</span><br>
+              <span class="grey-text">SO# Reference:</span><span> {{soRef}}</span><br>
+              <span class="grey-text">CWO# Reference:</span><span> {{cwoRef}}</span><br>
+              <span class="grey-text">Thread:</span><span> {{thread}}</span><br>
+              <span class="grey-text">Zipper:</span><span> {{zipper}}</span><br>
+              <span class="grey-text">Contrast:</span><span> {{contrast}}</span>
+              <hr>
+              Please view the Flat PDF to view colours used in the artwork
+            </div>
         </div>
         <!-- CARD END -->
         {{else}}
@@ -248,4 +248,6 @@
   </div>
 </div>
 
+{{#if user}}
 <div id="backButton"><a href="/orders"><i class="material-icons large">chevron_left</i></a></div>
+{{/if}}

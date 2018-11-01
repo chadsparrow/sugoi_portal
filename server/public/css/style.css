@@ -78,7 +78,7 @@ thead {
 }
 
 .instructionsBox {
-  max-height: 450px;
+  max-height: 400px;
   overflow-y: auto;
   color: black;
   font-size: 12px;
@@ -136,11 +136,11 @@ ul.collapsible > li {
 
 #proofWindow {
   display: grid;
-  grid-gap: 25px;
+  grid-gap: 0px 20px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 225px));
   grid-auto-flow: row;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .QCHover {
@@ -344,4 +344,8 @@ div#resetButton img {
 
 #backButton a:hover {
   color: #444;
+}
+
+svg {
+  width: 100%;
 }
