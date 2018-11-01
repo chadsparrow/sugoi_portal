@@ -36,21 +36,24 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 // @DESC - UPDATES ORDER BY ID# BASED ON CHANGES TO EDIT FORM
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
 router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
-  let id = req.params.id;
-  let qty = req.body.qty;
-  let netValue = req.body.netValue;
-  let currency = req.body.currency;
-  let latestShipDate = req.body.latestShipDate;
-  let markEvent = req.body.markEvent;
-  let multishipPrePack = req.body.multishipPrePack;
-  let vendorConfirmShip = req.body.vendorConfirmShip;
-  let jbaPONum = req.body.jbaPONum;
-  let jbaGNRNum = req.body.jbaGNRNum;
-  let shipStatus = req.body.shipStatus;
-  let tracking = req.body.tracking;
-  // IF TRACKING - API CALL TO SHIPPO TO GET SHIPPING DETAILS VIA TRACKING # IF NOT NULL
-  // Set confirmDeliveryDate, confirmDeliveryStatus, estDeliveryDate
-  let shippingNotes = req.body.shippingNotes;
+  const id = req.params.id;
+  const {
+    qty,
+    netValue,
+    currency,
+    latestShipDate,
+    markEvent,
+    multishipPrePack,
+    vendorConfirmShip,
+    jbaPONum,
+    jbaGNRNum,
+    shipStatus,
+    tracking,
+    confirmDeliveryDate,
+    confirmDeliveryStatus,
+    estDeliveryDate,
+    shippingNotes
+  } = req.body;
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
@@ -65,25 +68,25 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       foundOrder.markEvent = markEvent;
       foundOrder.multishipPrePack = multishipPrePack;
-      let sentVendor = foundOrder.sentVendor;
+      const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
-        let date1 = moment(vendorConfirmShip);
-        let date2 = moment(sentVendor);
-        let diff = new DateDiff(date1, date2);
-        let prodLeadTime = diff.days();
+        const date1 = moment(vendorConfirmShip);
+        const date2 = moment(sentVendor);
+        const diff = new DateDiff(date1, date2);
+        const prodLeadTime = diff.days();
         foundOrder.prodLeadTime = parseInt(prodLeadTime + 1);
       }
 
-      // if (confirmDeliveryDate) {
-      //   foundOrder.confirmDeliveryDate;
-      // }
+      foundOrder.confirmDeliveryDate = confirmDeliveryDate;
+      foundOrder.confirmDeliveryStatus = confirmDeliveryStatus;
+      foundOrder.estDeliveryDate = estDeliveryDate;
 
-      // if (confirmDeliveryDate && vendorConfirmShip) {
-      //   foundOrder.shippingLeadTime = parseInt(
-      //     confirmDeliveryDate - vendorConfirmShip
-      //   );
-      // }
+      if (confirmDeliveryDate && vendorConfirmShip) {
+        foundOrder.shippingLeadTime = parseInt(
+          confirmDeliveryDate - vendorConfirmShip
+        );
+      }
 
       if (tracking) {
         foundOrder.tracking = tracking;
