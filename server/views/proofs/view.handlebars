@@ -40,17 +40,16 @@
   <a href="#">Please view the Flat PDF to view colours used in the artwork</a>
 </div>
 
-<div id="resetButton">
-  <a href="#" class="btn-small white-text black" onclick="reset3D()">RESET 3D</a><br><br>
-  <img src="/images/mouse-left-click.png" style="width: 25px; height: 25px; margin: 0 6px 0 24px;">
-  Rotate Camera
-  <img src="/images/mouse-right-click.png" style="width: 25px; height: 25px; margin: 0 6px 0 12px;">
-  Pan Camera
-  <img src="/images/mouse-scrollwheel.png" style="width: 25px; height: 25px; margin: 0 6px 0 12px;">
-  Zoom Camera
+<div id="resetButton" class="row" style="padding: 0px !important; margin: 0px !important;">
+  <div id="reset3dButton" class="col s12 center-align">
+    <a href="#" class="btn-small waves-block white-text black" onclick="reset3D()">RESET 3D</a>
+  </div>
+  <div id="rotateCamera" class="col s4 center-align"><img src="/images/mouse-left-click.png">Rotate</div>
+  <div id="panCamera" class="col s4 center-align"><img src="/images/mouse-right-click.png">Move</div>
+  <div id="zoomCamera" class="col s4 center-align"><img src="/images/mouse-scrollwheel.png">Zoom</div>
 </div>
 
-<div id="backButton"><a href="/orders/view/{{mainOrder._id}}"><i class="material-icons large">chevron_left</i></a></div>
+<div id="backButton"><a href="javascript:history.back()"><i class="material-icons large">chevron_left</i></a></div>
 
 <script>
 
@@ -93,7 +92,7 @@
     controls.autoRotateSpeed = -0.4;
     controls.enablePan = true;
     controls.minDistance = 700;
-    controls.maxDistance = 1600;
+    controls.maxDistance = 2000;
     controls.maxPolarAngle = Math.PI / 2;
 
     var ambientLight = new THREE.AmbientLight(0xffffff, 1.8);

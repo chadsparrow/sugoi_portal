@@ -163,4 +163,17 @@ router.get("/:id", (req, res) => {
   });
 });
 
+router.get(
+  "/qc/:orderNum",
+  [ensureAuthenticated, ensureEditProofs],
+  (req, res) => {
+    Proof.find({ orderNum: req.params.orderNum }, (err, foundProofs) => {
+      if (err) throw err;
+      res.render("proofs/qc", {
+        foundProofs
+      });
+    });
+  }
+);
+
 module.exports = router;

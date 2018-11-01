@@ -65,11 +65,11 @@
                 {{#each (getInstructions order.instructions)}}
                 <li>
                   <div class="collapsible-header valign-wrapper {{{catNotes this.instructionType}}}">
-                    <div class="col s9 left-align valign-wrapper">
+                    <div class="col s9 valign-wrapper">
                       <i class="material-icons left">expand_more</i>{{formatDate this.date "MM/DD/YYYY"}} -
                       {{this.user}} - {{this.instructionType}}
                     </div>
-                    <div class="col s3 right-align valign-wrapper">
+                    <div class="col s3 valign-wrapper">
                       <a class="white-text" href="/orders/note-edit/{{this._id}}">
                         <i class="material-icons right">edit</i>
                       </a>
@@ -128,7 +128,7 @@
         <!-- CARD END -->
         {{else}}
         <span class="center-align grey-text" style="margin-top: 40px; font-weight:100; font-size:3rem;">
-          <p>Proofs available soon!</p>
+          <p>Proofs not available</p>
         </span>
         {{/each}}
       </div>
@@ -145,7 +145,8 @@
     <ul>
       {{#if user.editProofs}}
       {{#if (checkForQCStatus order.currentStatus)}}
-      <li><a class="btn-floating red tooltipped" data-position="left" data-tooltip="QC Order"><i class="material-icons">touch_app</i></a></li>
+      <li><a href="/proofs/qc/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left" data-tooltip="QC Order"><i
+            class="material-icons">touch_app</i></a></li>
       {{/if}}
       {{/if}}
       <li>
@@ -244,3 +245,5 @@
     </div>
   </div>
 </div>
+
+<div id="backButton"><a href="javascript:history.back()"><i class="material-icons large">chevron_left</i></a></div>

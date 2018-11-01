@@ -115,7 +115,7 @@ app.use((req, res, next) => {
 // Set static folder
 app.use(
   express.static(path.join(__dirname, "public"), {
-    maxage: "1m"
+    //maxage: "1m"
   })
 );
 

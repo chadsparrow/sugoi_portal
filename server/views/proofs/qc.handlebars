@@ -1,0 +1,26 @@
+<div class="container">
+  <ul class="collapsible" style="margin-top: 20px !important; max-height: 600px; overflow-y: auto;">
+    {{#each foundProofs}}
+    <li>
+      {{#if hasQCNote}}
+      <div class="collapsible-header red white-text" style="font-size: 18px; padding: 15px; display: block;"><span>{{itemNumber}}
+          -
+          {{styleNumber}}</span><i class="material-icons right">
+          create
+        </i></div>
+      <div class="collapsible-body"><small>{{formatDate qcnote.noteDate
+          "MM/DD/YYYY"}} -
+          {{qcnote.noteUser}}</small><span>QC Note Here</span>
+      </div>
+      {{else}}
+      <div class="collapsible-header green white-text" style="font-size: 18px; padding: 15px; display: block;"><span>{{itemNumber}}
+          -
+          {{styleNumber}}</span><i class="material-icons right">
+          create
+        </i></div>
+      <div class="collapsible-body"><span>No additional changes required</span></div>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</div>

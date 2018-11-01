@@ -182,7 +182,7 @@ ul.collapsible > li {
   align-items: center;
   justify-content: center;
   background-color: white;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 1);
   z-index: 50;
 }
 .myFilter {
@@ -298,28 +298,44 @@ div.dt-buttons {
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
+@media screen and (max-width: 450px) {
   .sidebar {
-    padding-top: 15px;
+    padding-top: 60px;
   }
   .sidebar a {
-    font-size: 18px;
+    padding: 3px 18px;
+  }
+  div#resetButton {
+    justify-content: left;
+  }
+
+  div#rotateCamera,
+  div#panCamera,
+  div#zoomCamera {
+    display: none;
   }
 }
 
-#resetButton {
+div#resetButton {
   position: fixed; /* Stay in place */
   z-index: 2; /* Stay on top */
-  bottom: 25px;
-  left: 25px;
+  bottom: 15px;
+  left: 15px;
   font-size: 12px;
-  padding: 10px;
+  justify-content: center;
+}
+
+div#resetButton img {
+  width: 20px;
+  height: 20px;
+  margin: 7px;
+  vertical-align: middle;
 }
 
 #backButton {
   position: absolute;
   z-index: 2;
-  top: 70px;
+  top: 60px;
 }
 
 #backButton a {
