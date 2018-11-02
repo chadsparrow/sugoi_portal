@@ -183,6 +183,10 @@ ul.collapsible > li {
   width: 95vw;
   margin: 0 auto;
 }
+#paymentTable_wrapper.dataTables_wrapper {
+  width: 95vw;
+  margin: 0 auto;
+}
 
 #orderTable_wrapper.dataTables_wrapper {
   width: 85vw;

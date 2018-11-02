@@ -26,6 +26,7 @@ const orderRoutes = require("./routes/orders");
 const indexRoutes = require("./routes/index");
 const prodRoutes = require("./routes/prod");
 const proofRoutes = require("./routes/proofs");
+const paymentRoutes = require("./routes/payments");
 
 // Handlebars Helpers
 const {
@@ -141,6 +142,7 @@ app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
 app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);
+app.use("/payments", paymentRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Resource Not Found");
