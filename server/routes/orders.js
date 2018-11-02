@@ -74,6 +74,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let totalLeadTime = 0;
   let jbaPONum = "";
   let jbaGNRNum = "";
+  let jbaInvoiceNum = "";
 
   if (instruction) {
     instructions.push({
@@ -112,7 +113,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         shippingLeadTime: shippingLeadTime,
         totalLeadTime: totalLeadTime,
         jbaPONum: jbaPONum,
-        jbaGNRNum: jbaGNRNum
+        jbaGNRNum: jbaGNRNum,
+        jbaInvoiceNum: jbaInvoiceNum
       });
 
       newOrder
@@ -189,11 +191,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
         foundOrder.currentArtist = currentArtist;
 
-        if (currentStatus === "U. Uploaded") {
+        if (foundOrder.currentStatus === "U. Uploaded") {
           foundOrder.uploadDate = Date.now();
           foundOrder.sentVendor = null;
-        } else if (currentStatus === "V. Sent to Vendor") {
+        } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = Date.now();
+          foundOrder.shipStatus = "In Production";
         }
       }
 

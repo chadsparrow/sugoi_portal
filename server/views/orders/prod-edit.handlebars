@@ -88,25 +88,28 @@
                   <label for="vendorConfirmShip">Confirmed Ship Date:</label>
                 </div>
 
-                <div class="input-field col s12 l6">
+                <div class="input-field col s12 l4">
                   <input type="text" name="jbaPONum" value="{{order.jbaPONum}}">
                   <label for="jbaPONum">JBA PO #:</label>
                 </div>
-                <div class="input-field col s12 l6">
+                <div class="input-field col s12 l4">
                   <input type="text" name="jbaGNRNum" value="{{order.jbaGNRNum}}">
                   <label for="jbaGNRNum">JBA GNR #:</label>
+                </div>
+                <div class="input-field col s12 l4">
+                  <input type="text" name="jbaInvoiceNum" value="{{order.jbaInvoiceNum}}">
+                  <label for="jbaInvoiceNum">JBA Invoice #:</label>
                 </div>
               </div>
               <div class="col s12 m6">
                 <div class="row">
-                  <div class="col s12">
-                    <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "MM/DD/YYYY"}}
+                  <div class="col s12 black white-text" style="padding: 10px; margin-bottom: 10px;">
+                    <span>Sent to Vendor:</span> {{formatDate order.sentVendor "MM/DD/YYYY"}}
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="shipStatus" value="{{order.shipStatus}}">
                     <label for="shipStatus">Vendor Shipping Status:</label>
                   </div>
-
                   <div class="col s12" style="margin-bottom: 5px;">
                     <h6 class="black white-text" style="padding: 5px;">Shipping Information</h6>
                   </div>

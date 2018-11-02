@@ -146,6 +146,9 @@ const OrderSchema = new Schema({
   jbaGNRNum: {
     type: String
   },
+  jbaInvoiceNum: {
+    type: String
+  },
   shippingNotes: {
     type: String
   },
@@ -157,6 +160,36 @@ const OrderSchema = new Schema({
   },
   totalLeadTime: {
     type: Number
+  },
+  approvedTerms: {
+    type: String
+  },
+  onTermPayment: {
+    type: Number
+  },
+  kitOrderPayment: {
+    type: Number
+  },
+  isrCollectedOrig: {
+    type: Number
+  },
+  isrCollectedCAD: {
+    type: Number
+  },
+  isrPaymentDate: {
+    type: Date
+  },
+  isrPaymentType: {
+    type: String
+  },
+  paymentNotes: {
+    type: String
+  },
+  balanceOutstanding: {
+    type: Number
+  },
+  paymentStatus: {
+    type: String
   }
 });
 

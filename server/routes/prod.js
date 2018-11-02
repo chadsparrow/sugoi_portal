@@ -15,7 +15,9 @@ const Order = require("../models/Order");
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN PROD TABLE
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
 router.get("/", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  Order.find().then(orders => {
+  Order.find({
+    currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] }
+  }).then(orders => {
     res.render("orders/prod", {
       orders
     });
@@ -47,6 +49,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     vendorConfirmShip,
     jbaPONum,
     jbaGNRNum,
+    jbaInvoiceNum,
     shipStatus,
     tracking,
     confirmDeliveryDate,
@@ -100,6 +103,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       foundOrder.jbaPONum = jbaPONum;
       foundOrder.jbaGNRNum = jbaGNRNum;
+      foundOrder.jbaInvoiceNum = jbaInvoiceNum;
       foundOrder.shipStatus = shipStatus;
       foundOrder.shippingNotes = shippingNotes;
 
