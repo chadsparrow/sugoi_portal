@@ -77,7 +77,7 @@ const OrderSchema = new Schema({
       },
       instructionType: {
         type: String,
-        enum: ["Initial", "Revision", "QC", "Note", "System"]
+        enum: ["Initial", "Revision", "Note", "System"]
       },
       user: {
         type: String

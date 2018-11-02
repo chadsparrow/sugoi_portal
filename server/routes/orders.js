@@ -45,20 +45,22 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  let orderNum = req.body.orderNum;
+  let {
+    orderNum,
+    accountNum,
+    priority,
+    currentStatus,
+    eventDate,
+    latestInHand,
+    isr,
+    client,
+    instruction,
+    vendor
+  } = req.body;
   orderNum = orderNum.toString();
-  let accountNum = req.body.accountNum;
-  let priority = req.body.priority;
-  let currentStatus = req.body.currentStatus;
-  let eventDate = req.body.eventDate;
-  let latestInHand = req.body.latestInHand;
-  let isr = req.body.isr;
   isr = isr.toUpperCase();
-  let client = req.body.client;
-  let instruction = req.body.instruction;
   let instructions = [];
   let currentArtist = "";
-  let vendor = req.body.vendor;
   let qty = 0;
   let netValue = 0;
   let markEvent = "";
@@ -158,13 +160,15 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let id = req.params.id;
-  let client = req.body.client;
-  let priority = req.body.priority;
-  let currentArtist = req.body.currentArtist;
-  let currentStatus = req.body.currentStatus;
-  let eventDate = req.body.eventDate;
-  let latestInHand = req.body.latestInHand;
-  let vendor = req.body.vendor;
+  let {
+    client,
+    priority,
+    currentArtist,
+    currentStatus,
+    eventDate,
+    latestInHand,
+    vendor
+  } = req.body;
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
@@ -172,14 +176,27 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       foundOrder.client = client;
       foundOrder.priority = priority;
-      foundOrder.currentArtist = currentArtist;
-      if (currentStatus === "U. Uploaded") {
-        foundOrder.uploadDate = Date.now();
-        foundOrder.sentVendor = null;
-      } else if (currentStatus === "V. Sent to Vendor") {
-        foundOrder.sentVendor = Date.now();
+      if (currentStatus === foundOrder.currentStatus) {
+        foundOrder.currentArtist = currentArtist;
+      } else {
+        foundOrder.currentStatus = currentStatus;
+        if (
+          foundOrder.currentStatus === "A. Waiting for Proof" ||
+          foundOrder.currentStatus === "G. Waiting for Revision" ||
+          foundOrder.currentStatus == "M. Waiting for Output"
+        ) {
+          currentArtist = "";
+        }
+        foundOrder.currentArtist = currentArtist;
+
+        if (currentStatus === "U. Uploaded") {
+          foundOrder.uploadDate = Date.now();
+          foundOrder.sentVendor = null;
+        } else if (currentStatus === "V. Sent to Vendor") {
+          foundOrder.sentVendor = Date.now();
+        }
       }
-      foundOrder.currentStatus = currentStatus;
+
       foundOrder.eventDate = eventDate;
       foundOrder.latestInHand = latestInHand;
       foundOrder.vendor = vendor;
@@ -189,7 +206,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           console.log(err);
         } else {
           req.flash("success_msg", "Order Updated");
-          res.redirect("/orders/view/" + id);
+          res.redirect("/orders");
         }
       });
     }
@@ -260,6 +277,7 @@ router.put(
     let revUser = req.body.isr;
     revUser = revUser.toUpperCase();
     let currentStatus = "G. Waiting for Revision";
+    let currentArtist = "";
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
@@ -269,7 +287,8 @@ router.put(
           foundOrder.instructions.push({
             instruction: instruction,
             instructionType: instructionType,
-            user: revUser
+            user: revUser,
+            currentArtist: currentArtist
           });
 
           foundOrder.currentStatus = currentStatus;

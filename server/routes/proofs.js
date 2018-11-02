@@ -94,6 +94,13 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
               fse
                 .readJson(jsonFile)
                 .then(jsonData => {
+                  if (jsonData.gender === "Womens") {
+                    let gender = "Women's";
+                  } else if (jsonData.gender === "Mens") {
+                    let gender = "Men's";
+                  } else {
+                    let gender = jsonData.gender;
+                  }
                   const newProof = new Proof({
                     orderNum: jsonData.orderNum,
                     client: jsonData.client,
@@ -101,7 +108,7 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
                     itemNumber: jsonData.itemNumber,
                     styleNumber: jsonData.styleNumber,
                     styleName: jsonData.styleName,
-                    gender: jsonData.gender,
+                    gender: gender,
                     sizes: jsonData.sizes,
                     fabric: jsonData.fabric,
                     styleCollection: jsonData.styleCollection,

@@ -38,5 +38,7 @@ module.exports = {
     if (req.user.editProofs == true) {
       return next();
     }
+    req.flash("error_msg", "Not Authorized");
+    res.redirect("/users/login");
   }
 };

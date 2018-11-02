@@ -112,7 +112,7 @@ ul.collapsible > li {
 
 .card.small {
   width: 100%;
-  height: 390px !important;
+  height: 380px !important;
 }
 
 #infoFooter {
@@ -137,7 +137,7 @@ ul.collapsible > li {
 #proofWindow {
   display: grid;
   grid-gap: 0px 20px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 225px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 260px));
   grid-auto-flow: row;
   justify-content: center;
   margin-bottom: 10px;
@@ -334,8 +334,4 @@ div#resetButton img {
 
 #backButton a:hover {
   color: #444;
-}
-
-svg {
-  width: 100%;
 }

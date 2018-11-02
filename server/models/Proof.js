@@ -39,10 +39,6 @@ const ProofSchema = new Schema({
     type: String,
     required: true
   },
-  styleCollection: {
-    type: String,
-    required: true
-  },
   fit: {
     type: String,
     required: true
