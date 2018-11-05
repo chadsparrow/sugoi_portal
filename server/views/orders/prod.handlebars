@@ -16,8 +16,8 @@
 
 <div style="margin-top: 20px; margin-bottom: 50px;">
   <table class="display nowrap" id="prodTable">
-    <thead>
-      <tr class="center-align">
+    <thead class="valign-wrapper">
+      <tr>
         <th>Order</th>
         <th>Client</th>
         <th>Account #</th>
@@ -50,7 +50,7 @@
     <tbody>
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px; background-color: black; color: white;">{{orderNum}}</td>
+        <td class="center-align" style="font-size: 12px; background-color: black; color: white;">{{orderNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{accountNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{qty}}</td>
