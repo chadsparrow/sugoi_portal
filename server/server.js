@@ -51,7 +51,7 @@ mongoose
       useNewUrlParser: true
     }
   )
-  .then(() => console.log("MongoDB Connected..."))
+  .then(() => console.log("MongoDB Connected on port 27017..."))
   .catch(err => console.log(err));
 
 mongoose.set("useFindAndModify", false);
