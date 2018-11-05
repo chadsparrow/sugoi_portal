@@ -4,6 +4,17 @@ const fse = require("fs-extra");
 const multer = require("multer");
 const path = require("path");
 const StreamZip = require("node-stream-zip");
+const winston = require("winston");
+const LogzioWinstonTransport = require("winston-logzio");
+const logzioWinstonTransport = new LogzioWinstonTransport({
+  level: "info",
+  name: "custom-proofs",
+  token: "rmcJlRvMcLYYBkfkKwQlHzvsnDtUtWLO"
+});
+
+const logger = winston.createLogger({
+  transports: [logzioWinstonTransport]
+});
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
@@ -133,12 +144,12 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
 
                   newProof.save(function(err, updateProof) {
                     if (err) {
-                      console.log(err);
+                      logger.log("error", err);
                     }
                   });
                 })
                 .catch(err => {
-                  console.log(err);
+                  logger.log("error", err);
                 });
             });
             req.flash("success_msg", "Proof Uploaded");
@@ -218,7 +229,7 @@ router.put(
       { hasQCNote: hasQCNote, qcnote: qcnote },
       function(err, updatedProof) {
         if (err) {
-          console.log(err);
+          logger.log("error", err);
         } else {
           req.flash("success_msg", "Proof QC Updated");
           res.redirect("/proofs/qc/" + updatedProof.orderNum);
@@ -235,7 +246,7 @@ router.get(
     const id = req.params.id;
     Proof.findOne({ _id: id }, function(err, foundProof) {
       if (err) {
-        console.log(err);
+        logger.log("error", err);
       } else {
         foundProof.hasQCNote = false;
         const qcnote = foundProof.qcnote;
@@ -248,7 +259,7 @@ router.get(
 
         foundProof.save(function(err, updatedProof) {
           if (err) {
-            console.log(err);
+            logger.log("error", err);
           } else {
             req.flash("success_msg", "Proof QC Archived");
             res.redirect("/proofs/qc/" + updatedProof.orderNum);

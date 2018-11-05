@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const DateDiff = require("date-diff");
 const moment = require("moment");
+const winston = require("winston");
+const LogzioWinstonTransport = require("winston-logzio");
+const logzioWinstonTransport = new LogzioWinstonTransport({
+  level: "info",
+  name: "custom-proofs",
+  token: "rmcJlRvMcLYYBkfkKwQlHzvsnDtUtWLO"
+});
+
+const logger = winston.createLogger({
+  transports: [logzioWinstonTransport]
+});
 
 const {
   ensureAuthenticated,
@@ -60,7 +71,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      console.log(err);
+      logger.log("error", err);
     } else {
       foundOrder.qty = qty;
       foundOrder.netValue = netValue;
@@ -115,7 +126,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          console.log(err);
+          logger.log("error", err);
         } else {
           req.flash("success_msg", "Order Production Updated");
           res.redirect("/prod");

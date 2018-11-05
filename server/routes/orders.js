@@ -1,5 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const winston = require("winston");
+const LogzioWinstonTransport = require("winston-logzio");
+const logzioWinstonTransport = new LogzioWinstonTransport({
+  level: "info",
+  name: "custom-proofs",
+  token: "rmcJlRvMcLYYBkfkKwQlHzvsnDtUtWLO"
+});
+
+const logger = winston.createLogger({
+  transports: [logzioWinstonTransport]
+});
 
 const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
@@ -61,8 +72,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   isr = isr.toUpperCase();
   let instructions = [];
   let currentArtist = "";
-  let qty = 0;
-  let netValue = 0;
   let markEvent = "";
   let multishipPrePack = "";
   let shipStatus = "";
@@ -122,7 +131,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           res.redirect("/orders");
         })
         .catch(err => {
-          console.log(err);
+          logger.log(err);
           return;
         });
     }
@@ -172,7 +181,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      console.log(err);
+      logger.log("error", err);
     } else {
       foundOrder.client = client;
       foundOrder.priority = priority;
@@ -204,7 +213,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          console.log(err);
+          logger.log("error", err);
         } else {
           req.flash("success_msg", "Order Updated");
           res.redirect("/orders");
@@ -252,7 +261,7 @@ router.put(
 
         foundOrder.save(function(err, updatedOrder) {
           if (err) {
-            console.log(err);
+            logger.log("error", err);
           } else {
             req.flash("success_msg", "Note Updated");
             res.redirect("/orders/view/" + id);
@@ -282,7 +291,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        console.log(err);
+        logger.log("error", err);
       } else {
         if (instruction) {
           foundOrder.instructions.push({
@@ -296,7 +305,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              console.log(err);
+              logger.log("error", err);
             } else {
               req.flash("success_msg", "Revision Requested");
               res.redirect("/orders/view/" + id);
@@ -325,7 +334,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        console.log(err);
+        logger.log("error", err);
       } else {
         if (instruction) {
           foundOrder.instructions.push({
@@ -336,7 +345,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              console.log(err);
+              logger.log("error", err);
             } else {
               req.flash("success_msg", "Note Added");
               res.redirect("/orders/view/" + id);

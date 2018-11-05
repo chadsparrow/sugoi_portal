@@ -5,8 +5,7 @@
 ############################################################################
 filebeat:
   prospectors:
-    -
-      paths:
+    - paths:
         - /logs/apache2/error.log
       fields:
         logzio_codec: plain
@@ -18,8 +17,7 @@ filebeat:
       fields_under_root: true
       ignore_older: 3h
       scan_frequency: 1s
-    -
-      paths:
+    - paths:
         - /logs/apache2/access.log
       fields:
         logzio_codec: plain
@@ -35,4 +33,4 @@ output:
   logstash:
     hosts: ["listener.logz.io:5015"]
     ssl:
-      certificate_authorities: ['/certificate.crt']
+      certificate_authorities: ["/certificate.crt"]
