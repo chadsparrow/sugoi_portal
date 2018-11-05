@@ -128,6 +128,31 @@ $(document).ready(function() {
         targets: 3,
         data: "netValue",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 10,
+        data: "onTermPayment",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 11,
+        data: "kitOrderPayment",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 12,
+        data: "isrCollectedOrig",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 13,
+        data: "isrCollectedCAD",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 18,
+        data: "balanceOutstanding",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
     scrollX: true,
@@ -205,27 +230,6 @@ $(document).ready(function() {
     dom: "lrftip"
   });
 
-  $("#accountNum").keydown(function(e) {
-    // Allow: backspace, delete, tab, escape, enter and .
-    if (
-      $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
-      // Allow: Ctrl+A, Command+A
-      (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-      // Allow: home, end, left, right, down, up
-      (e.keyCode >= 35 && e.keyCode <= 40)
-    ) {
-      // let it happen, don't do anything
-      return;
-    }
-    // Ensure that it is a number and stop the keypress
-    if (
-      (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
-      (e.keyCode < 96 || e.keyCode > 105)
-    ) {
-      e.preventDefault();
-    }
-  });
-
   $("#orderNum").keydown(function(e) {
     // Allow: backspace, delete, tab, escape, enter and .
     if (
@@ -246,4 +250,30 @@ $(document).ready(function() {
       e.preventDefault();
     }
   });
+
+  var validChars = "$£€c" + "0123456789" + ".-,()'";
+  // Init the regex just once for speed - it is "closure locked"
+  var str = jQuery.fn.dataTableExt.oApi._fnEscapeRegex(validChars),
+    re = new RegExp("[^" + str + "]");
+  $.fn.dataTableExt.aTypes.unshift(function(data) {
+    if (typeof data !== "string" || re.test(data)) {
+      return null;
+    }
+    return "currency";
+  });
+  $.fn.dataTable.ext.type.order["currency-pre"] = function(data) {
+    //Check if its in the proper format
+    if (data.match(/[\()]/g)) {
+      if (data.match(/[\-]/g) !== true) {
+        //It matched - strip out parentheses & any characters we dont want and append - at front
+        data = "-" + data.replace(/[\$£€c\(\),]/g, "");
+      } else {
+        //Already has a '-' so just strip out non-numeric charactors exluding '-'
+        data = data.replace(/[^\d\-\.]/g, "");
+      }
+    } else {
+      data = data.replace(/[\$£€\,]/g, "");
+    }
+    return parseInt(data, 10);
+  };
 });

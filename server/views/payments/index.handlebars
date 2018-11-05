@@ -26,17 +26,17 @@
         <th>Created By</th>
         <th>Sent to Vendor</th>
         <th>Status</th>
-        <th>Conf. Ship Date</th>
+        <th>Confirmed Ship Date</th>
         <th>Approved Terms</th>
-        <th>On Term Payment - Finance to Track - Original Currency</th>
-        <th>KitOrder Payment Collected - Original Currency</th>
-        <th>ISR Payment Collected - Original Currency</th>
-        <th>ISR Payment Colelcted - CAD Currency (USD Orders)</th>
+        <th>On Term Payment<br><small>(Finance to Track)<br>(Original Currency)</small></th>
+        <th>KitOrder Payment Collected<br><small>(Original Currency)</small></th>
+        <th>ISR Payment Collected<br><small>(Original Currency)</small></th>
+        <th>ISR Payment Collected<br><small>(CAD Currency)<br>(USD Orders)</small></th>
         <th>ISR Payment Date</th>
         <th>ISR Payment Type</th>
         <th>Notes</th>
         <th>JBA Invoice #</th>
-        <th>Balance Outstanding - Original Currency</th>
+        <th>Balance Outstanding<br><small>(Original Currency)</small></th>
         <th>Payment Status</th>
         <th></th>
       </tr>
@@ -45,15 +45,17 @@
       {{#each orders}}
       <tr>
         <td style="font-size: 12px; background-color: black; color: white;">{{orderNum}}</td>
-        <td style="font-size: 12px;" class="center-align">{{client}}</td>
-        <td style="font-size: 12px;" class="center-align">{{qty}}</td>
-        <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
-        <td style="font-size: 12px;" class="center-align">{{currency}}</td>
-        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{client}}</td>
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{qty}}</td>
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{netValue}}</td>
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{currency}}</td>
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{isr}}</td>
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{#if
+          sentVendor}}{{formatDate sentVendor
           "MM/DD/YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{shipStatus}}</td>
+        <td style="font-size: 12px;" class="center-align grey lighten-2">{{#if
+          vendorConfirmShip}}{{formatDate vendorConfirmShip
           "MM/DD/YYYY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{approvedTerms}}</td>
         <td style="font-size: 12px;" class="center-align">{{onTermPayment}}</td>
@@ -65,12 +67,12 @@
         <td style="font-size: 12px;" class="center-align">{{isrPaymentType}}</td>
         <td style="font-size: 12px;" class="center-align">{{paymentNotes}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>
-        <td style="font-size: 12px;" class="center-align">{{balanceOutstanding}}</td>
-        <td style="font-size: 12px;" class="center-align">{{paymentStatus}}</td>
+        <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{balanceOutstanding}}</td>
+        <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{paymentStatus}}</td>
         <td style="font-size: 12px;" class="center-align">
           <span>
             {{#if ../user.editOrders}}
-            <a class="green-text btn-flat" href="#">
+            <a class="green-text btn-flat" href="/payments/edit/{{_id}}">
               <i class="material-icons">edit</i>
             </a>
             {{/if}}

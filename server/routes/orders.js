@@ -101,8 +101,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         instructions: instructions,
         currentArtist: currentArtist,
         vendor: vendor,
-        qty: qty,
-        netValue: netValue,
         markEvent: markEvent,
         multishipPrePack: multishipPrePack,
         shipStatus: shipStatus,

@@ -1,0 +1,124 @@
+<div class="container">
+  <section class="section">
+    <form action="/payments/edit/{{order._id}}?_method=PUT" method="post">
+      <input type="hidden" name="_method" value="PUT">
+      <div class="row">
+        <div class="card col s12">
+          <div class="card-content">
+            <span class="card-title">Edit Payment Details</span>
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="col s12 grey lighten-3" style="padding: 0px 20px; font-size: 12px; margin-bottom: 10px;">
+                  <h6>Order Information:</h6>
+                  <hr>
+                  <div class="row">
+                    <div class="col s12 m4">
+                      <span class="grey-text">Order #: </span>{{order.orderNum}}
+                    </div>
+                    <div class="col s12 m8">
+                      <span class="grey-text">Client: </span>{{order.client}}
+                    </div>
+                    <div class="col s12 m4">
+                      <span class="grey-text">Account #: </span>{{order.accountNum}}
+                    </div>
+                    <div class="col s12 m8">
+                      <span class="grey-text">ISR: </span>{{order.isr}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 m4">
+                      <span class="grey-text">Qty: </span>{{order.qty}}
+                    </div>
+                    <div class="col s12 m4">
+                      <span class="grey-text">Total Value: $ </span>{{order.netValue}}
+                    </div>
+                    <div class="col s12 m4">
+                      <span class="grey-text">Currency: </span>{{order.currency}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12">
+                      <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "MM/DD/YYYY"}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 m4">
+                      <span class="grey-text">Conf. Ship Date: </span>{{formatDate order.vendorConfirmShip
+                      "MM/DD/YYYY"}}
+                    </div>
+                    <div class="col s12 m4">
+                      <span class="grey-text">Status: </span>{{order.shipStatus}}
+                    </div>
+                  </div>
+                  <div class="row black white-text" style="padding: 5px; margin-bottom: 10px;">
+                    <div class="col s12 m4">
+                      <span>JBA Invoice #: </span>{{order.jbaInvoiceNum}}
+                    </div>
+                    <div class="col s12 m8">
+                      <span>Balance: $ </span>{{order.balanceOutstanding}}
+                    </div>
+                    <div class="col s12" style="padding-top: 10px;">
+                      <span>Payment Status: </span>{{order.paymentStatus}}
+                    </div>
+                  </div>
+                </div>
+                <div class="input-field col s12">
+                  <input type="text" name="approvedTerms" value="{{order.approvedTerms}}">
+                  <label for="approvedTerms">Approved Terms:</label>
+                </div>
+                <div class="input-field col s12">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="onTermPayment" value="{{order.onTermPayment}}">
+                  <label for="onTermPayment">On Term Payment - Finance to Track (Original Currency):</label>
+                </div>
+                <div class="input-field col s12">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="kitOrderPayment" value="{{order.kitOrderPayment}}">
+                  <label for="kitOrderPayment">Kit Order Payment Collected (Original Currency):</label>
+                </div>
+              </div>
+              <div class="col s12 m6">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrCollectedOrig" value="{{order.isrCollectedOrig}}">
+                    <label for="isrCollectedOrig">ISR Payment Collected (Original Currency):</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrCollectedCAD" value="{{order.isrCollectedCAD}}">
+                    <label for="isrCollectedCAD">Kit Order Payment Collected (CAD Currency - USD Order):</label>
+                  </div>
+                  <div class="input-field col s12 l6">
+                    <input type="text" class="input-date" name="isrPaymentDate" id="isrPaymentDate" value="{{formatDate order.isrPaymentDate "MM/DD/YYYY"}}">
+                    <label for="isrPaymentDate">ISR Payment Date (exc. Kit Order):</label>
+                  </div>
+                  <div class="input-field col s12 l6">
+                    <select name="isrPaymentType">
+                      {{#select order.isrPaymentType}}
+                      <option value=""></option>
+                      <option value="CHEQUE">CHEQUE</option>
+                      <option value="VISA">VISA</option>
+                      <option value="MASTER">MASTER</option>
+                      <option value="AMEX">AMEX</option>
+                      {{/select}}
+                    </select>
+                    <label for="isrPaymentType">ISR Payment Type (exc. Kit Order):</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea name="paymentNotes" class="materialize-textarea">{{order.paymentNotes}}</textarea>
+                    <label for="paymentNotes">Payment Notes:</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-action center-align">
+              <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+                  class="fas fa-check-square"></i>
+                Submit
+              </button>
+              <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
+                  class="fas fa-times"></i>
+                Cancel</a>
+            </div>
+          </div>
+        </div>
+    </form>
+  </section>
+</div>

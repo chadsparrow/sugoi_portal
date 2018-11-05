@@ -12,14 +12,14 @@
           <li>
             <a href="/orders"><i class="fas fa-box-open"></i> Orders</a>
           </li>
-          {{#if user.editOrders}}
-          <li>
-            <a href="/payments"><i class="fas fa-file-invoice-dollar"></i> Payments</a>
-          </li>
-          {{/if}}
           {{#if user.viewProd}}
           <li>
             <a href="/prod"><i class="fas fa-calendar-check"></i> Production</a>
+          </li>
+          {{/if}}
+          {{#if user.editOrders}}
+          <li>
+            <a href="/payments"><i class="fas fa-file-invoice-dollar"></i> Payments</a>
           </li>
           {{/if}}
           <li>
@@ -68,16 +68,16 @@
   <li>
     <a href="/orders"><i class="material-icons">color_lens</i>Orders</a>
   </li>
-  {{#if user.editOrders}}
-  <li>
-    <a href="/payments"><i class="material-icons">attach_money</i>Payments</a>
-  </li>
-  {{/if}}
   {{#if user.viewProd}}
   <li>
     <a href="/prod"><i class="material-icons">
         assignment_turned_in
       </i> Production</a>
+  </li>
+  {{/if}}
+  {{#if user.editOrders}}
+  <li>
+    <a href="/payments"><i class="material-icons">attach_money</i>Payments</a>
   </li>
   {{/if}}
   <li class="divider"></li>

@@ -339,3 +339,7 @@ div#resetButton img {
 #backButton a:hover {
   color: #444;
 }
+
+label {
+  font-size: 14px !important;
+}

@@ -135,5 +135,18 @@ module.exports = {
         return "grey lighten-1";
         break;
     }
+  },
+  setPaymentStatus: function(paymentStatus) {
+    switch (paymentStatus) {
+      case "Balance Outstanding":
+        return "red lighten-4";
+        break;
+      case "Complete":
+        return "green lighten-4";
+        break;
+      case "Refund Customer":
+        return "amber lighten-2";
+        break;
+    }
   }
 };

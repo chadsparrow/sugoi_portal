@@ -15,13 +15,6 @@ const StyleSchema = new Schema({
     type: String,
     required: true
   },
-  LGstyleNum: {
-    type: String,
-    required: true
-  },
-  personalized: {
-    type: Boolean
-  },
   prdgrp: {
     type: String,
     required: true
@@ -45,9 +38,6 @@ const StyleSchema = new Schema({
   styleNum: {
     type: String,
     required: true
-  },
-  fluo: {
-    type: Boolean
   }
 });
 

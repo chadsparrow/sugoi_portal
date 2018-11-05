@@ -64,6 +64,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     } else {
       foundOrder.qty = qty;
       foundOrder.netValue = netValue;
+      foundOrder.balanceOutstanding = netValue;
       foundOrder.currency = currency;
       if (latestShipDate) {
         foundOrder.latestShipDate = latestShipDate;

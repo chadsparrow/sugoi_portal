@@ -19,33 +19,23 @@
     <thead>
       <tr>
         <th>Style #</th>
+        <th>Gender</th>
         <th>Collection</th>
         <th>Style Name</th>
         <th>Brand</th>
         <th>Sizes</th>
-        <th class="center-align">FLUO</th>
-        <th class="center-align">PRS</th>
       </tr>
     </thead>
-    <tbody id="myTable">
+    <tbody>
       {{#each styles}}
       <tr>
         <td style="font-size: 12px;">{{styleNum}}</td>
+        <td style="font-size: 12px;">{{gender}}</td>
         <td style="font-size: 12px;">{{stylecollection}}</td>
         <td style="font-size: 12px;">{{styleName}}</td>
         <td style="font-size: 12px;">{{brand}}</td>
         <td style="font-size: 12px;"><span class="new badge" data-badge-caption=""><span>{{#each sizing}}{{this}}
               {{/each}}</span></span></td>
-        {{#if fluo}}
-        <td class="center-align" style="font-weight: bold;">X</td>
-        {{else}}
-        <td></td>
-        {{/if}}
-        {{#if personalized}}
-        <td class="center-align" style="font-weight: bold;">X</td>
-        {{else}}
-        <td></td>
-        {{/if}}
       </tr>
       {{/each}}
     </tbody>
