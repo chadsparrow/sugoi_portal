@@ -1,16 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const winston = require("winston");
-const LogzioWinstonTransport = require("winston-logzio");
-const logzioWinstonTransport = new LogzioWinstonTransport({
-  level: "info",
-  name: "custom-proofs",
-  token: "rmcJlRvMcLYYBkfkKwQlHzvsnDtUtWLO"
-});
-
-const logger = winston.createLogger({
-  transports: [logzioWinstonTransport]
-});
 
 const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
@@ -49,7 +38,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      logger.log("error", err);
+      console.log(err);
+      return;
     } else {
       foundOrder.approvedTerms = approvedTerms;
       foundOrder.onTermPayment = onTermPayment;
@@ -75,7 +65,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          logger.log("error", err);
+          console.log(err);
+          return;
         } else {
           req.flash("success_msg", "Payment Updated");
           res.redirect("/payments/");

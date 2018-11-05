@@ -15,22 +15,10 @@ const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
 const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
-const winston = require("winston");
-const LogzioWinstonTransport = require("winston-logzio");
 
 // initializes the app using express
 const app = express();
 app.use(helmet());
-
-const logzioWinstonTransport = new LogzioWinstonTransport({
-  level: "info",
-  name: "custom-proofs",
-  token: "rmcJlRvMcLYYBkfkKwQlHzvsnDtUtWLO"
-});
-
-const logger = winston.createLogger({
-  transports: [logzioWinstonTransport]
-});
 
 // Load Routes
 const userRoutes = require("./routes/users");
@@ -64,7 +52,7 @@ mongoose
     }
   )
   .then(() => console.log("MongoDB Connected on port 27017..."))
-  .catch(err => logger.log(err));
+  .catch(err => console.log(err));
 
 mongoose.set("useFindAndModify", false);
 
@@ -169,7 +157,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  logger.log("error", error);
+  console.log(error);
   res.status(error.status || 500);
   res.render("error", { error });
 });
@@ -185,5 +173,5 @@ const port = process.env.APP_PORT || 3000;
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
-  logger.log(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
+  console.log(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
 });

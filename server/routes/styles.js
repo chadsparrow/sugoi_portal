@@ -1,16 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const winston = require("winston");
-const LogzioWinstonTransport = require("winston-logzio");
-const logzioWinstonTransport = new LogzioWinstonTransport({
-  level: "info",
-  name: "custom-proofs",
-  token: "rmcJlRvMcLYYBkfkKwQlHzvsnDtUtWLO"
-});
-
-const logger = winston.createLogger({
-  transports: [logzioWinstonTransport]
-});
 
 // includes model for mongodb
 const Style = require("../models/Style");
@@ -25,7 +14,7 @@ router.get("/", (req, res) => {
       });
     })
     .catch(err => {
-      logger.log("error", err);
+      console.log(err);
       req.flash("error_msg", err);
       res.redirect("/user/login");
     });
