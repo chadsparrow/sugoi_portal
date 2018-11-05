@@ -55,7 +55,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         kitOrderPayment -
         isrCollectedOrig;
       foundOrder.balanceOutstanding = parseInt(balanceOutstanding);
-      console.log(foundOrder.balanceOutstanding);
       if (foundOrder.balanceOutstanding > 0) {
         foundOrder.paymentStatus = "Balance Outstanding";
       } else if (foundOrder.balanceOutstanding == 0) {
