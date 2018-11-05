@@ -6,6 +6,7 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const flash = require("connect-flash");
 const session = require("express-session");
+const MemoryStore = require("memorystore")(session);
 const exphbs = require("express-handlebars");
 const path = require("path");
 const https = require("https");
@@ -93,6 +94,9 @@ app.use(flash());
 // Express Session middleware
 app.use(
   session({
+    store: new MemoryStore({
+      checkPeriod: 86400000 //prune expired entries every 24h
+    }),
     secret: "s3Cur3",
     resave: false,
     saveUninitialized: false,
