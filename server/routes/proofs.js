@@ -133,12 +133,12 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
 
                   newProof.save(function(err, updateProof) {
                     if (err) {
-                      console.log(err);
+                      logger.log(err);
                     }
                   });
                 })
                 .catch(err => {
-                  console.log(err);
+                  logger.log(err);
                 });
             });
             req.flash("success_msg", "Proof Uploaded");
@@ -218,7 +218,7 @@ router.put(
       { hasQCNote: hasQCNote, qcnote: qcnote },
       function(err, updatedProof) {
         if (err) {
-          console.log(err);
+          logger.log(err);
         } else {
           req.flash("success_msg", "Proof QC Updated");
           res.redirect("/proofs/qc/" + updatedProof.orderNum);
@@ -235,7 +235,7 @@ router.get(
     const id = req.params.id;
     Proof.findOne({ _id: id }, function(err, foundProof) {
       if (err) {
-        console.log(err);
+        logger.log(err);
       } else {
         foundProof.hasQCNote = false;
         const qcnote = foundProof.qcnote;
@@ -248,7 +248,7 @@ router.get(
 
         foundProof.save(function(err, updatedProof) {
           if (err) {
-            console.log(err);
+            logger.log(err);
           } else {
             req.flash("success_msg", "Proof QC Archived");
             res.redirect("/proofs/qc/" + updatedProof.orderNum);

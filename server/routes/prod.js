@@ -60,7 +60,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      console.log(err);
+      logger.log(err);
     } else {
       foundOrder.qty = qty;
       foundOrder.netValue = netValue;
@@ -115,7 +115,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          console.log(err);
+          logger.log(err);
         } else {
           req.flash("success_msg", "Order Production Updated");
           res.redirect("/prod");
