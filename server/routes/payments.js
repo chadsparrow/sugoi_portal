@@ -39,7 +39,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      logger.log(err);
+      console.log(err);
     } else {
       foundOrder.approvedTerms = approvedTerms;
       foundOrder.onTermPayment = onTermPayment;
@@ -65,7 +65,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          logger.log(err);
+          console.log(err);
         } else {
           req.flash("success_msg", "Payment Updated");
           res.redirect("/payments/");

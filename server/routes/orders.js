@@ -122,7 +122,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           res.redirect("/orders");
         })
         .catch(err => {
-          logger.log(err);
+          console.log(err);
           return;
         });
     }
@@ -172,7 +172,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      logger.log(err);
+      console.log(err);
     } else {
       foundOrder.client = client;
       foundOrder.priority = priority;
@@ -204,7 +204,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          logger.log(err);
+          console.log(err);
         } else {
           req.flash("success_msg", "Order Updated");
           res.redirect("/orders");
@@ -252,7 +252,7 @@ router.put(
 
         foundOrder.save(function(err, updatedOrder) {
           if (err) {
-            logger.log(err);
+            console.log(err);
           } else {
             req.flash("success_msg", "Note Updated");
             res.redirect("/orders/view/" + id);
@@ -282,7 +282,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        logger.log(err);
+        console.log(err);
       } else {
         if (instruction) {
           foundOrder.instructions.push({
@@ -296,7 +296,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              logger.log(err);
+              console.log(err);
             } else {
               req.flash("success_msg", "Revision Requested");
               res.redirect("/orders/view/" + id);
@@ -325,7 +325,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        logger.log(err);
+        console.log(err);
       } else {
         if (instruction) {
           foundOrder.instructions.push({
@@ -336,7 +336,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              logger.log(err);
+              console.log(err);
             } else {
               req.flash("success_msg", "Note Added");
               res.redirect("/orders/view/" + id);

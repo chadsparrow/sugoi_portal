@@ -98,7 +98,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
   User.findOne({ _id: id }, function(err, foundEmployee) {
     if (err) {
-      logger.log(err);
+      console.log(err);
     } else {
       foundEmployee.admin = admin;
       foundEmployee.editOrders = editOrders;
@@ -108,7 +108,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
       foundEmployee.save(function(err, updatedEmployee) {
         if (err) {
-          logger.log(err);
+          console.log(err);
         } else {
           req.flash("success_msg", "Employee Updated");
           res.redirect("/users/admin");
@@ -122,7 +122,7 @@ router.get("/delete/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let id = req.params.id;
   User.findOneAndRemove({ _id: id }, function(err) {
     if (err) {
-      logger.log(err);
+      console.log(err);
       req.flash("error_msg", err);
       res.redirect("/users/admin");
     } else {
@@ -211,7 +211,7 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
                 res.redirect("/users/admin");
               })
               .catch(err => {
-                logger.log(err);
+                console.log(err);
                 return;
               });
           });
@@ -260,7 +260,7 @@ router.put("/password", ensureAuthenticated, (req, res) => {
               res.redirect("/orders/");
             })
             .catch(err => {
-              logger.log(err);
+              console.log(err);
               return;
             });
         });
