@@ -205,7 +205,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         if (err) {
           logger.error(err);
         } else {
-          logger.info(`${updateOrder.orderNum} update by ${req.user.username}`);
+          logger.info(
+            `${updatedOrder.orderNum} - update by ${req.user.username}`
+          );
           req.flash("success_msg", "Order Updated");
           res.redirect("/orders");
         }
@@ -302,7 +304,7 @@ router.put(
               return;
             } else {
               logger.info(
-                `${updateOrder.ordernum} revision request by ${
+                `${updatedOrder.ordernum} - revision request by ${
                   req.user.username
                 }`
               );

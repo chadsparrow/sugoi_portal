@@ -70,7 +70,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         } else {
           logger.info(
-            `${updateOrder.orderNum} - Payment updated by ${req.user.username}`
+            `${updatedOrder.orderNum} - Payment updated by ${req.user.username}`
           );
           req.flash("success_msg", "Payment Updated");
           res.redirect("/payments/");

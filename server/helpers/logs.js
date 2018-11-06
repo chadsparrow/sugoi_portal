@@ -1,5 +1,4 @@
-const { createLogger, format, transports } = require("winston");
-const { combine, timestamp, prettyPrint } = format;
+const winston = require("winston");
 const path = require("path");
 const fs = require("fs");
 const logDir = "logs";
@@ -8,11 +7,10 @@ if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 
-const logger = createLogger({
-  format: combine(timestamp(), prettyPrint()),
+const logger = winston.createLogger({
   transports: [
-    new transports.Console(),
-    new transports.File({ filename: path.join(logDir, "logfile.log") })
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: path.join(logDir, "logfile.log") })
   ]
 });
 
