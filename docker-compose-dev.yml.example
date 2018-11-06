@@ -5,10 +5,10 @@ services:
   server:
     build: ./server
     command: npm run dev
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
+    image: gitlab url
     restart: always
     ports:
-      - "3000:3000"
+      - "port:port"
     volumes:
       #- ./certs:/certs
       - ./server:/usr/src/app
@@ -17,13 +17,13 @@ services:
     links:
       - mongo
     env_file:
-      - .env
+      - env file
   mongo:
     container_name: mongo
     restart: always
     image: mongo
     ports:
-      - "27017:27017"
+      - "port:port"
     volumes:
       - mongodbdata:/data/db
 
