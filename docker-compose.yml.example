@@ -1,0 +1,30 @@
+version: "3"
+
+## Setup Node.js container
+services:
+  server:
+    build: ./server
+    command: npm run start
+    image: gitlab url
+    restart: always
+    ports:
+      - "port:port"
+    volumes:
+      - ./server:/usr/src/app
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    env_file:
+      - env file
+  mongo:
+    container_name: mongo
+    restart: always
+    image: mongo
+    ports:
+      - "port:port"
+    volumes:
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:
