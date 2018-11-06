@@ -26,10 +26,9 @@ services:
     volumes:
       - mongodbdata:/data/db
 	environment:
-      - MONGO_INITDB_ROOT_USERNAME=username
-      - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_ROOT_DATABASE=db
-	command: mongod
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+	  - MONGO_INITDB_ROOT_DATABASE=${MONGO_INITDB_ROOT_DATABASE}
 
 volumes:
   mongodbdata:
