@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const logger = require("../helpers/logs");
 
 const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
@@ -38,7 +39,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       return;
     } else {
       foundOrder.approvedTerms = approvedTerms;
@@ -65,9 +66,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          console.log(err);
+          logger.error(err);
           return;
         } else {
+          logger.info(
+            `${updateOrder.orderNum} - Payment updated by ${req.user.username}`
+          );
           req.flash("success_msg", "Payment Updated");
           res.redirect("/payments/");
         }

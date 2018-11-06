@@ -1,6 +1,7 @@
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const logger = require("../helpers/logs");
 
 // Load user Model
 const User = mongoose.model("users");
@@ -15,12 +16,13 @@ module.exports = function(passport) {
           username: username
         }).then(user => {
           if (!user) {
+            logger.warn("Invalid Login Attempt");
             return done(null, false, { message: "User not Authorized" });
           }
           // Match password
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err) {
-              console.log(err);
+              logger.error(err);
               return;
             }
             if (isMatch) {
@@ -37,10 +39,13 @@ module.exports = function(passport) {
   );
 
   passport.serializeUser((user, done) => {
+    logger.info(`${user.username} logged in.`);
     done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
-    User.findById(id).then(user => done(null, user));
+    User.findById(id).then(user => {
+      done(null, user);
+    });
   });
 };

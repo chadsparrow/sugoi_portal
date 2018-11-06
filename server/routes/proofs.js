@@ -4,6 +4,7 @@ const fse = require("fs-extra");
 const multer = require("multer");
 const path = require("path");
 const StreamZip = require("node-stream-zip");
+const logger = require("../helpers/logs");
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
@@ -60,7 +61,7 @@ function checkFileType(file, cb) {
 router.post("/upload", ensureAuthenticated, (req, res) => {
   upload(req, res, err => {
     if (err) {
-      console.log(err);
+      logger.error(err);
       req.flash("error_msg", err);
       res.redirect("/proofs/uploadform");
     } else {
@@ -82,6 +83,7 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
         });
 
         zip.on("error", err => {
+          logger.error(err);
           req.flash("error_msg", err);
           res.redirect("/proofs/uploadform");
         });
@@ -134,15 +136,16 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
 
                   newProof.save(function(err, updateProof) {
                     if (err) {
-                      console.log(err);
+                      logger.error(err);
                       return;
                     }
                   });
                 })
                 .catch(err => {
-                  console.log(err);
+                  logger.error(err);
                 });
             });
+            logger.info(`Proof files uploaded`);
             req.flash("success_msg", "Proof Uploaded");
             res.redirect("/orders");
           });
@@ -161,9 +164,15 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
 
 router.get("/:id", (req, res) => {
   Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
-    if (err) throw err;
+    if (err) {
+      logger.error(err);
+      return;
+    }
     Order.findOne({ orderNum: foundProof.orderNum }, (err, mainOrder) => {
-      if (err) throw err;
+      if (err) {
+        logger.error(err);
+        return;
+      }
       res.render("proofs/view", {
         foundProof,
         mainOrder
@@ -177,9 +186,15 @@ router.get(
   [ensureAuthenticated, ensureEditProofs],
   (req, res) => {
     Proof.find({ orderNum: req.params.orderNum }, (err, foundProofs) => {
-      if (err) throw err;
+      if (err) {
+        logger.error(err);
+        return;
+      }
       Order.findOne({ orderNum: req.params.orderNum }, (err, mainOrder) => {
-        if (err) throw err;
+        if (err) {
+          logger.error(err);
+          return;
+        }
         res.render("proofs/qc", {
           foundProofs,
           mainOrder
@@ -194,7 +209,9 @@ router.get(
   [ensureAuthenticated, ensureEditProofs],
   (req, res) => {
     Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
-      if (err) throw err;
+      if (err) {
+        logger.error(err);
+      }
       res.render("proofs/qc-edit", {
         foundProof
       });
@@ -220,7 +237,7 @@ router.put(
       { hasQCNote: hasQCNote, qcnote: qcnote },
       function(err, updatedProof) {
         if (err) {
-          console.log(err);
+          logger.error(err);
           return;
         } else {
           req.flash("success_msg", "Proof QC Updated");
@@ -238,7 +255,7 @@ router.get(
     const id = req.params.id;
     Proof.findOne({ _id: id }, function(err, foundProof) {
       if (err) {
-        console.log(err);
+        logger.error(err);
         return;
       } else {
         foundProof.hasQCNote = false;
@@ -252,7 +269,7 @@ router.get(
 
         foundProof.save(function(err, updatedProof) {
           if (err) {
-            console.log(err);
+            logger.error(err);
             return;
           } else {
             req.flash("success_msg", "Proof QC Archived");
@@ -270,7 +287,10 @@ router.get(
   (req, res) => {
     const orderNum = req.params.orderNum;
     Proof.find({ orderNum: orderNum }, function(err, foundProofs) {
-      if (err) throw err;
+      if (err) {
+        logger.error(err);
+        return;
+      }
       res.render("proofs/qc-archive", {
         foundProofs,
         orderNum

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const logger = require("../helpers/logs");
 const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
 // includes model for mongodb
@@ -116,11 +116,12 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       newOrder
         .save()
         .then(order => {
+          logger.info(`${order.orderNum} added to DB by ${req.user.username}`);
           req.flash("success_msg", "Order Saved");
           res.redirect("/orders");
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
         });
     }
   });
@@ -169,7 +170,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       return;
     } else {
       foundOrder.client = client;
@@ -202,9 +203,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          console.log(err);
-          return;
+          logger.error(err);
         } else {
+          logger.info(`${updateOrder.orderNum} update by ${req.user.username}`);
           req.flash("success_msg", "Order Updated");
           res.redirect("/orders");
         }
@@ -251,7 +252,7 @@ router.put(
 
         foundOrder.save(function(err, updatedOrder) {
           if (err) {
-            console.log("error", err);
+            logger.error(err);
             return;
           } else {
             req.flash("success_msg", "Note Updated");
@@ -282,7 +283,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        console.log(err);
+        logger.error(err);
         return;
       } else {
         if (instruction) {
@@ -297,9 +298,14 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              console.log(err);
+              logger.error(err);
               return;
             } else {
+              logger.info(
+                `${updateOrder.ordernum} revision request by ${
+                  req.user.username
+                }`
+              );
               req.flash("success_msg", "Revision Requested");
               res.redirect("/orders/view/" + id);
             }
@@ -327,7 +333,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        console.log(err);
+        logger.error(err);
         return;
       } else {
         if (instruction) {
@@ -339,7 +345,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              console.log(err);
+              logger.error(err);
               return;
             } else {
               req.flash("success_msg", "Note Added");

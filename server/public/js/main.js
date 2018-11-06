@@ -94,7 +94,7 @@ $(document).ready(function() {
     ],
     scrollX: true,
     scrollCollapse: true,
-    pageLength: 20,
+    pageLength: 15,
     order: [[0, "asc"]],
     oLanguage: {
       sSearch: "Search",
@@ -102,8 +102,7 @@ $(document).ready(function() {
       sInfo: "_START_ -_END_ of _TOTAL_",
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
-        '<option value="10">10</option>' +
-        '<option value="20">20</option>' +
+        '<option value="15">15</option>' +
         '<option value="30">30</option>' +
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
@@ -165,8 +164,7 @@ $(document).ready(function() {
       sInfo: "_START_ -_END_ of _TOTAL_",
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
-        '<option value="10">10</option>' +
-        '<option value="20">20</option>' +
+        '<option value="15">15</option>' +
         '<option value="30">30</option>' +
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
@@ -187,8 +185,7 @@ $(document).ready(function() {
       sInfo: "_START_ -_END_ of _TOTAL_",
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
-        '<option value="10">10</option>' +
-        '<option value="20">20</option>' +
+        '<option value="15">15</option>' +
         '<option value="30">30</option>' +
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
@@ -218,8 +215,7 @@ $(document).ready(function() {
       sInfo: "_START_ -_END_ of _TOTAL_",
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
-        '<option value="10">10</option>' +
-        '<option value="20">20</option>' +
+        '<option value="15">15</option>' +
         '<option value="30">30</option>' +
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
@@ -250,30 +246,4 @@ $(document).ready(function() {
       e.preventDefault();
     }
   });
-
-  var validChars = "$£€c" + "0123456789" + ".-,()'";
-  // Init the regex just once for speed - it is "closure locked"
-  var str = jQuery.fn.dataTableExt.oApi._fnEscapeRegex(validChars),
-    re = new RegExp("[^" + str + "]");
-  $.fn.dataTableExt.aTypes.unshift(function(data) {
-    if (typeof data !== "string" || re.test(data)) {
-      return null;
-    }
-    return "currency";
-  });
-  $.fn.dataTable.ext.type.order["currency-pre"] = function(data) {
-    //Check if its in the proper format
-    if (data.match(/[\()]/g)) {
-      if (data.match(/[\-]/g) !== true) {
-        //It matched - strip out parentheses & any characters we dont want and append - at front
-        data = "-" + data.replace(/[\$£€c\(\),]/g, "");
-      } else {
-        //Already has a '-' so just strip out non-numeric charactors exluding '-'
-        data = data.replace(/[^\d\-\.]/g, "");
-      }
-    } else {
-      data = data.replace(/[\$£€\,]/g, "");
-    }
-    return parseInt(data, 10);
-  };
 });

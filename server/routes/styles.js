@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const logger = require("../helpers/logs");
 
 // includes model for mongodb
 const Style = require("../models/Style");
@@ -14,7 +15,7 @@ router.get("/", (req, res) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      logger.error(err);
       req.flash("error_msg", err);
       res.redirect("/user/login");
     });

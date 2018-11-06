@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const DateDiff = require("date-diff");
 const moment = require("moment");
+const logger = require("../helpers/logs");
 
 const {
   ensureAuthenticated,
@@ -60,7 +61,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       return;
     } else {
       foundOrder.qty = qty;
@@ -116,9 +117,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          console.log(err);
+          logger.error(err);
           return;
         } else {
+          logger.info(
+            `${updatedOrder.orderNum} - update by ${req.user.username}`
+          );
           req.flash("success_msg", "Order Production Updated");
           res.redirect("/prod");
         }

@@ -15,6 +15,7 @@ const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
 const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
+const logger = require("./helpers/logs");
 
 // initializes the app using express
 const app = express();
@@ -51,8 +52,8 @@ mongoose
       useNewUrlParser: true
     }
   )
-  .then(() => console.log("MongoDB Connected on port 27017..."))
-  .catch(err => console.log(err));
+  .then(() => logger.info("MongoDB Connected on port 27017..."))
+  .catch(err => logger.error(err));
 
 mongoose.set("useFindAndModify", false);
 
@@ -157,6 +158,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
+  logger.error(error);
   res.status(error.status || 500);
   res.render("error", { error });
 });
@@ -172,5 +174,5 @@ const port = process.env.APP_PORT || 3000;
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
-  console.log(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
+  logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
 });

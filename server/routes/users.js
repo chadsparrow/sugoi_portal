@@ -5,6 +5,7 @@ const passport = require("passport");
 const router = express.Router();
 
 const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
+const logger = require("../helpers/logs");
 
 // Load User Model
 require("../models/User");
@@ -43,7 +44,7 @@ router.get("/admin", [ensureAuthenticated, ensureAdmin], (req, res) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      logger.error(err);
       req.flash("error_msg", err);
       res.redirect("/orders");
     });
@@ -99,7 +100,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
   User.findOne({ _id: id }, function(err, foundEmployee) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       return;
     } else {
       foundEmployee.admin = admin;
@@ -110,9 +111,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
       foundEmployee.save(function(err, updatedEmployee) {
         if (err) {
-          console.log(err);
+          logger.error(err);
           return;
         } else {
+          logger.info(`${updateEmployee} - updated by ${req.user.username}`);
           req.flash("success_msg", "Employee Updated");
           res.redirect("/users/admin");
         }
@@ -125,10 +127,11 @@ router.get("/delete/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let id = req.params.id;
   User.findOneAndRemove({ _id: id }, function(err) {
     if (err) {
-      console.log(err);
+      logger.error(err);
       req.flash("error_msg", err);
       res.redirect("/users/admin");
     } else {
+      logger.info(`User deleted by ${req.user.username}`);
       req.flash("success_msg", "Employee Deleted");
       res.redirect("/users/admin");
     }
@@ -210,11 +213,14 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
             newUser
               .save()
               .then(user => {
+                logger.info(
+                  `${user.username} - user created by ${req.user.username}`
+                );
                 req.flash("success_msg", "User registered");
                 res.redirect("/users/admin");
               })
               .catch(err => {
-                console.log(err);
+                logger.error(err);
               });
           });
         });
@@ -225,8 +231,8 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 // Logout User
 router.get("/logout", ensureAuthenticated, (req, res) => {
+  logger.info(`${req.user.username} logged out.`);
   req.logout();
-  console.log(req.user.username + " logged out");
   req.flash("success_msg", "Logged out");
   res.redirect("/users/login");
 });
@@ -251,13 +257,16 @@ router.put("/password", ensureAuthenticated, (req, res) => {
   } else {
     User.findOne({ username: userName }, function(err, foundObject) {
       if (err) {
-        console.log(err);
+        logger.error(err);
         return;
       }
 
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(pass, salt, (err, hash) => {
-          if (err) throw err;
+          if (err) {
+            logger.error(err);
+            return;
+          }
           foundObject.password = hash;
           foundObject
             .save()
@@ -266,7 +275,7 @@ router.put("/password", ensureAuthenticated, (req, res) => {
               res.redirect("/orders/");
             })
             .catch(err => {
-              console.log(err);
+              logger.error(err);
             });
         });
       });
