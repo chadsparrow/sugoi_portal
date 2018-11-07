@@ -1,14 +1,19 @@
 version: "3"
 
-## Setup Node.js container
+# Setup Node.js container
 services:
   server:
     build: ./server
+    # node runs server app
     command: npm run start
+    # use gitlab url to sugoi/custom-proofs/server docker image registry
     image: gitlab url
     restart: always
+    # port grabs from env file, can be changed to APP_PORT:80 to expose 3000 to 80 for final production deployment
     ports:
-      - "port:port"
+      - "${APP_PORT}:${APP_PORT}"
+    # mounts volume for persistant data
+    # also mounts volume for node_modules on mac
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
@@ -16,21 +21,26 @@ services:
       - mongo
     links:
       - mongo
+    # env file needs to be changed to name of your env file (eg .env)
     env_file:
       - env file
   mongo:
     container_name: mongo
     restart: always
     image: mongo
+    # ports for mongodb is always 27017
     ports:
-      - "port:port"
+      - "27017:27017"
+	# Creates volume to persist database data with server folder
     volumes:
       - mongodbdata:/data/db
+  # these set mongodb admin and password when first deployed, set in env file
 	environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_INITDB_ROOT_DATABASE=${MONGO_INITDB_ROOT_DATABASE}
+    # starts mongo in -authenticated necessary mode
     command: mongod --auth
-
+# do not change lines below (creates volume on server named mongodbdata which persists /data/db above in mongo docker service)
+# if you change name, also needs to change in volumes in mongo service above
 volumes:
   mongodbdata:

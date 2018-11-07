@@ -5,10 +5,13 @@ services:
   server:
     build: ./server
     command: npm run dev
+	# gitlab url is url to server image registry 
     image: gitlab url
     restart: always
+	# pulls port for node app from env file
     ports:
-      - "port:port"
+      - "${APP_PORT}:${APP_PORT}"
+	# creates volumes to persist data and install node modules
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
@@ -16,16 +19,19 @@ services:
       - mongo
     links:
       - mongo
+	# filename for env file (eg .env  see .env.example)
     env_file:
       - env file
   mongo:
     container_name: mongo
     restart: always
     image: mongo
+	#mongodb always on 27017
     ports:
-      - "port:port"
+      - "27017:27017"
+	# volume linked to persist data from database
     volumes:
       - mongodbdata:/data/db
-
+# docker volume created for database, name must match mongo volumes section
 volumes:
   mongodbdata:
