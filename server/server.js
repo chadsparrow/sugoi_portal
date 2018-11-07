@@ -45,15 +45,21 @@ const {
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
-mongoose
-  .connect(
-    process.env.DB_HOST,
-    {
-      useNewUrlParser: true
-    }
-  )
-  .then(() => logger.info("MongoDB Connected on port 27017..."))
-  .catch(err => logger.error(err));
+
+const connectWithRetry = function() {
+  return mongoose
+    .connect(
+      process.env.DB_HOST,
+      { useNewUrlParser: true }
+    )
+    .then(() => logger.info("MongoDB Connected on port 27017..."))
+    .catch(err => {
+      logger.error(err);
+      setTimeout(connectWithRetry, 5000);
+    });
+};
+
+connectWithRetry();
 
 mongoose.set("useFindAndModify", false);
 
