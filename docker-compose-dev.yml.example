@@ -32,6 +32,11 @@ services:
 	# volume linked to persist data from database
     volumes:
       - mongodbdata:/data/db
+	# set to env files variables
+	environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    command: mongod --auth
 # docker volume created for database, name must match mongo volumes section
 volumes:
   mongodbdata:
