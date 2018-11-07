@@ -163,14 +163,8 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
-if (process.env.NODE_ENV == "development") {
-  siteURL = "https://dev.sugoi.com";
-} else if (process.env.NODE_ENV == "production") {
-  siteURL = "https://proofs.sugoi.com";
-}
-
+const siteURL = "https://localhost";
 const port = process.env.APP_PORT || 3000;
-
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
