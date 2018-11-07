@@ -17,7 +17,7 @@ const Order = require("../models/Order");
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
 router.get("/", [ensureAuthenticated, ensureViewProd], (req, res) => {
   Order.find({
-    currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] }
+    currentStatus: { $in: ["U. Uploaded", "V. Sent to Vendor", "W. CANCELLED"] }
   }).then(orders => {
     res.render("orders/prod", {
       orders
