@@ -97,12 +97,11 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
               fse
                 .readJson(jsonFile)
                 .then(jsonData => {
+                  let gender = jsonData.gender;
                   if (jsonData.gender === "Womens") {
                     let gender = "Women's";
                   } else if (jsonData.gender === "Mens") {
                     let gender = "Men's";
-                  } else {
-                    let gender = jsonData.gender;
                   }
                   const newProof = new Proof({
                     orderNum: jsonData.orderNum,
