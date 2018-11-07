@@ -31,11 +31,11 @@ services:
     # ports for mongodb is always 27017
     ports:
       - "27017:27017"
-	# Creates volume to persist database data with server folder
+	  # Creates volume to persist database data with server folder
     volumes:
       - mongodbdata:/data/db
-  # these set mongodb admin and password when first deployed, set in env file
-	environment:
+    # these set mongodb admin and password when first deployed, set in env file
+	  environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     # starts mongo in -authenticated necessary mode
