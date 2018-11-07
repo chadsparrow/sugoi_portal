@@ -248,7 +248,7 @@ router.put("/password", ensureAuthenticated, (req, res) => {
   let pass2 = req.body.password2;
   let userName = req.body.username;
 
-  if (pass.length < 8) {
+  if (pass.length < 5) {
     req.flash("error_msg", "Password needs to be at least 8 characters");
     res.redirect("/users/password");
   } else if (pass !== pass2) {
