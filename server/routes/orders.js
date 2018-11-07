@@ -304,7 +304,7 @@ router.put(
               return;
             } else {
               logger.info(
-                `${updatedOrder.ordernum} - revision request by ${
+                `${updatedOrder.orderNum} - revision request by ${
                   req.user.username
                 }`
               );
