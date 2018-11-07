@@ -114,7 +114,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
           logger.error(err);
           return;
         } else {
-          logger.info(`${updateEmployee} - updated by ${req.user.username}`);
+          logger.info(`${updatedEmployee} - updated by ${req.user.username}`);
           req.flash("success_msg", "Employee Updated");
           res.redirect("/users/admin");
         }
