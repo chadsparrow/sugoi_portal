@@ -50,7 +50,10 @@ const connectWithRetry = function() {
   return mongoose
     .connect(
       process.env.DB_HOST,
-      { useNewUrlParser: true }
+      {
+        useNewUrlParser: true,
+        autoReconnect: true
+      }
     )
     .then(() => logger.info("MongoDB Connected on port 27017..."))
     .catch(err => {
