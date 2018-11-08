@@ -160,7 +160,7 @@ $(document).ready(function() {
     ],
     scrollX: true,
     scrollCollapse: true,
-    pageLength: 20,
+    pageLength: 15,
     order: [[0, "asc"]],
     oLanguage: {
       sSearch: "Search",
