@@ -10,53 +10,51 @@
               <div class="row">
                 <div class="col s12 m6 blue lighten-5" style="padding: 5px;">
                   <h6>ISR Entry Fields:</h6>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input type="text" name="orderNum" value="{{order.orderNum}}" readonly>
-                      <label for="orderNum">Contract #:</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <input type="text" name="client" placeholder="enter client name" class="validate" value="{{order.client}}"
-                        required>
-                      <label for="orderNum">Client:</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
-                        placeholder="enter account number" class="validate" required>
-                      <label for="orderNum">Account #:</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                      <select name="priority">
-                        {{#select order.priority}}
-                        <option value=""></option>
-                        <option value="RUSH">RUSH</option>
-                        <option value="VIP">VIP</option>
-                        {{/select}}
-                      </select>
-                      <label for="priority">Priority:</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                      <select name="vendor">
-                        {{#select order.vendor}}
-                        <option value="CCN">CCN</option>
-                        <option value="PNR">PNR</option>
-                        <option value="MEX">MEX</option>
-                        {{/select}}
-                      </select>
-                      <label for="vendor">Vendor:</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <i class="material-icons prefix small">calendar_today</i>
-                      <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate
+                  <div class="input-field col s12">
+                    <input type="text" name="orderNum" value="{{order.orderNum}}" readonly>
+                    <label for="orderNum">Contract #:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="text" name="client" placeholder="enter client name" class="validate" value="{{order.client}}"
+                      required>
+                    <label for="orderNum">Client:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
+                      placeholder="enter account number" class="validate" required>
+                    <label for="orderNum">Account #:</label>
+                  </div>
+                  <div class="input-field col s12 m6">
+                    <select name="priority">
+                      {{#select order.priority}}
+                      <option value=""></option>
+                      <option value="RUSH">RUSH</option>
+                      <option value="VIP">VIP</option>
+                      {{/select}}
+                    </select>
+                    <label for="priority">Priority:</label>
+                  </div>
+                  <div class="input-field col s12 m6">
+                    <select name="vendor">
+                      {{#select order.vendor}}
+                      <option value="CCN">CCN</option>
+                      <option value="PNR">PNR</option>
+                      <option value="MEX">MEX</option>
+                      {{/select}}
+                    </select>
+                    <label for="vendor">Vendor:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <i class="material-icons prefix small">calendar_today</i>
+                    <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate
                       "MM/DD/YYYY"}}">
-                      <label for="eventDate">Event Date:</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <i class="material-icons prefix small">calendar_today</i>
-                      <input type="text" class="input-date" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand
+                    <label for="eventDate">Event Date:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <i class="material-icons prefix small">calendar_today</i>
+                    <input type="text" class="input-date" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand
                       "MM/DD/YYYY"}}">
-                      <label for="latestInHand">Latest In-Hand Date:</label>
-                    </div>
+                    <label for="latestInHand">Latest In-Hand Date:</label>
                   </div>
                 </div>
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">
