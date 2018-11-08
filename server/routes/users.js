@@ -39,7 +39,9 @@ router.post("/login", (req, res, next) => {
     }
 
     req.login(user, err => {
-      if (err) return next(err);
+      if (err) {
+        return next(err);
+      }
       return res.redirect("/orders");
     });
     //successRedirect: "/orders",
