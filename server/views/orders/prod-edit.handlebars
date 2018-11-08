@@ -73,15 +73,8 @@
                   <label for="markEvent">Mark Event:</label>
                 </div>
                 <div class="input-field col s12 l6">
-                  <select name="multishipPrePack">
-                    {{#select order.multishipPrePack}}
-                    <option value=""></option>
-                    <option value="Multi-Ship">Multi-Ship</option>
-                    <option value="Pre-Pack">Pre-Pack</option>
-                    <option value="Personalized">Personalized</option>
-                    {{/select}}
-                  </select>
-                  <label for="multishipPrePack">MultiShip/Prepack:</label>
+                  <input type="text" name="multishipPrePack" value="{{order.multishipPrePack}}">
+                  <label for="multishipPrePack">Added Services:</label>
                 </div>
                 <div class="input-field col s12 l6">
                   <input type="text" class="input-date" name="vendorConfirmShip" id="vendorConfirmShip" value="{{formatDate order.vendorConfirmShip "MM/DD/YYYY"}}">
@@ -128,7 +121,15 @@
                     <label for="estDeliveryDate">Estimated Delivery Date:</label>
                   </div>
                   <div class="input-field col s12 l6">
-                    <input type="text" name="confirmDeliveryStatus" value="{{order.confirmDeliveryStatus}}">
+                    <select name="confirmDeliveryStatus">
+                      {{#select order.confirmDeliveryStatus}}
+                      <option value=""></option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Customs">Customs</option>
+                      <option value="Facility">Facility</option>
+                      <option value="Courier">Courier</option>
+                      {{/select}}
+                    </select>
                     <label for="confirmDeliveryStatus">Confirmed Delivery Status:</label>
                   </div>
                   <div class="input-field col s12 l6">

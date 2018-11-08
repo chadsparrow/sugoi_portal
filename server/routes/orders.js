@@ -193,7 +193,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.sentVendor = null;
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = Date.now();
-          foundOrder.shipStatus = "In Production";
         }
       }
 
