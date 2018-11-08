@@ -29,7 +29,6 @@
         <th>Event Date</th>
         <th>Latest In-Hand</th>
         <th>Latest Ship Date</th>
-        <th>Mark as Event</th>
         <th>Added Services</th>
         <th>Conf. Ship Date</th>
         <th>Status</th>
@@ -50,7 +49,7 @@
     <tbody>
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px; background-color: black; color: white;">{{orderNum}}</td>
+        <td style="font-size: 12px;">{{orderNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{accountNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{qty}}</td>
@@ -64,7 +63,6 @@
           "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
           "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{markEvent}}</td>
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
           "DD-MMM"}}{{/if}}</td>

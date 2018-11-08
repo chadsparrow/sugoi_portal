@@ -61,7 +61,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   isr = isr.toUpperCase();
   let instructions = [];
   let currentArtist = "";
-  let markEvent = "";
   let multishipPrePack = "";
   let shipStatus = "";
   let tracking = "";
@@ -99,7 +98,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         instructions: instructions,
         currentArtist: currentArtist,
         vendor: vendor,
-        markEvent: markEvent,
         multishipPrePack: multishipPrePack,
         shipStatus: shipStatus,
         tracking: tracking,
@@ -165,7 +163,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     currentStatus,
     eventDate,
     latestInHand,
-    vendor
+    vendor,
+    qty,
+    netValue,
+    currency,
+    latestShipDate,
+    multishipPrePack
   } = req.body;
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
@@ -199,6 +202,11 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.eventDate = eventDate;
       foundOrder.latestInHand = latestInHand;
       foundOrder.vendor = vendor;
+      foundOrder.qty = qty;
+      foundOrder.netValue = netValue;
+      foundOrder.currency = currency;
+      foundOrder.latestShipDate = latestShipDate;
+      foundOrder.multishipPrePack = multishipPrePack;
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {

@@ -106,17 +106,43 @@
                     </select>
                     <label for="currentStatus">Status:</label>
                   </div>
+                  <div class="input-field col s6 l4">
+                    <input type="number" name="qty" value="{{order.qty}}">
+                    <label for="qty">Qty:</label>
+                  </div>
+                  <div class="input-field col s6 l4">
+                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" value="{{order.netValue}}">
+                    <label for="netValue">Total Value:</label>
+                  </div>
+                  <div class="input-field col s12 l4">
+                    <select name="currency">
+                      {{#select order.currency}}
+                      <option value="CAD">CAD</option>
+                      <option value="USD">USD</option>
+                      {{/select}}
+                    </select>
+                    <label for="currency">Currency:</label>
+                  </div>
+                  <div class="input-field col s12 l6">
+                    <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
+                      "MM/DD/YYYY"}}">
+                    <label for="latestShipDate">Latest Ship Date:</label>
+                  </div>
+                  <div class="input-field col s12 l6">
+                    <input type="text" name="multishipPrePack" value="{{order.multishipPrePack}}">
+                    <label for="multishipPrePack">Added Services:</label>
+                  </div>
                 </div>
                 {{#if order.uploadDate}}
-                <div class="col s6 left-align">
+                <div class="col s6">
                   <br>
-                  <span class="grey-text">Upload Date:</span><br>{{formatDate order.uploadDate "DD-MMM"}}
+                  <span class="grey-text">Upload Date:</span> {{formatDate order.uploadDate "DD-MMM"}}
                 </div>
                 {{/if}}
                 {{#if order.sentVendor}}
-                <div class="col s6 left-align">
+                <div class="col s6">
                   <br>
-                  <span class="grey-text">Sent to Vendor:</span><br>{{formatDate order.sentVendor "DD-MMM"}}
+                  <span class="grey-text">Sent to Vendor:</span> {{formatDate order.sentVendor "DD-MMM"}}
                 </div>
                 {{/if}}
               </div>

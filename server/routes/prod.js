@@ -45,7 +45,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     netValue,
     currency,
     latestShipDate,
-    markEvent,
     multishipPrePack,
     vendorConfirmShip,
     jbaPONum,
@@ -72,7 +71,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         foundOrder.latestShipDate = latestShipDate;
       }
 
-      foundOrder.markEvent = markEvent;
       foundOrder.multishipPrePack = multishipPrePack;
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
