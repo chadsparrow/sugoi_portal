@@ -27,26 +27,10 @@ router.get("/login/:userName/:key", (req, res) => {
 
 // User Login POST
 router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.render("/users/login", {
-        persistUsername: req.body.username,
-        message: info.message
-      });
-    }
-
-    req.login(user, err => {
-      if (err) {
-        return next(err);
-      }
-      return res.redirect("/orders");
-    });
-    //successRedirect: "/orders",
-    //failureRedirect: "/users/login",
-    //failureFlash: true
+  passport.authenticate("local", {
+    successRedirect: "/orders",
+    failureRedirect: "/users/login",
+    failureFlash: true
   })(req, res, next);
 });
 
