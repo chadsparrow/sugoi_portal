@@ -10,7 +10,7 @@
                 <div class="row">
                   <form action="/users/login" method="post" class="col s12">
                     <div class="input-field col s12">
-                      <input type="email" name="username" value="{{req.username}}" style="text-transform: lowercase;"
+                      <input type="email" name="username" value="{{persistUsername}}" style="text-transform: lowercase;"
                         on keyup="javascript:this.value=this.value.toLowerCase();" class="white-text validate" required
                         autofocus>
                       <label for="username"><i class="fas fa-envelope-square"></i> Email:</label>
