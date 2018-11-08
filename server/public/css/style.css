@@ -37,10 +37,6 @@ html {
   width: 100%;
 }
 
-.nav a:active {
-  color: blue;
-}
-
 .nav-wrapper a {
   font-size: 14px;
 }
