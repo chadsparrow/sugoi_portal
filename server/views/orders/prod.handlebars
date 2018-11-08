@@ -18,7 +18,7 @@
   <table class="display nowrap" id="prodTable">
     <thead>
       <tr>
-        <th>Order</th>
+        <th>Contract #</th>
         <th>Client</th>
         <th>Account #</th>
         <th>Qty</th>
@@ -58,26 +58,26 @@
         <td style="font-size: 12px;" class="center-align">{{currency}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
-          "MM/DD/YYYY"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{markEvent}}</td>
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{tracking}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if estDeliveryDate}}{{formatDate estDeliveryDate
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{confirmDeliveryStatus}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaPONum}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaGNRNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>

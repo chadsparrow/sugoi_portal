@@ -13,7 +13,7 @@
                   <hr>
                   <div class="row">
                     <div class="col s12 m4">
-                      <span class="grey-text">Order #: </span>{{order.orderNum}}
+                      <span class="grey-text">Contract #: </span>{{order.orderNum}}
                     </div>
                     <div class="col s12 m8">
                       <span class="grey-text">Client: </span>{{order.client}}
@@ -34,10 +34,10 @@
                       <span class="grey-text">Priority: </span>{{order.priority}}
                     </div>
                     <div class="col s12 m6">
-                      <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "MM/DD/YYYY"}}
+                      <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "DD-MMM"}}
                     </div>
                     <div class="col s12 m6">
-                      <span class="grey-text">Latest In-Hand: </span>{{formatDate order.latestInHand "MM/DD/YYYY"}}
+                      <span class="grey-text">Latest In-Hand: </span>{{formatDate order.latestInHand "DD-MMM"}}
                     </div>
                   </div>
                 </div>
@@ -104,10 +104,16 @@
               <div class="col s12 m6">
                 <div class="row">
                   <div class="col s12 black white-text" style="padding: 10px; margin-bottom: 10px;">
-                    <span>Sent to Vendor:</span> {{formatDate order.sentVendor "MM/DD/YYYY"}}
+                    <span>Sent to Vendor:</span> {{formatDate order.sentVendor "DD-MMM"}}
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="shipStatus" value="{{order.shipStatus}}">
+                    <select name="shipStatus">
+                      {{#select order.shipStatus}}
+                      <option value=""></option>
+                      <option value="In Production">In Production</option>
+                      <option value="Shipped">Shipped</option>
+                      {{/select}}
+                    </select>
                     <label for="shipStatus">Vendor Shipping Status:</label>
                   </div>
                   <div class="col s12" style="margin-bottom: 5px;">

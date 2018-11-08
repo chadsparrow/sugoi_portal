@@ -12,6 +12,10 @@ $(document).ready(function() {
     setDefaultDate: true
   });
 
+  $(".input-date2").datepicker({
+    setDefaultDate: true
+  });
+
   function goBack() {
     window.history.back();
   }

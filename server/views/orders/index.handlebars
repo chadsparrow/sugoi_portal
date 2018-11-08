@@ -18,7 +18,7 @@
   <table class="display nowrap" id="orderTable">
     <thead>
       <tr>
-        <th data-priority="1" class="center-align">Order</th>
+        <th data-priority="1" class="center-align">Contract #</th>
         <th data-priority="3" class="center-align">Status</th>
         <th data-priority="4" class="center-align">Priority</th>
         <th class="center-align">Request Date</th>
@@ -40,18 +40,18 @@
         <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
         </td>
         <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
-        <td style="font-size: 12px;" class="center-align">{{formatDate requestDate "MM/DD/YYYY"}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "MM/DD/YYYY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate requestDate "DD-MMM"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{currentArtist}}</td>
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
-          "MM/DD/YYYY"}}{{/if}}</td>
+          "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;">
           <span class="right">
             <a class="black-text btn-flat btn-small" href="/orders/view/{{_id}}">

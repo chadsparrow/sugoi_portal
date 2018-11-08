@@ -13,7 +13,7 @@
                   <hr>
                   <div class="row">
                     <div class="col s12 m4">
-                      <span class="grey-text">Order #: </span>{{order.orderNum}}
+                      <span class="grey-text">Contract #: </span>{{order.orderNum}}
                     </div>
                     <div class="col s12 m8">
                       <span class="grey-text">Client: </span>{{order.client}}
@@ -38,13 +38,13 @@
                   </div>
                   <div class="row">
                     <div class="col s12">
-                      <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "MM/DD/YYYY"}}
+                      <span class="grey-text">Sent to Vendor: </span>{{formatDate order.sentVendor "DD-MMM"}}
                     </div>
                   </div>
                   <div class="row">
                     <div class="col s12 m4">
                       <span class="grey-text">Conf. Ship Date: </span>{{formatDate order.vendorConfirmShip
-                      "MM/DD/YYYY"}}
+                      "DD-MMM"}}
                     </div>
                     <div class="col s12 m4">
                       <span class="grey-text">Status: </span>{{order.shipStatus}}
@@ -86,7 +86,7 @@
                     <label for="isrCollectedOrig">ISR Payment Collected (Original Currency):</label>
                   </div>
                   <div class="input-field col s12 l6">
-                    <input type="text" class="input-date" name="isrPaymentDate" id="isrPaymentDate" value="{{formatDate order.isrPaymentDate "MM/DD/YYYY"}}">
+                    <input type="text" class="input-date2" name="isrPaymentDate" id="isrPaymentDate" value="{{formatDate order.isrPaymentDate "MM/DD/YYYY"}}">
                     <label for="isrPaymentDate">ISR Payment Date (exc. Kit Order):</label>
                   </div>
                   <div class="input-field col s12 l6">

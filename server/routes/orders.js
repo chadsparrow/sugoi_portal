@@ -241,7 +241,6 @@ router.put(
     let noteid = req.params.noteid;
     let instruction = req.body.instruction;
     let isr = req.body.isr;
-    isr = isr.toUpperCase();
     let instructionType = req.body.instructionType;
 
     Order.findOne({ "instructions._id": noteid }).then(foundOrder => {
@@ -279,7 +278,6 @@ router.put(
     let instruction = req.body.instruction;
     let instructionType = "Revision";
     let revUser = req.body.isr;
-    revUser = revUser.toUpperCase();
     let currentStatus = "G. Waiting for Revision";
     let currentArtist = "";
 
@@ -331,7 +329,6 @@ router.put(
     let instruction = req.body.instruction;
     let instructionType = "Note";
     let noteUser = req.body.noteUser;
-    noteUser = noteUser.toUpperCase();
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
