@@ -108,6 +108,7 @@ app.use(
       checkPeriod: 86400000 //prune expired entries every 24h
     }),
     secret: "s3Cur3",
+    key: "sessionid",
     resave: false,
     saveUninitialized: false,
     cookie: {
