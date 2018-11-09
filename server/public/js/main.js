@@ -145,7 +145,7 @@ $(document).ready(function() {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
-      "excel",
+      "excelHtml5",
       {
         text: "My button",
         action: function(e, dt, node, config) {
