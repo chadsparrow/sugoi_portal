@@ -1,5 +1,9 @@
 $(document).ready(function() {
   $("#productionDiv").hide();
+
+  if ($("#currentStatus").val() == "V. Sent to Vendor") {
+    $("#productionDiv").show();
+  }
   $("#currentStatus").change(function() {
     if ($("#currentStatus").val() == "V. Sent to Vendor") {
       $("#productionDiv").show();
