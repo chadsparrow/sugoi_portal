@@ -121,6 +121,7 @@ $(document).ready(function() {
       $(".main-loader").hide();
     },
     search: {
+      regex: true,
       search: "^(?!V.|W.)"
     },
     responsive: true,
