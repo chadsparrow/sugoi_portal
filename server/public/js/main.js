@@ -163,27 +163,27 @@ $(document).ready(function() {
         }
       },
       {
+        text: "All",
+        action: function(e, dt, node, config) {
+          window.location.href("/orders/");
+        }
+      },
+      {
         text: "In Progress",
         action: function(e, dt, node, config) {
-          var regex = "^(?!V.|W.)";
-          dt.columns(1)
-            .search(regex, true, false, true)
-            .draw();
+          window.location.href("/orders/open");
         }
       },
       {
         text: "Completed",
         action: function(e, dt, node, config) {
-          var regex = "V. Sent to Vendor";
-          dt.columns(1)
-            .search(regex, true, false, true)
-            .draw();
+          window.location.href("/orders/completed");
         }
       },
       {
-        text: "Test",
+        text: "Cancelled",
         action: function(e, dt, node, config) {
-          window.location.replace("http://stackoverflow.com");
+          window.location.href("/orders/cancelled");
         }
       }
     ]

@@ -19,6 +19,36 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/open", ensureAuthenticated, (req, res) => {
+  Order.find({
+    currentStatus: { $not: { $in: ["V. Sent to Vendor", W.CANCELLED] } }
+  }).then(orders => {
+    res.render("orders/index", {
+      orders
+    });
+  });
+});
+
+router.get("/open", ensureAuthenticated, (req, res) => {
+  Order.find({
+    currentStatus: "V. Sent to Vendor"
+  }).then(orders => {
+    res.render("orders/index", {
+      orders
+    });
+  });
+});
+
+router.get("/cancelled", ensureAuthenticated, (req, res) => {
+  Order.find({
+    currentStatus: "W. CANCELLED"
+  }).then(orders => {
+    res.render("orders/index", {
+      orders
+    });
+  });
+});
+
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
