@@ -120,10 +120,6 @@ $(document).ready(function() {
     initComplete: function(settings, json) {
       $(".main-loader").hide();
     },
-    search: {
-      regex: true,
-      search: "^(?!V.|W.)"
-    },
     responsive: true,
     fixedHeader: {
       header: true,
