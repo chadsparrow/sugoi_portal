@@ -149,18 +149,25 @@ $(document).ready(function() {
         extend: "excelHtml5",
         text: "Export Excel",
         title: "",
-        filename: "Orders_Report",
+        filename: function() {
+          var d = new Date();
+          var n = d.getTime();
+          return "Orders-Report " + n;
+        },
         exportOptions: {
           modifier: {
             page: "current"
           },
-          columns: ":visible"
+          columns: ":not(:last-child)"
         }
       },
       {
         text: "Open",
         action: function(e, dt, node, config) {
-          alert("Button activated");
+          dataTable
+            .columns(1)
+            .search("V. Sent to Vendor", true, false, true)
+            .draw();
         }
       }
     ]
