@@ -113,7 +113,7 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "r<'myFilter'f>tip",
-    buttons: ["excel"]
+    buttons: ["excelHtml5"]
   });
 
   $("#orderTable").dataTable({
@@ -144,7 +144,17 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "lBrftip",
-    buttons: ["csv"]
+    buttons: [
+      {
+        "excelHtml5"
+      },
+      {
+        text: "Open Orders",
+        action: function(){
+          alert ("Open orders only!")
+        }
+      },
+    ]
   });
 
   $("#prodTable").dataTable({
@@ -181,7 +191,7 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "lBrftip",
-    buttons: ["csv"]
+    buttons: ["excelHtml5"]
   });
 
   $("#paymentTable").dataTable({
@@ -243,7 +253,7 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "lBrftip",
-    buttons: ["csv"]
+    buttons: ["excelHtml5"]
   });
 
   $("#userTable").dataTable({
@@ -264,7 +274,7 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "r<'myFilter'f>tip",
-    buttons: ["excel"]
+    buttons: ["excelHtml5"]
   });
 
   $("#qcTable").dataTable({
