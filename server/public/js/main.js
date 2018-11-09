@@ -179,6 +179,12 @@ $(document).ready(function() {
             .search(regex, true, false, true)
             .draw();
         }
+      },
+      {
+        text: "Test",
+        action: function(e, dt, node, config) {
+          window.location.replace("http://stackoverflow.com");
+        }
       }
     ]
   });
