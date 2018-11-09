@@ -153,7 +153,7 @@ $(document).ready(function() {
         action: function(){
           alert ("Open orders only!")
         }
-      },
+      }
     ]
   });
 
