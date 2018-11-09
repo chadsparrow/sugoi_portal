@@ -165,19 +165,19 @@ $(document).ready(function() {
       {
         text: "In Progress",
         action: function(e, dt, node, config) {
-          window.location.href("/orders");
+          $(location).attr("href", "/orders/");
         }
       },
       {
         text: "Completed",
         action: function(e, dt, node, config) {
-          window.location.href("/orders/completed");
+          $(location).attr("href", "/orders/completed");
         }
       },
       {
         text: "Cancelled",
         action: function(e, dt, node, config) {
-          window.location.href("/orders/cancelled");
+          $(location).attr("href", "/orders/cancelled");
         }
       }
     ]
