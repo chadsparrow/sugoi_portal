@@ -18,17 +18,19 @@ $(document).ready(function() {
   });
 
   //latest in hand
-  var eventDate = document.getElementById("eventDate").value;
-  if (eventDate) {
-    $(".input-date3").datepicker({
-      maxDate: eventDate,
-      setDefaultDate: true
-    });
-  } else {
-    $(".input-date3").datepicker({
-      minDate: new Date(),
-      setDefaultDate: true
-    });
+  if ($("#eventDate").length) {
+    var eventDate = document.getElementById("eventDate").value;
+    if (eventDate) {
+      $(".input-date3").datepicker({
+        maxDate: eventDate,
+        setDefaultDate: true
+      });
+    } else {
+      $(".input-date3").datepicker({
+        minDate: new Date(),
+        setDefaultDate: true
+      });
+    }
   }
 
   function goBack() {
