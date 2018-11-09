@@ -12,7 +12,9 @@ const Proof = require("../models/Proof");
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {
-  Order.find().then(orders => {
+  Order.find({
+    currentStatus: { $not: { $in: ["V. Sent to Vendor", W.CANCELLED] } }
+  }).then(orders => {
     res.render("orders/index", {
       orders
     });

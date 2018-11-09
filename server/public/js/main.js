@@ -163,15 +163,9 @@ $(document).ready(function() {
         }
       },
       {
-        text: "All",
-        action: function(e, dt, node, config) {
-          window.location.href("/orders/");
-        }
-      },
-      {
         text: "In Progress",
         action: function(e, dt, node, config) {
-          window.location.href("/orders/open");
+          window.location.href("/orders");
         }
       },
       {
