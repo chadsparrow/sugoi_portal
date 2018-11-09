@@ -164,7 +164,8 @@ $(document).ready(function() {
       {
         text: "Open",
         action: function(e, dt, node, config) {
-          dataTable
+          $("#orderTable")
+            .dataTable()
             .columns(1)
             .search("V. Sent to Vendor", true, false, true)
             .draw();
