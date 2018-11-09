@@ -117,12 +117,8 @@ $(document).ready(function() {
   });
 
   $("#orderTable").dataTable({
-    initComplete: function(settings, json, dt) {
+    initComplete: function(settings, json) {
       $(".main-loader").hide();
-      var regex = "^(?!V.)";
-      dt.columns(1)
-        .search(regex, true, false, true)
-        .draw();
     },
     responsive: true,
     fixedHeader: {
@@ -166,9 +162,18 @@ $(document).ready(function() {
         }
       },
       {
-        text: "Open",
+        text: "In Progress",
         action: function(e, dt, node, config) {
-          var regex = "^(?!V.)";
+          var regex = "^(?!V.|W.)";
+          dt.columns(1)
+            .search(regex, true, false, true)
+            .draw();
+        }
+      },
+      {
+        text: "Completed",
+        action: function(e, dt, node, config) {
+          var regex = "V. Sent to Vendor";
           dt.columns(1)
             .search(regex, true, false, true)
             .draw();
