@@ -216,7 +216,24 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "lBrftip",
-    buttons: ["excelHtml5"]
+    buttons: [
+      {
+        extend: "excelHtml5",
+        text: "Export Excel",
+        title: "",
+        filename: function() {
+          var d = new Date();
+          var n = d.getTime();
+          return "Production-Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
+      }
+    ]
   });
 
   $("#paymentTable").dataTable({
@@ -278,7 +295,24 @@ $(document).ready(function() {
     },
     bAutoWidth: false,
     dom: "lBrftip",
-    buttons: ["excelHtml5"]
+    buttons: [
+      {
+        extend: "excelHtml5",
+        text: "Export Excel",
+        title: "",
+        filename: function() {
+          var d = new Date();
+          var n = d.getTime();
+          return "Payments-Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
+      }
+    ]
   });
 
   $("#userTable").dataTable({
