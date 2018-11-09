@@ -202,8 +202,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         if (foundOrder.currentStatus === "U. Uploaded") {
           foundOrder.uploadDate = Date.now();
           foundOrder.sentVendor = null;
-          let date1 = moment(foundOrder.uploadDate);
-          let date2 = moment(foundOrder.signedOffDate);
+          let date1 = moment(Date.parse(foundOrder.uploadDate));
+          let date2 = moment(Date.parse(foundOrder.signedOffDate));
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = diff.days();
           foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
@@ -213,8 +213,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.signedOffDate = Date.now();
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
           foundOrder.proofCompletionDate = Date.now();
-          let date1 = moment(foundOrder.proofCompletionDate);
-          let date2 = moment(foundOrder.requestDate);
+          let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
+          let date2 = moment(Date.parse(foundOrder.requestDate));
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = diff.days();
           foundOrder.proofTurnaround = parseInt(proofTurnaround + 1);
