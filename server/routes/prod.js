@@ -92,7 +92,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.estDeliveryDate = estDeliveryDate;
 
       if (confirmDeliveryDate && vendorConfirmShip) {
-        let date1 = moment(confirmDeliveryDate, "MMM DD, YYYY");
+        let date1 = moment(Date.parse(confirmDeliveryDate));
         let date2 = moment(vendorConfirmShip);
         let diff = new DateDiff(date1, date2);
         const shippingLeadTime = diff.days();
