@@ -33,7 +33,8 @@ $(document).ready(function() {
       var endDate = new Date(selectedDate.getTime() + msecsInADay - 1);
 
       $("#latestInHand").datepicker({
-        maxDate: endDate
+        maxDate: endDate,
+        minDate: new Date()
       });
     }
   });
