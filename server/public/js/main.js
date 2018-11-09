@@ -23,6 +23,12 @@ $(document).ready(function() {
     setDefaultDate: true
   });
 
+  var eventDate = $("#eventDate")
+    .datepicker()
+    .getDate();
+
+  console.log(eventDate);
+
   // event date selector
   $("#eventDate").datepicker({
     minDate: new Date(),
