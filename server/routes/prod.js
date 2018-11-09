@@ -74,6 +74,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.multishipPrePack = multishipPrePack;
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
+        vendorConfirmShip = new Date(vendorConfirmShip);
         foundOrder.vendorConfirmShip = vendorConfirmShip;
         let date1 = moment(vendorConfirmShip);
         let date2 = moment(sentVendor);
