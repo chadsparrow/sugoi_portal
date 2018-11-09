@@ -116,6 +116,7 @@ $(document).ready(function() {
     buttons: ["excelHtml5"]
   });
 
+  //ORDER TABLE
   $("#orderTable").dataTable({
     initComplete: function(settings, json) {
       $(".main-loader").hide();
