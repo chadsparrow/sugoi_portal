@@ -22,7 +22,7 @@ $(document).ready(function() {
     var eventDate = document.getElementById("eventDate").value;
     if (eventDate) {
       $(".input-date3").datepicker({
-        maxDate: eventDate,
+        maxDate: new Date(eventDate),
         setDefaultDate: true
       });
     } else {
