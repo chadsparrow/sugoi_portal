@@ -184,5 +184,4 @@ const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
-  console.log(os.userInfo());
 });
