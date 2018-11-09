@@ -25,7 +25,7 @@ $(document).ready(function() {
 
   var eventDateElem = $("#eventDate").length;
 
-  if (eventDateElem) {
+  if (eventDateElem > 0) {
     var eventDateVal = $("#eventDate").datepicker("getDate");
     console.log(eventDateVal);
   }
