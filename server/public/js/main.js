@@ -145,9 +145,13 @@ $(document).ready(function() {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
-      "excelHtml5",
       {
-        text: "My button",
+        extend: "excel",
+        text: "Excel",
+        filename: default_name + "_excel"
+      },
+      {
+        text: "Open",
         action: function(e, dt, node, config) {
           alert("Button activated");
         }
