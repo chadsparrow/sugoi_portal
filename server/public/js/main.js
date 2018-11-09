@@ -12,9 +12,24 @@ $(document).ready(function() {
     setDefaultDate: true
   });
 
+  //payment date
   $(".input-date2").datepicker({
     setDefaultDate: true
   });
+
+  //latest in hand
+  var eventDate = document.getElementById("eventDate").value;
+  if (eventDate) {
+    $(".input-date3").datepicker({
+      maxDate: eventDate,
+      setDefaultDate: true
+    });
+  } else {
+    $(".input-date3").datepicker({
+      minDate: new Date(),
+      setDefaultDate: true
+    });
+  }
 
   function goBack() {
     window.history.back();
