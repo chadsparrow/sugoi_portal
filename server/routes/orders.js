@@ -13,7 +13,7 @@ const Proof = require("../models/Proof");
 // SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {
   Order.find({
-    currentStatus: { $not: { $in: ["V. Sent to Vendor", W.CANCELLED] } }
+    currentStatus: { $not: { $in: ["V. Sent to Vendor", "W.CANCELLED"] } }
   }).then(orders => {
     res.render("orders/index", {
       orders
@@ -21,17 +21,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/open", ensureAuthenticated, (req, res) => {
-  Order.find({
-    currentStatus: { $not: { $in: ["V. Sent to Vendor", W.CANCELLED] } }
-  }).then(orders => {
-    res.render("orders/index", {
-      orders
-    });
-  });
-});
-
-router.get("/open", ensureAuthenticated, (req, res) => {
+router.get("/completed", ensureAuthenticated, (req, res) => {
   Order.find({
     currentStatus: "V. Sent to Vendor"
   }).then(orders => {
