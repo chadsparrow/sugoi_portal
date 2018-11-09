@@ -165,7 +165,7 @@ $(document).ready(function() {
       {
         text: "In Progress",
         action: function(e, dt, node, config) {
-          $(location).attr("href", "/orders/");
+          $(location).attr("href", "/orders");
         }
       },
       {
