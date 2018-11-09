@@ -190,6 +190,18 @@ const OrderSchema = new Schema({
   },
   paymentStatus: {
     type: String
+  },
+  proofCompletionDate: {
+    type: Date
+  },
+  signedOffDate: {
+    type: Date
+  },
+  proofTurnaround: {
+    type: Number
+  },
+  outputTurnaround: {
+    type: Number
   }
 });
 

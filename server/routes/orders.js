@@ -72,6 +72,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let jbaPONum = "";
   let jbaGNRNum = "";
   let jbaInvoiceNum = "";
+  let signedOffDate = null;
 
   if (instruction) {
     instructions.push({
@@ -79,6 +80,10 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       instructionType: "Initial",
       user: isr
     });
+  }
+
+  if (currentStatus == "M. Waiting for Output") {
+    signedOffDate = Date.now();
   }
 
   Order.findOne({ orderNum: orderNum }, function(err, order) {
@@ -108,7 +113,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         totalLeadTime: totalLeadTime,
         jbaPONum: jbaPONum,
         jbaGNRNum: jbaGNRNum,
-        jbaInvoiceNum: jbaInvoiceNum
+        jbaInvoiceNum: jbaInvoiceNum,
+        signedOffDate: signedOffDate
       });
 
       newOrder
@@ -194,8 +200,22 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         if (foundOrder.currentStatus === "U. Uploaded") {
           foundOrder.uploadDate = Date.now();
           foundOrder.sentVendor = null;
+          let date1 = moment(foundOrder.uploadDate);
+          let date2 = moment(foundOrder.signedOffDate);
+          let diff = new DateDiff(date1, date2);
+          const outputTurnaround = diff.days();
+          foundOrder.outputTurnaround = parseInt(outputTurnaround);
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = Date.now();
+        } else if (foundOrder.currentStatus === "M. Waiting for Output") {
+          foundOrder.signedOffDate = Date.now();
+        } else if (foundOrder.currentStatus === "F. Proof Complete") {
+          foundOrder.proofCompletionDate = Date.now();
+          let date1 = moment(foundOrder.proofCompletionDate);
+          let date2 = moment(foundOrder.requestDate);
+          let diff = new DateDiff(date1, date2);
+          const proofTurnaround = diff.days();
+          foundOrder.proofTurnaround = parseInt(proofTurnaround);
         }
       }
 
