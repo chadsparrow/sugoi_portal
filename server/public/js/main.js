@@ -127,6 +127,7 @@ $(document).ready(function() {
       headerOffset: 64,
       footer: false
     },
+    select: true,
     pageLength: -1,
     order: [[1, "asc"], [3, "asc"]],
     oLanguage: {
@@ -202,6 +203,7 @@ $(document).ready(function() {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
+    select: true,
     scrollX: true,
     scrollCollapse: true,
     pageLength: 15,
@@ -282,6 +284,7 @@ $(document).ready(function() {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
+    select: true,
     scrollX: true,
     scrollCollapse: true,
     pageLength: 15,
