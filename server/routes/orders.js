@@ -206,7 +206,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let date2 = moment(foundOrder.signedOffDate);
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = diff.days();
-          foundOrder.outputTurnaround = parseInt(outputTurnaround);
+          foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = Date.now();
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
@@ -217,7 +217,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let date2 = moment(foundOrder.requestDate);
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = diff.days();
-          foundOrder.proofTurnaround = parseInt(proofTurnaround);
+          foundOrder.proofTurnaround = parseInt(proofTurnaround + 1);
         }
       }
 
