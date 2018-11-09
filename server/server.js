@@ -16,6 +16,7 @@ const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
+const os = require("os");
 
 // initializes the app using express
 const app = express();
@@ -183,4 +184,5 @@ const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
+  console.log(os.userInfo());
 });
