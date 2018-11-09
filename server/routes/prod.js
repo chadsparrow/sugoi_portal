@@ -75,7 +75,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
-        console.log(vendorConfirmShip);
         let date1 = moment(Date.parse(vendorConfirmShip));
         let date2 = moment(sentVendor);
         let diff = new DateDiff(date1, date2);
@@ -93,7 +92,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       if (confirmDeliveryDate && vendorConfirmShip) {
         let date1 = moment(confirmDeliveryDate);
-        let date2 = moment(vendorConfirmShip);
+        let date2 = moment(Date.parse(vendorConfirmShip));
         let diff = new DateDiff(date1, date2);
         const shippingLeadTime = diff.days();
         foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
