@@ -148,6 +148,7 @@ $(document).ready(function() {
     buttons: [
       {
         extend: "excelHtml5",
+        className: "btn btn-small",
         text: "Export Excel",
         title: "",
         filename: function() {
@@ -166,19 +167,22 @@ $(document).ready(function() {
         text: "In Progress",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders");
-        }
+        },
+        className: "btn btn-small"
       },
       {
         text: "Completed",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders/completed");
-        }
+        },
+        className: "btn btn-small"
       },
       {
         text: "Cancelled",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders/cancelled");
-        }
+        },
+        className: "btn btn-small"
       }
     ]
   });
@@ -220,6 +224,7 @@ $(document).ready(function() {
     buttons: [
       {
         extend: "excelHtml5",
+        className: "btn btn-small",
         text: "Export Excel",
         title: "",
         filename: function() {
@@ -299,6 +304,7 @@ $(document).ready(function() {
     buttons: [
       {
         extend: "excelHtml5",
+        className: "btn btn-small",
         text: "Export Excel",
         title: "",
         filename: function() {
