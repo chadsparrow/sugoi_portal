@@ -146,12 +146,9 @@ $(document).ready(function() {
     dom: "lBrftip",
     buttons: [
       {
-        "excelHtml5"
-      },
-      {
-        text: "Open Orders",
-        action: function(){
-          alert ("Open orders only!")
+        text: "My button",
+        action: function(e, dt, node, config) {
+          alert("Button activated");
         }
       }
     ]
