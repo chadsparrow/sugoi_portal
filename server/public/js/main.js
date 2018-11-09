@@ -34,7 +34,8 @@ $(document).ready(function() {
 
       $("#latestInHand").datepicker({
         maxDate: endDate,
-        minDate: new Date()
+        minDate: new Date(),
+        setDefaultDate: true
       });
     }
   });
