@@ -17,21 +17,26 @@ $(document).ready(function() {
     setDefaultDate: true
   });
 
-  //latest in hand
-  if ($("#eventDate").length) {
-    var eventDate = document.getElementById("eventDate").value;
-    if (eventDate) {
-      $(".input-date3").datepicker({
-        maxDate: new Date(eventDate),
-        setDefaultDate: true
-      });
-    } else {
-      $(".input-date3").datepicker({
-        minDate: new Date(),
-        setDefaultDate: true
+  //latest in hand\
+  $("#latestInHand").datepicker({
+    minDate: new Date(),
+    setDefaultDate: true
+  });
+
+  // event date selector
+  $("#eventDate").datepicker({
+    minDate: new Date(),
+    setDefaultDate: true,
+    onSelect: function(date) {
+      var selectedDate = new Date(date);
+      var msecsInADay = 86400000;
+      var endDate = new Date(selectedDate.getTime() + msecsInADay);
+
+      $("#latestInHand").datepicker({
+        maxDate: endDate
       });
     }
-  }
+  });
 
   function goBack() {
     window.history.back();
