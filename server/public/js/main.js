@@ -148,7 +148,7 @@ $(document).ready(function() {
     buttons: [
       {
         extend: "excelHtml5",
-        className: "btn btn-small",
+        className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
         filename: function() {
@@ -168,21 +168,21 @@ $(document).ready(function() {
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders");
         },
-        className: "btn btn-small"
+        className: "waves-effect waves-light btn-small"
       },
       {
         text: "Completed",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders/completed");
         },
-        className: "btn btn-small"
+        className: "waves-effect waves-light btn-small"
       },
       {
         text: "Cancelled",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders/cancelled");
         },
-        className: "btn btn-small"
+        className: "waves-effect waves-light btn-small"
       }
     ]
   });
@@ -224,7 +224,7 @@ $(document).ready(function() {
     buttons: [
       {
         extend: "excelHtml5",
-        className: "btn btn-small",
+        className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
         filename: function() {
@@ -304,7 +304,7 @@ $(document).ready(function() {
     buttons: [
       {
         extend: "excelHtml5",
-        className: "btn btn-small",
+        className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
         filename: function() {
