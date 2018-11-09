@@ -164,8 +164,9 @@ $(document).ready(function() {
       {
         text: "Open",
         action: function(e, dt, node, config) {
+          var regex = "^(?!V.)";
           dt.columns(1)
-            .search("^(?!.*(V.).*$", true, false, true)
+            .search(regex, true, false, true)
             .draw();
         }
       }
