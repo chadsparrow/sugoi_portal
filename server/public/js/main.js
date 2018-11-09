@@ -24,8 +24,8 @@ $(document).ready(function() {
   });
 
   var eventDate = $("#eventDate")
-    .datepicker()
-    .getDate();
+    .datepicker({ dateFormat: "MM/DD/YYYY" })
+    .val();
 
   console.log(eventDate);
 
