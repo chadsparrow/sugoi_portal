@@ -23,9 +23,11 @@ $(document).ready(function() {
     setDefaultDate: true
   });
 
-  var eventDate = $("#eventDate").datepicker("getDate");
+  var eventDateElem = $('#eventDate').length;
 
-  console.log(eventDate);
+  if (eventDateElem > 0){
+    var eventDate = $("#eventDate").datepicker("getDate");
+    console.log (eventDate);
 
   // event date selector
   $("#eventDate").datepicker({
