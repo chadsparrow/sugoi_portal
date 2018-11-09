@@ -30,7 +30,7 @@ $(document).ready(function() {
     onSelect: function(date) {
       var selectedDate = new Date(date);
       var msecsInADay = 86400000;
-      var endDate = new Date(selectedDate.getTime() + msecsInADay);
+      var endDate = new Date(selectedDate.getTime() + msecsInADay - 1);
 
       $("#latestInHand").datepicker({
         maxDate: endDate
