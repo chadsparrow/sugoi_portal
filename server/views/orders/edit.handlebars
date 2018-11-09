@@ -162,16 +162,3 @@
     </div>
   </section>
 </div>
-
-<script>
-  $(document).ready(function () {
-    var orderStatus = jQuery('#currentStatus');
-    var select = orderStatus.value;
-    orderStatus.change(function () {
-      if ($(this).val() == 'V. Sent to Vendor') {
-        $('#productionDiv').show();
-      }
-      else $('#productionDiv').hide(); // hide div if value is not "custom"
-    });
-  });
-</script>

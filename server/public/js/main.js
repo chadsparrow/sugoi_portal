@@ -1,4 +1,13 @@
 $(document).ready(function() {
+  $("#productionDiv").hide();
+  $("#currentStatus").change(function() {
+    if ($("#currentStatus").val() == "V. Sent to Vendor") {
+      $("#productionDiv").show();
+    } else {
+      $("#productionDiv").hide();
+    }
+  });
+
   $("#admin").click(function() {
     if ($("#admin").is(":checked")) {
       $(".form-check-input").attr("checked", true);
