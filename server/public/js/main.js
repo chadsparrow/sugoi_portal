@@ -145,7 +145,18 @@ $(document).ready(function() {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
-      "excelHtml5",
+      {
+        extend: "excelHtml5",
+        text: "Export Excel",
+        title: "",
+        filename: "Orders_Report",
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":visible"
+        }
+      },
       {
         text: "Open",
         action: function(e, dt, node, config) {
