@@ -145,11 +145,7 @@ $(document).ready(function() {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
-      {
-        extend: "excel",
-        text: "Excel",
-        filename: default_name + "_excel"
-      },
+      "excelHtml5",
       {
         text: "Open",
         action: function(e, dt, node, config) {
