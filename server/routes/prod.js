@@ -75,8 +75,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
-        vendorConfirmShip = new Date(vendorConfirmShip);
-        sentVendor = new Date(sentVendor);
         let date1 = moment(vendorConfirmShip.toISOString());
         let date2 = moment(sentVendor.toISOString());
         let diff = new DateDiff(date1, date2);
@@ -93,8 +91,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.estDeliveryDate = estDeliveryDate;
 
       if (confirmDeliveryDate && vendorConfirmShip) {
-        confirmDeliveryDate = new Date(confirmDeliveryDate);
-        vendorConfirmShip = new Date(vendorConfirmShip);
         let date1 = moment(confirmDeliveryDate.toISOString());
         let date2 = moment(vendorConfirmShip.toISOString());
         let diff = new DateDiff(date1, date2);
