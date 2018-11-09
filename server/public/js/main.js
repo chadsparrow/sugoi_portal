@@ -23,9 +23,7 @@ $(document).ready(function() {
     setDefaultDate: true
   });
 
-  var eventDate = $("#eventDate")
-    .datepicker({ dateFormat: "MM/DD/YYYY" })
-    .val();
+  var eventDate = $("#eventDate").datepicker("getDate");
 
   console.log(eventDate);
 
