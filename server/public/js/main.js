@@ -87,12 +87,8 @@ $(document).ready(function() {
   }
 
   $("#styleTable").dataTable({
-    initComplete: function(settings, json, dt) {
+    initComplete: function(settings, json) {
       $(".main-loader").hide();
-      var regex = "^(?!V.)";
-      dt.columns(1)
-        .search(regex, true, false, true)
-        .draw();
     },
     responsive: true,
     fixedHeader: {
@@ -121,8 +117,12 @@ $(document).ready(function() {
   });
 
   $("#orderTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function(settings, json, dt) {
       $(".main-loader").hide();
+      var regex = "^(?!V.)";
+      dt.columns(1)
+        .search(regex, true, false, true)
+        .draw();
     },
     responsive: true,
     fixedHeader: {
