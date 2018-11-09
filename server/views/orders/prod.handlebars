@@ -66,13 +66,13 @@
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
           "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
+        <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{tracking}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if estDeliveryDate}}{{formatDate estDeliveryDate
           "DD-MMM"}}{{/if}}</td>
         <!-- pull from Shippo API -->
-        <td style="font-size: 12px;" class="center-align">{{confirmDeliveryStatus}}</td>
+        <td style="font-size: 12px;" class="center-align {{setConfirmDeliveryStatus confirmDeliveryStatus}}">{{confirmDeliveryStatus}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
           "DD-MMM"}}{{/if}}</td>

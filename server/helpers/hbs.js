@@ -145,8 +145,31 @@ module.exports = {
         return "green lighten-4";
         break;
       case "Refund Customer":
-        return "amber lighten-2";
+        return "amber lighten-4";
         break;
+    }
+  },
+  setConfirmDeliveryStatus: function(confirmDeliveryStatus) {
+    switch (confirmDeliveryStatus) {
+      case "Delivered":
+        return "green lighten-4 green-text";
+        break;
+      case "Customs":
+        return "red lighten-4 red-text";
+        break;
+      case "Facility":
+        return "yellow lighten-4 grey-text";
+        break;
+      case "Courier":
+        return "yellow lighten-4 grey-text";
+        break;
+    }
+  },
+  setShipStatus: function(shipStatus) {
+    if (shipStatus == "Shipped") {
+      return "green lighten-4 green-text";
+    } else {
+      return "black-text";
     }
   }
 };
