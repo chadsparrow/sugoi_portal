@@ -33,7 +33,7 @@ services:
     volumes:
       - mongodbdata:/data/db
 	# set to env files variables
-	environment:
+	  environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     command: mongod --auth
