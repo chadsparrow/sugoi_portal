@@ -165,7 +165,7 @@ $(document).ready(function() {
         text: "Open",
         action: function(e, dt, node, config) {
           dt.columns(1)
-            .search("V. Sent to Vendor", true, false, true)
+            .search("^(?!V.).*S", true, false, true)
             .draw();
         }
       }
