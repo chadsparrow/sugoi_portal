@@ -29,7 +29,17 @@ $(document).ready(function() {
     var eventDateVal = $("#eventDate")
       .datepicker({ format: "MM/DD/YYYY" })
       .val();
-    console.log(eventDateVal);
+    if (eventDateVal) {
+      var selectedDate = new Date(eventDateVal);
+      var msecsInADay = 86400000;
+      var endDate = new Date(selectedDate.getTime() + msecsInADay - 1);
+
+      $("#latestInHand").datepicker({
+        maxDate: endDate,
+        minDate: new Date(),
+        setDefaultDate: true
+      });
+    }
   }
 
   // event date selector
