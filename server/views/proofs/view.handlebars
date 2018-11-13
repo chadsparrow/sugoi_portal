@@ -40,6 +40,8 @@
 </div>
 
 <div id="resetButton" class="row" style="padding: 0px !important; margin: 0px !important;">
+  {{#if user}}
+  {{else}}
   <span style="font-weight: 400;">Art Proof Notes:</span><br>
   <span style="text-align: justify; margin-bottom: 10px;">The art proofs provided are based on a size large for men and
     size
@@ -47,6 +49,7 @@
     possible to your artwork. Due to the nature of the sublimation process, lighting conditions, monitor
     manufacturing differences and calibrations, the color viewed on your screen may vary from the printed
     finished product color.</span><br>
+  {{/if}}
   <div id="reset3dButton" class="col s12 center-align">
     <a href="#" class="btn-small waves-block white-text black" onclick="reset3D()">RESET 3D</a>
   </div>
