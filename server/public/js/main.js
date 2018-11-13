@@ -91,11 +91,6 @@ $(document).ready(function() {
       $(".main-loader").hide();
     },
     responsive: true,
-    fixedHeader: {
-      header: true,
-      headerOffset: 64,
-      footer: false
-    },
     pageLength: -1,
     oLanguage: {
       sSearch: "Search",
