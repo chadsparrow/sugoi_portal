@@ -148,23 +148,6 @@ $(document).ready(function() {
     dom: "lBrftip",
     buttons: [
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function() {
-          var d = new Date();
-          var n = d.getTime();
-          return "Orders-Report " + n;
-        },
-        exportOptions: {
-          modifier: {
-            page: "current"
-          },
-          columns: ":not(:last-child)"
-        }
-      },
-      {
         text: "In Progress",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/orders");
@@ -184,6 +167,23 @@ $(document).ready(function() {
           $(location).attr("href", "/orders/cancelled");
         },
         className: "waves-effect waves-light btn-small"
+      },
+      {
+        extend: "excelHtml5",
+        className: "waves-effect waves-light btn-small",
+        text: "Export Excel",
+        title: "",
+        filename: function() {
+          var d = new Date();
+          var n = d.getTime();
+          return "Orders-Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
       }
     ]
   });
