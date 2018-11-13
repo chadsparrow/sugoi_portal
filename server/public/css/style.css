@@ -291,8 +291,8 @@ div.dt-buttons {
   padding: 20px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-width: 450px) {
+/* On smaller screens, where height is less than 400px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-width: 500px) {
   .sidebar {
     padding-top: 60px;
   }
