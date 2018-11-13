@@ -12,31 +12,37 @@ const Proof = require("../models/Proof");
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {
+  let pageTitle = "In Progress";
   Order.find({
     currentStatus: { $not: { $in: ["V. Sent to Vendor", "W.CANCELLED"] } }
   }).then(orders => {
     res.render("orders/index", {
-      orders
+      orders,
+      pageTitle
     });
   });
 });
 
 router.get("/completed", ensureAuthenticated, (req, res) => {
+  let pageTitle = "Completed";
   Order.find({
     currentStatus: "V. Sent to Vendor"
   }).then(orders => {
     res.render("orders/index", {
-      orders
+      orders,
+      pageTitle
     });
   });
 });
 
 router.get("/cancelled", ensureAuthenticated, (req, res) => {
+  let pageTitle = "Cancelled";
   Order.find({
     currentStatus: "W. CANCELLED"
   }).then(orders => {
     res.render("orders/index", {
-      orders
+      orders,
+      pageTitle
     });
   });
 });
