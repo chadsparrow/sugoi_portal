@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const StyleSchema = new Schema({
-  active: {
-    type: Boolean
-  },
-  contrast: [{ type: String }],
   brand: {
     type: String,
     required: true
@@ -15,22 +11,9 @@ const StyleSchema = new Schema({
     type: String,
     required: true
   },
-  prdgrp: {
-    type: String,
-    required: true
+  sizing: {
+    type: String
   },
-  prdgrpName: {
-    type: String,
-    required: true
-  },
-  quickdesign: {
-    type: Boolean
-  },
-  sizing: [
-    {
-      type: String
-    }
-  ],
   styleName: {
     type: String,
     required: true
@@ -38,6 +21,12 @@ const StyleSchema = new Schema({
   styleNum: {
     type: String,
     required: true
+  },
+  styleCollection: {
+    type: String
+  },
+  fit: {
+    type: String
   }
 });
 
