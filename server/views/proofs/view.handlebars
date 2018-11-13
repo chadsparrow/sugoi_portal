@@ -39,17 +39,19 @@
   <a href="#">Please view the Flat PDF to view colours used in the artwork</a>
 </div>
 
-<div id="resetButton" class="row" style="padding: 0px !important; margin: 0px !important; max-width: 300px;">
+<div id="resetButton" class="row" style="padding: 0px !important; margin: 0px !important;">
   {{#if user}}
   {{else}}
-  <span class="left-align" style="font-weight: bold; font-size: 12px;">Art Proof Notes:</span><br>
-  <span class="left-align" style="font-size: 12px;">The art proofs provided are based on a
-    size large for men and size medium for women only. The artwork will vary slightly per size. Sugoi
-    Swatches are matched as closely as
-    possible to your artwork. Due to the nature of the sublimation process, lighting conditions, monitor
-    manufacturing differences and calibrations, and fabric difference used througout the garment, the color
-    viewed on your screen may vary from the printed
-    finished product color.</span>
+  <div style="padding: 10px; max-width: 400px;">
+    <span class="left-align" style="font-weight: bold; font-size: 12px;">Art Proof Notes:</span><br>
+    <span class="left-align" style="font-size: 12px;">The art proofs provided are based on a
+      size large for men and size medium for women only. The artwork will vary slightly per size. Sugoi
+      Swatches are matched as closely as
+      possible to your artwork. Due to the nature of the sublimation process, lighting conditions, monitor
+      manufacturing differences and calibrations, and fabric difference used througout the garment, the color
+      viewed on your screen may vary from the printed
+      finished product color.</span>
+  </div>
   {{/if}}
   <div id="reset3dButton" class="col s12 center-align">
     <a href="#" class="btn-small waves-block white-text black" onclick="reset3D()">RESET 3D</a>
