@@ -262,7 +262,7 @@ $(document).ready(function() {
     select: true,
     scrollX: true,
     scrollCollapse: true,
-    pageLength: 15,
+    pageLength: -1,
     order: [[0, "asc"]],
     oLanguage: {
       sSearch: "Search",
