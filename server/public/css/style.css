@@ -193,6 +193,11 @@ ul.collapsible > li {
   margin: 0 auto;
 }
 
+#prodCCNTable_wrapper.dataTables_wrapper {
+  width: 85vw;
+  margin: 0 auto;
+}
+
 .group.group-start {
   font-size: 14px;
 }
