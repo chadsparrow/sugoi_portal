@@ -25,6 +25,16 @@ router.get("/", [ensureAuthenticated, ensureViewProd], (req, res) => {
   });
 });
 
+router.get("/ccn", [ensureAuthenticated, ensureViewProd], (req, res) => {
+  Order.find({
+    currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] }
+  }).then(orders => {
+    res.render("orders/ccnview", {
+      orders
+    });
+  });
+});
+
 // @DESC - GETS ORDER BY ID# AND DISPLAYS IN MODAL WITH EDITABLE FIELDS
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
 router.get("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {

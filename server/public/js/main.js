@@ -240,6 +240,61 @@ $(document).ready(function() {
           },
           columns: ":not(:last-child)"
         }
+      },
+      {
+        text: "CCN Copy",
+        action: function(e, dt, node, config) {
+          $(location).attr("href", "/prod/ccn");
+        },
+        className: "waves-effect waves-light btn-small"
+      }
+    ]
+  });
+
+  $("#prodCCNTable").dataTable({
+    initComplete: function(settings, json) {
+      $(".main-loader").hide();
+    },
+    fixedColumns: {
+      leftColumns: 1,
+      rightColumns: 1
+    },
+    select: true,
+    scrollX: true,
+    scrollCollapse: true,
+    pageLength: 15,
+    order: [[0, "asc"]],
+    oLanguage: {
+      sSearch: "Search",
+      sSearchPlaceholder: "Enter search text",
+      sInfo: "_START_ -_END_ of _TOTAL_",
+      sLengthMenu:
+        '<span>Rows per page:</span><select class="browser-default">' +
+        '<option value="15">15</option>' +
+        '<option value="30">30</option>' +
+        '<option value="40">40</option>' +
+        '<option value="50">50</option>' +
+        '<option value="-1">All</option>' +
+        "</select></div>"
+    },
+    bAutoWidth: false,
+    dom: "lBrftip",
+    buttons: [
+      {
+        extend: "excelHtml5",
+        className: "waves-effect waves-light btn-small",
+        text: "Export Excel",
+        title: "",
+        filename: function() {
+          var d = new Date();
+          var n = d.getTime();
+          return "Production-Report-CCN " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          }
+        }
       }
     ]
   });

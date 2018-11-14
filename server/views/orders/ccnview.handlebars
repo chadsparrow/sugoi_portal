@@ -1,0 +1,53 @@
+<div class="main-loader">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top: 20px; margin-bottom: 50px;">
+  <h5 class='center-align'>Production</h5>
+  <table class="display nowrap compact" id="prodCCNTable">
+    <thead>
+      <tr>
+        <th>Sales Doc</th>
+        <th>Customer Name</th>
+        <th>Qty</th>
+        <th>Sent to CCN</th>
+        <th>Latest Ship Date</th>
+        <th>Event Date</th>
+        <th>Added Services</th>
+        <th>CCN Conf. Ship Date</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders}}
+      <tr>
+        <td style="font-size: 12px;" class="center-align">{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{client}}</td>
+        <td style="font-size: 12px;" class="center-align">{{qty}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
+          "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>
+        <td style="font-size: 12px;" class="center-align">{{shippingNotes}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
