@@ -59,7 +59,8 @@ const OrderSchema = new Schema({
   },
   isr: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   client: {
     type: String,
@@ -85,7 +86,8 @@ const OrderSchema = new Schema({
     }
   ],
   currentArtist: {
-    type: String
+    type: String,
+    uppercase: true
   },
   uploadDate: {
     type: Date,

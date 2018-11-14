@@ -13,7 +13,8 @@ const ProofSchema = new Schema({
   },
   isr: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   itemNumber: {
     type: String,
@@ -57,7 +58,8 @@ const ProofSchema = new Schema({
     required: true
   },
   artist: {
-    type: String
+    type: String,
+    uppercase: true
   },
   soRef: {
     type: String
@@ -132,7 +134,8 @@ const ProofSchema = new Schema({
         type: String
       },
       noteUser: {
-        type: String
+        type: String,
+        uppercase: true
       }
     }
   ]

@@ -22,9 +22,6 @@ const StyleSchema = new Schema({
     type: String,
     required: true
   },
-  styleCollection: {
-    type: String
-  },
   fit: {
     type: String
   }
