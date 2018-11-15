@@ -81,7 +81,8 @@ const OrderSchema = new Schema({
         enum: ["Initial", "Revision", "Note", "System"]
       },
       user: {
-        type: String
+        type: String,
+        uppercase: true
       }
     }
   ],
