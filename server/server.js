@@ -11,6 +11,8 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const https = require("https");
 const fs = require("fs");
+const tracker = require('delivery-tracker');
+const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
 const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
@@ -48,7 +50,7 @@ const {
 
 // MongoDB Connection using .env in docker for credentials
 
-const connectWithRetry = function() {
+const connectWithRetry = function () {
   return mongoose
     .connect(
       process.env.DB_HOST,
@@ -183,4 +185,7 @@ const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
+  courier.trace(772977397759, function (err, result) {
+    console.log(result);
+  })
 });
