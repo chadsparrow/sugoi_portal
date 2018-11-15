@@ -169,6 +169,13 @@ $(document).ready(function() {
         className: "waves-effect waves-light btn-small"
       },
       {
+        text: "All",
+        action: function(e, dt, node, config) {
+          $(location).attr("href", "/orders/all");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
         extend: "excelHtml5",
         className: "waves-effect waves-light btn-small",
         text: "Export Excel",

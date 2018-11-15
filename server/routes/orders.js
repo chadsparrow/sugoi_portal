@@ -47,6 +47,16 @@ router.get("/cancelled", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/all", ensureAuthenticated, (req, res) => {
+  let pageTitle = "All";
+  Order.find().then(orders => {
+    res.render("orders/index", {
+      orders,
+      pageTitle
+    });
+  });
+});
+
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
