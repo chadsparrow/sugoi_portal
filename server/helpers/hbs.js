@@ -21,7 +21,7 @@ module.exports = {
       return moment(d)
         .tz("America/Vancouver")
         .startOf("day")
-        .format();
+        .format(format);
     } else {
       return null;
     }
