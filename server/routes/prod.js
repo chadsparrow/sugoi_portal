@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const DateDiff = require("date-diff");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
 
 const {
@@ -85,8 +85,14 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
-        let date1 = moment(Date.parse(vendorConfirmShip));
-        let date2 = moment(Date.parse(sentVendor));
+        let date1 = moment(Date.parse(vendorConfirmShip))
+          .tz("America/Vancouver")
+          .startOf("day")
+          .format();
+        let date2 = moment(Date.parse(sentVendor))
+          .tz("America/Vancouver")
+          .startOf("day")
+          .format();
         let diff = new DateDiff(date1, date2);
         const prodLeadTime = diff.days();
         foundOrder.prodLeadTime = parseInt(prodLeadTime);
@@ -101,8 +107,14 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.estDeliveryDate = estDeliveryDate;
 
       if (confirmDeliveryDate && vendorConfirmShip) {
-        let date1 = moment(Date.parse(confirmDeliveryDate));
-        let date2 = moment(Date.parse(vendorConfirmShip));
+        let date1 = moment(Date.parse(confirmDeliveryDate))
+          .tz("America/Vancouver")
+          .startOf("day")
+          .format();
+        let date2 = moment(Date.parse(vendorConfirmShip))
+          .tz("America/Vancouver")
+          .startOf("day")
+          .format();
         let diff = new DateDiff(date1, date2);
         const shippingLeadTime = diff.days();
         foundOrder.shippingLeadTime = parseInt(shippingLeadTime);

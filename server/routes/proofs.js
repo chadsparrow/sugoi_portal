@@ -5,6 +5,7 @@ const multer = require("multer");
 const path = require("path");
 const StreamZip = require("node-stream-zip");
 const logger = require("../helpers/logs");
+const moment = require("moment-timezone");
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
@@ -28,7 +29,10 @@ let storage = multer.diskStorage({
       null,
       path.basename(file.originalname, path.extname(file.originalname)) +
         "_" +
-        Date.now() +
+        moment()
+          .tz("America/Vancouver")
+          .startOf("day")
+          .format() +
         path.extname(file.originalname)
     );
   }
@@ -226,7 +230,10 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: Date.now(),
+      noteDate: moment()
+        .tz("America/Vancouver")
+        .startOf("day")
+        .format(),
       noteUser: noteUser,
       note: note
     };

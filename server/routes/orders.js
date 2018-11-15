@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const DateDiff = require("date-diff");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
 const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
@@ -113,7 +113,10 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   }
 
   if (currentStatus == "M. Waiting for Output") {
-    signedOffDate = Date.now();
+    signedOffDate = moment()
+      .tz("America/Vancouver")
+      .startOf("day")
+      .format();
   }
 
   Order.findOne({ orderNum: orderNum }, function(err, order) {
@@ -228,7 +231,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
 
         if (foundOrder.currentStatus === "U. Uploaded") {
-          foundOrder.uploadDate = Date.now();
+          foundOrder.uploadDate = moment()
+            .tz("America/Vancouver")
+            .startOf("day")
+            .format();
           foundOrder.sentVendor = null;
           let date1 = moment(Date.parse(foundOrder.uploadDate));
           let date2 = moment(Date.parse(foundOrder.signedOffDate));
@@ -236,11 +242,20 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           const outputTurnaround = diff.days();
           foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
-          foundOrder.sentVendor = Date.now();
+          foundOrder.sentVendor = moment()
+            .tz("America/Vancouver")
+            .startOf("day")
+            .format();
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
-          foundOrder.signedOffDate = Date.now();
+          foundOrder.signedOffDate = moment()
+            .tz("America/Vancouver")
+            .startOf("day")
+            .format();
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
-          foundOrder.proofCompletionDate = Date.now();
+          foundOrder.proofCompletionDate = moment()
+            .tz("America/Vancouver")
+            .startOf("day")
+            .format();
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
           let date2 = moment(Date.parse(foundOrder.requestDate));
           let diff = new DateDiff(date1, date2);

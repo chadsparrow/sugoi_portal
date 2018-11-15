@@ -1,4 +1,4 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 module.exports = {
   getHandle: function(username) {
@@ -18,7 +18,10 @@ module.exports = {
     if (date) {
       let d = new Date(date);
       d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-      return moment.utc(d).format(format);
+      return moment(d)
+        .tz("America/Vancouver")
+        .startOf("day")
+        .format();
     } else {
       return null;
     }
