@@ -189,6 +189,7 @@ var cronJob = cron.job("*/5 * * * *", function () {
     foundOrders.forEach(foundOrder => {
       courier.trace(foundOrder.tracking, function (err, result) {
         foundOrder.confirmDeliveryStatus = result.status;
+        foundOrder.confirmDeliveryDate = result.checkpoints[0].time;
         foundOrder.checkpoints = result.checkpoints;
         foundOrder.save(function (err, updatedOrder) {
           if (err) {
@@ -197,7 +198,9 @@ var cronJob = cron.job("*/5 * * * *", function () {
         });
       });
     });
-    console.log(`Shipment Tracking information updated`);
+    if (foundOrders.length > 0) {
+      console.log(`Shipment Tracking information updated`);
+    }
   });
 });
 cronJob.start();
