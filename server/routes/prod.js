@@ -68,7 +68,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     shippingNotes
   } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
+  Order.findOne({ _id: id }, function (err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -85,14 +85,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
-        let date1 = moment(Date.parse(vendorConfirmShip))
-          .tz("America/Vancouver")
-          .startOf("day")
-          .format();
-        let date2 = moment(Date.parse(sentVendor))
-          .tz("America/Vancouver")
-          .startOf("day")
-          .format();
+        let date1 = moment(Date.parse(vendorConfirmShip));
+        let date2 = moment(Date.parse(sentVendor));
         let diff = new DateDiff(date1, date2);
         const prodLeadTime = diff.days();
         foundOrder.prodLeadTime = parseInt(prodLeadTime);
@@ -107,14 +101,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.estDeliveryDate = estDeliveryDate;
 
       if (confirmDeliveryDate && vendorConfirmShip) {
-        let date1 = moment(Date.parse(confirmDeliveryDate))
-          .tz("America/Vancouver")
-          .startOf("day")
-          .format();
-        let date2 = moment(Date.parse(vendorConfirmShip))
-          .tz("America/Vancouver")
-          .startOf("day")
-          .format();
+        let date1 = moment(Date.parse(confirmDeliveryDate));
+        let date2 = moment(Date.parse(vendorConfirmShip));
         let diff = new DateDiff(date1, date2);
         const shippingLeadTime = diff.days();
         foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
@@ -135,7 +123,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
           foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
       }
 
-      foundOrder.save(function(err, updatedOrder) {
+      foundOrder.save(function (err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;

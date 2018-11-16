@@ -129,7 +129,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       .format();
   }
 
-  Order.findOne({ orderNum: orderNum }, function(err, order) {
+  Order.findOne({ orderNum: orderNum }, function (err, order) {
     if (order) {
       req.flash("error_msg", "Order Number already entered");
       res.redirect("/orders/add");
@@ -220,7 +220,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     multishipPrePack
   } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
+  Order.findOne({ _id: id }, function (err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -283,7 +283,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.latestShipDate = latestShipDate;
       foundOrder.multishipPrePack = multishipPrePack;
 
-      foundOrder.save(function(err, updatedOrder) {
+      foundOrder.save(function (err, updatedOrder) {
         if (err) {
           logger.error(err);
         } else {
@@ -333,7 +333,7 @@ router.put(
         note.isr = isr;
         note.instructionType = instructionType;
 
-        foundOrder.save(function(err, updatedOrder) {
+        foundOrder.save(function (err, updatedOrder) {
           if (err) {
             logger.error(err);
             return;
@@ -363,7 +363,7 @@ router.put(
     let currentStatus = "G. Waiting for Revision";
     let currentArtist = "";
 
-    Order.findOne({ _id: id }, function(err, foundOrder) {
+    Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
         logger.error(err);
         return;
@@ -378,14 +378,14 @@ router.put(
 
           foundOrder.currentStatus = currentStatus;
 
-          foundOrder.save(function(err, updatedOrder) {
+          foundOrder.save(function (err, updatedOrder) {
             if (err) {
               logger.error(err);
               return;
             } else {
               logger.info(
                 `${updatedOrder.orderNum} - revision request by ${
-                  req.user.username
+                req.user.username
                 }`
               );
               req.flash("success_msg", "Revision Requested");
@@ -412,7 +412,7 @@ router.put(
     let instructionType = "Note";
     let noteUser = req.body.noteUser;
 
-    Order.findOne({ _id: id }, function(err, foundOrder) {
+    Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
         logger.error(err);
         return;
@@ -424,7 +424,7 @@ router.put(
             user: noteUser
           });
 
-          foundOrder.save(function(err, updatedOrder) {
+          foundOrder.save(function (err, updatedOrder) {
             if (err) {
               logger.error(err);
               return;
