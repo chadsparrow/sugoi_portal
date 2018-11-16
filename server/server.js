@@ -191,6 +191,7 @@ var cronJob = cron.job("0 * * * *", function () {
     foundOrders.forEach(foundOrder => {
       courier.trace(foundOrder.tracking, function (err, result) {
         if (err) {
+          logger.error(err);
           foundOrder.confirmDeliveryStatus = "Invalid Tracking #";
         } else {
           foundOrder.confirmDeliveryStatus = result.status;

@@ -93,7 +93,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       } else if (vendorConfirmShip && !sentVendor) {
         req.flash("error", "No Sent to Vendor Date");
         res.redirect("/prod/edit/" + foundOrder._id);
+        foundOrder.prodLeadTime = 0;
         return;
+      } else {
+        foundOrder.prodLeadTime = 0;
       }
 
       //foundOrder.confirmDeliveryDate = confirmDeliveryDate;
