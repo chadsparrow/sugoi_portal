@@ -106,6 +106,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         let diff = new DateDiff(date1, date2);
         const shippingLeadTime = diff.days();
         foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+      } else {
+        foundOrder.shippingLeadTime = 0;
       }
 
       if (tracking) {
@@ -121,6 +123,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
         foundOrder.totalLeadTime =
           foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+      } else {
+        foundOrder.totalLeadTime = 0;
       }
 
       foundOrder.save(function (err, updatedOrder) {
