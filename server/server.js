@@ -13,11 +13,13 @@ const https = require("https");
 const fs = require("fs");
 const tracker = require('delivery-tracker');
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
+const Agenda = require('agenda');
 const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
 const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
+
 
 // initializes the app using express
 const app = express();
@@ -67,8 +69,18 @@ const connectWithRetry = function () {
 };
 
 connectWithRetry();
-
 mongoose.set("useFindAndModify", false);
+
+// agenda connection
+const agenda = new Agenda({ db: { address: AGENDA_DB_HOST } });
+agenda.define("send console message", (job, done) => {
+  console.log("Agenda Test " + Date.now());
+})
+
+  (async function () {
+    await agenda.start();
+    await agenda.every('5 minutes', "send console message");
+  })();
 
 // initializes EJS middleware
 app.engine(
@@ -185,7 +197,7 @@ const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
-  courier.trace(772977397759, function (err, result) {
-    console.log(result);
-  })
+  //courier.trace(772977397759, function (err, result) {
+  //  console.log(result);
+  //})
 });
