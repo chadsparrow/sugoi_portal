@@ -8,7 +8,7 @@ const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 const Order = require("../models/Order");
 
 router.get("/", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  Order.find({ netValue: { $nin: [null, "", 0]).then(orders => {
+  Order.find({ netValue: { $nin: [null, "", 0] } }).then(orders => {
     res.render("payments/", {
       orders
     });
