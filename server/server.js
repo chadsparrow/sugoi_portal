@@ -71,6 +71,7 @@ const connectWithRetry = function () {
 connectWithRetry();
 mongoose.set("useFindAndModify", false);
 
+const Order = require("./models/Order");
 
 // initializes EJS middleware
 app.engine(
@@ -181,9 +182,13 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
+// cron job to run every 5 mins.. will be every hour to update fedex info in order collection
 var cronJob = cron.job("*/5 * * * *", function () {
   // perform operation e.g. GET request http.get() etc.
-  console.info('cron job test ' + Date.now());
+
+  Order.find({ tracking: { $ne: "" } }).then(orders => {
+    console.info("Updating " + orders.length + " orders");
+  });
 });
 cronJob.start();
 
