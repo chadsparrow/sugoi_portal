@@ -190,25 +190,29 @@ var cronJob = cron.job("*/1 * * * *", function () {
     console.log(`Updating shipment tracking information on ${foundOrders.length} orders...`);
     foundOrders.forEach(foundOrder => {
       courier.trace(foundOrder.tracking, function (err, result) {
-        foundOrder.confirmDeliveryStatus = result.status;
-        foundOrder.checkpoints = result.checkpoints;
-        if (foundOrder.confirmDeliveryStatus === "Delivered") {
-          foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
-          let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
-          let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
-          let diff = new DateDiff(date1, date2);
-          const shippingLeadTime = diff.days();
-          foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
-          if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
-            foundOrder.totalLeadTime =
-              foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+        if (err) {
+          foundOrder.confirmDeliveryStatus = "Invalid Tracking #";
+        } else {
+          foundOrder.confirmDeliveryStatus = result.status;
+          foundOrder.checkpoints = result.checkpoints;
+          if (foundOrder.confirmDeliveryStatus === "Delivered") {
+            foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
+            let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
+            let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
+            let diff = new DateDiff(date1, date2);
+            const shippingLeadTime = diff.days();
+            foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+            if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
+              foundOrder.totalLeadTime =
+                foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+            }
           }
+          foundOrder.save(function (err, updatedOrder) {
+            if (err) {
+              logger.error(err);
+            }
+          });
         }
-        foundOrder.save(function (err, updatedOrder) {
-          if (err) {
-            logger.error(err);
-          }
-        });
       });
     });
     if (foundOrders.length > 0) {

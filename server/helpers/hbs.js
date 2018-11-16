@@ -172,6 +172,9 @@ module.exports = {
       case "FailAttempt":
         return "red lighten-4 red-text";
         break;
+      case "Invalid Tracking #":
+        return "red lighten-4 red-text";
+        break;
     }
   },
   setShipStatus: function (shipStatus) {
