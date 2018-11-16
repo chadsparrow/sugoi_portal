@@ -192,15 +192,17 @@ var cronJob = cron.job("*/1 * * * *", function () {
       courier.trace(foundOrder.tracking, function (err, result) {
         foundOrder.confirmDeliveryStatus = result.status;
         foundOrder.checkpoints = result.checkpoints;
-        foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
-        let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
-        let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
-        let diff = new DateDiff(date1, date2);
-        const shippingLeadTime = diff.days();
-        foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
-        if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
-          foundOrder.totalLeadTime =
-            foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+        if (foundOrder.confirmDeliveryStatus === "Delivered") {
+          foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
+          let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
+          let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
+          let diff = new DateDiff(date1, date2);
+          const shippingLeadTime = diff.days();
+          foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+          if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
+            foundOrder.totalLeadTime =
+              foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+          }
         }
         foundOrder.save(function (err, updatedOrder) {
           if (err) {
