@@ -72,10 +72,7 @@ connectWithRetry();
 mongoose.set("useFindAndModify", false);
 
 // agenda connection
-const agenda = new Agenda({ db: { address: process.env.AGENDA_DB_HOST, {
-  useNewUrlParser: true,
-  autoReconnect: true
-}}});
+const agenda = new Agenda({ db: { address: process.env.AGENDA_DB_HOST } });
 
 (async function () {
   const weeklyReport = agenda.create('send console message', (job, done) => {
