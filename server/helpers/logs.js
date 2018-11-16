@@ -2,18 +2,24 @@ const winston = require("winston");
 const path = require("path");
 const fs = require("fs");
 const logDir = "logs";
+const moment = require('moment-timezone');
 
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 
+const appendTimestamp = format((info, opts) => {
+  if (opts.tz) {
+    info.timestamp = moment().tz(opts.tz).format();
+    return info;
+  }
+});
+
 winston.remove(winston.transports.Console);
 
 const logger = winston.createLogger({
   format: winston.format.combine(
-    winston.format.timestamp({
-      format: "MM-DD-YYYY HH:mm:ss"
-    }),
+    appendTimestamp({ tz: 'America/Vancouver' }),
     winston.format.simple()
   ),
   transports: [
