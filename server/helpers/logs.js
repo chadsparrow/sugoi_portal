@@ -8,7 +8,7 @@ if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
 
-const appendTimestamp = format((info, opts) => {
+const appendTimestamp = winston.format((info, opts) => {
   if (opts.tz) {
     info.timestamp = moment().tz(opts.tz).format();
     return info;
