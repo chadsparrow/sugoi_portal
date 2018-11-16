@@ -185,7 +185,7 @@ app.use((error, req, res, next) => {
 });
 
 // cron job to run every 5 mins.. will be every hour to update fedex info in order collection
-var cronJob = cron.job("*/1 * * * *", function () {
+var cronJob = cron.job("0 * * * *", function () {
   Order.find({ tracking: { $ne: "" }, confirmDeliveryStatus: { $ne: "Delivered" } }).then(foundOrders => {
     console.log(`Updating shipment tracking information on ${foundOrders.length} orders...`);
     foundOrders.forEach(foundOrder => {
