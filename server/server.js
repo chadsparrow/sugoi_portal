@@ -181,7 +181,7 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
-var cronJob = cron.job("*/5 * * * * *", function () {
+var cronJob = cron.job("*/5 * * * *", function () {
   // perform operation e.g. GET request http.get() etc.
   console.info('cron job test ' + Date.now());
 });
