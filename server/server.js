@@ -187,7 +187,7 @@ var cronJob = cron.job("*/5 * * * *", function () {
   // perform operation e.g. GET request http.get() etc.
   Order.find({ tracking: { $ne: "" } }).then(orders => {
     orders.forEach(order => {
-      console.log(`Getting tracking info for ${order.tracking}...`)
+      console.log(`Updating tracking info for order # ${order.orderNum} - Tracking #: ${order.tracking}...`)
     });
   });
 });
