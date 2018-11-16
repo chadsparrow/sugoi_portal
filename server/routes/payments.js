@@ -37,7 +37,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     paymentNotes
   } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
+  Order.findOne({ _id: id }, function (err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -55,7 +55,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         onTermPayment -
         kitOrderPayment -
         isrCollectedOrig;
-      foundOrder.balanceOutstanding = parseInt(balanceOutstanding);
+      foundOrder.balanceOutstanding = parseFloat(balanceOutstanding).toFixed(2);
       if (foundOrder.balanceOutstanding > 0) {
         foundOrder.paymentStatus = "Balance Outstanding";
       } else if (foundOrder.balanceOutstanding == 0) {
@@ -64,7 +64,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.paymentStatus = "Refund Customer";
       }
 
-      foundOrder.save(function(err, updatedOrder) {
+      foundOrder.save(function (err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;

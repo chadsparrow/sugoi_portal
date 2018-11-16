@@ -75,7 +75,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     } else {
       foundOrder.qty = qty;
       foundOrder.netValue = netValue;
-      foundOrder.balanceOutstanding = netValue;
+      if (foundOrder.netValue > 0) {
+        foundOrder.balanceOutstanding = netValue;
+        foundOrder.paymentStatus = "Balance Outstanding";
+      } else if (foundOrder.netValue < 0) {
+        foundOrder.balanceOutstanding = netValue;
+        foundOrder.paymentStatus = "Refund Customer";
+      } else if (foundOrder.netValue == 0) {
+        foundOrder.balanceOutstanding = netValue;
+        foundOrder.paymentStatus = "Complete";
+      }
       foundOrder.currency = currency;
       if (latestShipDate) {
         foundOrder.latestShipDate = latestShipDate;
