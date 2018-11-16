@@ -72,7 +72,7 @@ connectWithRetry();
 mongoose.set("useFindAndModify", false);
 
 // agenda connection
-const agenda = new Agenda({ db: { address: AGENDA_DB_HOST } });
+const agenda = new Agenda({ db: { address: process.env.AGENDA_DB_HOST } });
 agenda.define("send console message", (job, done) => {
   console.log("Agenda Test " + Date.now());
 })
