@@ -64,7 +64,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     tracking,
     //confirmDeliveryDate,
     //confirmDeliveryStatus,
-    estDeliveryDate,
+    //estDeliveryDate,
     shippingNotes
   } = req.body;
 
@@ -101,7 +101,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       //foundOrder.confirmDeliveryDate = confirmDeliveryDate;
       //foundOrder.confirmDeliveryStatus = confirmDeliveryStatus;
-      foundOrder.estDeliveryDate = estDeliveryDate;
+      //foundOrder.estDeliveryDate = estDeliveryDate;
 
       if (foundOrder.confirmDeliveryDate && vendorConfirmShip) {
         let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
