@@ -123,10 +123,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   }
 
   if (currentStatus == "M. Waiting for Output") {
-    signedOffDate = moment()
-      .tz("America/Vancouver")
-      .startOf("day")
-      .format();
+    signedOffDate = moment().tz('America/Vancouver').format();
   }
 
   Order.findOne({ orderNum: orderNum }, function (err, order) {
@@ -241,10 +238,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
 
         if (foundOrder.currentStatus === "U. Uploaded") {
-          foundOrder.uploadDate = moment()
-            .tz("America/Vancouver")
-            .startOf("day")
-            .format();
+          foundOrder.uploadDate = moment().tz('America/Vancouver').format();
           foundOrder.sentVendor = null;
           let date1 = moment(Date.parse(foundOrder.uploadDate));
           let date2 = moment(Date.parse(foundOrder.signedOffDate));
@@ -252,20 +246,11 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           const outputTurnaround = diff.days();
           foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
-          foundOrder.sentVendor = moment()
-            .tz("America/Vancouver")
-            .startOf("day")
-            .format();
+          foundOrder.sentVendor = moment().tz('America/Vancouver').format();
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
-          foundOrder.signedOffDate = moment()
-            .tz("America/Vancouver")
-            .startOf("day")
-            .format();
+          foundOrder.signedOffDate = moment().tz('America/Vancouver').format();
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
-          foundOrder.proofCompletionDate = moment()
-            .tz("America/Vancouver")
-            .startOf("day")
-            .format();
+          foundOrder.proofCompletionDate = moment().tz('America/Vancouver').format();
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
           let date2 = moment(Date.parse(foundOrder.requestDate));
           let diff = new DateDiff(date1, date2);

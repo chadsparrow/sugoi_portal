@@ -28,12 +28,9 @@ let storage = multer.diskStorage({
     cb(
       null,
       path.basename(file.originalname, path.extname(file.originalname)) +
-        "_" +
-        moment()
-          .tz("America/Vancouver")
-          .startOf("day")
-          .format() +
-        path.extname(file.originalname)
+      "_" +
+      moment().tz('America/Vancouver').format() +
+      path.extname(file.originalname)
     );
   }
 });
@@ -96,7 +93,7 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
           zip.extract(null, destPath, (err, count) => {
             zip.close();
             fse.removeSync(zipFilePath);
-            Proof.deleteMany({ orderNum: orderNumber }, function(err) {});
+            Proof.deleteMany({ orderNum: orderNumber }, function (err) { });
             jsonArray.forEach(jsonFile => {
               fse
                 .readJson(jsonFile)
@@ -137,7 +134,7 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
                     proofMTLLink: jsonData.proofMTLLink
                   });
 
-                  newProof.save(function(err, updateProof) {
+                  newProof.save(function (err, updateProof) {
                     if (err) {
                       logger.error(err);
                       return;
@@ -230,10 +227,7 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: moment()
-        .tz("America/Vancouver")
-        .startOf("day")
-        .format(),
+      noteDate: moment().tz('America/Vancouver').format(),
       noteUser: noteUser,
       note: note
     };
@@ -241,7 +235,7 @@ router.put(
     Proof.findOneAndUpdate(
       { _id: id },
       { hasQCNote: hasQCNote, qcnote: qcnote },
-      function(err, updatedProof) {
+      function (err, updatedProof) {
         if (err) {
           logger.error(err);
           return;
@@ -259,7 +253,7 @@ router.get(
   [ensureAuthenticated, ensureEditProofs],
   (req, res) => {
     const id = req.params.id;
-    Proof.findOne({ _id: id }, function(err, foundProof) {
+    Proof.findOne({ _id: id }, function (err, foundProof) {
       if (err) {
         logger.error(err);
         return;
@@ -273,7 +267,7 @@ router.get(
           note: null
         };
 
-        foundProof.save(function(err, updatedProof) {
+        foundProof.save(function (err, updatedProof) {
           if (err) {
             logger.error(err);
             return;
@@ -292,7 +286,7 @@ router.get(
   [ensureAuthenticated, ensureEditProofs],
   (req, res) => {
     const orderNum = req.params.orderNum;
-    Proof.find({ orderNum: orderNum }, function(err, foundProofs) {
+    Proof.find({ orderNum: orderNum }, function (err, foundProofs) {
       if (err) {
         logger.error(err);
         return;
