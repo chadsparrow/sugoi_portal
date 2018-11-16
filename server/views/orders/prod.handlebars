@@ -72,9 +72,9 @@
         <td style="font-size: 12px;" class="center-align">{{#if estDeliveryDate}}{{formatDate estDeliveryDate
           "DD-MMM"}}{{/if}}</td>
         <!-- pull from Shippo API -->
-        <td style="font-size: 12px;" class="center-align {{setConfirmDeliveryStatus confirmDeliveryStatus}}">{{confirmDeliveryStatus}}
-          <a href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
-            target="_blank"><i class="material-icons tiny">flight</i></a>
+        <td style="font-size: 12px;" class="center-align {{setConfirmDeliveryStatus confirmDeliveryStatus}}">{{confirmDeliveryStatus}}<a
+            href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
+            target="_blank"> <i class="material-icons">flight</i></a>
           </a></td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
