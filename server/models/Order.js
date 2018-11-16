@@ -205,7 +205,8 @@ const OrderSchema = new Schema({
   },
   outputTurnaround: {
     type: Number
-  }
+  },
+  checkpoints: []
 });
 
 module.exports = mongoose.model("orders", OrderSchema);
