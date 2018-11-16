@@ -62,8 +62,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     jbaInvoiceNum,
     shipStatus,
     tracking,
-    confirmDeliveryDate,
-    confirmDeliveryStatus,
+    //confirmDeliveryDate,
+    //confirmDeliveryStatus,
     estDeliveryDate,
     shippingNotes
   } = req.body;
@@ -96,12 +96,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         return;
       }
 
-      foundOrder.confirmDeliveryDate = confirmDeliveryDate;
-      foundOrder.confirmDeliveryStatus = confirmDeliveryStatus;
+      //foundOrder.confirmDeliveryDate = confirmDeliveryDate;
+      //foundOrder.confirmDeliveryStatus = confirmDeliveryStatus;
       foundOrder.estDeliveryDate = estDeliveryDate;
 
-      if (confirmDeliveryDate && vendorConfirmShip) {
-        let date1 = moment(Date.parse(confirmDeliveryDate));
+      if (foundOrder.confirmDeliveryDate && vendorConfirmShip) {
+        let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
         let date2 = moment(Date.parse(vendorConfirmShip));
         let diff = new DateDiff(date1, date2);
         const shippingLeadTime = diff.days();

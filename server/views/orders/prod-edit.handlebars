@@ -110,21 +110,12 @@
                     <input type="text" class="input-date" name="estDeliveryDate" id="estDeliveryDate" value="{{formatDate order.estDeliveryDate "MM/DD/YYYY"}}">
                     <label for="estDeliveryDate">Estimated Delivery Date:</label>
                   </div>
-                  <div class="input-field col s12 l6">
-                    <select name="confirmDeliveryStatus">
-                      {{#select order.confirmDeliveryStatus}}
-                      <option value=""></option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Customs">Customs</option>
-                      <option value="Facility">Facility</option>
-                      <option value="Courier">Courier</option>
-                      {{/select}}
-                    </select>
-                    <label for="confirmDeliveryStatus">Confirmed Delivery Status:</label>
+                  <div class="col s12 l6">
+                    <span class="grey-text">Confirmed Delivery Status: </span>{{order.confirmDeliveryStatus}}
                   </div>
-                  <div class="input-field col s12 l6">
-                    <input type="text" class="input-date" name="confirmDeliveryDate" id="confirmDeliveryDate" value="{{formatDate order.confirmDeliveryDate "MM/DD/YYYY"}}">
-                    <label for="confirmDeliveryDate">Confirmed Delivery Date:</label>
+                  <div class="col s12 l6">
+                    <span class="grey-text">Confirmed Delivery Date: </span>{{formatDate order.confirmDeliveryDate
+                    "DD-MMM"}}
                   </div>
                   <div class="input-field col s12">
                     <textarea name="shippingNotes" class="materialize-textarea">{{order.shippingNotes}}</textarea>
