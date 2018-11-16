@@ -13,7 +13,7 @@ const https = require("https");
 const fs = require("fs");
 const tracker = require('delivery-tracker');
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
-const Agenda = require('agenda');
+const cron = require('cron');
 const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
 const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
@@ -70,18 +70,6 @@ const connectWithRetry = function () {
 
 connectWithRetry();
 mongoose.set("useFindAndModify", false);
-
-// agenda connection
-const agenda = new Agenda({ db: { address: process.env.AGENDA_DB_HOST } });
-
-(async function () {
-  const weeklyReport = agenda.create('send console message', (job, done) => {
-    console.log("Agenda Test " + Date.now());
-  });
-
-  await agenda.start();
-  await weeklyReport.repeatEvery('5 minutes').save();
-})();
 
 
 // initializes EJS middleware
@@ -192,6 +180,12 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.render("error", { error });
 });
+
+var cronJob = cron.job("*/5 * * * * *", function () {
+  // perform operation e.g. GET request http.get() etc.
+  console.info('cron job test ' + moment().format());
+});
+cronJob.start();
 
 const siteURL = "https://localhost";
 const port = process.env.APP_PORT || 3000;
