@@ -198,6 +198,6 @@ const httpsServer = https.createServer(credentials, app);
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
   //courier.trace(772977397759, function (err, result) {
-  //  console.log(result);
+  //  console.log(result); // Test
   //})
 });
