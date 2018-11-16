@@ -73,14 +73,16 @@ mongoose.set("useFindAndModify", false);
 
 // agenda connection
 const agenda = new Agenda({ db: { address: process.env.AGENDA_DB_HOST } });
-agenda.create("send console message", (job, done) => {
-  console.log("Agenda Test " + Date.now());
-})
 
-  (async function () {
-    await agenda.start();
-    await agenda.every('5 minutes', "send console message");
-  })();
+(async function () {
+  const weeklyReport = agenda.create('send console message', (job, done) => {
+    console.log("Agenda Test " + Date.now());
+  });
+
+  await agenda.start();
+  await weeklyReport.repeatEvery('5 minutes').save();
+})();
+
 
 // initializes EJS middleware
 app.engine(
