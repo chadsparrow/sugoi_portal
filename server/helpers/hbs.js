@@ -20,7 +20,6 @@ module.exports = {
       d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
       return moment(d)
         .tz("America/Vancouver")
-        .startOf("day")
         .format(format);
     } else {
       return null;
