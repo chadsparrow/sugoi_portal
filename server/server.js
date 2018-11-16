@@ -183,14 +183,23 @@ app.use((error, req, res, next) => {
 });
 
 // cron job to run every 5 mins.. will be every hour to update fedex info in order collection
-var cronJob = cron.job("*/5 * * * *", function () {
+var cronJob = cron.job("*/1 * * * *", function () {
   Order.find({ tracking: { $ne: "" }, confirmDeliveryStatus: { $ne: "Delivered" } }).then(foundOrders => {
     console.log(`Updating shipment tracking information on ${foundOrders.length} orders...`);
     foundOrders.forEach(foundOrder => {
       courier.trace(foundOrder.tracking, function (err, result) {
         foundOrder.confirmDeliveryStatus = result.status;
-        foundOrder.confirmDeliveryDate = result.checkpoints[0].time;
         foundOrder.checkpoints = result.checkpoints;
+        foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
+        let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
+        let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
+        let diff = new DateDiff(date1, date2);
+        const shippingLeadTime = diff.days();
+        foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+        if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
+          foundOrder.totalLeadTime =
+            foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+        }
         foundOrder.save(function (err, updatedOrder) {
           if (err) {
             logger.error(err);
