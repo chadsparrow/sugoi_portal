@@ -44,17 +44,17 @@
     <tbody>
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{orderNum}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{client}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{qty}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{netValue}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{currency}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{isr}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{#if
+        <td style="font-size: 12px;" class="center-align">{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{client}}</td>
+        <td style="font-size: 12px;" class="center-align">{{qty}}</td>
+        <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
+        <td style="font-size: 12px;" class="center-align">{{currency}}</td>
+        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if
           sentVendor}}{{formatDate sentVendor
           "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{shipStatus}}</td>
-        <td style="font-size: 12px;" class="center-align grey lighten-3">{{#if
+        <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if
           vendorConfirmShip}}{{formatDate vendorConfirmShip
           "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{approvedTerms}}</td>
