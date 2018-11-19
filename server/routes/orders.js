@@ -123,10 +123,12 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   }
 
   if (currentStatus == "M. Waiting for Output") {
-    signedOffDate = moment().tz('America/Vancouver').format();
+    signedOffDate = moment()
+      .tz("America/Vancouver")
+      .format();
   }
 
-  Order.findOne({ orderNum: orderNum }, function (err, order) {
+  Order.findOne({ orderNum: orderNum }, function(err, order) {
     if (order) {
       req.flash("error_msg", "Order Number already entered");
       res.redirect("/orders/add");
@@ -217,7 +219,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     multishipPrePack
   } = req.body;
 
-  Order.findOne({ _id: id }, function (err, foundOrder) {
+  Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -238,7 +240,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
 
         if (foundOrder.currentStatus === "U. Uploaded") {
-          foundOrder.uploadDate = moment().tz('America/Vancouver').format();
+          foundOrder.uploadDate = moment()
+            .tz("America/Vancouver")
+            .format();
           foundOrder.sentVendor = null;
           let date1 = moment(Date.parse(foundOrder.uploadDate));
           let date2 = moment(Date.parse(foundOrder.signedOffDate));
@@ -246,11 +250,17 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           const outputTurnaround = diff.days();
           foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
-          foundOrder.sentVendor = moment().tz('America/Vancouver').format();
+          foundOrder.sentVendor = moment()
+            .tz("America/Vancouver")
+            .format();
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
-          foundOrder.signedOffDate = moment().tz('America/Vancouver').format();
+          foundOrder.signedOffDate = moment()
+            .tz("America/Vancouver")
+            .format();
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
-          foundOrder.proofCompletionDate = moment().tz('America/Vancouver').format();
+          foundOrder.proofCompletionDate = moment()
+            .tz("America/Vancouver")
+            .format();
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
           let date2 = moment(Date.parse(foundOrder.requestDate));
           let diff = new DateDiff(date1, date2);
@@ -258,28 +268,29 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.proofTurnaround = parseInt(proofTurnaround + 1);
         }
       }
-
       foundOrder.eventDate = eventDate;
       foundOrder.latestInHand = latestInHand;
       foundOrder.vendor = vendor;
       foundOrder.qty = qty;
       foundOrder.netValue = netValue;
-      if (foundOrder.netValue > 0) {
-        foundOrder.balanceOutstanding = netValue;
-        foundOrder.paymentStatus = "Balance Outstanding";
-      } else if (foundOrder.netValue < 0) {
-        foundOrder.balanceOutstanding = netValue;
-        foundOrder.paymentStatus = "Refund Customer";
-      } else if (foundOrder.netValue == 0) {
-        foundOrder.balanceOutstanding = netValue;
-        foundOrder.paymentStatus = "Complete";
+      if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
+        if (foundOrder.netValue > 0) {
+          foundOrder.balanceOutstanding = netValue;
+          foundOrder.paymentStatus = "Balance Outstanding";
+        } else if (foundOrder.netValue < 0) {
+          foundOrder.balanceOutstanding = netValue;
+          foundOrder.paymentStatus = "Refund Customer";
+        } else if (foundOrder.netValue == 0) {
+          foundOrder.balanceOutstanding = netValue;
+          foundOrder.paymentStatus = "Complete";
+        }
       }
 
       foundOrder.currency = currency;
       foundOrder.latestShipDate = latestShipDate;
       foundOrder.multishipPrePack = multishipPrePack;
 
-      foundOrder.save(function (err, updatedOrder) {
+      foundOrder.save(function(err, updatedOrder) {
         if (err) {
           logger.error(err);
         } else {
@@ -329,7 +340,7 @@ router.put(
         note.isr = isr;
         note.instructionType = instructionType;
 
-        foundOrder.save(function (err, updatedOrder) {
+        foundOrder.save(function(err, updatedOrder) {
           if (err) {
             logger.error(err);
             return;
@@ -359,7 +370,7 @@ router.put(
     let currentStatus = "G. Waiting for Revision";
     let currentArtist = "";
 
-    Order.findOne({ _id: id }, function (err, foundOrder) {
+    Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
         logger.error(err);
         return;
@@ -374,14 +385,14 @@ router.put(
 
           foundOrder.currentStatus = currentStatus;
 
-          foundOrder.save(function (err, updatedOrder) {
+          foundOrder.save(function(err, updatedOrder) {
             if (err) {
               logger.error(err);
               return;
             } else {
               logger.info(
                 `${updatedOrder.orderNum} - revision request by ${
-                req.user.username
+                  req.user.username
                 }`
               );
               req.flash("success_msg", "Revision Requested");
@@ -408,7 +419,7 @@ router.put(
     let instructionType = "Note";
     let noteUser = req.body.noteUser;
 
-    Order.findOne({ _id: id }, function (err, foundOrder) {
+    Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
         logger.error(err);
         return;
@@ -420,7 +431,7 @@ router.put(
             user: noteUser
           });
 
-          foundOrder.save(function (err, updatedOrder) {
+          foundOrder.save(function(err, updatedOrder) {
             if (err) {
               logger.error(err);
               return;
