@@ -29,7 +29,7 @@ module.exports = function(passport) {
               return done(null, user);
             } else {
               return done(null, false, {
-                message: "Invalid email/password, try again!"
+                message: "Invalid user/password, try again!"
               });
             }
           });
