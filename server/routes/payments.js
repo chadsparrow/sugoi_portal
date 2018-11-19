@@ -8,7 +8,7 @@ const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 const Order = require("../models/Order");
 
 router.get("/", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  Order.find({ netValue: { $nin: [null, "", 0] } }).then(orders => {
+  Order.find().then(orders => {
     res.render("payments/", {
       orders
     });
@@ -37,7 +37,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     paymentNotes
   } = req.body;
 
-  Order.findOne({ _id: id }, function (err, foundOrder) {
+  Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -64,7 +64,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.paymentStatus = "Refund Customer";
       }
 
-      foundOrder.save(function (err, updatedOrder) {
+      foundOrder.save(function(err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;
