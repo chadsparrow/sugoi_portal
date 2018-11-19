@@ -179,6 +179,9 @@ const OrderSchema = new Schema({
   isrCollectedCAD: {
     type: Number
   },
+  isrRefunded: {
+    type: Number
+  },
   isrPaymentDate: {
     type: Date
   },
