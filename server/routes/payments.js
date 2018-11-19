@@ -51,19 +51,23 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.isrPaymentDate = isrPaymentDate;
       foundOrder.isrPaymentType = isrPaymentType;
       foundOrder.paymentNotes = paymentNotes;
-      let balanceOutstanding =
-        foundOrder.netValue -
-        onTermPayment -
-        kitOrderPayment -
-        isrCollectedOrig +
-        isrRefunded;
-      foundOrder.balanceOutstanding = parseFloat(balanceOutstanding).toFixed(2);
-      if (foundOrder.balanceOutstanding > 0) {
-        foundOrder.paymentStatus = "Balance Outstanding";
-      } else if (foundOrder.balanceOutstanding == 0) {
-        foundOrder.paymentStatus = "Complete";
-      } else if (foundOrder.balanceOutstanding < 0) {
-        foundOrder.paymentStatus = "Refund Customer";
+      if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
+        let balanceOutstanding =
+          foundOrder.netValue -
+          onTermPayment -
+          kitOrderPayment -
+          isrCollectedOrig +
+          isrRefunded;
+        foundOrder.balanceOutstanding = parseFloat(balanceOutstanding).toFixed(
+          2
+        );
+        if (foundOrder.balanceOutstanding > 0) {
+          foundOrder.paymentStatus = "Balance Outstanding";
+        } else if (foundOrder.balanceOutstanding == 0) {
+          foundOrder.paymentStatus = "Complete";
+        } else if (foundOrder.balanceOutstanding < 0) {
+          foundOrder.paymentStatus = "Refund Customer";
+        }
       }
 
       foundOrder.save(function(err, updatedOrder) {
