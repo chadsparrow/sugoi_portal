@@ -34,7 +34,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     isrCollectedCAD,
     isrPaymentDate,
     isrPaymentType,
-    paymentNotes
+    paymentNotes,
+    isrRefunded
   } = req.body;
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
@@ -54,7 +55,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.netValue -
         onTermPayment -
         kitOrderPayment -
-        isrCollectedOrig;
+        isrCollectedOrig +
+        isrRefunded;
       foundOrder.balanceOutstanding = parseFloat(balanceOutstanding).toFixed(2);
       if (foundOrder.balanceOutstanding > 0) {
         foundOrder.paymentStatus = "Balance Outstanding";
