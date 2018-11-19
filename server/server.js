@@ -187,36 +187,36 @@ app.use((error, req, res, next) => {
 // cron job to run every 5 mins.. will be every hour to update fedex info in order collection
 var cronJob = cron.job("0 * * * *", function () {
   Order.find({ tracking: { $ne: "" }, confirmDeliveryStatus: { $ne: "Delivered" } }).then(foundOrders => {
-    logger.info(`Updating shipment tracking information on ${foundOrders.length} orders...`);
-    foundOrders.forEach(foundOrder => {
-      courier.trace(foundOrder.tracking, function (err, result) {
-        if (err) {
-          logger.error(err);
-          foundOrder.confirmDeliveryStatus = "Invalid Tracking #";
-        } else {
-          foundOrder.confirmDeliveryStatus = result.status;
-          foundOrder.checkpoints = result.checkpoints;
-          if (foundOrder.confirmDeliveryStatus === "Delivered") {
-            foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
-            let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
-            let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
-            let diff = new DateDiff(date1, date2);
-            const shippingLeadTime = diff.days();
-            foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
-            if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
-              foundOrder.totalLeadTime =
-                foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
-            }
-          }
-          foundOrder.save(function (err, updatedOrder) {
-            if (err) {
-              logger.error(err);
-            }
-          });
-        }
-      });
-    });
     if (foundOrders.length > 0) {
+      logger.info(`Updating shipment tracking information on ${foundOrders.length} orders...`);
+      foundOrders.forEach(foundOrder => {
+        courier.trace(foundOrder.tracking, function (err, result) {
+          if (err) {
+            logger.error(err);
+            foundOrder.confirmDeliveryStatus = "Invalid Tracking #";
+          } else {
+            foundOrder.confirmDeliveryStatus = result.status;
+            foundOrder.checkpoints = result.checkpoints;
+            if (foundOrder.confirmDeliveryStatus === "Delivered") {
+              foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
+              let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
+              let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
+              let diff = new DateDiff(date1, date2);
+              const shippingLeadTime = diff.days();
+              foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+              if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
+                foundOrder.totalLeadTime =
+                  foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+              }
+            }
+            foundOrder.save(function (err, updatedOrder) {
+              if (err) {
+                logger.error(err);
+              }
+            });
+          }
+        });
+      });
       logger.info(`Shipment Tracking information updated`);
     }
   });
