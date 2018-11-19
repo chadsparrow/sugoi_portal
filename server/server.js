@@ -11,17 +11,16 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const https = require("https");
 const fs = require("fs");
-const tracker = require('delivery-tracker');
+const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
-const cron = require('cron');
+const cron = require("cron");
 const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
 const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
-const moment = require('moment-timezone');
-const DateDiff = require('date-diff');
-
+const moment = require("moment-timezone");
+const DateDiff = require("date-diff");
 
 // initializes the app using express
 const app = express();
@@ -54,7 +53,7 @@ const {
 
 // MongoDB Connection using .env in docker for credentials
 
-const connectWithRetry = function () {
+const connectWithRetry = function() {
   return mongoose
     .connect(
       process.env.DB_HOST,
@@ -185,15 +184,21 @@ app.use((error, req, res, next) => {
 });
 
 // cron job to run every 5 mins.. will be every hour to update fedex info in order collection
-var cronJob = cron.job("0 * * * *", function () {
-  Order.find({ tracking: { $ne: "" }, confirmDeliveryStatus: { $ne: "Delivered" } }).then(foundOrders => {
+var cronJob = cron.job("0 * * * *", function() {
+  Order.find({
+    tracking: { $ne: "" },
+    confirmDeliveryStatus: { $ne: "Delivered" }
+  }).then(foundOrders => {
     if (foundOrders.length > 0) {
-      logger.info(`Updating shipment tracking information on ${foundOrders.length} orders...`);
+      logger.info(
+        `Updating shipment tracking information on ${
+          foundOrders.length
+        } orders...`
+      );
       foundOrders.forEach(foundOrder => {
-        courier.trace(foundOrder.tracking, function (err, result) {
+        courier.trace(foundOrder.tracking, function(err, result) {
           if (err) {
             logger.error(err);
-            foundOrder.confirmDeliveryStatus = "Invalid Tracking #";
           } else {
             foundOrder.confirmDeliveryStatus = result.status;
             foundOrder.checkpoints = result.checkpoints;
@@ -204,12 +209,15 @@ var cronJob = cron.job("0 * * * *", function () {
               let diff = new DateDiff(date1, date2);
               const shippingLeadTime = diff.days();
               foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
-              if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
+              if (
+                foundOrder.prodLeadTime !== 0 &&
+                foundOrder.shippingLeadTime !== 0
+              ) {
                 foundOrder.totalLeadTime =
                   foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
               }
             }
-            foundOrder.save(function (err, updatedOrder) {
+            foundOrder.save(function(err, updatedOrder) {
               if (err) {
                 logger.error(err);
               }
