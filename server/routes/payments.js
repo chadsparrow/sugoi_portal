@@ -35,7 +35,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     isrPaymentDate,
     isrPaymentType,
     paymentNotes,
-    isrRefunded
+    isrRefunded,
+    invoiceSent
   } = req.body;
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
@@ -51,6 +52,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.isrPaymentDate = isrPaymentDate;
       foundOrder.isrPaymentType = isrPaymentType;
       foundOrder.paymentNotes = paymentNotes;
+      foundOrder.invoiceSent = invoiceSent;
       if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
         let balanceOutstanding =
           foundOrder.netValue -

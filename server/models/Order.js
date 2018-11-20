@@ -157,6 +157,9 @@ const OrderSchema = new Schema({
   jbaInvoiceNum: {
     type: String
   },
+  invoiceSent: {
+    type: Date
+  },
   shippingNotes: {
     type: String
   },

@@ -62,6 +62,10 @@
                     </div>
                   </div>
                 </div>
+                <div class="input-field col s12 l6">
+                  <input type="text" class="input-date2" name="invoiceSent" id="invoiceSent" value="{{formatDate order.invoiceSent "MM/DD/YYYY"}}">
+                  <label for="invoiceSent">Date Invoice Sent:</label>
+                </div>
                 <div class="input-field col s12">
                   <input type="text" name="approvedTerms" value="{{order.approvedTerms}}">
                   <label for="approvedTerms">Approved Terms:</label>
