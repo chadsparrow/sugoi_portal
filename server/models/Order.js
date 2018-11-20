@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const moment = require("moment-timezone");
 
 // Create Order Schema
 const OrderSchema = new Schema({
@@ -47,7 +48,9 @@ const OrderSchema = new Schema({
   requestDate: {
     type: Date,
     required: true,
-    default: Date.now
+    default: moment()
+      .tz("America/Vancouver")
+      .format()
   },
   eventDate: {
     type: Date,
@@ -70,7 +73,9 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: Date.now
+        default: moment()
+          .tz("America/Vancouver")
+          .format()
       },
       instruction: {
         type: String,
