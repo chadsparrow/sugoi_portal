@@ -119,6 +119,11 @@ module.exports = {
       return true;
     }
   },
+  checkForSignOff: function(status) {
+    if (status === "M. Waiting for Output") {
+      return true;
+    }
+  },
   catNotes: function(type) {
     switch (type) {
       case "Initial":
