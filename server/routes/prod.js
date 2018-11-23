@@ -64,9 +64,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     jbaInvoiceNum,
     shipStatus,
     tracking,
-    //confirmDeliveryDate,
-    //confirmDeliveryStatus,
-    //estDeliveryDate,
     shippingNotes
   } = req.body;
 
@@ -124,6 +121,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
               }
             }
           });
+        } else {
+          foundOrder.confirmDeliveryStatus = null;
+          foundOrder.confirmDeliveryDate = null;
         }
       }
 
