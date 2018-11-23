@@ -3,6 +3,8 @@ const router = express.Router();
 const DateDiff = require("date-diff");
 const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
+const tracker = require("delivery-tracker");
+const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 
 const {
   ensureAuthenticated,
@@ -68,7 +70,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     shippingNotes
   } = req.body;
 
-  Order.findOne({ _id: id }, function (err, foundOrder) {
+  Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -108,9 +110,22 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         foundOrder.prodLeadTime = 0;
       }
 
-      //foundOrder.confirmDeliveryDate = confirmDeliveryDate;
-      //foundOrder.confirmDeliveryStatus = confirmDeliveryStatus;
-      //foundOrder.estDeliveryDate = estDeliveryDate;
+      if (tracking != foundOrder.tracking) {
+        foundOrder.tracking = tracking;
+        if (foundOrder.tracking) {
+          courier.trace(foundOrder.tracking, function(err, result) {
+            if (err) {
+              logger.error(err);
+            } else {
+              foundOrder.confirmDeliveryStatus = result.status;
+              foundOrder.checkpoints = result.checkpoints;
+              if (foundOrder.confirmDeliveryStatus === "Delivered") {
+                foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
+              }
+            }
+          });
+        }
+      }
 
       if (foundOrder.confirmDeliveryDate && vendorConfirmShip) {
         let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
@@ -120,10 +135,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
       } else {
         foundOrder.shippingLeadTime = 0;
-      }
-
-      if (tracking) {
-        foundOrder.tracking = tracking;
       }
 
       foundOrder.jbaPONum = jbaPONum;
@@ -139,7 +150,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         foundOrder.totalLeadTime = 0;
       }
 
-      foundOrder.save(function (err, updatedOrder) {
+      foundOrder.save(function(err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;
