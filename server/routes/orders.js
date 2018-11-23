@@ -231,8 +231,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else {
         foundOrder.currentStatus = currentStatus;
         if (
-          foundOrder.currentStatus === "A. Waiting for Proof" ||
-          foundOrder.currentStatus === "G. Waiting for Revision" ||
+          foundOrder.currentStatus == "A. Waiting for Proof" ||
+          foundOrder.currentStatus == "G. Waiting for Revision" ||
           foundOrder.currentStatus == "M. Waiting for Output"
         ) {
           currentArtist = "";
@@ -368,7 +368,6 @@ router.put(
     let instructionType = "Revision";
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
-    let currentArtist = "";
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
@@ -379,11 +378,11 @@ router.put(
           foundOrder.instructions.push({
             instruction: instruction,
             instructionType: instructionType,
-            user: revUser,
-            currentArtist: currentArtist
+            user: revUser
           });
 
           foundOrder.currentStatus = currentStatus;
+          foundOrder.currentArtist = "";
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
