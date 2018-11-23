@@ -3,8 +3,6 @@ const router = express.Router();
 const DateDiff = require("date-diff");
 const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
-const tracker = require("delivery-tracker");
-const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 
 const {
   ensureAuthenticated,
