@@ -68,9 +68,10 @@
         <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{tracking}}</td>
         <!-- pull from Shippo API -->
-        <td style="font-size: 12px;" class="center-align {{setConfirmDeliveryStatus confirmDeliveryStatus}}"><a href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
+        <td style="font-size: 12px;" class="center-align {{setConfirmDeliveryStatus confirmDeliveryStatus}}">{{#if
+          tracking}}<a href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
             target="_blank" class="text-decoration:none !important;">{{confirmDeliveryStatus}} <i class="material-icons tiny">flight</i></a>
-          </a></td>
+          </a>{{/if}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
           "DD-MMM"}}{{/if}}</td>
