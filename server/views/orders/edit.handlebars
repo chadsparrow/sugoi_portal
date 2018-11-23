@@ -26,7 +26,6 @@
                       <label for="orderNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
-                    {{#if (checkForSignOff order.currentStatus)}}
                     {{#if user.admin}}
                     <select name="priority">
                       {{#select order.priority}} <option value=""></option>
@@ -36,13 +35,23 @@
                     </select>
                     <label for="priority">Priority:</label>
                     {{else}}
+                    {{#if (checkForSignOff order.currentStatus)}}
                     <input type="text" name="priority" value="{{order.priority}}" readonly>
+                    <label for="priority">Priority:</label>
+                    {{else}}
+                    <select name="priority">
+                      {{#select order.priority}} <option value=""></option>
+                      <option value="RUSH">RUSH</option>
+                      <option value="VIP">VIP</option>
+                      {{/select}}
+                    </select>
                     <label for="priority">Priority:</label>
                     {{/if}}
                     {{/if}}
+
                   </div>
                   <div class="input-field col s12 m6">
-                    {{#if (checkForSignOff order.currentStatus)}}
+
                     {{#if user.admin}}
                     <select name="vendor">
                       {{#select order.vendor}}
@@ -53,33 +62,52 @@
                     </select>
                     <label for="vendor">Vendor:</label>
                     {{else}}
+                    {{#if (checkForSignOff order.currentStatus)}}
                     <input type="text" name="vendor" value="{{order.vendor}}" readonly>
+                    <label for="vendor">Vendor:</label>
+                    {{else}}
+                    <select name="vendor">
+                      {{#select order.vendor}}
+                      <option value="CCN">CCN</option>
+                      <option value="PNR">PNR</option>
+                      <option value="MEX">MEX</option>
+                      {{/select}}
+                    </select>
                     <label for="vendor">Vendor:</label>
                     {{/if}}
                     {{/if}}
                   </div>
                   <div class="input-field col s12">
-                    {{#if (checkForSignOff order.currentStatus)}}
+
                     {{#if user.admin}}
                     <i class="material-icons prefix md-18">calendar_today</i>
                     <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{else}}
+                    {{#if (checkForSignOff order.currentStatus)}}
                     <i class="material-icons prefix md-18">calendar_today</i>
                     <input type="text" name="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}" readonly>
+                    <label for="eventDate">Event Date:</label>
+                    {{else}}
+                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{/if}}
                     {{/if}}
                   </div>
                   <div class="input-field col s12">
-                    {{#if (checkForSignOff order.currentStatus)}}
                     {{#if user.admin}}
                     <i class="material-icons prefix md-18">calendar_today</i>
                     <input type="text" class="input-date3" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{else}}
+                    {{#if (checkForSignOff order.currentStatus)}}
                     <i class="material-icons prefix md-18">calendar_today</i>
                     <input type="text" name="latestInHand" value="{{formatDate order.latestInHand "DD-MMM"}}" readonly>
+                    <label for="latestInHand">Latest In-Hand Date:</label>
+                    {{else}}
+                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{/if}}
                     {{/if}}
@@ -142,7 +170,6 @@
                         <label for="netValue">Total Value:</label>
                     </div>
                     <div class="input-field col s12 l4">
-                      {{#if (checkForSignOff order.currentStatus)}}
                       {{#if user.admin}}
                       <select name="currency">
                         {{#select order.currency}}
@@ -153,22 +180,38 @@
                       </select>
                       <label for="currency">Currency:</label>
                       {{else}}
+                      {{#if (checkForSignOff order.currentStatus)}}
                       <input type="text" name="currency" value="{{order.currency}}" readonly>
+                      <label for="currency">Currency:</label>
+                      {{else}}
+                      <select name="currency">
+                        {{#select order.currency}}
+                        <option value=""></option>
+                        <option value="CAD">CAD</option>
+                        <option value="USD">USD</option>
+                        {{/select}}
+                      </select>
                       <label for="currency">Currency:</label>
                       {{/if}}
                       {{/if}}
                     </div>
                     <div class="input-field col s12">
-                      {{#if (checkForSignOff order.currentStatus)}}
+
                       {{#if user.admin}}
                       <i class="material-icons prefix md-18">calendar_today</i>
                       <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
                       "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>
                       {{else}}
+                      {{#if (checkForSignOff order.currentStatus)}}
                       <i class="material-icons prefix md-18">calendar_today</i>
                       <input type="text" name="latestShipDate" value="{{formatDate order.latestShipDate "DD-MMM"}}"
                         readonly>
+                      <label for="latestShipDate">Latest Ship Date:</label>
+                      {{else}}
+                      <i class="material-icons prefix md-18">calendar_today</i>
+                      <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
+                      "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>
                       {{/if}}
                       {{/if}}
