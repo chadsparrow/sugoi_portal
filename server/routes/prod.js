@@ -109,22 +109,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
       if (tracking != foundOrder.tracking) {
         foundOrder.tracking = tracking;
-        if (foundOrder.tracking) {
-          courier.trace(foundOrder.tracking, function(err, result) {
-            if (err) {
-              logger.error(err);
-            } else {
-              foundOrder.confirmDeliveryStatus = result.status;
-              foundOrder.checkpoints = result.checkpoints;
-              if (foundOrder.confirmDeliveryStatus === "Delivered") {
-                foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
-              }
-            }
-          });
-        } else {
-          foundOrder.confirmDeliveryStatus = null;
-          foundOrder.confirmDeliveryDate = null;
-        }
       }
 
       if (foundOrder.confirmDeliveryDate && vendorConfirmShip) {
