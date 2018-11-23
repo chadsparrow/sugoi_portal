@@ -334,8 +334,8 @@ $(document).ready(function() {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       },
       {
-        targets: 13,
-        data: "isrCollectedCAD",
+        targets: 15,
+        data: "isrRefunded",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       },
       {
