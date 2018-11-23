@@ -59,7 +59,7 @@
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">
                   <h6>Art / Production Entry Fields:</h6>
                   <div class="input-field col s12">
-                    <select name="currentArtist" {{#if checkForSignOff}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
+                    <select name="currentArtist">
                       {{#select order.currentArtist}} <option value=""></option>
                       <option value="BCASTRO">BARBARA</option>
                       <option value="CSPARROW">CHAD</option>
@@ -73,9 +73,8 @@
                     <label for="currentArtist">Current Artist:</label>
                   </div>
                   <div class="input-field col s12 center-align">
-                    <select name="currentStatus" id="currentStatus" {{#if checkForSignOff}} {{#if user.admin}} {{else}}
-                      readonly{{/if}}{{/if}}> {{#select order.currentStatus}} <option value="A. Waiting for Proof"
-                      selected>Waiting for Proof</option>
+                    <select name="currentStatus" id="currentStatus"> {{#select order.currentStatus}}
+                      <option value="A. Waiting for Proof" selected>Waiting for Proof</option>
                       <option value="B. Proof Started">Proof Started</option>
                       <option value="C. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
                       <option value="D. Proof Ready for QC">Proof Ready for QC</option>

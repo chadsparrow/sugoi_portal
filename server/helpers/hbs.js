@@ -120,7 +120,19 @@ module.exports = {
     }
   },
   checkForSignOff: function(status) {
-    if (status === "M. Waiting for Output") {
+    if (
+      status === "M. Waiting for Output" ||
+      status === "N. Output - Waiting on Someone else" ||
+      status === "O. Output Started" ||
+      status === "P. Output Ready for QC" ||
+      status === "Q. Output QC Complete" ||
+      status === "R. Waiting for PNT" ||
+      status === "S. PNT Ready for QC" ||
+      status === "T. PNT QC Complete" ||
+      status === "U. Uploaded" ||
+      status === "V. Sent to Vendor" ||
+      status === "W. CANCELLED"
+    ) {
       return true;
     }
   },
