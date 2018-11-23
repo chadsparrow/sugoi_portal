@@ -37,7 +37,7 @@
                     <label for="priority">Priority:</label>
                     {{else}}
                     <input type="text" name="priority" value="{{order.priority}}" readonly>
-                    <label for="priority">Account #:</label>
+                    <label for="priority">Priority:</label>
                     {{/if}}
                     {{/if}}
                   </div>
@@ -154,7 +154,7 @@
                       <label for="currency">Currency:</label>
                       {{else}}
                       <input type="text" name="currency" value="{{order.currency}}" readonly>
-                      <label for="currency">Vendor:</label>
+                      <label for="currency">Currency:</label>
                       {{/if}}
                       {{/if}}
                     </div>
@@ -169,7 +169,7 @@
                       <i class="material-icons prefix md-18">calendar_today</i>
                       <input type="text" name="latestShipDate" value="{{formatDate order.latestShipDate "DD-MMM"}}"
                         readonly>
-                      <label for="latestShipDate">Latest In-Hand Date:</label>
+                      <label for="latestShipDate">Latest Ship Date:</label>
                       {{/if}}
                       {{/if}}
                     </div>
