@@ -208,6 +208,13 @@ $(document).ready(function() {
         targets: 4,
         data: "netValue",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 21,
+        data: null,
+        render: function(data, type, row) {
+          return data["vendorConfirmShip"] - data["sentVendor"];
+        }
       }
     ],
     scrollX: true,
