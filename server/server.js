@@ -34,6 +34,7 @@ const indexRoutes = require("./routes/index");
 const prodRoutes = require("./routes/prod");
 const proofRoutes = require("./routes/proofs");
 const paymentRoutes = require("./routes/payments");
+const reportRoutes = require("./routes/reports");
 
 // Handlebars Helpers
 const {
@@ -172,6 +173,7 @@ app.use("/orders", orderRoutes);
 app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);
 app.use("/payments", paymentRoutes);
+app.use("/reports", reportRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Resource Not Found");
