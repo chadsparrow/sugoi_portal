@@ -6,7 +6,7 @@ const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 
 const Report = require("../models/Reports");
 
-router.get("/custom", ensureAuthenticated, (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   const currentWeek = moment()
     .tz("America/Vancouver")
     .format("W");
