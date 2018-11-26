@@ -268,6 +268,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.proofTurnaround = parseInt(proofTurnaround + 1);
         }
       }
+
       foundOrder.eventDate = eventDate;
       foundOrder.latestInHand = latestInHand;
       foundOrder.vendor = vendor;
