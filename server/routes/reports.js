@@ -54,7 +54,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
     currentYear
   )}`;
 
-  console.log(PageTitle);
+  console.log(pageTitle);
 
   res.send("HELLO");
 
