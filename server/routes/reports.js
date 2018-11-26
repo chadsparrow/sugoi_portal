@@ -54,16 +54,16 @@ router.get("/", ensureAuthenticated, (req, res) => {
     currentYear
   )}`;
 
-  console.log(pageTitle);
-
-  res.send("HELLO");
-
-  // Report.find({}).then(orders => {
-  //   res.render("reports/index", {
-  //     orders,
-  //     pageTitle
-  //   });
-  // });
+  Report.findOne({
+    reportWeekNumber: currentWeek,
+    reportYear: currentYear
+  }).then(report => {
+    res.json(report);
+    // res.render("reports/index", {
+    //   orders,
+    //   pageTitle
+    // });
+  });
 });
 
 module.exports = router;
