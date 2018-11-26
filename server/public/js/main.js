@@ -213,7 +213,7 @@ $(document).ready(function() {
         targets: 21,
         data: null,
         render: function(data, type, row) {
-          return data["Conf. Ship Date"] - data["Sent to Vendor"];
+          return data["sentVendor"];
         }
       }
     ],
