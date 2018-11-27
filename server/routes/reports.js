@@ -11,9 +11,9 @@ router.get("/", (req, res) => {
   Report.aggregate([
     {
       $project: {
-        proofAvg: { $avg: "$proofTurnArounds" }.toFixed(2),
-        revisionAvg: { $avg: "$revisionTurnArounds" }.toFixed(2),
-        outputAvg: { $avg: "$outputTurnArounds" }.toFixed(2)
+        proofAvg: { $trunc: { $avg: "$proofTurnArounds" } },
+        revisionAvg: { $trunc { $avg: "$revisionTurnArounds" } },
+        outputAvg: { $trunc { $avg: "$outputTurnArounds" } }
       }
     }
   ]).then(function(res) {
