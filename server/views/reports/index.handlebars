@@ -35,10 +35,7 @@
         data: [{{ averages.0.proofAvg }}, {{ averages.0.revisionAvg }}, {{ averages.0.outputAvg }}]
       }
     ],
-  xaxis: { categories: ["Proofs", "Revisions", "Output"] },
-  tooltip: {
-    enabled: false
-  }
+  xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
 
   var chart = new ApexCharts(document.querySelector(".chart"), options);
