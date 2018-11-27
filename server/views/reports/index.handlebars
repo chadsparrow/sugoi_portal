@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 20px; margin-bottom: 50px;">
+<div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports</h5>
   <div class="input-field col s4">
     <select>
@@ -28,7 +28,10 @@
     series: [{
       data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
     }],
-  xaxis: { categories: ["Proofs", "Revisions", "Output"] }
+  xaxis: { categories: ["Proofs", "Revisions", "Output"] },
+  tooltip: {
+    enabled: false
+  }
   }
 
   var chart = new ApexCharts(document.querySelector(".chart"), options);
