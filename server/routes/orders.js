@@ -317,7 +317,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               }
             }
           );
-        } else if (foundOrderOrder.currentStatus === "L. Revision Complete") {
+        } else if (foundOrder.currentStatus === "L. Revision Complete") {
           let reportWeek = moment()
             .tz("America/Vancouver")
             .format("W");
