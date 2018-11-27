@@ -256,7 +256,13 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
           Report.aggregate([
-            { $group: { _id: null, proofAvg: { $avg: "$proofTurnArounds" } } }
+            {
+              $project: {
+                proofAvg: { $avg: "$proofTurnArounds" },
+                revisionAvg: { $avg: "$revisionTurnArounds" },
+                outputAvg: { $avg: "$outputTurnArounds" }
+              }
+            }
           ]).then(function(res) {
             console.log(res);
           });
