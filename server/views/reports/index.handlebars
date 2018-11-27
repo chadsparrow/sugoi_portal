@@ -1,16 +1,13 @@
 <div class="container" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports</h5>
-  <!-- Dropdown Trigger -->
-  <a class='dropdown-trigger btn' href='#' data-target='weekSelector' style="width: 225px;">Select Week</a>
-
-  <!-- Dropdown Structure -->
-  <ul id='weekSelector' class='dropdown-content'>
-    {{#each reports}}
-    <li><a href="#!" style="font-size: 12px;" class="center-align">{{reportWeekRange}}</a></li>
-    {{/each}}
-  </ul>
-  <hr>
-  <div id="chart"></div>
+  <div class="input-field col s12">
+    <select>
+      {{#each reports}}
+      <option value="{{reportWeekNumber}}">{{reportWeekRange}}</option>
+      {{/each}}
+    </select>
+    <label>Select Week</label>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
