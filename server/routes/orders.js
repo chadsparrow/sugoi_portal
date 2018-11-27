@@ -248,8 +248,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let date1 = moment(Date.parse(foundOrder.uploadDate));
           let date2 = moment(Date.parse(foundOrder.signedOffDate));
           let diff = new DateDiff(date1, date2);
-          const outputTurnaround = diff.days();
-          foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
+          const outputTurnaround = parseInt(diff.days() + 1);
+          foundOrder.outputTurnaround = outputTurnaround;
 
           let reportWeek = moment()
             .tz("America/Vancouver")
@@ -268,7 +268,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             },
             {
               $inc: { outputCompleted: 1 },
-              $push: { proofTurnAround: foundOrder.outputTurnAround }
+              $push: { outputTurnArounds: outputTurnaround }
             },
             { upsert: true, new: true },
             function(err, result) {
@@ -293,8 +293,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
           let date2 = moment(Date.parse(foundOrder.requestDate));
           let diff = new DateDiff(date1, date2);
-          const proofTurnaround = diff.days();
-          foundOrder.proofTurnaround = parseInt(proofTurnaround + 1);
+          const proofTurnaround = parseInt(diff.days() + 1);
+          foundOrder.proofTurnaround = proofTurnaround;
 
           let reportWeek = moment()
             .tz("America/Vancouver")
@@ -313,7 +313,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             },
             {
               $inc: { proofsCompleted: 1 },
-              $push: { proofTurnAround: foundOrder.proofTurnAround }
+              $push: { proofTurnArounds: proofTurnaround }
             },
             { upsert: true, new: true },
             function(err, result) {
@@ -331,7 +331,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let date1 = moment(Date.parse(foundOrder.revisionCompletionDate));
           let date2 = moment(Date.parse(foundOrder.revisionRequestDate));
           let diff = new DateDiff(date1, date2);
-          const revisionTurnaround = parstInt(diff.days() + 1);
+          const revisionTurnaround = parseInt(diff.days() + 1);
 
           let reportWeek = moment()
             .tz("America/Vancouver")
