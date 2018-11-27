@@ -4,7 +4,7 @@ const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
 const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 
-const Report = require("../models/Reports");
+const Report = require("../models/Report");
 
 router.get("/", ensureAuthenticated, (req, res) => {
   const currentWeek = moment()

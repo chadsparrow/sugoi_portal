@@ -7,6 +7,7 @@ const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
 // includes model for mongodb
 const Order = require("../models/Order");
+const Report = require("../models/Report");
 const Proof = require("../models/Proof");
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
@@ -249,6 +250,21 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = diff.days();
           foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
+
+          let reportWeek = moment().tz("America/Vancouver").format("W");
+          let reportYear = moment().tz("America/Vancouver").format("YYYY");
+
+          let query = {reportWeekNumber: reportWeek, reportYear: reportYear};
+          let updater = {$inc {outputCompleted: 1}};
+          let options = {upsert: true, new: true};
+
+
+          Report.findOneAndUpdate(query, updater, options, function(err, result){
+            if (error){
+              logger.error(err);
+              return;
+            }
+          });
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = moment()
             .tz("America/Vancouver")
