@@ -8,9 +8,10 @@ const Report = require("../models/Report");
 
 router.get("/", (req, res) => {
   Report.find().then(reports => {
-    res.render("reports/index", {
-      reports
-    });
+    const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+    const result = average(reports[0].proofsCompleted);
+    //res.render("reports/index", {});
+    res.send(result);
   });
 });
 
