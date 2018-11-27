@@ -8,11 +8,23 @@ const Report = require("../models/Report");
 
 router.get("/", (req, res) => {
   Report.find().then(reports => {
-    const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
-    const result = average(reports[0].proofsCompleted);
-    //res.render("reports/index", {});
-    res.send(result);
+    reports.forEach((report, index) => {
+      const avgProofs = getAvg(report.proofTurnArounds);
+      reports[index] = { avgProofs: avgProofs, ...report };
+    });
+    // res.render("reports/index", {
+    //   reports
+    // });
+    res.json(reports);
   });
 });
+
+function getAvg(turnArounds) {
+  return (
+    turnArounds.reduce(function(p, c) {
+      return p + c;
+    }) / turnArounds.length
+  );
+}
 
 module.exports = router;
