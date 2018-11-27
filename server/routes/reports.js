@@ -8,7 +8,9 @@ const Report = require("../models/Report");
 
 router.get("/", (req, res) => {
   Report.find().then(reports => {
-    res.json(reports);
+    res.render("reports/index", {
+      reports
+    });
   });
 });
 
