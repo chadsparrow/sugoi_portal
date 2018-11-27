@@ -1,10 +1,10 @@
 <div class="container" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports</h5>
   <!-- Dropdown Trigger -->
-  <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Select Week</a>
+  <a class='dropdown-trigger btn' href='#' data-target='weekSelector'>Select Week</a>
 
   <!-- Dropdown Structure -->
-  <ul id='dropdown1' class='dropdown-content'>
+  <ul id='weekSelector' class='dropdown-content'>
     {{#each reports}}
     <li><a href="#!">{{reportWeekRange}}</a></li>
     {{/each}}
