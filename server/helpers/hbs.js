@@ -199,12 +199,5 @@ module.exports = {
     } else {
       return "black-text";
     }
-  },
-  getArrayAvg: function(array) {
-    return (
-      array.reduce(function(p, c) {
-        return p + c;
-      }) / array.length
-    );
   }
 };
