@@ -90,7 +90,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     orderNum,
     accountNum,
     priority,
-    currentStatus,
     eventDate,
     latestInHand,
     isr,
@@ -123,39 +122,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     });
   }
 
-  if (currentStatus == "M. Waiting for Output") {
-    signedOffDate = moment()
-      .tz("America/Vancouver")
-      .format();
-
-    let reportWeek = moment()
-      .tz("America/Vancouver")
-      .format("W");
-    let reportYear = moment()
-      .tz("America/Vancouver")
-      .format("YYYY");
-
-    let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
-
-    Report.findOneAndUpdate(
-      {
-        reportWeekNumber: reportWeek,
-        reportYear: reportYear,
-        reportWeekRange: reportWeekRange
-      },
-      {
-        $inc: { signOffs: 1 }
-      },
-      { upsert: true, new: true },
-      function(err, result) {
-        if (err) {
-          logger.error(err);
-          return;
-        }
-      }
-    );
-  }
-
   Order.findOne({ orderNum: orderNum }, function(err, order) {
     if (order) {
       req.flash("error_msg", "Order Number already entered");
@@ -164,7 +130,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       const newOrder = new Order({
         orderNum: orderNum,
         accountNum: accountNum,
-        currentStatus: currentStatus,
         priority: priority,
         eventDate: eventDate,
         latestInHand: latestInHand,
