@@ -14,6 +14,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
+
+  console.log(averages);
   var options = {
     chart: {
       height: 500,
@@ -31,7 +33,7 @@
     },
   {
     name: 'Avg. Turn Around',
-      data: []
+      data: [{{ averages.0.proofAvg }}, { { averages.0.revisionAvg } }, { { averages.0.outputAvg } }]
   }
   ],
   xaxis: { categories: ["Proofs", "Revisions", "Output"] },
