@@ -265,6 +265,9 @@
 {{/if}}
 
 <script>
-  var instance = M.FloatingActionButton.getInstance('#viewActionButton');
-  console.log(instance);
+  document.addEventListener('DOMContentLoaded', function () {
+    var elem = document.querySelector('.fixed-action-btn');
+    var instance = M.FloatingActionButton.init(elem);
+    instance.open();
+  })
 </script>
