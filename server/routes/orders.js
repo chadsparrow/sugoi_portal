@@ -251,20 +251,24 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           const outputTurnaround = diff.days();
           foundOrder.outputTurnaround = parseInt(outputTurnaround + 1);
 
-          let reportWeek = moment().tz("America/Vancouver").format("W");
-          let reportYear = moment().tz("America/Vancouver").format("YYYY");
+          let reportWeek = moment()
+            .tz("America/Vancouver")
+            .format("W");
+          let reportYear = moment()
+            .tz("America/Vancouver")
+            .format("YYYY");
 
-          let query = {reportWeekNumber: reportWeek, reportYear: reportYear};
-          let updater = {$inc {outputCompleted: 1}};
-          let options = {upsert: true, new: true};
-
-
-          Report.findOneAndUpdate(query, updater, options, function(err, result){
-            if (error){
-              logger.error(err);
-              return;
+          Report.findOneAndUpdate(
+            { reportWeekNumber: reportWeek, reportYear: reportYear },
+            { $inc: { outputCompleted: 1 } },
+            { upsert: true, new: true },
+            function(err, result) {
+              if (error) {
+                logger.error(err);
+                return;
+              }
             }
-          });
+          );
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = moment()
             .tz("America/Vancouver")
