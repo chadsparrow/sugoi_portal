@@ -27,15 +27,16 @@
         distributed: true
       }
     },
-    series: [{
-      name: 'Completed',
-      data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
-    },
-  {
-    name: 'Avg. Turn Around',
-      data: [{{ averages.0.proofAvg }}, { { averages.0.revisionAvg } }, { { averages.0.outputAvg } }]
-  }
-  ],
+    series: [
+      {
+        name: 'Completed',
+        data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
+      },
+      {
+        name: 'Completed',
+       data: [{{ averages.0.proofAvg }}, {{ averages.0.revisionAvg }}, {{ averages.0.outputAvg }}]
+      }
+    ],
   xaxis: { categories: ["Proofs", "Revisions", "Output"] },
   tooltip: {
     enabled: false
