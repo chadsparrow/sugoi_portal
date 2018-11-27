@@ -39,7 +39,6 @@ router.get("/", (req, res) => {
   });
 
   Report.find().then(reports => {
-    console.log(averages);
     res.render("reports/index", {
       reports,
       averages
