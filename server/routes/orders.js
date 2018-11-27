@@ -288,6 +288,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let reportYear = moment()
             .tz("America/Vancouver")
             .format("YYYY");
+          let reportMonth = moment()
+            .tz("America/Vancouver")
+            .format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -295,7 +298,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
-              reportWeekRange: reportWeekRange
+              reportWeekRange: reportWeekRange,
+              reportMonth: reportMonth
             },
             {
               $inc: { signOffs: 1 }
@@ -324,6 +328,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let reportYear = moment()
             .tz("America/Vancouver")
             .format("YYYY");
+          let reportMonth = moment()
+            .tz("America/Vancouver")
+            .format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -331,7 +338,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
-              reportWeekRange: reportWeekRange
+              reportWeekRange: reportWeekRange,
+              reportMonth: reportMonth
             },
             {
               $inc: { proofsCompleted: 1 },
@@ -361,6 +369,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let reportYear = moment()
             .tz("America/Vancouver")
             .format("YYYY");
+          let reportMonth = moment()
+            .tz("America/Vancouver")
+            .format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -368,7 +379,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
-              reportWeekRange: reportWeekRange
+              reportWeekRange: reportWeekRange,
+              reportMonth: reportMonth
             },
             {
               $inc: { revisionsCompleted: 1 },
