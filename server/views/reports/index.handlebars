@@ -14,8 +14,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-
-  console.log(averages);
   var options = {
     chart: {
       height: 500,
@@ -33,7 +31,7 @@
         data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
       },
       {
-        name: 'Completed',
+        name: 'Avg. Turn Around',
        data: [{{ averages.0.proofAvg }}, {{ averages.0.revisionAvg }}, {{ averages.0.outputAvg }}]
       }
     ],
