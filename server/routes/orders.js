@@ -263,7 +263,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             { $inc: { outputCompleted: 1 } },
             { upsert: true, new: true },
             function(err, result) {
-              if (error) {
+              if (err) {
                 logger.error(err);
                 return;
               }
