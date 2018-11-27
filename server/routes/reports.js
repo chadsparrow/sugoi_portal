@@ -18,10 +18,10 @@ router.get("/", (req, res) => {
     }
   ]).then(function(res) {
     averages = res;
-    console.log(averages);
   });
 
   Report.find().then(reports => {
+    console.log(averages);
     res.render("reports/index", {
       reports,
       averages
