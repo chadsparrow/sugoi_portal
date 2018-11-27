@@ -19,7 +19,10 @@ const ReportSchema = new Schema({
   },
   outputCompleted: {
     type: Number
-  }
+  },
+  proofTurnArounds: [],
+  outputTurnArounds: [],
+  revisionTurnArounds: []
 });
 
 module.exports = mongoose.model("reports", ReportSchema);

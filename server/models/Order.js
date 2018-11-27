@@ -217,7 +217,13 @@ const OrderSchema = new Schema({
   outputTurnaround: {
     type: Number
   },
-  checkpoints: []
+  checkpoints: [],
+  revisionRequestDate: {
+    type: Date
+  },
+  revisionCompletionDate: {
+    type: Date
+  }
 });
 
 module.exports = mongoose.model("orders", OrderSchema);

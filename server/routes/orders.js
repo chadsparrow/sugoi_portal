@@ -266,7 +266,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               reportYear: reportYear,
               reportWeekRange: reportWeekRange
             },
-            { $inc: { outputCompleted: 1 } },
+            {
+              $inc: { outputCompleted: 1 },
+              $push: { proofTurnAround: foundOrder.outputTurnArounds }
+            },
             { upsert: true, new: true },
             function(err, result) {
               if (err) {
@@ -308,7 +311,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               reportYear: reportYear,
               reportWeekRange: reportWeekRange
             },
-            { $inc: { proofsCompleted: 1 } },
+            {
+              $inc: { proofsCompleted: 1 },
+              $push: { proofTurnAround: foundOrder.proofTurnArounds }
+            },
             { upsert: true, new: true },
             function(err, result) {
               if (err) {
@@ -318,6 +324,19 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             }
           );
         } else if (foundOrder.currentStatus === "L. Revision Complete") {
+          foundOrder.revisionCompletionDate = moment()
+            .tz("America/Vancouver")
+            .format();
+
+          if (foundOrder.revisionRequestDate != null) {
+            let date1 = moment(Date.parse(foundOrder.revisionCompletionDate));
+            let date2 = moment(Date.parse(foundOrder.revisionRequestDate));
+            let diff = new DateDiff(date1, date2);
+            const revisionTurnaround = parstInt(diff.days() + 1);
+          } else {
+            const revisionTurnaround = 0;
+          }
+
           let reportWeek = moment()
             .tz("America/Vancouver")
             .format("W");
@@ -333,7 +352,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               reportYear: reportYear,
               reportWeekRange: reportWeekRange
             },
-            { $inc: { revisionsCompleted: 1 } },
+            {
+              $inc: { revisionsCompleted: 1 },
+              $push: { revisionTurnArounds: revisionTurnaround }
+            },
             { upsert: true, new: true },
             function(err, result) {
               if (err) {
@@ -445,6 +467,9 @@ router.put(
     let instructionType = "Revision";
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
+    let revisionRequestDate = moment()
+      .tz("America/Vancouver")
+      .format();
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
@@ -460,6 +485,7 @@ router.put(
 
           foundOrder.currentStatus = currentStatus;
           foundOrder.currentArtist = "";
+          foundOrder.revisionRequestDate = revisionRequestDate;
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {

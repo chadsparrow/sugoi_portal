@@ -47,8 +47,6 @@ router.get("/", ensureAuthenticated, (req, res) => {
     return rangeIsFrom + " to " + rangeIsTo;
   }
 
-  //console.log(getDateRangeOfWeek(currentWeek, currentYear)); //12-21-2015 to 12-27-2015
-
   let pageTitle = `Custom Reports - ${getDateRangeOfWeek(
     currentWeek,
     currentYear
