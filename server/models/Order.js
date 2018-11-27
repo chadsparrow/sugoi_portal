@@ -39,7 +39,8 @@ const OrderSchema = new Schema({
       "V. Sent to Vendor",
       "W. CANCELLED"
     ],
-    required: true
+    required: true,
+    default: "A. Waiting for Proof"
   },
   priority: {
     type: String,
