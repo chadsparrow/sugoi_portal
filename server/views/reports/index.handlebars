@@ -32,7 +32,7 @@
       },
       {
         name: 'Avg. Turn Around',
-        data: [{{ averages.0.proofAvg }}, {{ averages.0.revisionAvg }}, {{ averages.0.outputAvg }}]
+        data: [{{ averages.0.proofAvg }} + " d", {{ averages.0.revisionAvg }} +' d', {{ averages.0.outputAvg }} + ' d']
       }
     ],
   xaxis: { categories: ["Proofs", "Revisions", "Output"] }
