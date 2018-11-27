@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
     }
   ]).then(function(res) {
     averages = res;
+    console.log(averages);
   });
 
   Report.find().then(reports => {
