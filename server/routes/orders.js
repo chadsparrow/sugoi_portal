@@ -255,18 +255,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.aggregate([
-            {
-              $project: {
-                proofAvg: { $avg: "$proofTurnArounds" },
-                revisionAvg: { $avg: "$revisionTurnArounds" },
-                outputAvg: { $avg: "$outputTurnArounds" }
-              }
-            }
-          ]).then(function(res) {
-            console.log(res);
-          });
-
           Report.findOneAndUpdate(
             {
               reportWeekNumber: reportWeek,
