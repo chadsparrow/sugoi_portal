@@ -6,7 +6,7 @@ const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 
 const Report = require("../models/Report");
 
-router.get("/", ensureAuthenticated, (req, res) => {
+router.get("/", (req, res) => {
   Report.find().then(reports => {
     res.render("reports/index", {
       reports
