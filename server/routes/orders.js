@@ -587,13 +587,29 @@ Date.prototype.getWeek = function() {
 
 function getDateRangeOfWeek(weekNo, y) {
   var d1, numOfdaysPastSinceLastMonday, rangeIsFrom, rangeIsTo;
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
   d1 = new Date("" + y + "");
   numOfdaysPastSinceLastMonday = d1.getDay() - 1;
   d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
   d1.setDate(d1.getDate() + 7 * (weekNo - d1.getWeek()));
-  rangeIsFrom = d1.getMonth() + 1 + "-" + d1.getDate() + "-" + d1.getFullYear();
+  rangeIsFrom =
+    months[d1.getMonth()] + "-" + d1.getDate() + "-" + d1.getFullYear();
   d1.setDate(d1.getDate() + 6);
-  rangeIsTo = d1.getMonth() + 1 + "-" + d1.getDate() + "-" + d1.getFullYear();
+  rangeIsTo =
+    months[d1.getMonth()] + "-" + d1.getDate() + "-" + d1.getFullYear();
   return rangeIsFrom + " to " + rangeIsTo;
 }
 
