@@ -20,6 +20,9 @@ const ReportSchema = new Schema({
   outputCompleted: {
     type: Number
   },
+  signOffs: {
+    type: Number
+  },
   proofTurnArounds: [],
   outputTurnArounds: [],
   revisionTurnArounds: []

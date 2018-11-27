@@ -127,6 +127,33 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     signedOffDate = moment()
       .tz("America/Vancouver")
       .format();
+
+    let reportWeek = moment()
+      .tz("America/Vancouver")
+      .format("W");
+    let reportYear = moment()
+      .tz("America/Vancouver")
+      .format("YYYY");
+
+    let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+
+    Report.findOneAndUpdate(
+      {
+        reportWeekNumber: reportWeek,
+        reportYear: reportYear,
+        reportWeekRange: reportWeekRange
+      },
+      {
+        $inc: { signOffs: 1 }
+      },
+      { upsert: true, new: true },
+      function(err, result) {
+        if (err) {
+          logger.error(err);
+          return;
+        }
+      }
+    );
   }
 
   Order.findOne({ orderNum: orderNum }, function(err, order) {
@@ -286,6 +313,32 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.signedOffDate = moment()
             .tz("America/Vancouver")
             .format();
+          let reportWeek = moment()
+            .tz("America/Vancouver")
+            .format("W");
+          let reportYear = moment()
+            .tz("America/Vancouver")
+            .format("YYYY");
+
+          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+
+          Report.findOneAndUpdate(
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange
+            },
+            {
+              $inc: { signOffs: 1 }
+            },
+            { upsert: true, new: true },
+            function(err, result) {
+              if (err) {
+                logger.error(err);
+                return;
+              }
+            }
+          );
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
           foundOrder.proofCompletionDate = moment()
             .tz("America/Vancouver")
