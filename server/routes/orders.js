@@ -255,22 +255,31 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
+          Report.findOne(
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
               reportWeekRange: reportWeekRange,
               reportMonth: reportMonth
             },
-            {
-              $inc: { outputCompleted: 1 },
-              $push: { outputTurnArounds: outputTurnaround }
-            },
-            { upsert: true, new: true },
-            function(err, result) {
+            (err, foundReport) => {
               if (err) {
                 logger.error(err);
                 return;
+              } else {
+                foundReport.outputCompleted = foundReport.outputCompleted + 1;
+                foundReport.outputTurnArounds = [
+                  outputTurnaround,
+                  ...foundReport.outputTurnArounds
+                ];
+                foundReport.avgOutput = getAvg(foundReport.outputTurnArounds);
+
+                foundReport.save(function(err, updatedReport) {
+                  if (err) {
+                    logger.error(err);
+                    return;
+                  }
+                });
               }
             }
           );
@@ -294,21 +303,25 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
+          Report.findOne(
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
               reportWeekRange: reportWeekRange,
               reportMonth: reportMonth
             },
-            {
-              $inc: { signOffs: 1 }
-            },
-            { upsert: true, new: true },
-            function(err, result) {
+            (err, foundReport) => {
               if (err) {
                 logger.error(err);
                 return;
+              } else {
+                foundReport.signOffs = foundReport.signOffs + 1;
+                foundReport.save(function(err, updatedReport) {
+                  if (err) {
+                    logger.error(err);
+                    return;
+                  }
+                });
               }
             }
           );
@@ -334,22 +347,31 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
+          Report.findOne(
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
               reportWeekRange: reportWeekRange,
               reportMonth: reportMonth
             },
-            {
-              $inc: { proofsCompleted: 1 },
-              $push: { proofTurnArounds: proofTurnaround }
-            },
-            { upsert: true, new: true },
-            function(err, result) {
+            (err, foundReport) => {
               if (err) {
                 logger.error(err);
                 return;
+              } else {
+                foundReport.proofsCompleted = foundReport.proofsCompleted + 1;
+                foundReport.proofTurnArounds = [
+                  proofTurnaround,
+                  ...foundReport.proofTurnArounds
+                ];
+                foundReport.avgProofs = getAvg(foundReport.proofTurnArounds);
+
+                foundReport.save(function(err, updatedReport) {
+                  if (err) {
+                    logger.error(err);
+                    return;
+                  }
+                });
               }
             }
           );
@@ -375,22 +397,34 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
+          Report.findOne(
             {
               reportWeekNumber: reportWeek,
               reportYear: reportYear,
               reportWeekRange: reportWeekRange,
               reportMonth: reportMonth
             },
-            {
-              $inc: { revisionsCompleted: 1 },
-              $push: { revisionTurnArounds: revisionTurnaround }
-            },
-            { upsert: true, new: true },
-            function(err, result) {
+            (err, foundReport) => {
               if (err) {
                 logger.error(err);
                 return;
+              } else {
+                foundReport.revisionsCompleted =
+                  foundReport.revisionsCompleted + 1;
+                foundReport.revisionTurnArounds = [
+                  revisionTurnaround,
+                  ...foundReport.revisionTurnArounds
+                ];
+                foundReport.avgRevisions = getAvg(
+                  foundReport.revisionTurnArounds
+                );
+
+                foundReport.save(function(err, updatedReport) {
+                  if (err) {
+                    logger.error(err);
+                    return;
+                  }
+                });
               }
             }
           );
@@ -627,6 +661,14 @@ function getDateRangeOfWeek(weekNo, y) {
   rangeIsTo =
     months[d1.getMonth()] + "-" + d1.getDate() + "-" + d1.getFullYear();
   return rangeIsFrom + " to " + rangeIsTo;
+}
+
+function getAvg(turnArounds) {
+  return (
+    turnArounds.reduce(function(p, c) {
+      return p + c;
+    }) / turnArounds.length
+  );
 }
 
 module.exports = router;

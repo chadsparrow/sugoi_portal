@@ -27,8 +27,17 @@ const ReportSchema = new Schema({
     type: Number
   },
   proofTurnArounds: [],
+  avgProofs: {
+    type: Number
+  },
   outputTurnArounds: [],
-  revisionTurnArounds: []
+  avgOutput: {
+    type: Number
+  },
+  revisionTurnArounds: [],
+  avgRevisions: {
+    type: Number
+  }
 });
 
 module.exports = mongoose.model("reports", ReportSchema);
