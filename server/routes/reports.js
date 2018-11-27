@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   Report.find().then(reports => {
     reports.forEach((report, index) => {
       const avgProofs = getAvg(report.proofTurnArounds);
-      reports[index] = { avgProofs: avgProofs, ...report };
+      report = { avgProofs: avgProofs, ...report };
     });
     // res.render("reports/index", {
     //   reports
