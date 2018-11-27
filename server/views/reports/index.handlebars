@@ -27,7 +27,7 @@
       }
     },
     series: [{
-      data: [{{ reports[0].proofsCompleted }}, {{ reports[0].revisionsCompleted }}, {{ reports[0].outputCompleted }}]
+      data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
     }],
   xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
