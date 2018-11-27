@@ -500,6 +500,7 @@ router.put(
           foundOrder.currentStatus = currentStatus;
           foundOrder.currentArtist = "";
           foundOrder.revisionRequestDate = revisionRequestDate;
+          foundOrder.revisionCompletionDate = null;
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
