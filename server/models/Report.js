@@ -8,6 +8,9 @@ const ReportSchema = new Schema({
   reportWeekRange: {
     type: String
   },
+  reportMonth: {
+    type: Number
+  },
   reportYear: {
     type: Number
   },
