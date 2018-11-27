@@ -258,8 +258,14 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             .tz("America/Vancouver")
             .format("YYYY");
 
+          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+
           Report.findOneAndUpdate(
-            { reportWeekNumber: reportWeek, reportYear: reportYear },
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange
+            },
             { $inc: { outputCompleted: 1 } },
             { upsert: true, new: true },
             function(err, result) {
@@ -286,6 +292,56 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = diff.days();
           foundOrder.proofTurnaround = parseInt(proofTurnaround + 1);
+
+          let reportWeek = moment()
+            .tz("America/Vancouver")
+            .format("W");
+          let reportYear = moment()
+            .tz("America/Vancouver")
+            .format("YYYY");
+
+          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+
+          Report.findOneAndUpdate(
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange
+            },
+            { $inc: { proofsCompleted: 1 } },
+            { upsert: true, new: true },
+            function(err, result) {
+              if (err) {
+                logger.error(err);
+                return;
+              }
+            }
+          );
+        } else if (foundOrderOrder.currentStatus === "L. Revision Complete") {
+          let reportWeek = moment()
+            .tz("America/Vancouver")
+            .format("W");
+          let reportYear = moment()
+            .tz("America/Vancouver")
+            .format("YYYY");
+
+          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+
+          Report.findOneAndUpdate(
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange
+            },
+            { $inc: { revisionsCompleted: 1 } },
+            { upsert: true, new: true },
+            function(err, result) {
+              if (err) {
+                logger.error(err);
+                return;
+              }
+            }
+          );
         }
       }
 
@@ -468,5 +524,36 @@ router.put(
     });
   }
 );
+
+Date.prototype.getWeek = function() {
+  var date = new Date(this.getTime());
+  date.setHours(0, 0, 0, 0);
+  // Thursday in current week decides the year.
+  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
+  // January 4 is always in week 1.
+  var week1 = new Date(date.getFullYear(), 0, 4);
+  // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+  return (
+    1 +
+    Math.round(
+      ((date.getTime() - week1.getTime()) / 86400000 -
+        3 +
+        ((week1.getDay() + 6) % 7)) /
+        7
+    )
+  );
+};
+
+function getDateRangeOfWeek(weekNo, y) {
+  var d1, numOfdaysPastSinceLastMonday, rangeIsFrom, rangeIsTo;
+  d1 = new Date("" + y + "");
+  numOfdaysPastSinceLastMonday = d1.getDay() - 1;
+  d1.setDate(d1.getDate() - numOfdaysPastSinceLastMonday);
+  d1.setDate(d1.getDate() + 7 * (weekNo - d1.getWeek()));
+  rangeIsFrom = d1.getMonth() + 1 + "-" + d1.getDate() + "-" + d1.getFullYear();
+  d1.setDate(d1.getDate() + 6);
+  rangeIsTo = d1.getMonth() + 1 + "-" + d1.getDate() + "-" + d1.getFullYear();
+  return rangeIsFrom + " to " + rangeIsTo;
+}
 
 module.exports = router;
