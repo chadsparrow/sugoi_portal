@@ -265,5 +265,6 @@
 {{/if}}
 
 <script>
-  $('.fixed-action-btn').floatingActionButton('open');
+  var instance = M.FloatingActionButton.getInstance('#viewActionButton');
+  console.log(instance);
 </script>
