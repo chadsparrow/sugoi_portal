@@ -14,9 +14,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  let i = $('#weekSelector').val();
-  console.log (i);
-  
+  let e = document.getElementsByName('weekSelector').value;
+  console.log (e);
+
   var options = {
     chart: {
       height: 500,
@@ -31,7 +31,7 @@
     series: [
       {
         name: 'Completed',
-        data: [i]
+        data: [e]
       },
       {
         name: 'Avg. Turn-Around (Days)'//,
