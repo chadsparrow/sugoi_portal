@@ -14,7 +14,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  let selectedChart = parseInt($('select[name=weekSelector]').val());
+  let selectedChart = ($('select[name=weekSelector]').val()).toFixed(0);
+  console.log (selectedChart);
   let proofsCompleted = "proofsCompleted";
   let revisionsCompleted = "revisionsCompleted";
   let outputCompleted = "outputCompleted";
