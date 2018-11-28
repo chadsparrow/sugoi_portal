@@ -14,7 +14,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  var chartSelection = parseInt($("#weekSelector").val());
+  var chartSelection = $("#weekSelector").val();
+  chartSelection = parseInt(chartSelection);
   console.log (chartSelection);
   var options = {
     chart: {
