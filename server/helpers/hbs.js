@@ -201,6 +201,6 @@ module.exports = {
     }
   },
   callReports: function(index, array, item) {
-    return "{{" + array + ".[" + index + "]." + item + "}}";
+    return `{{${array}.[${index}].${item}}}`;
   }
 };
