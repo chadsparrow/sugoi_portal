@@ -32,7 +32,7 @@
     series: [
       {
         name: 'Completed',
-        data: [{{ callReports selectedChart reports proofsCompleted }}, {{ reports.[0].revisionsCompleted }}, {{ reports.[0].outputCompleted }}]
+        data: [{{ callReports (selectedChart reports proofsCompleted) }}, {{ reports.[0].revisionsCompleted }}, {{ reports.[0].outputCompleted }}]
       },
       {
         name: 'Avg. Turn-Around (Days)',
