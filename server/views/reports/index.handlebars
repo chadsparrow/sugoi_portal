@@ -20,9 +20,18 @@
       type: 'bar',
       stacked: true
     },
+    
     plotOptions: {
       bar: {
         distributed: true
+      }
+    },
+    states: {
+      hover: {
+          filter: {
+              type: 'lighten',
+              value: 0.15,
+          }
       }
     },
     theme: {
