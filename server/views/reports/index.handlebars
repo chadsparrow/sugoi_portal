@@ -16,7 +16,6 @@
 <script>
   var chartSelection = $("#weekSelector").val();
   chartSelection = parseInt(chartSelection);
-  console.log (chartSelection);
 
   var options = {
     chart: {
@@ -32,12 +31,12 @@
     series: [
       {
         name: 'Completed',
-        data: [chartSelection]
-      },
-      {
-        name: 'Avg. Turn-Around (Days)'//,
+        data: [chartSelection+1,chartSelection+1,chartSelection+1 ]
+      }//,
+     // {
+       // name: 'Avg. Turn-Around (Days)'//,
         //data: [{{ callReports averages selectedChart proofAvg }}, {{ callReports averages selectedChart revisionAvg }}, {{ callReports averages selectedChart outputAvg }}]
-      }
+      //}
     ],
     xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
