@@ -1,7 +1,7 @@
 <div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports</h5>
   <div class="input-field col s4">
-    <select name="weekSelector">
+    <select id="weekSelector">
       {{#each reports}}
       <option value="{{@index}}">{{reportWeekRange}}</option>
       {{/each}}
@@ -14,7 +14,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  let selectedChart = $('select[name=weekSelector]').val();
+  let selectedChart = $('#weekSelector').val();
+
+  console.log (selectedChart);
 
   var options = {
     chart: {
