@@ -199,5 +199,8 @@ module.exports = {
     } else {
       return "black-text";
     }
+  },
+  callReports: function(index, array, item) {
+    return "{{" + array + ".[" + index + "]." + item + "}}";
   }
 };
