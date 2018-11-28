@@ -15,31 +15,10 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
   var chartSelection = $("#weekSelector").val();
-  var proofsCompletedArray = [];
-  var revisionsCompletedArray = [];
-  var outputCompletedArray = [];
-  {{#each reports}}
-    proofsCompletedArray.push({{proofsCompleted}});
-    revisionsCompletedArray.push({{revisionsCompleted}});
-    outputCompletedArray.push({{outputCompleted}});
-  {{/each}}
-  var proofsAvgArray = [];
-  var revisionAvgArray = [];
-  var outputAvgArray = [];
-  {{#each averages}}
-    proofsAvgArray.push({{proofAvg}});
-    revisionAvgArray.push({{revisionAvg}});
-    outputAvgArray.push({{outputAvg}});
-  {{/each}}
+  console.log (reports);
 
   chartSelection = parseInt(chartSelection);
 
-  var selectedProofsCompleted = proofsCompletedArray[chartSelection];
-  var selectedRevisionsCompleted = revisionsCompletedArray[chartSelection];
-  var selectedOutputCompleted = outputCompletedArray[chartSelection];
-  var selectedProofsAvg = proofsAvgArray[chartSelection];
-  var selectedRevisionssAvg = revisionAvgArray[chartSelection];
-  var selectedOutputsCompleted = outputAvgArray[chartSelection];
 
   var options = {
     chart: {
@@ -47,20 +26,15 @@
       type: 'bar',
       stacked: true
     },
-    plotOptions: {
-      bar: {
-        distributed: true
-      }
-    },
     series: [
       {
         name: 'Completed',
         data: [selectedProofsCompleted,selectedRevisionsCompleted,selectedOutputCompleted ]
-      },
-      {
-        name: 'Avg. Turn-Around (Days)'//,
-        data: [selectedProofsAvg, selectedRevisionssAvg, selectedOutputsCompleted]
-      }
+      }//,
+      //{
+      //  name: 'Avg. Turn-Around (Days)'//,
+      //  data: [selectedProofsAvg, selectedRevisionssAvg, selectedOutputsCompleted]
+      //}
     ],
     xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
