@@ -201,6 +201,7 @@ module.exports = {
     }
   },
   callReports: function(index, array, item) {
-    return "{{" + array + "." + index + "." + item + "}}";
+    const val = array[index].item;
+    return val;
   }
 };
