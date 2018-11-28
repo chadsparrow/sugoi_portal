@@ -26,16 +26,11 @@
         distributed: true
       }
     },
-    states: {
-      hover: {
-          filter: {
-              type: 'lighten',
-              value: 0.05,
-          }
+    tooltip:{
+      enabled: true,
+      onDatasetHover: {
+        highlightDataSeries: false
       }
-    },
-    theme: {
-        palette: 'palette1' // upto palette10
     },
     series: [
       {
@@ -47,7 +42,7 @@
         data: [{{ averages.0.proofAvg }}, {{ averages.0.revisionAvg }}, {{ averages.0.outputAvg }}]
       }
     ],
-  xaxis: { categories: ["Proofs", "Revisions", "Output"] }
+    xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
 
   var chart = new ApexCharts(document.querySelector(".chart"), options);
