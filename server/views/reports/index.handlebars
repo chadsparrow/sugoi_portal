@@ -1,9 +1,9 @@
 <div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports</h5>
   <div class="input-field col s4">
-    <select id="weekSelector">
+    <select>
       {{#each reports}}
-      <option value="{{@index}}">{{reportWeekRange}}</option>
+      <option value="{{reportWeekNumber}}">{{reportWeekRange}}</option>
       {{/each}}
     </select>
     <label>Select Week</label>
@@ -14,27 +14,27 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  var chartSelection = $("#weekSelector").val();
-  console.log (reports);
-
-  chartSelection = parseInt(chartSelection);
-
-
   var options = {
     chart: {
       height: 500,
       type: 'bar',
       stacked: true
     },
+    
+    plotOptions: {
+      bar: {
+        distributed: true
+      }
+    },
     series: [
       {
         name: 'Completed',
-        data: [selectedProofsCompleted,selectedRevisionsCompleted,selectedOutputCompleted ]
-      }//,
-      //{
-      //  name: 'Avg. Turn-Around (Days)'//,
-      //  data: [selectedProofsAvg, selectedRevisionssAvg, selectedOutputsCompleted]
-      //}
+        data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
+      },
+      {
+        name: 'Avg. Turn-Around (Days)',
+        data: [{{ averages.0.proofAvg }}, {{ averages.0.revisionAvg }}, {{ averages.0.outputAvg }}]
+      }
     ],
     xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
