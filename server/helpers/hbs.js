@@ -200,8 +200,26 @@ module.exports = {
       return "black-text";
     }
   },
-  callReports: function(index, array, item) {
-    const val = array[index].item;
-    return val;
+  callReports: function(array, index, item) {
+    switch (item) {
+      case "proofsCompleted":
+        return array[index].proofsCompleted;
+        break;
+      case "revisionsCompleted":
+        return array[index].revisionsCompleted;
+        break;
+      case "outputCompleted":
+        return array[index].outputCompleted;
+        break;
+      case "proofAvg":
+        return array[index].proofAvg;
+        break;
+      case "revisionAvg":
+        return array[index].revisionAvg;
+        break;
+      case "outputAvg":
+        return array[index].outputAvg;
+        break;
+    }
   }
 };
