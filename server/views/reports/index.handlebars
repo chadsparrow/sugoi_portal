@@ -3,7 +3,7 @@
   <div class="input-field col s4">
     <select>
       {{#each reports}}
-      <option value="{{reportWeekNumber}}">{{reportWeekRange}}</option>
+      <option value="{{@index}}">{{reportWeekRange}}</option>
       {{/each}}
     </select>
     <label>Select Week</label>
