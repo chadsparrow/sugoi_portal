@@ -14,8 +14,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  let selectedChart = $('select[name=weekSelector]').val();
+  let i = $('#weekSelector').val();
+  let report = {{reports[i]};
+  let proofsCompleted = report.proofsCompleted;
 
+  let averagesArray = {{averages}};
   var options = {
     chart: {
       height: 500,
@@ -30,7 +33,7 @@
     series: [
       {
         name: 'Completed',
-        data: [{{reports.selectedChart.proofsCompleted}}, {{reports.selectedChart.revisionsCompleted}} , {{reports.selectedChart.outputCompleted}}]
+        data: [proofsCompleted]
       },
       {
         name: 'Avg. Turn-Around (Days)'//,
