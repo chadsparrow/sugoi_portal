@@ -202,7 +202,6 @@ module.exports = {
   },
   callReports: function(array, index, item) {
     index = parseInt(index);
-    item = item.toString();
 
     switch (item) {
       case "proofsCompleted":
