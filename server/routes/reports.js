@@ -16,4 +16,13 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/week/:weekNum", ensureAuthenticated, (req, res) => {
+  const weekNum = req.params.weekNum;
+  Report.findOne({ reportWeekNumber: weekNum }).then(report => {
+    res.render("reports/index", {
+      report
+    });
+  });
+});
+
 module.exports = router;
