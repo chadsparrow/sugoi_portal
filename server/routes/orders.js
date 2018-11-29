@@ -254,6 +254,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             .format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+          let outputAvg = 0;
 
           Report.findOneAndUpdate(
             {
@@ -266,23 +267,39 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $inc: { outputCompleted: 1 },
               $push: { outputTurnArounds: outputTurnaround }
             },
-            { upsert: true, new: true }
-          ).then(updatedReport => {
-            let length = updatedReport.outputTurnArounds.length;
-            let sum = 0;
-            for (let i = 0; i < length; i++) {
-              sum += parseInt(updatedReport.outputTurnArounds[i], 10);
-            }
-
-            let outputAvg = sum / length;
-
-            updatedReport.outputAvg = outputAvg;
-            updatedReport.save(function(err, finalReport) {
+            { upsert: true, new: true },
+            function(err, updatedReport) {
               if (err) {
                 logger.error(err);
+                return;
               }
-            });
-          });
+
+              let length = updatedReport.outputTurnArounds.length;
+              let sum = 0;
+              for (let i = 0; i < length; i++) {
+                sum += parseInt(updatedReport.outputTurnArounds[i], 10);
+              }
+
+              outputAvg = sum / length;
+            }
+          );
+
+          Report.findOneAndUpdate(
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange,
+              reportMonth: reportMonth
+            },
+            { $set: { outputAvg } },
+            { upsert: true, new: true },
+            function(error, newUpdatedReport) {
+              if (error) {
+                logger.error(error);
+                return;
+              }
+            }
+          );
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
           foundOrder.sentVendor = moment()
             .tz("America/Vancouver")
@@ -343,6 +360,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
+          let proofsAvg = 0;
+
           Report.findOneAndUpdate(
             {
               reportWeekNumber: reportWeek,
@@ -351,26 +370,40 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               reportMonth: reportMonth
             },
             {
-              $inc: { proofCompleted: 1 },
+              $inc: { proofsCompleted: 1 },
               $push: { proofTurnArounds: proofTurnaround }
             },
-            { upsert: true, new: true }
-          ).then(updatedReport => {
-            let length = updatedReport.proofTurnArounds.length;
-            let sum = 0;
-            for (let i = 0; i < length; i++) {
-              sum += parseInt(updatedReport.proofTurnArounds[i], 10);
-            }
-
-            let proofsAvg = sum / length;
-
-            updatedReport.proofsAvg = proofsAvg;
-            updatedReport.save(function(err, finalReport) {
+            { upsert: true, new: true },
+            function(err, updatedReport) {
               if (err) {
                 logger.error(err);
+                return;
               }
-            });
-          });
+              let length = updatedReport.proofTurnArounds.length;
+              let sum = 0;
+              for (let i = 0; i < length; i++) {
+                sum += parseInt(updatedReport.proofTurnArounds[i], 10);
+              }
+              proofsAvg = sum / length;
+            }
+          );
+
+          Report.findOneAndUpdate(
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange,
+              reportMonth: reportMonth
+            },
+            { $set: { proofsAvg } },
+            { upsert: true, new: true },
+            function(error, newUpdatedReport) {
+              if (error) {
+                logger.error(error);
+                return;
+              }
+            }
+          );
         } else if (foundOrder.currentStatus === "L. Revision Complete") {
           foundOrder.revisionCompletionDate = moment()
             .tz("America/Vancouver")
@@ -392,6 +425,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             .format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+          let revisionsAvg = 0;
 
           Report.findOneAndUpdate(
             {
@@ -404,23 +438,37 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $inc: { revisionsCompleted: 1 },
               $push: { revisionTurnArounds: revisionTurnaround }
             },
-            { upsert: true, new: true }
-          ).then(updatedReport => {
-            let length = updatedReport.revisionTurnArounds.length;
-            let sum = 0;
-            for (let i = 0; i < length; i++) {
-              sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
-            }
-
-            let revisionsAvg = sum / length;
-
-            updatedReport.revisionsAvg = revisionsAvg;
-            updatedReport.save(function(err, finalReport) {
+            { upsert: true, new: true },
+            function(err, updatedReport) {
               if (err) {
                 logger.error(err);
+                return;
               }
-            });
-          });
+              let length = updatedReport.revisionTurnArounds.length;
+              let sum = 0;
+              for (let i = 0; i < length; i++) {
+                sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
+              }
+              revisionsAvg = sum / length;
+            }
+          );
+
+          Report.findOneAndUpdate(
+            {
+              reportWeekNumber: reportWeek,
+              reportYear: reportYear,
+              reportWeekRange: reportWeekRange,
+              reportMonth: reportMonth
+            },
+            { $set: { revisionsAvg } },
+            { upsert: true, new: true },
+            function(error, newUpdatedReport) {
+              if (error) {
+                logger.error(error);
+                return;
+              }
+            }
+          );
         }
       }
 
