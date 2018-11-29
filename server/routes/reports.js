@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated } = require("../helpers/auth");
+const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 const moment = require("moment-timezone");
 
 const Report = require("../models/Report");
