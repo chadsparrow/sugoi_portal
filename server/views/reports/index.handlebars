@@ -32,11 +32,11 @@
     series: [
       {
         name: 'Completed',
-        data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
+        data: [{{ reports.chartSelection.proofsCompleted }}, {{ reports.chartSelection.revisionsCompleted }}, {{ reports.chartSelection.outputCompleted }}]
       },
       {
         name: 'Avg. Turn-Around (Days)',
-        data: [{{ reports.0.avgProofs }}, {{ reports.0.avgRevisions }}, {{ reports.0.avgOutput }}]
+        data: [{{ reports.chartSelection.avgProofs }}, {{ reports.chartSelection.avgRevisions }}, {{ reports.chartSelection.avgOutput }}]
       }
     ],
     xaxis: { categories: ["Proofs", "Revisions", "Output"] }
