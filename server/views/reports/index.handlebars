@@ -32,7 +32,8 @@
     series: [
       {
         name: 'Completed',
-        data: [{{ reports.chartSelection.proofsCompleted }}, {{ reports.chartSelection.revisionsCompleted }}, {{ reports.chartSelection.outputCompleted }}]
+        //data: [{{ reports.chartSelection.proofsCompleted }}, {{ reports.chartSelection.revisionsCompleted }}, {{ reports.chartSelection.outputCompleted }}]
+        data: [{{chartHelper reports chartSelection 'proofsCompleted'}}, {{chartHelper reports chartSelection 'revisionsCompleted'}}, {{chartHelper reports chartSelection 'outputCompleted'}}]
       },
       {
         name: 'Avg. Turn-Around (Days)',
