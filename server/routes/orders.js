@@ -286,13 +286,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           Report.findOneAndUpdate(
             {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
+              reportWeekNumber: reportWeek
             },
             { avgOutput: outputAvg },
-            { upsert: true, new: true },
+            { upsert: true },
             function(error, newUpdatedReport) {
               if (error) {
                 logger.error(error);
@@ -390,13 +387,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           Report.findOneAndUpdate(
             {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
+              reportWeekNumber: reportWeek
             },
             { avgProofs: proofsAvg },
-            { upsert: true, new: true },
+            { upsert: true },
             function(error, newUpdatedReport) {
               if (error) {
                 logger.error(error);
@@ -455,13 +449,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           Report.findOneAndUpdate(
             {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
+              reportWeekNumber: reportWeek
             },
             { avgRevisions: revisionsAvg },
-            { upsert: true, new: true },
+            { upsert: true },
             function(error, newUpdatedReport) {
               if (error) {
                 logger.error(error);
