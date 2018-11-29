@@ -381,20 +381,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               for (let i = 0; i < length; i++) {
                 sum += parseInt(updatedReport.proofTurnArounds[i]);
               }
-              console.log(sum);
               proofsAvg = sum / length;
-              console.log(proofsAvg);
             }
           );
 
-          console.log(proofsAvg);
-
-          Report.findOneAndUpdate(
+          Report.update(
             {
               reportWeekNumber: reportWeek
             },
-            { $set: { avgProofs: proofsAvg } },
-            { new: true },
+            { avgProofs: proofsAvg },
+            { multi: true },
             function(error, newUpdatedReport) {
               if (error) {
                 logger.error(error);
