@@ -50,8 +50,7 @@ const {
   setPaymentStatus,
   setConfirmDeliveryStatus,
   setShipStatus,
-  checkForSignOff,
-  callReports
+  checkForSignOff
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
@@ -94,8 +93,7 @@ app.engine(
       setPaymentStatus,
       setConfirmDeliveryStatus,
       setShipStatus,
-      checkForSignOff,
-      callReports
+      checkForSignOff
     },
     defaultLayout: "main"
   })

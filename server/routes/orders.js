@@ -267,11 +267,36 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $push: { outputTurnArounds: outputTurnaround }
             },
             { upsert: true, new: true },
-            function(err, result) {
+            function(err, updatedReport) {
               if (err) {
                 logger.error(err);
                 return;
               }
+
+              let length = updatedReport.outputTurnArounds.length;
+              let sum = 0;
+              for (let i = 0; i < length; i++) {
+                sum += parseInt(updatedReport.outputTurnArounds[i], 10);
+              }
+
+              let avg = sum / length;
+
+              Report.findOneAndUpdate(
+                {
+                  reportWeekNumber: reportWeek,
+                  reportYear: reportYear,
+                  reportWeekRange: reportWeekRange,
+                  reportMonth: reportMonth
+                },
+                { outputAvg: avg },
+                { upsert: true, new: true },
+                function(error, newUpdatedReport) {
+                  if (error) {
+                    logger.error(error);
+                    return;
+                  }
+                }
+              );
             }
           );
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
@@ -346,11 +371,34 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $push: { proofTurnArounds: proofTurnaround }
             },
             { upsert: true, new: true },
-            function(err, result) {
+            function(err, updatedReport) {
               if (err) {
                 logger.error(err);
                 return;
               }
+              let length = updatedReport.proofTurnArounds.length;
+              let sum = 0;
+              for (let i = 0; i < length; i++) {
+                sum += parseInt(updatedReport.proofTurnArounds[i], 10);
+              }
+              let avg = sum / length;
+
+              Report.findOneAndUpdate(
+                {
+                  reportWeekNumber: reportWeek,
+                  reportYear: reportYear,
+                  reportWeekRange: reportWeekRange,
+                  reportMonth: reportMonth
+                },
+                { proofsAvg: avg },
+                { upsert: true, new: true },
+                function(error, newUpdatedReport) {
+                  if (error) {
+                    logger.error(error);
+                    return;
+                  }
+                }
+              );
             }
           );
         } else if (foundOrder.currentStatus === "L. Revision Complete") {
@@ -387,11 +435,34 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $push: { revisionTurnArounds: revisionTurnaround }
             },
             { upsert: true, new: true },
-            function(err, result) {
+            function(err, updatedReport) {
               if (err) {
                 logger.error(err);
                 return;
               }
+              let length = updatedReport.revisionTurnArounds.length;
+              let sum = 0;
+              for (let i = 0; i < length; i++) {
+                sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
+              }
+              let avg = sum / length;
+
+              Report.findOneAndUpdate(
+                {
+                  reportWeekNumber: reportWeek,
+                  reportYear: reportYear,
+                  reportWeekRange: reportWeekRange,
+                  reportMonth: reportMonth
+                },
+                { revisionsAvg: avg },
+                { upsert: true, new: true },
+                function(error, newUpdatedReport) {
+                  if (error) {
+                    logger.error(error);
+                    return;
+                  }
+                }
+              );
             }
           );
         }

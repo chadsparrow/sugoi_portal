@@ -199,29 +199,5 @@ module.exports = {
     } else {
       return "black-text";
     }
-  },
-  callReports: function(array, index, item) {
-    index = parseInt(index);
-
-    switch (item) {
-      case "proofsCompleted":
-        return array[index].proofsCompleted;
-        break;
-      case "revisionsCompleted":
-        return array[index].revisionsCompleted;
-        break;
-      case "outputCompleted":
-        return array[index].outputCompleted;
-        break;
-      case "proofAvg":
-        return array[index].proofAvg;
-        break;
-      case "revisionAvg":
-        return array[index].revisionAvg;
-        break;
-      case "outputAvg":
-        return array[index].outputAvg;
-        break;
-    }
   }
 };
