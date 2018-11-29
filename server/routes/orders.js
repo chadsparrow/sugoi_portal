@@ -379,7 +379,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               let length = updatedReport.proofTurnArounds.length;
               let sum = 0;
               for (let i = 0; i < length; i++) {
-                sum += parseInt(updatedReport.proofTurnArounds[i], 10);
+                sum += parseInt(updatedReport.proofTurnArounds[i]);
               }
               proofsAvg = sum / length;
             }
@@ -390,7 +390,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               reportWeekNumber: reportWeek
             },
             { avgProofs: proofsAvg },
-            { upsert: true },
+            { new: true },
             function(error, newUpdatedReport) {
               if (error) {
                 logger.error(error);
