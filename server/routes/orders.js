@@ -288,7 +288,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                   reportWeekRange: reportWeekRange,
                   reportMonth: reportMonth
                 },
-                { outputAvg: avg },
+                { $set: { outputAvg: avg } },
                 { upsert: true, new: true },
                 function(error, newUpdatedReport) {
                   if (error) {
@@ -390,7 +390,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                   reportWeekRange: reportWeekRange,
                   reportMonth: reportMonth
                 },
-                { proofsAvg: avg },
+                { $set: { proofsAvg: avg } },
                 { upsert: true, new: true },
                 function(error, newUpdatedReport) {
                   if (error) {
