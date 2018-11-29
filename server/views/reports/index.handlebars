@@ -32,11 +32,11 @@
     series: [
       {
         name: 'Completed',
-        data: [{{ lookup reports.chartSelection proofsCompleted }}, {{ lookup reports.chartSelection revisionsCompleted }}, {{ lookup reports.chartSelection outputCompleted }}]
+        data: [{{ reports.0.proofsCompleted }}, {{ reports.0.revisionsCompleted }}, {{ reports.0.outputCompleted }}]
       },
       {
         name: 'Avg. Turn-Around (Days)',
-        data: [{{ lookup averages.chartSelection proofAvg }}, {{ lookup averages.chartSelection revisionAvg }}, {{ lookup averages.chartSelection outputAvg }}]
+        data: [{{ reports.0.avgProofs }}, {{ reports.0.avgRevisions }}, {{ reports.0.avgOutput }}]
       }
     ],
     xaxis: { categories: ["Proofs", "Revisions", "Output"] }
