@@ -1,11 +1,11 @@
 <div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
-  <h5 class='center-align'>Custom Order Reports - {{report.reportWeekNumber}}</h5>
+  <h5 class='center-align'>Custom Order Reports - Week {{report.reportWeekNumber}}</h5>
   <h6 class='center-align'>{{report.reportWeekRange}}</h6>
     <div class="input-field col s4">
       <select onchange="location = this.options[this.selectedIndex].value;">
-        <option>Select a Week to Display Chart</option>
+        <option style="font-size: 12px;">Select a Week to Display Chart</option>
       {{#each reports}}
-       <option value="/reports/week/{{reportWeekNumber}}">{{reportWeekRange}}</option>
+       <option value="/reports/week/{{reportWeekNumber}}" style="font-size: 12px;">{{reportWeekRange}}</option>
       {{/each}}
       </select>
      <label>Select Week</label>
