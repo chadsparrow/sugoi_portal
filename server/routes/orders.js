@@ -389,7 +389,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             {
               reportWeekNumber: reportWeek
             },
-            { avgProofs: proofsAvg },
+            { $set {avgProofs: proofsAvg} },
             { new: true },
             function(error, newUpdatedReport) {
               if (error) {
