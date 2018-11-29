@@ -2,9 +2,11 @@
   <h5 class='center-align'>Custom Order Reports</h5>
     <div class="input-field col s4">
       <select onchange="location = this.options[this.selectedIndex].value;">
+        {{#select report.reportWeekNumber}}
       {{#each reports}}
        <option value="/reports/week/{{reportWeekNumber}}">{{reportWeekRange}}</option>
       {{/each}}
+      {{/select}}
       </select>
      <label>Select Week</label>
     </div>
