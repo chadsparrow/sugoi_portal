@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 
 const Report = require("../models/Report");
 
-router.get("/", ensureAuthenticated, (req, res) => {
+router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment()
     .tz("America/Vancouver")
     .format("W");
@@ -21,7 +21,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
     });
 });
 
-router.get("/week/:weekNum", ensureAuthenticated, (req, res) => {
+router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const weekNum = req.params.weekNum;
   Report.find()
     .sort({ reportWeekNumber: -1 })
