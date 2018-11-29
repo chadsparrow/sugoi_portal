@@ -280,7 +280,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 sum += parseInt(updatedReport.outputTurnArounds[i], 10);
               }
 
-              outputAvg = sum / length;
+              outputAvg = Math.round(sum / length);
 
               Report.updateOne(
                 {
@@ -380,7 +380,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               for (let i = 0; i < length; i++) {
                 sum += parseInt(updatedReport.proofTurnArounds[i]);
               }
-              proofsAvg = sum / length;
+              proofsAvg = Math.round(sum / length);
 
               Report.updateOne(
                 {
@@ -441,7 +441,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               for (let i = 0; i < length; i++) {
                 sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
               }
-              revisionsAvg = sum / length;
+              revisionsAvg = Math.round(sum / length);
 
               Report.updateOne(
                 {
