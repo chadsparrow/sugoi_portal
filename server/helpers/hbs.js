@@ -199,8 +199,5 @@ module.exports = {
     } else {
       return "black-text";
     }
-  },
-  chartHelper: function(array, index, string) {
-    return array[index].string;
   }
 };

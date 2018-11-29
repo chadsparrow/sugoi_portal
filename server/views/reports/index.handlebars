@@ -2,9 +2,7 @@
   <h5 class='center-align'>Custom Order Reports</h5>
   <div class="input-field col s4">
     <select id="weekSelector">
-      {{#each reports}}
-      <option value="{{reportWeekNumber}}">{{reportWeekRange}}</option>
-      {{/each}}
+      <option value="{{report.reportWeekNumber}}">{{report.reportWeekRange}}</option>
     </select>
     <label>Select Week</label>
   </div>
@@ -16,7 +14,6 @@
 <script>
   var chartSelection = $("#weekSelector").val();
   chartSelection = parseInt(chartSelection);
-  console.log (chartSelection);
   var options = {
     chart: {
       height: 500,
@@ -32,12 +29,11 @@
     series: [
       {
         name: 'Completed',
-        //data: [{{ reports.chartSelection.proofsCompleted }}, {{ reports.chartSelection.revisionsCompleted }}, {{ reports.chartSelection.outputCompleted }}]
-        data: [{{chartHelper reports chartSelection 'proofsCompleted'}}, {{chartHelper reports chartSelection 'revisionsCompleted'}}, {{chartHelper reports chartSelection 'outputCompleted'}}]
+        data: [{{report.proofsCompleted}}, {{report.revisionsCompleted}}, {{report.outputCompleted}}]
       },
       {
         name: 'Avg. Turn-Around (Days)',
-        data: [{{ reports.chartSelection.avgProofs }}, {{ reports.chartSelection.avgRevisions }}, {{ reports.chartSelection.avgOutput }}]
+        data: [{{ report.avgProofs }}, {{ report.avgRevisions }}, {{ report.avgOutput }}]
       }
     ],
     xaxis: { categories: ["Proofs", "Revisions", "Output"] }
