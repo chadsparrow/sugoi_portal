@@ -382,20 +382,19 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 sum += parseInt(updatedReport.proofTurnArounds[i]);
               }
               proofsAvg = sum / length;
-            }
-          );
 
-          Report.update(
-            {
-              reportWeekNumber: reportWeek
-            },
-            { avgProofs: proofsAvg },
-            { multi: true },
-            function(error, newUpdatedReport) {
-              if (error) {
-                logger.error(error);
-                return;
-              }
+              Report.updateOne(
+                {
+                  _id: updatedReport._id
+                },
+                { $set: { avgProofs: proofsAvg } },
+                function(error, finalUpdatedReport) {
+                  if (error) {
+                    logger.error(error);
+                    return;
+                  }
+                }
+              );
             }
           );
         } else if (foundOrder.currentStatus === "L. Revision Complete") {
