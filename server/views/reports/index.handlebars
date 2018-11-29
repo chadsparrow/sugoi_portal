@@ -1,19 +1,17 @@
 <div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports</h5>
-  <div class="input-field col s4">
-    <select id="weekSelector">
-      <option value="{{report.reportWeekNumber}}">{{report.reportWeekRange}}</option>
-    </select>
-    <label>Select Week</label>
-  </div>
+    <div class="input-field col s6">
+      <select onchange="location = this.options[this.selectedIndex].value;">
+       <option value="/reports/week/{{report.reportWeekNumber}}">{{report.reportWeekRange}}</option>
+      </select>
+     <label>Select Week</label>
+    </div>
   <div class="chart"></div>
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  var chartSelection = $("#weekSelector").val();
-  chartSelection = parseInt(chartSelection);
   var options = {
     chart: {
       height: 500,
