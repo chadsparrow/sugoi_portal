@@ -381,7 +381,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               for (let i = 0; i < length; i++) {
                 sum += parseInt(updatedReport.proofTurnArounds[i]);
               }
-              A;
               console.log(sum);
               proofsAvg = sum / length;
               console.log(proofsAvg);
