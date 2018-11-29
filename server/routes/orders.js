@@ -281,20 +281,19 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               }
 
               outputAvg = sum / length;
-            }
-          );
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek
-            },
-            { avgOutput: outputAvg },
-            { upsert: true },
-            function(error, newUpdatedReport) {
-              if (error) {
-                logger.error(error);
-                return;
-              }
+              Report.updateOne(
+                {
+                  _id: updatedReport._id
+                },
+                { $set: { avgOutput: outputAvg } },
+                function(error, finalUpdatedReport) {
+                  if (error) {
+                    logger.error(error);
+                    return;
+                  }
+                }
+              );
             }
           );
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
@@ -443,20 +442,19 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
               }
               revisionsAvg = sum / length;
-            }
-          );
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek
-            },
-            { avgRevisions: revisionsAvg },
-            { upsert: true },
-            function(error, newUpdatedReport) {
-              if (error) {
-                logger.error(error);
-                return;
-              }
+              Report.updateOne(
+                {
+                  _id: updatedReport._id
+                },
+                { $set: { avgRevisions: revisionsAvg } },
+                function(error, finalUpdatedReport) {
+                  if (error) {
+                    logger.error(error);
+                    return;
+                  }
+                }
+              );
             }
           );
         }
