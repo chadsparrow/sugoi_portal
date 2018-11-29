@@ -29,6 +29,9 @@
           <ul id="dropdown1" class="dropdown-content">
             {{#if user.admin}}
             <li>
+              <a href="/reports"><i class="material-icons">assignment</i>Reports</a>
+            </li>
+            <li>
               <a href="/users/admin"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
             </li>
             {{/if}}
@@ -83,7 +86,10 @@
   <li class="divider"></li>
   {{#if user.admin}}
   <li>
-    <a href="/users/register"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
+    <a href="/reports"><i class="material-icons">assignment</i>Reports</a>
+  </li>
+  <li>
+    <a href="/users/admin"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
   </li>
   {{/if}}
   <li>
