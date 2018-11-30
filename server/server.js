@@ -54,7 +54,6 @@ const {
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
-
 const connectWithRetry = function() {
   return mongoose
     .connect(
@@ -70,13 +69,13 @@ const connectWithRetry = function() {
       setTimeout(connectWithRetry, 5000);
     });
 };
-
 connectWithRetry();
 mongoose.set("useFindAndModify", false);
 
+// Load the order model from mongodb
 const Order = require("./models/Order");
 
-// initializes EJS middleware
+// initializes Handlebars middleware
 app.engine(
   "handlebars",
   exphbs({
@@ -98,7 +97,7 @@ app.engine(
     defaultLayout: "main"
   })
 );
-
+//sets the handlebars engine
 app.set("view engine", "handlebars");
 
 // Passport config
@@ -152,6 +151,7 @@ app.use(
   })
 );
 
+//set access control security
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -165,7 +165,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Use Routes
+// Use Routes from above
 app.use("/", indexRoutes);
 app.use("/users", userRoutes);
 app.use("/styles", styleRoutes);
@@ -175,19 +175,21 @@ app.use("/proofs", proofRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/reports", reportRoutes);
 
+// if the req doesnt match any route above, set an error
 app.use((req, res, next) => {
   const error = new Error("Resource Not Found");
   error.status = 404;
   next(error);
 });
 
+//if there is an error it will render the error page
 app.use((error, req, res, next) => {
   logger.error(error);
   res.status(error.status || 500);
   res.render("error", { error });
 });
 
-// cron job to run every 5 mins.. will be every hour to update fedex info in order collection
+// cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function() {
   Order.find({
     tracking: { $ne: "" },
@@ -237,8 +239,10 @@ cronJob.start();
 
 const siteURL = "https://localhost";
 const port = process.env.APP_PORT || 3000;
+// sets https server with certificates and keys
 const httpsServer = https.createServer(credentials, app);
 
+// start the server and listen for requests
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
 });
