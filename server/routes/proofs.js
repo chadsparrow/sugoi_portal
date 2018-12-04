@@ -28,9 +28,11 @@ let storage = multer.diskStorage({
     cb(
       null,
       path.basename(file.originalname, path.extname(file.originalname)) +
-      "_" +
-      moment().tz('America/Vancouver').format() +
-      path.extname(file.originalname)
+        "_" +
+        moment()
+          .tz("America/Vancouver")
+          .format() +
+        path.extname(file.originalname)
     );
   }
 });
@@ -76,7 +78,8 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
         let destPath = "./public/3d_assets/" + orderNumber;
         let jsonArray = [];
 
-        fse.emptyDirSync(destPath);
+        //fse.emptyDirSync(destPath);
+        fse.removeSync(destPath);
 
         const zip = new StreamZip({
           file: zipFilePath,
@@ -93,16 +96,16 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
           zip.extract(null, destPath, (err, count) => {
             zip.close();
             fse.removeSync(zipFilePath);
-            Proof.deleteMany({ orderNum: orderNumber }, function (err) { });
+            Proof.deleteMany({ orderNum: orderNumber }, function(err) {});
             jsonArray.forEach(jsonFile => {
               fse
                 .readJson(jsonFile)
                 .then(jsonData => {
-                  let gender = jsonData.gender;
+                  var gender = jsonData.gender;
                   if (jsonData.gender === "Womens") {
-                    let gender = "Women's";
+                    gender = "Women's";
                   } else if (jsonData.gender === "Mens") {
-                    let gender = "Men's";
+                    gender = "Men's";
                   }
                   const newProof = new Proof({
                     orderNum: jsonData.orderNum,
@@ -134,7 +137,7 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
                     proofMTLLink: jsonData.proofMTLLink
                   });
 
-                  newProof.save(function (err, updateProof) {
+                  newProof.save(function(err, updateProof) {
                     if (err) {
                       logger.error(err);
                       return;
@@ -227,7 +230,9 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: moment().tz('America/Vancouver').format(),
+      noteDate: moment()
+        .tz("America/Vancouver")
+        .format(),
       noteUser: noteUser,
       note: note
     };
@@ -235,7 +240,7 @@ router.put(
     Proof.findOneAndUpdate(
       { _id: id },
       { hasQCNote: hasQCNote, qcnote: qcnote },
-      function (err, updatedProof) {
+      function(err, updatedProof) {
         if (err) {
           logger.error(err);
           return;
@@ -253,7 +258,7 @@ router.get(
   [ensureAuthenticated, ensureEditProofs],
   (req, res) => {
     const id = req.params.id;
-    Proof.findOne({ _id: id }, function (err, foundProof) {
+    Proof.findOne({ _id: id }, function(err, foundProof) {
       if (err) {
         logger.error(err);
         return;
@@ -267,7 +272,7 @@ router.get(
           note: null
         };
 
-        foundProof.save(function (err, updatedProof) {
+        foundProof.save(function(err, updatedProof) {
           if (err) {
             logger.error(err);
             return;
@@ -286,7 +291,7 @@ router.get(
   [ensureAuthenticated, ensureEditProofs],
   (req, res) => {
     const orderNum = req.params.orderNum;
-    Proof.find({ orderNum: orderNum }, function (err, foundProofs) {
+    Proof.find({ orderNum: orderNum }, function(err, foundProofs) {
       if (err) {
         logger.error(err);
         return;
