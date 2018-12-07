@@ -56,4 +56,4 @@ const StyleSchema = new Schema({
   factory: String
 });
 
-module.exports = mongoose.model("styles", StyleSchema);
+module.exports = mongoose.model("styles2019", StyleSchema);
