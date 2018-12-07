@@ -165,30 +165,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Use Routes from above
-app.use("/", indexRoutes);
-app.use("/users", userRoutes);
-app.use("/styles", styleRoutes);
-app.use("/orders", orderRoutes);
-app.use("/prod", prodRoutes);
-app.use("/proofs", proofRoutes);
-app.use("/payments", paymentRoutes);
-app.use("/reports", reportRoutes);
-
-// if the req doesnt match any route above, set an error
-app.use((req, res, next) => {
-  const error = new Error("Resource Not Found");
-  error.status = 404;
-  next(error);
-});
-
-//if there is an error it will render the error page
-app.use((error, req, res, next) => {
-  logger.error(error);
-  res.status(error.status || 500);
-  res.render("error", { error });
-});
-
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function() {
   Order.find({
@@ -236,6 +212,30 @@ var cronJob = cron.job("0 * * * *", function() {
   });
 });
 cronJob.start();
+
+// Use Routes from above
+app.use("/", indexRoutes);
+app.use("/users", userRoutes);
+app.use("/styles", styleRoutes);
+app.use("/orders", orderRoutes);
+app.use("/prod", prodRoutes);
+app.use("/proofs", proofRoutes);
+app.use("/payments", paymentRoutes);
+app.use("/reports", reportRoutes);
+
+// if the req doesnt match any route above, set an error
+app.use((req, res, next) => {
+  const error = new Error("Resource Not Found");
+  error.status = 404;
+  next(error);
+});
+
+//if there is an error it will render the error page
+app.use((error, req, res, next) => {
+  logger.error(error);
+  res.status(error.status || 500);
+  res.render("error", { error });
+});
 
 const siteURL = "https://localhost";
 const port = process.env.APP_PORT || 3000;
