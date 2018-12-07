@@ -208,6 +208,8 @@ var cronJob = cron.job("0 * * * *", function() {
         });
       });
       logger.info(`Shipment Tracking information updated`);
+    } else {
+      logger.info(`Shipment Tracking Skipped`);
     }
   });
 });
