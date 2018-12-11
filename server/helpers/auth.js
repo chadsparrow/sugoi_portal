@@ -11,7 +11,8 @@ module.exports = {
       return next();
     }
     req.flash("error_msg", "Not Authorized");
-    res.redirect("/users/login");
+    res.locals.error_msg = req.flash();
+    //res.redirect("/users/login");
   },
   ensureEditOrders: function(req, res, next) {
     if (req.user.editOrders == true) {
