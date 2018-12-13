@@ -67,30 +67,30 @@
                   <label for="invoiceSent">Date Invoice Sent:</label>
                 </div>
                 <div class="input-field col s12">
-                  <input type="text" name="approvedTerms" value="{{order.approvedTerms}}">
+                  <input type="text" name="approvedTerms" id="approvedTerms" value="{{order.approvedTerms}}">
                   <label for="approvedTerms">Approved Terms:</label>
                 </div>
                 <div class="input-field col s12">
-                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="onTermPayment" value="{{order.onTermPayment}}">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="onTermPayment" id="onTermPayment" value="{{order.onTermPayment}}">
                   <label for="onTermPayment">On Term Payment - Finance to Track (Original Currency):</label>
                 </div>
                 <div class="input-field col s12">
-                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="kitOrderPayment" value="{{order.kitOrderPayment}}">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="kitOrderPayment" id="kitOrderPayment" value="{{order.kitOrderPayment}}">
                   <label for="kitOrderPayment">Kit Order Payment Collected (Original Currency):</label>
                 </div>
               </div>
               <div class="col s12 m6">
                 <div class="row">
                   <div class="input-field col s12">
-                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrCollectedOrig" value="{{order.isrCollectedOrig}}">
+                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrCollectedOrig" id="isrCollectedOrig" value="{{order.isrCollectedOrig}}">
                     <label for="isrCollectedOrig">ISR Payment Collected (Original Currency):</label>
                   </div>
                   <div class="input-field col s12 l6">
-                    <input type="text" class="input-date2" name="isrPaymentDate" id="isrPaymentDate" value="{{formatDate order.isrPaymentDate "MM/DD/YYYY"}}">
+                    <input type="text" class="input-date2" name="isrPaymentDate" id="isrPaymentDate" id="isrPaymentDate" value="{{formatDate order.isrPaymentDate "MM/DD/YYYY"}}">
                     <label for="isrPaymentDate">ISR Payment Date (exc. Kit Order):</label>
                   </div>
                   <div class="input-field col s12 l6">
-                    <select name="isrPaymentType">
+                    <select name="isrPaymentType" id="isrPaymentType">
                       {{#select order.isrPaymentType}}
                       <option value=""></option>
                       <option value="CHEQUE">CHEQUE</option>
@@ -103,11 +103,11 @@
                     <label for="isrPaymentType">ISR Payment Type (exc. Kit Order):</label>
                   </div>
                   <div class="input-field col s12">
-                    <textarea name="paymentNotes" class="materialize-textarea">{{order.paymentNotes}}</textarea>
+                    <textarea name="paymentNotes" id="paymentNotes" class="materialize-textarea">{{order.paymentNotes}}</textarea>
                     <label for="paymentNotes">Payment Notes:</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrRefunded" value="{{order.isrRefunded}}">
+                    <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrRefunded" id="isrRefunded" value="{{order.isrRefunded}}">
                     <label for="isrRefunded">ISR Refunded (Original Currency):</label>
                   </div>
                 </div>

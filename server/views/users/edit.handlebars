@@ -11,7 +11,7 @@
                   <form action="/users/edit/{{employee._id}}?_method=PUT" method="post">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-field col s12">
-                      <input type="text" value="{{employee.username}}" name="username" class="white-text validate"
+                      <input type="text" value="{{employee.username}}" name="username" id="username" class="white-text validate"
                         readonly>
                       <label for="username"><i class="fas fa-envelope-square"></i> Username:</label>
                     </div>

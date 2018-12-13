@@ -20,7 +20,7 @@
                       <label for="orderNum">* Contract #:</label>
                     </div>
                     <div class="input-field col s12 m6">
-                      <select name="priority">
+                      <select name="priority" id="priority">
                         {{#select priority}}
                         <option value=""></option>
                         <option value="RUSH">RUSH</option>
@@ -40,7 +40,7 @@
                       <label for="latestInHand">Latest In-Hand Date:</label>
                     </div>
                     <div class="input-field col s12 m6">
-                      <select name="isr">
+                      <select name="isr" id="isr">
                         {{#select isr}}
                         <option value="AHOOGEVEEN">ADAM</option>
                         <option value="DOSULLIVAN">DEAN</option>
@@ -51,7 +51,7 @@
                       <label for="isr">* ISR:</label>
                     </div>
                     <div class="input-field col s12 m6">
-                      <select name="vendor">
+                      <select name="vendor" id="vendor">
                         {{#select vendor}}
                         <option value="CCN">CCN</option>
                         <option value="PNR">PNR</option>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="input-field col s12">
-                      <input type="text" name="client" placeholder="enter client name" class="validate" value="{{client}}"
+                      <input type="text" name="client" id="client" placeholder="enter client name" class="validate" value="{{client}}"
                         required>
                       <label for="client">* Client:</label>
                     </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="col s12 m6">
                   <div class="input-field col s12">
-                    <textarea name="instruction" class="materialize-textarea" placeholder="type instructions here...">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
+                    <textarea name="instruction" id="instruction" class="materialize-textarea" placeholder="type instructions here...">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
                     <label for="instruction">Initial Instructions:</label>
                   </div>
                 </div>

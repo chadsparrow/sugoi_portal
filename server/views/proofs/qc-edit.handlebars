@@ -10,12 +10,12 @@
                 <input type="hidden" name="_method" value="PUT">
                 <div class="row">
                   <div class="input-field col s12 m6">
-                    <input placeholder="enter name..." name="noteUser" type="text" class="validate" value="{{foundProof.qcnote.noteUser}}"
+                    <input placeholder="enter name..." name="noteUser" id="noteUser" type="text" class="validate" value="{{foundProof.qcnote.noteUser}}"
                       required>
                     <label for="noteUser">QC By:</label>
                   </div>
                   <div class="input-field col s12">
-                    <textarea name="note" class="materialize-textarea" required>{{foundProof.qcnote.note}}</textarea>
+                    <textarea name="note" id="note" class="materialize-textarea" required>{{foundProof.qcnote.note}}</textarea>
                     <label for="note">QC Note:</label>
                   </div>
                 </div>

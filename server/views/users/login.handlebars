@@ -10,13 +10,13 @@
                 <div class="row">
                   <form action="/users/login" method="post" class="col s12">
                     <div class="input-field col s12">
-                      <input type="text" name="username" value="{{username}}" style="text-transform: lowercase;" on
+                      <input type="text" name="username" id="username" value="{{username}}" style="text-transform: lowercase;" on
                         keyup="javascript:this.value=this.value.toLowerCase();" class="white-text validate" required
                         autofocus>
                       <label for="username"><i class="fas fa-envelope-square"></i> Username:</label>
                     </div>
                     <div class="input-field col s12">
-                      <input type="password" name="password" class="white-text validate" required>
+                      <input type="password" name="password" id="password" class="white-text validate" required>
                       <label for="password"><i class="fas fa-key"></i> Password:</label>
                     </div>
                     <button class="btn waves-effect waves-light black-text" type="submit" name="action"><i class="fas fa-check-square"></i>

@@ -11,49 +11,49 @@
                 <div class="col s12 m6 blue lighten-5" style="padding: 5px;">
                   <h6>ISR Entry Fields:</h6>
                   <div class="input-field col s12">
-                    <input type="text" name="orderNum" value="{{order.orderNum}}" readonly>
+                    <input type="text" id="orderNum" name="orderNum" value="{{order.orderNum}}" readonly>
                     <label for="orderNum">Contract #:</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="client" placeholder="enter client name" class="validate" value="{{order.client}}"
+                    <input type="text" name="client" id="client" placeholder="enter client name" class="validate" value="{{order.client}}"
                       required {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
-                      <label for="orderNum">Client:</label>
+                      <label for="client">Client:</label>
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
                       placeholder="enter account number" class="validate" required
                       {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
-                      <label for="orderNum">Account #:</label>
+                      <label for="accountNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
                     {{#if user.admin}}
-                    <select name="priority">
-                      {{#select order.priority}} <option value=""></option>
-                      <option value="RUSH">RUSH</option>
-                      <option value="VIP">VIP</option>
-                      {{/select}}
-                    </select>
-                    <label for="priority">Priority:</label>
+                      <select name="priority" id="priority">
+                        {{#select order.priority}} <option value=""></option>
+                        <option value="RUSH">RUSH</option>
+                        <option value="VIP">VIP</option>
+                        {{/select}}
+                      </select>
+                      <label for="priority">Priority:</label>
                     {{else}}
-                    {{#if (checkForSignOff order.currentStatus)}}
-                    <input type="text" name="priority" value="{{order.priority}}" readonly>
-                    <label for="priority">Priority:</label>
-                    {{else}}
-                    <select name="priority">
-                      {{#select order.priority}} <option value=""></option>
-                      <option value="RUSH">RUSH</option>
-                      <option value="VIP">VIP</option>
-                      {{/select}}
-                    </select>
-                    <label for="priority">Priority:</label>
-                    {{/if}}
+                      {{#if (checkForSignOff order.currentStatus)}}
+                        <input type="text" id="priority" name="priority" value="{{order.priority}}" readonly>
+                        <label for="priority">Priority:</label>
+                      {{else}}
+                        <select name="priority" id="priority">
+                          {{#select order.priority}} <option value=""></option>
+                          <option value="RUSH">RUSH</option>
+                          <option value="VIP">VIP</option>
+                          {{/select}}
+                        </select>
+                        <label for="priority">Priority:</label>
+                      {{/if}}
                     {{/if}}
 
                   </div>
                   <div class="input-field col s12 m6">
 
                     {{#if user.admin}}
-                    <select name="vendor">
+                    <select name="vendor" id="vendor">
                       {{#select order.vendor}}
                       <option value="CCN">CCN</option>
                       <option value="PNR">PNR</option>
@@ -63,10 +63,10 @@
                     <label for="vendor">Vendor:</label>
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
-                    <input type="text" name="vendor" value="{{order.vendor}}" readonly>
+                    <input type="text" name="vendor" id="vendor" value="{{order.vendor}}" readonly>
                     <label for="vendor">Vendor:</label>
                     {{else}}
-                    <select name="vendor">
+                    <select name="vendor" id="vendor">
                       {{#select order.vendor}}
                       <option value="CCN">CCN</option>
                       <option value="PNR">PNR</option>
@@ -78,7 +78,6 @@
                     {{/if}}
                   </div>
                   <div class="input-field col s12">
-
                     {{#if user.admin}}
                     <i class="material-icons prefix md-18">calendar_today</i>
                     <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
@@ -86,7 +85,7 @@
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
                     <i class="material-icons prefix md-18">calendar_today</i>
-                    <input type="text" name="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}" readonly>
+                    <input type="text" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}" readonly>
                     <label for="eventDate">Event Date:</label>
                     {{else}}
                     <i class="material-icons prefix md-18">calendar_today</i>
@@ -116,7 +115,7 @@
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">
                   <h6>Art / Production Entry Fields:</h6>
                   <div class="input-field col s12">
-                    <select name="currentArtist">
+                    <select name="currentArtist" id="currentArtist">
                       {{#select order.currentArtist}} <option value=""></option>
                       <option value="BCASTRO">BARBARA</option>
                       <option value="CSPARROW">CHAD</option>
@@ -160,18 +159,18 @@
                   </div>
                   <div id="productionDiv">
                     <div class="input-field col s6 l4">
-                      <input type="number" name="qty" value="{{order.qty}}"
+                      <input type="number" name="qty" id="qty" value="{{order.qty}}"
                         {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                         <label for="qty">Qty:</label>
                     </div>
                     <div class="input-field col s6 l4">
-                      <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" value="{{order.netValue}}"
+                      <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue" value="{{order.netValue}}"
                         {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                         <label for="netValue">Total Value:</label>
                     </div>
                     <div class="input-field col s12 l4">
                       {{#if user.admin}}
-                      <select name="currency">
+                      <select name="currency" id="currency">
                         {{#select order.currency}}
                         <option value=""></option>
                         <option value="CAD">CAD</option>
@@ -184,7 +183,7 @@
                       <input type="text" name="currency" value="{{order.currency}}" readonly>
                       <label for="currency">Currency:</label>
                       {{else}}
-                      <select name="currency">
+                      <select name="currency" id="currency">
                         {{#select order.currency}}
                         <option value=""></option>
                         <option value="CAD">CAD</option>
@@ -217,7 +216,7 @@
                       {{/if}}
                     </div>
                     <div class="input-field col s12">
-                      <input type="text" name="multishipPrePack" value="{{order.multishipPrePack}}">
+                      <input type="text" name="multishipPrePack" id="multishipPrePack" value="{{order.multishipPrePack}}">
                       <label for="multishipPrePack">Added Services:</label>
                     </div>
                   </div>

@@ -42,15 +42,15 @@
                   </div>
                 </div>
                 <div class="input-field col s6 l4">
-                  <input type="number" name="qty" value="{{order.qty}}">
+                  <input type="number" name="qty" id="qty" value="{{order.qty}}">
                   <label for="qty">Qty:</label>
                 </div>
                 <div class="input-field col s6 l4">
-                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" value="{{order.netValue}}">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue" value="{{order.netValue}}">
                   <label for="netValue">Total Value:</label>
                 </div>
                 <div class="input-field col s12 l4">
-                  <select name="currency">
+                  <select name="currency" id="currency">
                     {{#select order.currency}} <option value="CAD">CAD</option>
                     <option value="USD">USD</option>
                     {{/select}}
@@ -63,7 +63,7 @@
                   <label for="latestShipDate">Latest Ship Date:</label>
                 </div>
                 <div class="input-field col s12 l6">
-                  <input type="text" name="multishipPrePack" value="{{order.multishipPrePack}}">
+                  <input type="text" name="multishipPrePack" id="multishipPrePack" value="{{order.multishipPrePack}}">
                   <label for="multishipPrePack">Added Services:</label>
                 </div>
                 <div class="input-field col s12 l6">
@@ -72,15 +72,15 @@
                 </div>
 
                 <div class="input-field col s12 l6">
-                  <input type="text" name="jbaPONum" value="{{order.jbaPONum}}">
+                  <input type="text" name="jbaPONum" id="jbaPONum" value="{{order.jbaPONum}}">
                   <label for="jbaPONum">JBA PO #:</label>
                 </div>
                 <div class="input-field col s12 l6">
-                  <input type="text" name="jbaGNRNum" value="{{order.jbaGNRNum}}">
+                  <input type="text" name="jbaGNRNum" id="jbaGNRNum" value="{{order.jbaGNRNum}}">
                   <label for="jbaGNRNum">JBA GNR #:</label>
                 </div>
                 <div class="input-field col s12 l6">
-                  <input type="text" name="jbaInvoiceNum" value="{{order.jbaInvoiceNum}}">
+                  <input type="text" name="jbaInvoiceNum" id="jbaInvoiceNum" value="{{order.jbaInvoiceNum}}">
                   <label for="jbaInvoiceNum">JBA Invoice #:</label>
                 </div>
               </div>
@@ -90,7 +90,7 @@
                     <span>Sent to Vendor:</span> {{formatDate order.sentVendor "DD-MMM"}}
                   </div>
                   <div class="input-field col s12">
-                    <select name="shipStatus">
+                    <select name="shipStatus" id="shipStatus">
                       {{#select order.shipStatus}}
                       <option value=""></option>
                       <option value="Shipped">Shipped</option>
@@ -102,7 +102,7 @@
                     <h6 class="black white-text" style="padding: 5px;">Shipping Information</h6>
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="tracking" class="input-numeral" maxlength="12" value="{{order.tracking}}">
+                    <input type="text" name="tracking" id="tracking" class="input-numeral" maxlength="12" value="{{order.tracking}}">
                     <label for="tracking">Tracking #:</label>
                   </div>
                   <div class="col s12 l6">
@@ -113,7 +113,7 @@
                     "DD-MMM"}}
                   </div>
                   <div class="input-field col s12">
-                    <textarea name="shippingNotes" class="materialize-textarea">{{order.shippingNotes}}</textarea>
+                    <textarea name="shippingNotes" id="shippingNotes" class="materialize-textarea">{{order.shippingNotes}}</textarea>
                     <label for="shippingNotes">Production Notes:</label>
                   </div>
                 </div>

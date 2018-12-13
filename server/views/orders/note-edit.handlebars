@@ -16,7 +16,7 @@
                       <label for="noteUser">Note By:</label>
                     </div>
                     <div class="input-field col s12 m6">
-                      <select name="instructionType">
+                      <select name="instructionType" id="instructionType">
                         {{#select note.instructionType}}
                         <option value="Initial">Initial</option>
                         <option value="Revision">Revision</option>
@@ -28,7 +28,7 @@
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <textarea name="instruction" class="materialize-textarea" required>{{note.instruction}}</textarea>
+                      <textarea name="instruction" class="materialize-textarea" id="instruction" required>{{note.instruction}}</textarea>
                       <label for="instruction">Note:</label>
                     </div>
 
