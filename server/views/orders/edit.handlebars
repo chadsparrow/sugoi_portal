@@ -79,16 +79,16 @@
                   </div>
                   <div class="input-field col s12">
                     {{#if user.admin}}
-                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
-                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}" readonly>
                     <label for="eventDate">Event Date:</label>
                     {{else}}
-                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{/if}}
@@ -96,16 +96,16 @@
                   </div>
                   <div class="input-field col s12">
                     {{#if user.admin}}
-                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date3" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
-                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" name="latestInHand" value="{{formatDate order.latestInHand "DD-MMM"}}" readonly>
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{else}}
-                    <i class="material-icons prefix md-18">calendar_today</i>
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date3" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{/if}}
@@ -159,11 +159,13 @@
                   </div>
                   <div id="productionDiv">
                     <div class="input-field col s6 l4">
+                      <i class="small material-icons prefix">import_export</i>
                       <input type="number" name="qty" id="qty" value="{{order.qty}}"
                         {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                         <label for="qty">Qty:</label>
                     </div>
                     <div class="input-field col s6 l4">
+                      <i class="small material-icons prefix">attach_money</i>
                       <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue" value="{{order.netValue}}"
                         {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                         <label for="netValue">Total Value:</label>
@@ -197,18 +199,18 @@
                     <div class="input-field col s12">
 
                       {{#if user.admin}}
-                      <i class="material-icons prefix md-18">calendar_today</i>
+                      <i class="small material-icons prefix">today</i>
                       <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
                       "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>
                       {{else}}
                       {{#if (checkForSignOff order.currentStatus)}}
-                      <i class="material-icons prefix md-18">calendar_today</i>
+                      <i class="small material-icons prefix">today</i>
                       <input type="text" name="latestShipDate" value="{{formatDate order.latestShipDate "DD-MMM"}}"
                         readonly>
                       <label for="latestShipDate">Latest Ship Date:</label>
                       {{else}}
-                      <i class="material-icons prefix md-18">calendar_today</i>
+                      <i class="small material-icons prefix">today</i>
                       <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
                       "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>

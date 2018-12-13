@@ -63,6 +63,7 @@
                   </div>
                 </div>
                 <div class="input-field col s12">
+                  <i class="small material-icons prefix">today</i>
                   <input type="text" class="input-date2" name="invoiceSent" id="invoiceSent" value="{{formatDate order.invoiceSent "MM/DD/YYYY"}}">
                   <label for="invoiceSent">Date Invoice Sent:</label>
                 </div>
@@ -71,10 +72,12 @@
                   <label for="approvedTerms">Approved Terms:</label>
                 </div>
                 <div class="input-field col s12">
+                  <i class="small material-icons prefix">attach_money</i>
                   <input type="number" class="input-numeral" min="0.00" step="0.01" name="onTermPayment" id="onTermPayment" value="{{order.onTermPayment}}">
                   <label for="onTermPayment">On Term Payment - Finance to Track (Original Currency):</label>
                 </div>
                 <div class="input-field col s12">
+                  <i class="small material-icons prefix">attach_money</i>
                   <input type="number" class="input-numeral" min="0.00" step="0.01" name="kitOrderPayment" id="kitOrderPayment" value="{{order.kitOrderPayment}}">
                   <label for="kitOrderPayment">Kit Order Payment Collected (Original Currency):</label>
                 </div>
@@ -82,10 +85,12 @@
               <div class="col s12 m6">
                 <div class="row">
                   <div class="input-field col s12">
+                    <i class="small material-icons prefix">attach_money</i>
                     <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrCollectedOrig" id="isrCollectedOrig" value="{{order.isrCollectedOrig}}">
                     <label for="isrCollectedOrig">ISR Payment Collected (Original Currency):</label>
                   </div>
                   <div class="input-field col s12 l6">
+                    <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date2" name="isrPaymentDate" id="isrPaymentDate" id="isrPaymentDate" value="{{formatDate order.isrPaymentDate "MM/DD/YYYY"}}">
                     <label for="isrPaymentDate">ISR Payment Date (exc. Kit Order):</label>
                   </div>
@@ -107,6 +112,7 @@
                     <label for="paymentNotes">Payment Notes:</label>
                   </div>
                   <div class="input-field col s12">
+                    <i class="small material-icons prefix">attach_money</i>
                     <input type="number" class="input-numeral" min="0.00" step="0.01" name="isrRefunded" id="isrRefunded" value="{{order.isrRefunded}}">
                     <label for="isrRefunded">ISR Refunded (Original Currency):</label>
                   </div>
