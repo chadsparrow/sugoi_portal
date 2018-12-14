@@ -97,13 +97,3 @@
     </div>
   </div>
 </section>
-
-<script>
-  document.querySelector('.accountNum').addEventListener('input', function (e) {
-    var foo = this.value.split("-").join("");
-    if (foo.length > 0) {
-        foo = foo.match(new RegExp('.{1,4}', 'g')).join("-");
-    }
-    this.value = foo;
-});
-</script>
