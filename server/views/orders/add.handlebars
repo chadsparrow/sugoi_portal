@@ -46,6 +46,7 @@
                         <option value="DOSULLIVAN">DEAN</option>
                         <option value="RPILLER">REED</option>
                         <option value="SROBINSON">SHEILA</option>
+                        <option value="MBELLEAU">MJ</option>
                         {{/select}}
                       </select>
                       <label for="isr">* ISR:</label>
@@ -62,20 +63,20 @@
                     </div>
 
                     <div class="input-field col s12">
-                      <input type="text" name="client" id="client" placeholder="enter client name" class="validate" value="{{client}}"
+                      <input type="text" name="client" id="client" class="validate" value="{{client}}"
                         required>
                       <label for="client">* Client:</label>
                     </div>
                     <div class="input-field col s12">
                       <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{accountNum}}"
-                        placeholder="enter account number" class="validate" required>
+                        class="validate" required>
                       <label for="accountNum">* Account #:</label>
                     </div>
                   </div>
                 </div>
                 <div class="col s12 m6">
                   <div class="input-field col s12">
-                    <textarea name="instruction" id="instruction" class="materialize-textarea" placeholder="type instructions here...">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
+                    <textarea name="instruction" id="instruction" class="materialize-textarea">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
                     <label for="instruction">Initial Instructions:</label>
                   </div>
                 </div>
