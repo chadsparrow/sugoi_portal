@@ -15,13 +15,13 @@
                     <label for="orderNum">Contract #:</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="client" id="client" placeholder="enter client name" class="validate" value="{{order.client}}"
+                    <input type="text" name="client" id="client" class="validate" value="{{order.client}}"
                       required {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                       <label for="client">Client:</label>
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
-                      placeholder="enter account number" class="validate" required
+                      class="validate" required
                       {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                       <label for="accountNum">Account #:</label>
                   </div>
@@ -249,3 +249,18 @@
     </div>
   </section>
 </div>
+
+<script>
+  $(function () {
+    $('#accountNum').keydown(function (e) {
+        var key = e.charCode || e.keyCode || 0;
+        $text = $(this);
+        if (key !== 8 && key !== 9) {
+            if ($text.val().length === 6) {
+                $text.val($text.val() + '-');
+            }
+        }
+        return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+    })
+  });
+</script>
