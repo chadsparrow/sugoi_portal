@@ -126,7 +126,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 28800000,
-      secure: true,
+      // ************************************ UN COMMENT SECURE LINE ONCE CERT IS FIXED
+      //secure: true,
       httpOnly: true
     }
   })
@@ -241,12 +242,15 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
-const siteURL = "https://localhost";
 const port = process.env.APP_PORT || 3000;
-// sets https server with certificates and keys
-const httpsServer = https.createServer(credentials, app);
 
-// start the server and listen for requests
-httpsServer.listen(port, (req, res) => {
-  logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
-});
+// **************************** UN COMMMENT WHEN CERTS ARE FIXED
+// sets https server with certificates and keys
+// const httpsServer = https.createServer(credentials, app);
+
+// // start the secure server and listen for requests
+// httpsServer.listen(port, (req, res) => {
+//   logger.info(`App listening on port ${port}`);
+// });
+
+app.listen(port, logger.info(`App listening on port ${port}`));
