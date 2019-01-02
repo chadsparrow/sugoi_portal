@@ -14,10 +14,9 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-// un comment these for Secure https fix
-//const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
-//const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
-//const credentials = { key: privateKey, cert: certificate };
+const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
+const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
+const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
@@ -242,16 +241,12 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
+const siteURL = "https://localhost";
 const port = process.env.APP_PORT || 3000;
-
 // sets https server with certificates and keys
-// un-comment when going live
-// const httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
-// start the https server and listen for requests
-
-// httpsServer.listen(port, (req, res) => {
-//   logger.info(`App listening on port ${port}`);
-// });
-
-app.listen(port, logger.info(`App listening on port ${port}`));
+// start the server and listen for requests
+httpsServer.listen(port, (req, res) => {
+  logger.info(`App listening on port ${port} - Go to ${siteURL}:${port}/`);
+});
