@@ -14,9 +14,9 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-//const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
-//const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
-//const credentials = { key: privateKey, cert: certificate };
+const privateKey = fs.readFileSync("./certs/star_sugoi_com.key", "utf8");
+const certificate = fs.readFileSync("./certs/star_sugoi_com.crt", "utf8");
+const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
@@ -127,7 +127,7 @@ app.use(
     cookie: {
       maxAge: 28800000,
       // ************************************ UN COMMENT SECURE LINE ONCE CERT IS FIXED
-      //secure: true,
+      secure: true,
       httpOnly: true
     }
   })
@@ -244,13 +244,13 @@ app.use((error, req, res, next) => {
 
 const port = process.env.APP_PORT || 3000;
 
-// **************************** UN COMMMENT WHEN CERTS ARE FIXED
-// sets https server with certificates and keys
-// const httpsServer = https.createServer(credentials, app);
+//**************************** UN COMMMENT WHEN CERTS ARE FIXED
+sets https server with certificates and keys
+const httpsServer = https.createServer(credentials, app);
 
-// // start the secure server and listen for requests
-// httpsServer.listen(port, (req, res) => {
-//   logger.info(`App listening on port ${port}`);
-// });
+// start the secure server and listen for requests
+httpsServer.listen(port, (req, res) => {
+  logger.info(`App listening on port ${port}`);
+});
 
-app.listen(port, logger.info(`App listening on port ${port}`));
+// app.listen(port, logger.info(`App listening on port ${port}`));
