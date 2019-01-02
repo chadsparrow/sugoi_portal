@@ -254,4 +254,4 @@ const port = process.env.APP_PORT || 3000;
 //   logger.info(`App listening on port ${port}`);
 // });
 
-app.listen(PORT, logger.info(`App listening on port ${port}`));
+app.listen(port, logger.info(`App listening on port ${port}`));
