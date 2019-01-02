@@ -245,7 +245,7 @@ app.use((error, req, res, next) => {
 const port = process.env.APP_PORT || 3000;
 
 //**************************** UN COMMMENT WHEN CERTS ARE FIXED
-sets https server with certificates and keys
+//sets https server with certificates and keys
 const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
