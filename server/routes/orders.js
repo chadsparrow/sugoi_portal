@@ -233,73 +233,83 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
 
         if (foundOrder.currentStatus === "U. Uploaded") {
-          foundOrder.uploadDate = moment()
-            .tz("America/Vancouver")
-            .format();
-          foundOrder.sentVendor = null;
-          let date1 = moment(Date.parse(foundOrder.uploadDate));
-          let date2 = moment(Date.parse(foundOrder.signedOffDate));
-          let diff = new DateDiff(date1, date2);
-          const outputTurnaround = parseInt(diff.days() + 1);
-          foundOrder.outputTurnaround = outputTurnaround;
+          if (foundOrder.signedOffDate === null) {
+            req.flash("error_msg", "Order has not been signed off");
+            res.redirect("/orders");
+          } else {
+            foundOrder.uploadDate = moment()
+              .tz("America/Vancouver")
+              .format();
+            foundOrder.sentVendor = null;
+            let date1 = moment(Date.parse(foundOrder.uploadDate));
+            let date2 = moment(Date.parse(foundOrder.signedOffDate));
+            let diff = new DateDiff(date1, date2);
+            const outputTurnaround = parseInt(diff.days() + 1);
+            foundOrder.outputTurnaround = outputTurnaround;
 
-          let reportWeek = moment()
-            .tz("America/Vancouver")
-            .format("W");
-          let reportYear = moment()
-            .tz("America/Vancouver")
-            .format("YYYY");
-          let reportMonth = moment()
-            .tz("America/Vancouver")
-            .format("M");
+            let reportWeek = moment()
+              .tz("America/Vancouver")
+              .format("W");
+            let reportYear = moment()
+              .tz("America/Vancouver")
+              .format("YYYY");
+            let reportMonth = moment()
+              .tz("America/Vancouver")
+              .format("M");
 
-          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
-          let outputAvg = 0;
+            let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+            let outputAvg = 0;
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
-            },
-            {
-              $inc: { outputCompleted: 1 },
-              $push: { outputTurnArounds: outputTurnaround }
-            },
-            { upsert: true, new: true },
-            function(err, updatedReport) {
-              if (err) {
-                logger.error(err);
-                return;
-              }
-
-              let length = updatedReport.outputTurnArounds.length;
-              let sum = 0;
-              for (let i = 0; i < length; i++) {
-                sum += parseInt(updatedReport.outputTurnArounds[i], 10);
-              }
-
-              outputAvg = Math.round(sum / length);
-
-              Report.updateOne(
-                {
-                  _id: updatedReport._id
-                },
-                { $set: { avgOutput: outputAvg } },
-                function(error, finalUpdatedReport) {
-                  if (error) {
-                    logger.error(error);
-                    return;
-                  }
+            Report.findOneAndUpdate(
+              {
+                reportWeekNumber: reportWeek,
+                reportYear: reportYear,
+                reportWeekRange: reportWeekRange,
+                reportMonth: reportMonth
+              },
+              {
+                $inc: { outputCompleted: 1 },
+                $push: { outputTurnArounds: outputTurnaround }
+              },
+              { upsert: true, new: true },
+              function(err, updatedReport) {
+                if (err) {
+                  logger.error(err);
+                  return;
                 }
-              );
-            }
-          );
+
+                let length = updatedReport.outputTurnArounds.length;
+                let sum = 0;
+                for (let i = 0; i < length; i++) {
+                  sum += parseInt(updatedReport.outputTurnArounds[i], 10);
+                }
+
+                outputAvg = Math.round(sum / length);
+
+                Report.updateOne(
+                  {
+                    _id: updatedReport._id
+                  },
+                  { $set: { avgOutput: outputAvg } },
+                  function(error, finalUpdatedReport) {
+                    if (error) {
+                      logger.error(error);
+                      return;
+                    }
+                  }
+                );
+              }
+            );
+          }
         } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
-          foundOrder.sentVendor = moment()
-            .tz("America/Vancouver")
-            .format();
+          if (foundOrder.signedOffDate === null) {
+            req.flash("error_msg", "Order has not been signed off");
+            res.redirect("/orders");
+          } else {
+            foundOrder.sentVendor = moment()
+              .tz("America/Vancouver")
+              .format();
+          }
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
           foundOrder.signedOffDate = moment()
             .tz("America/Vancouver")
