@@ -136,7 +136,7 @@ app.use(flash());
 
 const cookieExpire = 1 * 24 * 60 * 60 * 1000; // 1 day
 const session = cookieSession({
-  secret: sessionSecret,
+  secret: "s3cr3t",
   resave: false,
   saveUninitialized: true,
   cookie: {
