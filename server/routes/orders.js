@@ -126,6 +126,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     if (order) {
       req.flash("error_msg", "Order Number already entered");
       res.redirect("/orders/add");
+      return;
     } else {
       const newOrder = new Order({
         orderNum: orderNum,
@@ -214,8 +215,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
-      logger.error(err);
-      return;
+      return logger.error(err);
     } else {
       foundOrder.client = client;
       foundOrder.priority = priority;
@@ -275,8 +275,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               { upsert: true, new: true },
               function(err, updatedReport) {
                 if (err) {
-                  logger.error(err);
-                  return;
+                  return logger.error(err);
                 }
 
                 let length = updatedReport.outputTurnArounds.length;
@@ -294,8 +293,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                   { $set: { avgOutput: outputAvg } },
                   function(error, finalUpdatedReport) {
                     if (error) {
-                      logger.error(error);
-                      return;
+                      return logger.error(error);
                     }
                   }
                 );
@@ -341,8 +339,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             { upsert: true, new: true },
             function(err, result) {
               if (err) {
-                logger.error(err);
-                return;
+                return logger.error(err);
               }
             }
           );
@@ -384,8 +381,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             { upsert: true, new: true },
             function(err, updatedReport) {
               if (err) {
-                logger.error(err);
-                return;
+                return logger.error(err);
               }
               let length = updatedReport.proofTurnArounds.length;
               let sum = 0;
@@ -401,8 +397,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 { $set: { avgProofs: proofsAvg } },
                 function(error, finalUpdatedReport) {
                   if (error) {
-                    logger.error(error);
-                    return;
+                    return logger.error(error);
                   }
                 }
               );
@@ -445,8 +440,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             { upsert: true, new: true },
             function(err, updatedReport) {
               if (err) {
-                logger.error(err);
-                return;
+                return logger.error(err);
               }
               let length = updatedReport.revisionTurnArounds.length;
               let sum = 0;
@@ -462,8 +456,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 { $set: { avgRevisions: revisionsAvg } },
                 function(error, finalUpdatedReport) {
                   if (error) {
-                    logger.error(error);
-                    return;
+                    return logger.error(error);
                   }
                 }
               );
@@ -496,7 +489,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.save(function(err, updatedOrder) {
         if (err) {
-          logger.error(err);
+          return logger.error(err);
         } else {
           logger.info(
             `${updatedOrder.orderNum} - update by ${req.user.username}`
@@ -546,8 +539,7 @@ router.put(
 
         foundOrder.save(function(err, updatedOrder) {
           if (err) {
-            logger.error(err);
-            return;
+            return logger.error(err);
           } else {
             req.flash("success_msg", "Note Updated");
             res.redirect("/orders/view/" + id);
@@ -578,8 +570,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        logger.error(err);
-        return;
+        return logger.error(err);
       } else {
         if (instruction) {
           foundOrder.instructions.push({
@@ -595,8 +586,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              logger.error(err);
-              return;
+              return logger.error(err);
             } else {
               logger.info(
                 `${updatedOrder.orderNum} - revision request by ${
@@ -629,8 +619,7 @@ router.put(
 
     Order.findOne({ _id: id }, function(err, foundOrder) {
       if (err) {
-        logger.error(err);
-        return;
+        return logger.error(err);
       } else {
         if (instruction) {
           foundOrder.instructions.push({
@@ -641,8 +630,7 @@ router.put(
 
           foundOrder.save(function(err, updatedOrder) {
             if (err) {
-              logger.error(err);
-              return;
+              return logger.error(err);
             } else {
               req.flash("success_msg", "Note Added");
               res.redirect("/orders/view/" + id);
