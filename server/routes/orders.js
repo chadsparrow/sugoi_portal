@@ -234,8 +234,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
         if (foundOrder.currentStatus === "U. Uploaded") {
           if (foundOrder.signedOffDate === null) {
-            req.flash("error_msg", "Order has not been signed off");
+            req.flash("error_msg", "Order has not been signed off yet");
             res.redirect("/orders");
+            return;
           } else {
             foundOrder.uploadDate = moment()
               .tz("America/Vancouver")
@@ -305,6 +306,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           if (foundOrder.signedOffDate === null) {
             req.flash("error_msg", "Order has not been signed off");
             res.redirect("/orders");
+            return;
           } else {
             foundOrder.sentVendor = moment()
               .tz("America/Vancouver")
