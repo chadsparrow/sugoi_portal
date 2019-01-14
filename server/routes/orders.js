@@ -561,6 +561,11 @@ router.put(
   (req, res) => {
     let id = req.params.id;
     let instruction = req.body.instruction;
+    if (instruction === "" || instruction === null) {
+      req.flash("error_msg", "Blank Request Ignored");
+      res.redirect("/orders/view/" + id);
+      return;
+    }
     let instructionType = "Revision";
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
@@ -572,35 +577,30 @@ router.put(
       if (err) {
         return logger.error(err);
       } else {
-        if (instruction) {
-          foundOrder.instructions.push({
-            instruction: instruction,
-            instructionType: instructionType,
-            user: revUser
-          });
+        foundOrder.instructions.push({
+          instruction: instruction,
+          instructionType: instructionType,
+          user: revUser
+        });
 
-          foundOrder.currentStatus = currentStatus;
-          foundOrder.currentArtist = "";
-          foundOrder.revisionRequestDate = revisionRequestDate;
-          foundOrder.revisionCompletionDate = null;
+        foundOrder.currentStatus = currentStatus;
+        foundOrder.currentArtist = "";
+        foundOrder.revisionRequestDate = revisionRequestDate;
+        foundOrder.revisionCompletionDate = null;
 
-          foundOrder.save(function(err, updatedOrder) {
-            if (err) {
-              return logger.error(err);
-            } else {
-              logger.info(
-                `${updatedOrder.orderNum} - revision request by ${
-                  req.user.username
-                }`
-              );
-              req.flash("success_msg", "Revision Requested");
-              res.redirect("/orders/view/" + id);
-            }
-          });
-        } else {
-          req.flash("error_msg", "Blank Request Ignored");
-          res.redirect("/orders/view/" + id);
-        }
+        foundOrder.save(function(err, updatedOrder) {
+          if (err) {
+            return logger.error(err);
+          } else {
+            logger.info(
+              `${updatedOrder.orderNum} - revision request by ${
+                req.user.username
+              }`
+            );
+            req.flash("success_msg", "Revision Requested");
+            res.redirect("/orders/view/" + id);
+          }
+        });
       }
     });
   }
