@@ -255,6 +255,13 @@ $(document).ready(function() {
         className: "waves-effect waves-light btn-small"
       },
       {
+        text: "All Orders",
+        action: function(e, dt, node, config) {
+          $(location).attr("href", "/prod/");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
         text: "Open Orders",
         action: function(e, dt, node, config) {
           $(location).attr("href", "/prod/open");
