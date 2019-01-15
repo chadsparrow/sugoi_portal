@@ -274,6 +274,13 @@ $(document).ready(function() {
           $(location).attr("href", "/prod/pending");
         },
         className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Cancelled",
+        action: function(e, dt, node, config) {
+          $(location).attr("href", "/prod/cancelled");
+        },
+        className: "waves-effect waves-light btn-small"
       }
     ]
   });
