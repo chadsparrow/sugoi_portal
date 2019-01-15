@@ -404,6 +404,11 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             }
           );
         } else if (foundOrder.currentStatus === "L. Revision Complete") {
+          if(foundOrder.revisionRequestDate == null){
+            req.flash("error_msg", "Revision not requested");
+            res.redirect("/orders");
+            return;
+          }
           foundOrder.revisionCompletionDate = moment()
             .tz("America/Vancouver")
             .format();
