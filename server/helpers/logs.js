@@ -24,7 +24,9 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.File({
-      filename: path.join(logDir, "logfile.log"),
+      filename: path.join(logDir, "logfile-"+moment()
+      .tz("America/Vancouver")
+      .format("W")+".log"),
       colorize: true
     })
   ]
