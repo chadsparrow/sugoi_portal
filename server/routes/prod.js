@@ -27,6 +27,16 @@ router.get("/", [ensureAuthenticated, ensureViewProd], (req, res) => {
   });
 });
 
+router.get("/ccn", [ensureAuthenticated, ensureViewProd], (req, res) => {
+  Order.find({
+    currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] }
+  }).then(orders => {
+    res.render("orders/ccnview", {
+      orders
+    });
+  });
+});
+
 router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
   let pageTitle = "Open Orders";
   Order.find({
