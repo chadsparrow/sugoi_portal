@@ -1,14 +1,14 @@
 <div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>Custom Order Reports - Week {{report.reportWeekNumber}}</h5>
   <h6 class='center-align'>{{report.reportWeekRange}}</h6>
-  <div class="input-field col s12 m4 l3">
-    <select onchange="location = this.options[this.selectedIndex].value;">
-      <option style="font-size: 12px;">Select a Week to Display Chart</option>
+    <div class="input-field col s12 m4 l3">
+      <select onchange="location = this.options[this.selectedIndex].value;">
+        <option style="font-size: 12px;">Select a Week to Display Chart</option>
       {{#each reports}}
-      <option value="/reports/week/{{reportWeekNumber}}" style="font-size: 12px;">{{reportWeekRange}}</option>
+       <option value="/reports/week/{{reportWeekNumber}}" style="font-size: 12px;">{{reportWeekRange}}</option>
       {{/each}}
-    </select>
-  </div>
+      </select>
+    </div>
   <div class="chart"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -17,27 +17,28 @@
     chart: {
       height: 500,
       type: 'bar',
+      //stacked: true
     },
-    stroke: {
-      show: true,
-      width: 1,
-      colors: ['#fff']
+    plotOptions: {
+      bar: {
+        distributed: true
+      }
     },
     series: [
       {
         name: 'Completed',
-        data: [{{ report.proofsCompleted }}, {{ report.revisionsCompleted }}, {{ report.outputCompleted }}]
+        data: [{{report.proofsCompleted}}, {{report.revisionsCompleted}}, {{report.outputCompleted}}]
       },
-  {
-    name: 'Avg. Turn-Around (Days)',
-      data: [{{ report.avgProofs }}, { { report.avgRevisions } }, { { report.avgOutput } }]
+      {
+        name: 'Avg. Turn-Around (Days)',
+        data: [{{ report.avgProofs }}, {{ report.avgRevisions }}, {{ report.avgOutput }}]
       }
     ],
-  xaxis: { categories: ["Proofs", "Revisions", "Output"] }
+    xaxis: { categories: ["Proofs", "Revisions", "Output"] }
   }
 
   var chart = new ApexCharts(document.querySelector(".chart"), options);
 
   chart.render();
-
+  
 </script>
