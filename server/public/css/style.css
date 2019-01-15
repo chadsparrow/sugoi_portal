@@ -216,6 +216,12 @@ div.dt-buttons {
   margin-top: 1.5em;
 }
 
+.dt-button{
+  background-color: black !important;
+  color: white !important;
+  background-image: none !important;
+}
+
 #canvas {
   position: absolute;
   top: 0;
