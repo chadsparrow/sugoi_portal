@@ -253,6 +253,20 @@ $(document).ready(function() {
           $(location).attr("href", "/prod/ccn");
         },
         className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Open Orders",
+        action: function(e, dt, node, config) {
+          $(location).attr("href", "/prod/open");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Pending Delivery",
+        action: function(e, dt, node, config) {
+          $(location).attr("href", "/prod/pending");
+        },
+        className: "waves-effect waves-light btn-small"
       }
     ]
   });

@@ -16,22 +16,55 @@ const Order = require("../models/Order");
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN PROD TABLE
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
 router.get("/", [ensureAuthenticated, ensureViewProd], (req, res) => {
+  let pageTitle = "Production";
   Order.find({
     currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] }
   }).then(orders => {
     res.render("orders/prod", {
-      orders
+      orders,
+      pageTitle
     });
   });
 });
 
-router.get("/ccn", [ensureAuthenticated, ensureViewProd], (req, res) => {
+router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
+  let pageTitle = "Open Orders";
   Order.find({
-    currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] }
+    $and: [
+      { currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] } },
+      {
+        $or: [
+          { vendorConfirmShip: null },
+          { shipStatus: "" },
+          { shipStatus: null },
+          { tracking: null },
+          { tracking: "" },
+          { jbaPONum: null },
+          { jbaPONum: "" },
+          { jbaGNRNum: null },
+          { jbaGNRNum: "" },
+          { jbaInvoiceNum: null },
+          { jbaInvoiceNum: "" }
+        ]
+      }
+    ]
   }).then(orders => {
-    res.render("orders/ccnview", {
-      orders
+    res.render("orders/prod", {
+      orders,
+      pageTitle
     });
+  });
+});
+
+router.get("/pending", [ensureAuthenticated, ensureViewProd], (req, res) => {
+  let pageTitle = "Pending Delivery";
+  Order.find({
+    $and: [
+      { currentStatus: { $in: ["V. Sent to Vendor", "W. CANCELLED"] } },
+      { confirmDeliveryStatus: { $ne: "Delivered" } }
+    ]
+  }).then(orders => {
+    res.render("orders/prod", { orders, pageTitle });
   });
 });
 
