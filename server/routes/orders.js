@@ -173,11 +173,15 @@ router.get("/view/:id", (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {
-    Proof.find({ orderNum: order.orderNum }).then(proofs => {
+    Proof.find({ orderNum: order.orderNum })
+    .then(proofs => {
       res.render("orders/view", {
         order,
         proofs
       });
+    })
+    .catch(err=>{
+      console.log(err);
     });
   });
 });
