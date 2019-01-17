@@ -9,8 +9,7 @@ const OrderSchema = new Schema({
     required: true
   },
   accountNum: {
-    type: String,
-    required: true
+    type: String
   },
   currentStatus: {
     type: String,
@@ -39,7 +38,6 @@ const OrderSchema = new Schema({
       "V. Sent to Vendor",
       "W. CANCELLED"
     ],
-    required: true,
     default: "A. Waiting for Proof"
   },
   priority: {
@@ -48,7 +46,6 @@ const OrderSchema = new Schema({
   },
   requestDate: {
     type: Date,
-    required: true,
     default: moment()
       .tz("America/Vancouver")
       .format()
@@ -63,12 +60,10 @@ const OrderSchema = new Schema({
   },
   isr: {
     type: String,
-    required: true,
     uppercase: true
   },
   client: {
-    type: String,
-    required: true
+    type: String
   },
   instructions: [
     {
@@ -101,8 +96,7 @@ const OrderSchema = new Schema({
     default: null
   },
   vendor: {
-    type: String,
-    required: true
+    type: String
   },
   sentVendor: {
     type: Date,
