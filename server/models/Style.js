@@ -16,7 +16,13 @@ const StyleSchema = new Schema({
       configuration: {
         type: String
       },
+      styleCode:{
+        type: String
+      },
       autobahnCode: {
+        type: String
+      },
+      jbaCode:{
         type: String
       },
       brand: {
@@ -46,7 +52,8 @@ const StyleSchema = new Schema({
       cad500: Number,
       minUnits: Number,
       usaTariff: String,
-      cadTariff: String
+      cadTariff: String,
+      costUSD: [Number]
     }
   ],
   zipperOptions: [String],
