@@ -51,7 +51,7 @@ const StyleSchema = new Schema({
       cad200: Number,
       cad500: Number,
       minUnits: Number,
-      usaTariff: String,
+      usdTariff: String,
       cadTariff: String,
       costUSD: [Number]
     }
