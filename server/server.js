@@ -142,7 +142,7 @@ const session = cookieSession({
   cookie: {
     secure: true,
     httpOnly: true,
-    expires: cookieExpire
+    maxAge: cookieExpire
   }
 });
 
