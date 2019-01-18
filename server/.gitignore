@@ -2,5 +2,6 @@
 node_modules
 logs
 seeder.js
+seeder2.js
 costprice2019.csv
 costprice2019_pnr.csv

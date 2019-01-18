@@ -62,13 +62,12 @@
                     </div>
 
                     <div class="input-field col s12">
-                      <input type="text" name="client" id="client" class="validate" value="{{client}}"
-                        required>
+                      <input type="text" name="client" id="client" class="validate" value="{{client}}" required>
                       <label for="client">* Client:</label>
                     </div>
                     <div class="input-field col s12">
-                      <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{accountNum}}"
-                        class="validate" required>
+                      <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{accountNum}}" class="validate"
+                        required>
                       <label for="accountNum">* Account #:</label>
                     </div>
                   </div>
@@ -97,17 +96,18 @@
   </div>
 </section>
 
+{{!--
 <script>
   $(function () {
     $('#accountNum').keydown(function (e) {
-        var key = e.charCode || e.keyCode || 0;
-        $text = $(this);
-        if (key !== 8 && key !== 9) {
-            if ($text.val().length === 6) {
-                $text.val($text.val() + '-');
-            }
+      var key = e.charCode || e.keyCode || 0;
+      $text = $(this);
+      if (key !== 8 && key !== 9) {
+        if ($text.val().length === 6) {
+          $text.val($text.val() + '-');
         }
-        return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+      }
+      return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
     })
   });
-</script>
+</script> --}}
