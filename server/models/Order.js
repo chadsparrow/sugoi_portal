@@ -266,7 +266,10 @@ const OrderSchema = new Schema({
   },
   orderLines: [
     {
-      orderJobType: {
+      lineNumber: {
+        type: String
+      },
+      lineJobType: {
         type: String
       },
       swoReference: {
