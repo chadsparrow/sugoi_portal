@@ -218,7 +218,177 @@ const OrderSchema = new Schema({
   },
   revisionCompletionDate: {
     type: Date
-  }
+  },
+  orderNotes: {
+    type: String
+  },
+  accountName: {
+    type: String
+  },
+  contactName: {
+    type: String
+  },
+  shipToName: {
+    type: String
+  },
+  shipToAddress: {
+    type: String
+  },
+  shipToCity: {
+    type: String
+  },
+  shipToState: {
+    type: String
+  },
+  shipToCountry: {
+    type: String
+  },
+  shipToPostalZip: {
+    type: String
+  },
+  contactPhone: {
+    type: String
+  },
+  contactEmail: {
+    type: String
+  },
+  orderDiscount: {
+    type: Number
+  },
+  multiShips: {
+    type: Number
+  },
+  prePacks: {
+    type: Number
+  },
+  deposit: {
+    type: Number
+  },
+  orderLines: [
+    {
+      orderJobType: {
+        type: String
+      },
+      swoReference: {
+        type: String
+      },
+      priceBreak: {
+        type: Number
+      },
+      graphicCode: {
+        type: String
+      },
+      qdCode: {
+        type: String
+      },
+      colour1: {
+        type: String
+      },
+      colour2: {
+        type: String
+      },
+      colour3: {
+        type: String
+      },
+      tracingCharge: {
+        type: Number
+      },
+      creativeCharge: {
+        type: Number
+      },
+      scaledArtCharge: {
+        type: Number
+      },
+      itemsSubTotal: {
+        type: Number
+      },
+      items: [
+        {
+          itemNumber: {
+            type: String
+          },
+          childReference: {
+            type: String
+          },
+          description: {
+            type: String
+          },
+          jbaCode: {
+            type: String
+          },
+          styleCode: {
+            type: String
+          },
+          autobahnCode: {
+            type: String
+          },
+          inkType: {
+            type: String
+          },
+          zipper: {
+            type: String
+          },
+          thread: {
+            type: String
+          },
+          contrast: {
+            type: String
+          },
+          personalization: {
+            type: Boolean
+          },
+          zap: {
+            type: Boolean
+          },
+          sizeRange: {
+            type: String
+          },
+          xxs: {
+            type: Number
+          },
+          xs: {
+            type: Number
+          },
+          s: {
+            type: Number
+          },
+          m: {
+            type: Number
+          },
+          l: {
+            type: Number
+          },
+          xl: {
+            type: Number
+          },
+          xxl: {
+            type: Number
+          },
+          xxxl: {
+            type: Number
+          },
+          totalUnits: {
+            type: Number
+          },
+          unitPrice: {
+            type: Number
+          },
+          addOns: {
+            type: Number
+          },
+          itemDiscount: {
+            type: Number
+          },
+          finalUnitPrice: {
+            type: Number
+          },
+          itemTotalPrice: {
+            type: Number
+          }
+        }
+      ]
+    }
+  ]
 });
 
 module.exports = mongoose.model("orders", OrderSchema);
