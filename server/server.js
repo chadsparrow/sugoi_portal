@@ -2,6 +2,7 @@
 const helmet = require("helmet");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const passport = require("passport");
@@ -109,6 +110,7 @@ require("./config/passport")(passport);
 //Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 // Method Override
 app.use(methodOverride("_method"));
@@ -135,7 +137,7 @@ app.use(flash());
 //   })
 // );
 
-const expiryDate = new Date(Date.now()+60*60*1000);
+const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
 const sessionOptions = {
   name: "session",
   secret: "s3cr3t",

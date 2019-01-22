@@ -15,7 +15,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
-    "cors": "^2.8.4",
+    "cors": "^2.8.5",
     "cron": "^1.5.0",
     "csv": "^0.3.7",
     "date-diff": "^0.2.1",
