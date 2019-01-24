@@ -14,6 +14,7 @@ a {
 .brand-logo > span,
 .brand-logo > img {
   vertical-align: middle;
+  height: 65px;
 }
 
 .fas {
@@ -216,7 +217,7 @@ div.dt-buttons {
   margin-top: 1.5em;
 }
 
-.dt-button{
+.dt-button {
   background-color: black !important;
   color: white !important;
   background-image: none !important;

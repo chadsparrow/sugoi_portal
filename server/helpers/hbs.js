@@ -19,7 +19,7 @@ module.exports = {
       let d = new Date(date);
       d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
       return moment(d)
-        .tz("America/Vancouver")
+        .utc()
         .format(format);
     } else {
       return null;
