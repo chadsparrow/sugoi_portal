@@ -1,19 +1,26 @@
 const express = require("express");
 const router = express.Router();
+const logger = require("../../helpers/logs");
 
-const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
+const { ensureAuthenticated, ensureEditOrders } = require("../../helpers/auth");
 
 // includes model for mongodb
-const Order = require("../models/Order");
+const Order = require("../../models/Order");
 
-// @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
+// @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
 router.get("/:orderNum", ensureAuthenticated, (req, res) => {
-  Order.find({ orderNum: req.params.orderNum }).then(order => {
-    res
-      .status(200)
-      .send(`OrderNum: ${order.orderNum} found! - ${order.client}`);
-  });
+  Order.find({ orderNum: req.params.orderNum })
+    .then(order => {
+      if (order.length == 0) {
+        res.status(404).send("No Order Found!");
+      } else {
+        res.json(order);
+      }
+    })
+    .catch(err => {
+      logger.error(err);
+    });
 });
 
 module.exports = router;
