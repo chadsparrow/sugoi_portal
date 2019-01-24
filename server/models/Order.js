@@ -237,7 +237,7 @@ const OrderSchema = new Schema({
   shipToCity: {
     type: String
   },
-  shipToState: {
+  shipToProvState: {
     type: String
   },
   shipToCountry: {
