@@ -19,7 +19,7 @@ const appendTimestamp = winston.format((info, opts) => {
 });
 
 const transport = new winston.transports.DailyRotateFile({
-  filename: "portal-log-%DATE%.log",
+  filename: "./logs/portal-log-%DATE%.log",
   datePattern: "YYYY-MM-DD-HH"
 });
 
