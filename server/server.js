@@ -3,13 +3,10 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const passport = require("passport");
 const flash = require("connect-flash");
-//const session = require("express-session");
 const session = require("cookie-session");
-//const MemoryStore = require("memorystore")(session);
 const exphbs = require("express-handlebars");
 const path = require("path");
 const https = require("https");
@@ -137,15 +134,13 @@ app.use(flash());
 //   })
 // );
 
-const expiryDate = new Date(Date.now() + 60 * 60 * 1000);
 const sessionOptions = {
   name: "session",
   secret: "s3cr3t",
   httpOnly: true,
-  maxAge: expiryDate
+  maxAge: 24 * 60 * 60 * 1000 //24 hours
 };
 
-app.use(cookieParser());
 app.use(session(sessionOptions));
 
 // Passport middleware
