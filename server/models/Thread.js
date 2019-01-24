@@ -6,7 +6,7 @@ const ThreadSchema = new Schema({
   name: {
     type: String
   },
-  code:{
+  code: {
     type: String
   }
 });

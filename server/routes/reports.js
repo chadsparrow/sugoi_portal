@@ -7,7 +7,7 @@ const Report = require("../models/Report");
 
 router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment()
-    .tz("America/Los_Angeles")
+    .utc()
     .format("W");
   Report.find({})
     .sort({ reportWeekNumber: -1 })

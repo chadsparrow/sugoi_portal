@@ -30,7 +30,7 @@ let storage = multer.diskStorage({
       path.basename(file.originalname, path.extname(file.originalname)) +
         "_" +
         moment()
-          .tz("America/Los_Angeles")
+          .utc()
           .format() +
         path.extname(file.originalname)
     );
@@ -231,7 +231,7 @@ router.put(
     const hasQCNote = true;
     const qcnote = {
       noteDate: moment()
-        .tz("America/Los_Angeles")
+        .utc()
         .format(),
       noteUser: noteUser,
       note: note

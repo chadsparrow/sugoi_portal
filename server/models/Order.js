@@ -47,7 +47,7 @@ const OrderSchema = new Schema({
   requestDate: {
     type: Date,
     default: moment()
-      .tz("America/Vancouver")
+      .utc()
       .format()
   },
   eventDate: {
@@ -70,7 +70,7 @@ const OrderSchema = new Schema({
       date: {
         type: Date,
         default: moment()
-          .tz("America/Vancouver")
+          .utc()
           .format()
       },
       instruction: {
