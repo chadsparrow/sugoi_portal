@@ -222,9 +222,6 @@ const OrderSchema = new Schema({
   orderNotes: {
     type: String
   },
-  accountName: {
-    type: String
-  },
   contactName: {
     type: String
   },
@@ -252,9 +249,6 @@ const OrderSchema = new Schema({
   contactEmail: {
     type: String
   },
-  orderDiscount: {
-    type: Number
-  },
   multiShips: {
     type: Number
   },
@@ -262,6 +256,9 @@ const OrderSchema = new Schema({
     type: Number
   },
   deposit: {
+    type: Number
+  },
+  taxes: {
     type: Number
   },
   orderLines: [
