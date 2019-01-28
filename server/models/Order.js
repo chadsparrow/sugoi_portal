@@ -14,6 +14,7 @@ const OrderSchema = new Schema({
   currentStatus: {
     type: String,
     enum: [
+      "1. Initial",
       "A. Waiting for Proof",
       "B. Proof Started",
       "C. Proof - Waiting on Someone else",

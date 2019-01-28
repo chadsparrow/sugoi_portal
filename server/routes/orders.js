@@ -15,7 +15,9 @@ const Proof = require("../models/Proof");
 router.get("/", ensureAuthenticated, (req, res) => {
   let pageTitle = "In Progress";
   Order.find({
-    currentStatus: { $not: { $in: ["V. Sent to Vendor", "W. CANCELLED"] } }
+    currentStatus: {
+      $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "1. Initial"] }
+    }
   }).then(orders => {
     res.render("orders/index", {
       orders,

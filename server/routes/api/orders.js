@@ -9,8 +9,11 @@ const Order = require("../../models/Order");
 
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.get("/:orderNum", ensureAuthenticated, (req, res) => {
-  Order.find({ orderNum: req.params.orderNum })
+router.get("/:orderNum", (req, res) => {
+  Order.find(
+    { orderNum: req.params.orderNum },
+    "accountNum balanceOutstanding client currency estDeliveryDate eventDate isr latestInHand netValue orderNum qty requestDate signedOffDate vendor"
+  )
     .then(order => {
       if (order.length == 0) {
         res.status(404).send("No Order Found!");
