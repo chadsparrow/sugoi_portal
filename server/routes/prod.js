@@ -69,6 +69,7 @@ router.get("/pending", [ensureAuthenticated, ensureViewProd], (req, res) => {
   Order.find({
     $and: [
       { currentStatus: "V. Sent to Vendor" },
+      { vendorConfirmShip: { $ne: null } },
       { confirmDeliveryStatus: { $ne: "Delivered" } }
     ]
   }).then(orders => {
