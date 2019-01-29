@@ -31,7 +31,7 @@ winston.remove(winston.transports.Console);
 
 const logger = winston.createLogger({
   format: winston.format.combine(
-    appendTimestamp({ tz: "America/Vancouver" }),
+    appendTimestamp({ tz: "America/Los_Angeles" }),
     winston.format.simple()
   ),
   transports: [transport]
