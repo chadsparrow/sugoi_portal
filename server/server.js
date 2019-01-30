@@ -115,28 +115,9 @@ app.use(methodOverride("_method"));
 // Connect Flash
 app.use(flash());
 
-// Express Cookie Session middleware
-// app.use(
-//   session({
-//     store: new MemoryStore({
-//       checkPeriod: 86400000 //prune expired entries every 24h
-//     }),
-//     secret: "s3Cur3",
-//     key: "sessionid",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       maxAge: 28800000,
-//       // ************************************ UN COMMENT SECURE LINE ONCE CERT IS FIXED
-//       secure: true,
-//       httpOnly: true
-//     }
-//   })
-// );
-
 const sessionOptions = {
   name: "session",
-  secret: "s3cr3t",
+  secret: process.env.SESSION_SECRET,
   httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000 //24 hours
 };
