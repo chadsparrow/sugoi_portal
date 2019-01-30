@@ -5,6 +5,8 @@ const logger = require("../helpers/logs");
 // includes model for mongodb
 const Style = require("../models/Style");
 
+//FIXING FOR new 2019 STYLES
+
 // styles route to show all the styles in mongodb
 // router.get("/", (req, res) => {
 //   Style.find()

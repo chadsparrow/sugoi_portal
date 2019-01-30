@@ -1,6 +1,9 @@
 version: "3"
 
-## Setup Node.js / MongoDB containers
+# Setup Node.js container / MondoDB containers
+
+## Need to add Subnet info - confirm with Jordin
+
 services:
   server:
     build: ./server
@@ -10,8 +13,9 @@ services:
     restart: always
 	# pulls port for node app from env file
     ports:
-      - "${APP_PORT}:${APP_PORT}"
-	# creates volumes to persist data and install node modules
+  ## This needs to change to available web server ports - confirm with Jordin/Jonathan
+      - "${PORT}:${PORT}"
+	# creates volumes to persist data and install node modules  - may not need node_modules one for server (mac only?)
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
@@ -28,6 +32,7 @@ services:
     image: mongo
 	#mongodb always on 27017
     ports:
+  ## This needs to change to available web server ports - confirm with Jordin/Jonathan
       - "27017:27017"
 	# volume linked to persist data from database
     volumes:

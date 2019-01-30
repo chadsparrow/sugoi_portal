@@ -1,4 +1,4 @@
-/path/to/application/logfile.log {
+/server/logs/logfile.log {
     rotate 6
     monthly
     compress

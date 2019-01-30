@@ -1,7 +1,6 @@
 const winston = require("winston");
-require("winston-daily-rotate-file");
-const path = require("path");
 const fs = require("fs");
+const path = require ("path");
 const logDir = "logs";
 const moment = require("moment-timezone");
 
@@ -18,14 +17,13 @@ const appendTimestamp = winston.format((info, opts) => {
   }
 });
 
-const transport = new winston.transports.DailyRotateFile({
-  filename: "./logs/portal-log-%DATE%.log",
-  datePattern: "YYYY-MM-DD"
-});
+// const transport = new winston.transports.DailyRotateFile({
+//   filename: "./logs/logfile.log"
+// });
 
-transport.on("rotate", function(oldFilename, newFileName) {
-  //do something
-});
+// transport.on("rotate", function(oldFilename, newFileName) {
+//   //do something
+// });
 
 winston.remove(winston.transports.Console);
 
@@ -34,7 +32,12 @@ const logger = winston.createLogger({
     appendTimestamp({ tz: "America/Los_Angeles" }),
     winston.format.simple()
   ),
-  transports: [transport]
+  transports: [
+    new winston.transports.File({
+      filename: path.join(logDir, "logfile.log"),
+      colorize:true
+    })
+  ]
 });
 
 if (process.env.NODE_ENV !== "production") {

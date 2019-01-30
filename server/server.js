@@ -65,7 +65,7 @@ const connectWithRetry = function() {
         autoReconnect: true
       }
     )
-    .then(() => logger.info("MongoDB Connected on port 27017..."))
+    .then(() => logger.info("MongoDB Connected..."))
     .catch(err => {
       logger.error(err);
       setTimeout(connectWithRetry, 5000);
@@ -116,28 +116,9 @@ app.use(methodOverride("_method"));
 // Connect Flash
 app.use(flash());
 
-// Express Cookie Session middleware
-// app.use(
-//   session({
-//     store: new MemoryStore({
-//       checkPeriod: 86400000 //prune expired entries every 24h
-//     }),
-//     secret: "s3Cur3",
-//     key: "sessionid",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       maxAge: 28800000,
-//       // ************************************ UN COMMENT SECURE LINE ONCE CERT IS FIXED
-//       secure: true,
-//       httpOnly: true
-//     }
-//   })
-// );
-
 const sessionOptions = {
   name: "session",
-  secret: "s3cr3t",
+  secret: process.env.SESSION_SECRET,
   httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000 //24 hours
 };
@@ -254,7 +235,7 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
-const port = process.env.APP_PORT || 3000;
+const port = process.env.PORT;
 
 //**************************** UN COMMMENT WHEN CERTS ARE FIXED
 //sets https server with certificates and keys
@@ -262,7 +243,5 @@ const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
-  logger.info(`App listening on port ${port}`);
+  logger.info(`App listening...`);
 });
-
-// app.listen(port, logger.info(`App listening on port ${port}`));

@@ -2,6 +2,9 @@
 
 Full Stack Node.js / MongoDB application to keep track of custom orders and act as front-end portal for customer to view custom orders.
 
+change directory to /server and npm install to get node_modules
+
+
 ![Portal Tech](./imgs/portal_tech.png)
 
 ## Description
@@ -43,3 +46,4 @@ This is where sales team enters any payments they have taken (soon to be connect
 Admin section to govern users
 
 ![Admin](./imgs/portal_user_management.png)
+

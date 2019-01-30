@@ -13,4 +13,4 @@ RUN npm install
 # Bundle server source (may only be needed when complete)
 COPY . .
 
-EXPOSE 3000
+EXPOSE 5000
