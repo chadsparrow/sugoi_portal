@@ -100,7 +100,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  let {
+  const {
     orderNum,
     accountNum,
     priority,
@@ -113,8 +113,9 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
+  const instructions = [];
 
-  if (instruction) {
+  if (instruction != null || instruction != "") {
     instructions.push({
       instruction: instruction,
       instructionType: "Initial",
