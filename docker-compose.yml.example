@@ -1,6 +1,9 @@
 version: "3"
 
 # Setup Node.js container / MondoDB containers
+
+## Need to add Subnet info - confirm with Jordin
+
 services:
   server:
     build: ./server
@@ -9,11 +12,11 @@ services:
     # use gitlab url to sugoi/custom-proofs/server docker image registry
     image: gitlab url
     restart: always
-    # port grabs from env file, can be changed to APP_PORT:80 to expose 3000 to 80 for final production deployment
     ports:
-      - "${APP_PORT}:${APP_PORT}"
+    ## This needs to change to available web server ports - confirm with Jordin/Jonathan
+      - "${PORT}:${PORT}"
     # mounts volume for persistant data
-    # also mounts volume for node_modules on mac
+    # also mounts volume for node_modules on mac / not sure if needed for server
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules

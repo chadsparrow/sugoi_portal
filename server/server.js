@@ -64,7 +64,7 @@ const connectWithRetry = function() {
         autoReconnect: true
       }
     )
-    .then(() => logger.info("MongoDB Connected on port 27017..."))
+    .then(() => logger.info("MongoDB Connected..."))
     .catch(err => {
       logger.error(err);
       setTimeout(connectWithRetry, 5000);
@@ -260,7 +260,5 @@ const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
-  logger.info(`App listening on port ${port}`);
+  logger.info(`App listening...`);
 });
-
-// app.listen(port, logger.info(`App listening on port ${port}`));
