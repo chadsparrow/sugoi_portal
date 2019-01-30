@@ -22,7 +22,8 @@ const ProofSchema = new Schema({
   },
   styleNumber: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   styleName: {
     type: String,
@@ -34,7 +35,8 @@ const ProofSchema = new Schema({
   },
   sizes: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   fabric: {
     type: String,
@@ -72,18 +74,22 @@ const ProofSchema = new Schema({
     required: true
   },
   thread: {
-    type: String
+    type: String,
+    uppercase: true
   },
   zipper: {
-    type: String
+    type: String,
+    uppercase: true
   },
   contrast: {
-    type: String
+    type: String,
+    uppercase: true
   },
   colors: [
     {
       colorname: {
-        type: String
+        type: String,
+        uppercase: true
       },
       colorr: {
         type: String

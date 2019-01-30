@@ -7,7 +7,8 @@ const ThreadSchema = new Schema({
     type: String
   },
   code: {
-    type: String
+    type: String,
+    uppercase: true 
   }
 });
 

@@ -15,28 +15,35 @@ const ReportSchema = new Schema({
     type: Number
   },
   proofsCompleted: {
-    type: Number
+    type: Number,
+    default: 0
   },
   revisionsCompleted: {
-    type: Number
+    type: Number,
+    default: 0
   },
   outputCompleted: {
-    type: Number
+    type: Number,
+    default: 0
   },
   signOffs: {
-    type: Number
+    type: Number,
+    default: 0
   },
   proofTurnArounds: [],
   avgProofs: {
-    type: Number
+    type: Number,
+    default: 0
   },
   outputTurnArounds: [],
   avgOutput: {
-    type: Number
+    type: Number,
+    default: 0
   },
   revisionTurnArounds: [],
   avgRevisions: {
-    type: Number
+    type: Number,
+    default: 0
   }
 });
 

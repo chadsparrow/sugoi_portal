@@ -16,7 +16,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
   let pageTitle = "In Progress";
   Order.find({
     currentStatus: {
-      $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "1. Initial"] }
+      $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "1. Initial", "X. Archived"] }
     }
   }).then(orders => {
     res.render("orders/index", {
@@ -42,6 +42,18 @@ router.get("/cancelled", ensureAuthenticated, (req, res) => {
   let pageTitle = "Cancelled";
   Order.find({
     currentStatus: "W. CANCELLED"
+  }).then(orders => {
+    res.render("orders/index", {
+      orders,
+      pageTitle
+    });
+  });
+});
+
+router.get("/archived", ensureAuthenticated, (req, res) => {
+  let pageTitle = "Archived";
+  Order.find({
+    currentStatus: "X. Archived"
   }).then(orders => {
     res.render("orders/index", {
       orders,
@@ -101,20 +113,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-  let instructions = [];
-  let currentArtist = "";
-  let multishipPrePack = "";
-  let shipStatus = "";
-  let tracking = "";
-  let confirmDeliveryStatus = "";
-  let shippingNotes = "";
-  let prodLeadTime = 0;
-  let shippingLeadTime = 0;
-  let totalLeadTime = 0;
-  let jbaPONum = "";
-  let jbaGNRNum = "";
-  let jbaInvoiceNum = "";
-  let signedOffDate = null;
 
   if (instruction) {
     instructions.push({
@@ -131,34 +129,21 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       return;
     } else {
       const newOrder = new Order({
-        orderNum: orderNum,
-        accountNum: accountNum,
-        priority: priority,
-        eventDate: eventDate,
-        latestInHand: latestInHand,
-        isr: isr,
-        client: client,
-        instructions: instructions,
-        currentArtist: currentArtist,
-        vendor: vendor,
-        multishipPrePack: multishipPrePack,
-        shipStatus: shipStatus,
-        tracking: tracking,
-        confirmDeliveryStatus: confirmDeliveryStatus,
-        shippingNotes: shippingNotes,
-        prodLeadTime: prodLeadTime,
-        shippingLeadTime: shippingLeadTime,
-        totalLeadTime: totalLeadTime,
-        jbaPONum: jbaPONum,
-        jbaGNRNum: jbaGNRNum,
-        jbaInvoiceNum: jbaInvoiceNum,
-        signedOffDate: signedOffDate
+        orderNum,
+        accountNum,
+        priority,
+        eventDate,
+        latestInHand,
+        isr,
+        client,
+        instructions,
+        vendor,
       });
 
       newOrder
         .save()
         .then(order => {
-          logger.info(`${order.orderNum} added to DB by ${req.user.username}`);
+          logger.info(`${order.orderNum} added to database by ${req.user.username}`);
           req.flash("success_msg", "Order Saved");
           res.redirect("/orders");
         })
@@ -232,7 +217,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         if (
           foundOrder.currentStatus == "A. Waiting for Proof" ||
           foundOrder.currentStatus == "G. Waiting for Revision" ||
-          foundOrder.currentStatus == "M. Waiting for Output"
+          foundOrder.currentStatus == "M. Waiting for Output" ||
+          foundOrder.currentStatus == "W. CANCELLED" ||
+          foundOrder.currentStatus == "X. Archived"
         ) {
           currentArtist = "";
         }

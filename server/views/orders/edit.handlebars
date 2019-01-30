@@ -130,7 +130,8 @@
                   </div>
                   <div class="input-field col s12 center-align">
                     <select name="currentStatus" id="currentStatus"> {{#select order.currentStatus}}
-                      <option value="A. Waiting for Proof" selected>Waiting for Proof</option>
+                      <option value="1. Initial">Initial Order</option>
+                      <option value="A. Waiting for Proof">Waiting for Proof</option>
                       <option value="B. Proof Started">Proof Started</option>
                       <option value="C. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
                       <option value="D. Proof Ready for QC">Proof Ready for QC</option>
@@ -153,6 +154,7 @@
                       <option value="U. Uploaded">Uploaded</option>
                       <option value="V. Sent to Vendor">Sent to Vendor</option>
                       <option value="W. CANCELLED">CANCELLED</option>
+                      <option value="X. Archived">Archive Order</option>
                       {{/select}}
                     </select>
                     <label for="currentStatus">Status:</label>

@@ -17,13 +17,16 @@ const StyleSchema = new Schema({
         type: String
       },
       styleCode: {
-        type: String
+        type: String,
+        uppercase: true
       },
       autobahnCode: {
-        type: String
+        type: String,
+        uppercase: true
       },
       jbaCode: {
-        type: String
+        type: String,
+        uppercase: true
       },
       brand: {
         type: String
@@ -32,7 +35,8 @@ const StyleSchema = new Schema({
         type: String
       },
       sizeRange: {
-        type: String
+        type: String,
+        uppercase: true
       },
       usd1: Number,
       usd6: Number,

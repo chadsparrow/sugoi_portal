@@ -27,6 +27,9 @@ module.exports = {
   },
   setStatusDiv: function(status) {
     switch (status) {
+      case "1. Initial":
+        return "grey lighten-2 grey-text"; 
+        break;
       case "A. Waiting for Proof":
         return "red white-text";
         break;
@@ -96,6 +99,9 @@ module.exports = {
       case "W. CANCELLED":
         return "grey lighten-2 grey-text";
         break;
+      case "X. Archived":
+        return "grey lighten-2 grey-text";
+        break;
     }
   },
   stripStatusCode: function(status) {
@@ -131,7 +137,8 @@ module.exports = {
       status === "T. PNT QC Complete" ||
       status === "U. Uploaded" ||
       status === "V. Sent to Vendor" ||
-      status === "W. CANCELLED"
+      status === "W. CANCELLED" ||
+      status === "X. Archived"
     ) {
       return true;
     }
