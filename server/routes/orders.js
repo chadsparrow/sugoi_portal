@@ -113,7 +113,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-  const instructions = [];
+  let instructions = [];
 
   if (instruction != null || instruction != "") {
     instructions.push({
