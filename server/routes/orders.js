@@ -100,7 +100,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  const {
+  let {
     orderNum,
     accountNum,
     priority,

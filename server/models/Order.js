@@ -47,7 +47,6 @@ const OrderSchema = new Schema({
   priority: {
     type: String,
     enum: ["", "VIP", "RUSH"],
-    default: null,
     uppercase: true
   },
   requestDate: {
@@ -89,7 +88,6 @@ const OrderSchema = new Schema({
       instructionType: {
         type: String,
         enum: ["Initial", "Revision", "Note", "System"],
-        default: null
       },
       user: {
         type: String,
@@ -109,7 +107,6 @@ const OrderSchema = new Schema({
   },
   vendor: {
     type: String,
-    default: null,
     uppercase: true,
     enum: ["CCN","PNR","MEX", ""]
   },
@@ -128,7 +125,6 @@ const OrderSchema = new Schema({
   currency: {
     type: String,
     enum: ["", "CAD", "USD"],
-    default: null,
     uppercase: true
   },
   latestShipDate: {
