@@ -1,3 +1,6 @@
 .env
 node_modules
 logs
+seeder.js
+.DS_Store
+2019_Cost_Price_Tariffs_SSOT.csv
