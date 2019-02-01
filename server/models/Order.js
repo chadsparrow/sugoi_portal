@@ -108,7 +108,7 @@ const OrderSchema = new Schema({
   vendor: {
     type: String,
     uppercase: true,
-    enum: ["CCN","PNR","MEX", ""]
+    enum: ["CCN", "PNR", "MEX", ""]
   },
   sentVendor: {
     type: Date,
@@ -132,10 +132,6 @@ const OrderSchema = new Schema({
     default: null
   },
   markEvent: {
-    type: String,
-    default: null
-  },
-  multishipPrePack: {
     type: String,
     default: null
   },
@@ -327,6 +323,10 @@ const OrderSchema = new Schema({
     type: Number,
     default: null
   },
+  orderDiscount: {
+    type: Number,
+    default: null
+  },
   orderLines: [
     {
       lineNumber: {
@@ -352,6 +352,11 @@ const OrderSchema = new Schema({
         uppercase: true
       },
       qdCode: {
+        type: String,
+        default: null,
+        uppercase: true
+      },
+      colourWayCode: {
         type: String,
         default: null,
         uppercase: true
@@ -387,6 +392,10 @@ const OrderSchema = new Schema({
         type: Number,
         default: null
       },
+      cancelled: {
+        type: Boolean,
+        default: false
+      },
       items: [
         {
           itemNumber: {
@@ -413,7 +422,7 @@ const OrderSchema = new Schema({
           },
           autobahnCode: {
             type: String,
-            default: null, 
+            default: null,
             uppercase: true
           },
           inkType: {
@@ -503,6 +512,10 @@ const OrderSchema = new Schema({
           itemTotalPrice: {
             type: Number,
             default: null
+          },
+          cancelled: {
+            type: Boolean,
+            default: false
           }
         }
       ]

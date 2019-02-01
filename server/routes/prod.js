@@ -109,7 +109,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     netValue,
     currency,
     latestShipDate,
-    multishipPrePack,
     vendorConfirmShip,
     jbaPONum,
     jbaGNRNum,
@@ -119,7 +118,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     shippingNotes
   } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
+  Order.findOne({ _id: id }, function (err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -141,7 +140,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         foundOrder.latestShipDate = latestShipDate;
       }
 
-      foundOrder.multishipPrePack = multishipPrePack;
       const sentVendor = foundOrder.sentVendor;
       if (vendorConfirmShip && sentVendor) {
         foundOrder.vendorConfirmShip = vendorConfirmShip;
@@ -186,7 +184,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         foundOrder.totalLeadTime = 0;
       }
 
-      foundOrder.save(function(err, updatedOrder) {
+      foundOrder.save(function (err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;
