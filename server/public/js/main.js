@@ -148,20 +148,6 @@ $(document).ready(function () {
     dom: "lBrftip",
     buttons: [
       {
-        text: "All",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/all");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
-      {
-        text: "Initial",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/initial");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
-      {
         text: "In Progress",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/orders");
@@ -183,9 +169,9 @@ $(document).ready(function () {
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "Archived",
+        text: "All",
         action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/archived");
+          $(location).attr("href", "/orders/all");
         },
         className: "waves-effect waves-light btn-small"
       },
