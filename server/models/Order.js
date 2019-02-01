@@ -49,7 +49,7 @@ const OrderSchema = new Schema({
     enum: ["", "VIP", "RUSH"],
     uppercase: true
   },
-  requestDate: {
+  enteredDate: {
     type: Date,
     default: moment()
       .utc()
@@ -237,6 +237,10 @@ const OrderSchema = new Schema({
   },
   paymentStatus: {
     type: String,
+    default: null
+  },
+  proofRequestDate: {
+    type: Date,
     default: null
   },
   proofCompletionDate: {

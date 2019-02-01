@@ -12,6 +12,18 @@ const Proof = require("../models/Proof");
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
+router.get("/all", ensureAuthenticated, (req, res) => {
+  let pageTitle = "All";
+  Order.find().then(orders => {
+    res.render("orders/index", {
+      orders,
+      pageTitle
+    });
+  });
+});
+
+// @DESC - GETS ALL IN PROGRESS ORDERS
+// SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {
   let pageTitle = "In Progress";
   Order.find({
@@ -26,6 +38,22 @@ router.get("/", ensureAuthenticated, (req, res) => {
   });
 });
 
+// @DESC - GETS ALL IN INITIAL ORDERS - BEFORE IN PROGRESS
+// SEC - MUST BE LOGGED IN
+router.get("/initial", ensureAuthenticated, (req, res) => {
+  let pageTitle = "Initial Orders";
+  Order.find({
+    currentStatus: "1. Initial"
+  }).then(orders => {
+    res.render("orders/index", {
+      orders,
+      pageTitle
+    });
+  });
+});
+
+// @DESC - GETS ALL IN COMPLETED ORDERS - IN PRODUCTION
+// SEC - MUST BE LOGGED IN
 router.get("/completed", ensureAuthenticated, (req, res) => {
   let pageTitle = "Completed";
   Order.find({
@@ -38,6 +66,8 @@ router.get("/completed", ensureAuthenticated, (req, res) => {
   });
 });
 
+// @DESC - GETS ALL CANCELLED ORDERS
+// SEC - MUST BE LOGGED IN
 router.get("/cancelled", ensureAuthenticated, (req, res) => {
   let pageTitle = "Cancelled";
   Order.find({
@@ -50,6 +80,8 @@ router.get("/cancelled", ensureAuthenticated, (req, res) => {
   });
 });
 
+// @DESC - GETS ALL IN ARCHIVED ORDERS - MAINLY NEVER GONE TO PRODUCTION
+// SEC - MUST BE LOGGED IN
 router.get("/archived", ensureAuthenticated, (req, res) => {
   let pageTitle = "Archived";
   Order.find({
@@ -62,15 +94,6 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/all", ensureAuthenticated, (req, res) => {
-  let pageTitle = "All";
-  Order.find().then(orders => {
-    res.render("orders/index", {
-      orders,
-      pageTitle
-    });
-  });
-});
 
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
@@ -97,7 +120,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
-// @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE
+// @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE FIELDS
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let {
@@ -214,16 +237,18 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
       } else {
         foundOrder.currentStatus = currentStatus;
+        if (foundOrder.currentStatus == "A. Waiting for Proof") {
+          foundOrder.currentArtist = "";
+          foundOrder.proofRequestDate = moment().utc().format();
+        }
         if (
-          foundOrder.currentStatus == "A. Waiting for Proof" ||
           foundOrder.currentStatus == "G. Waiting for Revision" ||
           foundOrder.currentStatus == "M. Waiting for Output" ||
           foundOrder.currentStatus == "W. CANCELLED" ||
           foundOrder.currentStatus == "X. Archived"
         ) {
-          currentArtist = "";
+          foundOrder.currentArtist = "";
         }
-        foundOrder.currentArtist = currentArtist;
 
         if (foundOrder.currentStatus === "U. Uploaded") {
           if (foundOrder.signedOffDate === null) {
@@ -333,11 +358,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             }
           );
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
+          if (foundOrder.proofRequestDate == null) {
+            req.flash("error_msg", "Proof was not requested");
+            res.redirect("/orders");
+            return;
+          }
           foundOrder.proofCompletionDate = moment()
             .utc()
             .format();
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
-          let date2 = moment(Date.parse(foundOrder.requestDate));
+          let date2 = moment(Date.parse(foundOrder.proofRequestDate));
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = parseInt(diff.days() + 1);
           foundOrder.proofTurnaround = proofTurnaround;
