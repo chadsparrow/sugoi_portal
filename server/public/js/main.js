@@ -148,6 +148,20 @@ $(document).ready(function () {
     dom: "lBrftip",
     buttons: [
       {
+        text: "All",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/orders/all");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Initial",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/orders/initial");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
         text: "In Progress",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/orders");
@@ -169,9 +183,9 @@ $(document).ready(function () {
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "All",
+        text: "Archived",
         action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/all");
+          $(location).attr("href", "/orders/archived");
         },
         className: "waves-effect waves-light btn-small"
       },
@@ -231,30 +245,6 @@ $(document).ready(function () {
     dom: "lBrftip",
     buttons: [
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
-          var d = new Date();
-          var n = d.getTime();
-          return "Production-Report " + n;
-        },
-        exportOptions: {
-          modifier: {
-            page: "current"
-          },
-          columns: ":not(:last-child)"
-        }
-      },
-      {
-        text: "CCN Copy",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/ccn");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
-      {
         text: "All Orders",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/");
@@ -279,6 +269,30 @@ $(document).ready(function () {
         text: "Cancelled",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/cancelled");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        extend: "excelHtml5",
+        className: "waves-effect waves-light btn-small",
+        text: "Export Excel",
+        title: "",
+        filename: function () {
+          var d = new Date();
+          var n = d.getTime();
+          return "Production-Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
+      },
+      {
+        text: "CCN Copy",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/prod/ccn");
         },
         className: "waves-effect waves-light btn-small"
       }

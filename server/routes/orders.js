@@ -238,8 +238,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else {
         foundOrder.currentStatus = currentStatus;
         if (foundOrder.currentStatus == "A. Waiting for Proof") {
-          foundOrder.currentArtist = "";
-          foundOrder.proofRequestDate = moment().utc().format();
+          if (foundOrder.proofRequestDate != null) {
+            foundOrder.currentArtist = "";
+            foundOrder.proofRequestDate = moment().utc().format();
+          }
         }
         if (
           foundOrder.currentStatus == "G. Waiting for Revision" ||
@@ -320,43 +322,47 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             res.redirect("/orders");
             return;
           } else {
-            foundOrder.sentVendor = moment()
-              .utc()
-              .format();
+            if (foundOrder.sentVendor != null) {
+              foundOrder.sentVendor = moment()
+                .utc()
+                .format();
+            }
           }
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
-          foundOrder.signedOffDate = moment()
-            .utc()
-            .format();
-          let reportWeek = moment()
-            .utc()
-            .format("W");
-          let reportYear = moment()
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment()
-            .utc()
-            .format("M");
+          if (foundOrder.signedOffDate != null) {
+            foundOrder.signedOffDate = moment()
+              .utc()
+              .format();
+            let reportWeek = moment()
+              .utc()
+              .format("W");
+            let reportYear = moment()
+              .utc()
+              .format("YYYY");
+            let reportMonth = moment()
+              .utc()
+              .format("M");
 
-          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+            let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
-            },
-            {
-              $inc: { signOffs: 1 }
-            },
-            { upsert: true, new: true },
-            function (err, result) {
-              if (err) {
-                return logger.error(err);
+            Report.findOneAndUpdate(
+              {
+                reportWeekNumber: reportWeek,
+                reportYear: reportYear,
+                reportWeekRange: reportWeekRange,
+                reportMonth: reportMonth
+              },
+              {
+                $inc: { signOffs: 1 }
+              },
+              { upsert: true, new: true },
+              function (err, result) {
+                if (err) {
+                  return logger.error(err);
+                }
               }
-            }
-          );
+            );
+          }
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
           if (foundOrder.proofRequestDate == null) {
             req.flash("error_msg", "Proof was not requested");
