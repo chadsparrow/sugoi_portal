@@ -176,16 +176,16 @@ $(document).ready(function () {
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "Cancelled",
+        text: "Archived",
         action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/cancelled");
+          $(location).attr("href", "/orders/archived");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "Archived",
+        text: "Cancelled",
         action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/archived");
+          $(location).attr("href", "/orders/cancelled");
         },
         className: "waves-effect waves-light btn-small"
       },
