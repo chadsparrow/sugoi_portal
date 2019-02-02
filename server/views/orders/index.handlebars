@@ -40,7 +40,7 @@
         <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
         </td>
         <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
-        <td style="font-size: 12px;" class="center-align">{{formatDate requestDate "DD-MMM"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate enteredDate "DD-MMM"}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
           "DD-MMM"}}{{/if}}</td>
@@ -53,7 +53,7 @@
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;">
-          <span class="right">
+          <span>
             <a class="black-text" href="/orders/view/{{_id}}">
               <i class="material-icons">remove_red_eye</i>
             </a>
