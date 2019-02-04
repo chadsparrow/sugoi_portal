@@ -117,13 +117,9 @@
                   <div class="input-field col s12">
                     <select name="currentArtist" id="currentArtist">
                       {{#select order.currentArtist}} <option value=""></option>
-                      <option value="BCASTRO">BARBARA</option>
-                      <option value="CSPARROW">CHAD</option>
-                      <option value="DMENESES">DANIELA</option>
-                      <option value="KKE">KELLY</option>
-                      <option value="LHORVATH">LILLA</option>
-                      <option value="RYUE">ROY</option>
-                      <option value="WLIAO">WILLIAM</option>
+                      {{#each artists}}
+                      <option value="{{value}}">{{text}}</option>
+                      {{/each}}
                       {{/select}}
                     </select>
                     <label for="currentArtist">Current Artist:</label>

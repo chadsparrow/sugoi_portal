@@ -42,10 +42,9 @@
                     <div class="input-field col s12 m6">
                       <select name="isr" id="isr">
                         {{#select isr}}
-                        <option value="DOSULLIVAN">DEAN</option>
-                        <option value="RPILLER">REED</option>
-                        <option value="SROBINSON">SHEILA</option>
-                        <option value="MBELLEAU">MJ</option>
+                        {{#each reps}}
+                        <option value="{{value}}">{{text}}</option>
+                        {{/each}}
                         {{/select}}
                       </select>
                       <label for="isr">* ISR:</label>

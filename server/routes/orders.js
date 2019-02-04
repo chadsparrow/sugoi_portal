@@ -9,6 +9,8 @@ const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 const Order = require("../models/Order");
 const Report = require("../models/Report");
 const Proof = require("../models/Proof");
+const Artist = require('../models/Artist');
+const Rep = require('../models/Rep');
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
@@ -98,26 +100,29 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  const orderNum = "";
-  const accountNum = "";
-  const priority = "";
-  const currentStatus = "";
-  const eventDate = null;
-  const latestInHand = null;
-  const isr = "";
-  const instruction = "";
-  const vendor = "";
-  res.render("orders/add", {
-    orderNum,
-    accountNum,
-    priority,
-    currentStatus,
-    eventDate,
-    latestInHand,
-    isr,
-    instruction,
-    vendor
-  });
+  Rep.find().then(reps => {
+    const orderNum = "";
+    const accountNum = "";
+    const priority = "";
+    const currentStatus = "";
+    const eventDate = null;
+    const latestInHand = null;
+    const isr = "";
+    const instruction = "";
+    const vendor = "";
+    res.render("orders/add", {
+      orderNum,
+      accountNum,
+      priority,
+      currentStatus,
+      eventDate,
+      latestInHand,
+      isr,
+      instruction,
+      vendor,
+      reps
+    });
+  }).catch(err => logger.error(err));
 });
 
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE FIELDS
@@ -203,9 +208,12 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {
-    res.render("orders/edit", {
-      order
-    });
+    Artist.find().then(artists => {
+      res.render("orders/edit", {
+        order,
+        artists
+      });
+    }).catch(err => logger.error(err));
   });
 });
 
@@ -361,7 +369,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                   return logger.error(err);
                 }
               }
-            );
+            )
           }
         } else if (foundOrder.currentStatus === "F. Proof Complete") {
           if (foundOrder.proofRequestDate == null) {
