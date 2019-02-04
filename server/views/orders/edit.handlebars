@@ -117,7 +117,7 @@
                   <div class="input-field col s12">
                     <select name="currentArtist" id="currentArtist">
                       {{#select order.currentArtist}} <option value=""></option>
-                      {{#each artists}}
+                      {{#each customArtists}}
                       <option value="{{value}}">{{text}}</option>
                       {{/each}}
                       {{/select}}
