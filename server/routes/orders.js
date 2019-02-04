@@ -209,7 +209,6 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     _id: req.params.id
   }).then(order => {
     CustomArtist.find().then(customArtists => {
-      console.log(customArtists);
       res.render("orders/edit", {
         order,
         customArtists
