@@ -35,7 +35,6 @@ const prodRoutes = require("./routes/prod");
 const proofRoutes = require("./routes/proofs");
 const paymentRoutes = require("./routes/payments");
 const reportRoutes = require("./routes/reports");
-const confirmationRoutes = require("./routes/confirmations");
 
 // Handlebars Helpers
 const {
@@ -55,7 +54,7 @@ const {
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
-const connectWithRetry = function() {
+const connectWithRetry = function () {
   return mongoose
     .connect(
       process.env.DB_HOST,
@@ -159,7 +158,7 @@ app.use((req, res, next) => {
 });
 
 // cron job to run every hour to update all tracking numbers status in the Orders db.
-var cronJob = cron.job("0 * * * *", function() {
+var cronJob = cron.job("0 * * * *", function () {
   Order.find({
     tracking: { $ne: "" },
     confirmDeliveryStatus: { $ne: "Delivered" }
@@ -167,11 +166,11 @@ var cronJob = cron.job("0 * * * *", function() {
     if (foundOrders.length > 0) {
       logger.info(
         `Updating shipment tracking information on ${
-          foundOrders.length
+        foundOrders.length
         } orders...`
       );
       foundOrders.forEach(foundOrder => {
-        courier.trace(foundOrder.tracking, function(err, result) {
+        courier.trace(foundOrder.tracking, function (err, result) {
           if (err) {
             logger.error(err);
           } else {
@@ -192,7 +191,7 @@ var cronJob = cron.job("0 * * * *", function() {
                   foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
               }
             }
-            foundOrder.save(function(err, updatedOrder) {
+            foundOrder.save(function (err, updatedOrder) {
               if (err) {
                 logger.error(err);
               }
@@ -217,7 +216,6 @@ app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/reports", reportRoutes);
-app.use("/confirmations", confirmationRoutes);
 
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {

@@ -122,7 +122,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     });
   }
 
-  Order.findOne({ orderNum: orderNum }, function(err, order) {
+  Order.findOne({ orderNum: orderNum }, function (err, order) {
     if (order) {
       req.flash("error_msg", "Order Number already entered");
       res.redirect("/orders/add");
@@ -217,7 +217,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     multishipPrePack
   } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
+  Order.findOne({ _id: id }, function (err, foundOrder) {
     if (err) {
       return logger.error(err);
     } else {
@@ -273,7 +273,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 $push: { outputTurnArounds: outputTurnaround }
               },
               { upsert: true, new: true },
-              function(err, updatedReport) {
+              function (err, updatedReport) {
                 if (err) {
                   return logger.error(err);
                 }
@@ -291,7 +291,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                     _id: updatedReport._id
                   },
                   { $set: { avgOutput: outputAvg } },
-                  function(error, finalUpdatedReport) {
+                  function (error, finalUpdatedReport) {
                     if (error) {
                       return logger.error(error);
                     }
@@ -337,7 +337,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $inc: { signOffs: 1 }
             },
             { upsert: true, new: true },
-            function(err, result) {
+            function (err, result) {
               if (err) {
                 return logger.error(err);
               }
@@ -379,7 +379,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $push: { proofTurnArounds: proofTurnaround }
             },
             { upsert: true, new: true },
-            function(err, updatedReport) {
+            function (err, updatedReport) {
               if (err) {
                 return logger.error(err);
               }
@@ -395,7 +395,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                   _id: updatedReport._id
                 },
                 { $set: { avgProofs: proofsAvg } },
-                function(error, finalUpdatedReport) {
+                function (error, finalUpdatedReport) {
                   if (error) {
                     return logger.error(error);
                   }
@@ -443,7 +443,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               $push: { revisionTurnArounds: revisionTurnaround }
             },
             { upsert: true, new: true },
-            function(err, updatedReport) {
+            function (err, updatedReport) {
               if (err) {
                 return logger.error(err);
               }
@@ -459,7 +459,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                   _id: updatedReport._id
                 },
                 { $set: { avgRevisions: revisionsAvg } },
-                function(error, finalUpdatedReport) {
+                function (error, finalUpdatedReport) {
                   if (error) {
                     return logger.error(error);
                   }
@@ -492,7 +492,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.latestShipDate = latestShipDate;
       foundOrder.multishipPrePack = multishipPrePack;
 
-      foundOrder.save(function(err, updatedOrder) {
+      foundOrder.save(function (err, updatedOrder) {
         if (err) {
           return logger.error(err);
         } else {
@@ -542,7 +542,7 @@ router.put(
         note.isr = isr;
         note.instructionType = instructionType;
 
-        foundOrder.save(function(err, updatedOrder) {
+        foundOrder.save(function (err, updatedOrder) {
           if (err) {
             return logger.error(err);
           } else {
@@ -577,7 +577,7 @@ router.put(
       .utc()
       .format();
 
-    Order.findOne({ _id: id }, function(err, foundOrder) {
+    Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
         return logger.error(err);
       } else {
@@ -592,13 +592,13 @@ router.put(
         foundOrder.revisionRequestDate = revisionRequestDate;
         foundOrder.revisionCompletionDate = null;
 
-        foundOrder.save(function(err, updatedOrder) {
+        foundOrder.save(function (err, updatedOrder) {
           if (err) {
             return logger.error(err);
           } else {
             logger.info(
               `${updatedOrder.orderNum} - revision request by ${
-                req.user.username
+              req.user.username
               }`
             );
             req.flash("success_msg", "Revision Requested");
@@ -621,7 +621,7 @@ router.put(
     let instructionType = "Note";
     let noteUser = req.body.noteUser;
 
-    Order.findOne({ _id: id }, function(err, foundOrder) {
+    Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
         return logger.error(err);
       } else {
@@ -632,7 +632,7 @@ router.put(
             user: noteUser
           });
 
-          foundOrder.save(function(err, updatedOrder) {
+          foundOrder.save(function (err, updatedOrder) {
             if (err) {
               return logger.error(err);
             } else {
@@ -649,7 +649,7 @@ router.put(
   }
 );
 
-Date.prototype.getWeek = function() {
+Date.prototype.getWeek = function () {
   var date = new Date(this.getTime());
   date.setHours(0, 0, 0, 0);
   // Thursday in current week decides the year.
@@ -663,7 +663,7 @@ Date.prototype.getWeek = function() {
       ((date.getTime() - week1.getTime()) / 86400000 -
         3 +
         ((week1.getDay() + 6) % 7)) /
-        7
+      7
     )
   );
 };
