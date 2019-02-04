@@ -9,8 +9,8 @@ const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 const Order = require("../models/Order");
 const Report = require("../models/Report");
 const Proof = require("../models/Proof");
-const Artist = require('../models/Artist');
-const Rep = require('../models/Rep');
+const CustomArtist = require('../models/CustomArtist');
+const CustomRep = require('../models/CustomRep');
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
@@ -63,7 +63,7 @@ router.get("/all", ensureAuthenticated, (req, res) => {
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  Rep.find().then(reps => {
+  CustomRep.find().then(reps => {
     const orderNum = "";
     const accountNum = "";
     const priority = "";
@@ -197,7 +197,7 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {
-    Artist.find().then(artists => {
+    CustomArtist.find().then(artists => {
       res.render("orders/edit", {
         order,
         artists
