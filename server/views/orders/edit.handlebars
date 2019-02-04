@@ -15,38 +15,37 @@
                     <label for="orderNum">Contract #:</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="client" id="client" class="validate" value="{{order.client}}"
-                      required {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
+                    <input type="text" name="client" id="client" class="validate" value="{{order.client}}" required
+                      {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
                       <label for="client">Client:</label>
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
-                      class="validate" required
-                      {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
-                      <label for="accountNum">Account #:</label>
+                      class="validate" required {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}}
+                      {{else}} readonly{{/if}}{{/if}}> <label for="accountNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
                     {{#if user.admin}}
-                      <select name="priority" id="priority">
-                        {{#select order.priority}} <option value=""></option>
-                        <option value="RUSH">RUSH</option>
-                        <option value="VIP">VIP</option>
-                        {{/select}}
-                      </select>
-                      <label for="priority">Priority:</label>
+                    <select name="priority" id="priority">
+                      {{#select order.priority}} <option value=""></option>
+                      <option value="RUSH">RUSH</option>
+                      <option value="VIP">VIP</option>
+                      {{/select}}
+                    </select>
+                    <label for="priority">Priority:</label>
                     {{else}}
-                      {{#if (checkForSignOff order.currentStatus)}}
-                        <input type="text" id="priority" name="priority" value="{{order.priority}}" readonly>
-                        <label for="priority">Priority:</label>
-                      {{else}}
-                        <select name="priority" id="priority">
-                          {{#select order.priority}} <option value=""></option>
-                          <option value="RUSH">RUSH</option>
-                          <option value="VIP">VIP</option>
-                          {{/select}}
-                        </select>
-                        <label for="priority">Priority:</label>
-                      {{/if}}
+                    {{#if (checkForSignOff order.currentStatus)}}
+                    <input type="text" id="priority" name="priority" value="{{order.priority}}" readonly>
+                    <label for="priority">Priority:</label>
+                    {{else}}
+                    <select name="priority" id="priority">
+                      {{#select order.priority}} <option value=""></option>
+                      <option value="RUSH">RUSH</option>
+                      <option value="VIP">VIP</option>
+                      {{/select}}
+                    </select>
+                    <label for="priority">Priority:</label>
+                    {{/if}}
                     {{/if}}
 
                   </div>
@@ -85,7 +84,8 @@
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
                     <i class="small material-icons prefix">today</i>
-                    <input type="text" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}" readonly>
+                    <input type="text" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}"
+                      readonly>
                     <label for="eventDate">Event Date:</label>
                     {{else}}
                     <i class="small material-icons prefix">today</i>
@@ -117,13 +117,9 @@
                   <div class="input-field col s12">
                     <select name="currentArtist" id="currentArtist">
                       {{#select order.currentArtist}} <option value=""></option>
-                      <option value="BCASTRO">BARBARA</option>
-                      <option value="CSPARROW">CHAD</option>
-                      <option value="DMENESES">DANIELA</option>
-                      <option value="KKE">KELLY</option>
-                      <option value="LHORVATH">LILLA</option>
-                      <option value="RYUE">ROY</option>
-                      <option value="WLIAO">WILLIAM</option>
+                      {{#each artists}}
+                      <option value="{{value}}">{{text}}</option>
+                      {{/each}}
                       {{/select}}
                     </select>
                     <label for="currentArtist">Current Artist:</label>
@@ -164,9 +160,9 @@
                         <label for="qty">Qty:</label>
                     </div>
                     <div class="input-field col s6 l4">
-                      <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue" value="{{order.netValue}}"
-                        {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
-                        <label for="netValue">Total Value:</label>
+                      <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue"
+                        value="{{order.netValue}}" {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}}
+                        {{else}} readonly{{/if}}{{/if}}> <label for="netValue">Total Value:</label>
                     </div>
                     <div class="input-field col s12 l4">
                       {{#if user.admin}}
@@ -253,14 +249,14 @@
 <script>
   $(function () {
     $('#accountNum').keydown(function (e) {
-        var key = e.charCode || e.keyCode || 0;
-        $text = $(this);
-        if (key !== 8 && key !== 9) {
-            if ($text.val().length === 6) {
-                $text.val($text.val() + '-');
-            }
+      var key = e.charCode || e.keyCode || 0;
+      $text = $(this);
+      if (key !== 8 && key !== 9) {
+        if ($text.val().length === 6) {
+          $text.val($text.val() + '-');
         }
-        return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+      }
+      return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
     })
   });
 </script>
