@@ -13,4 +13,4 @@ const RepsSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("customReps", RepsSchema);
+module.exports = mongoose.model("customreps", RepsSchema);
