@@ -16,11 +16,7 @@
           <div class="form-group mb-1">
             <label for="isr" class="small">Custom Rep</label>
             <select class="form-control form-control-sm" id="isr" v-model="order.isr">
-              <option selected value>Choose...</option>
-              <option value="DOSULLIVAN">Dean</option>
-              <option value="RPILLER">Reed</option>
-              <option value="SROBINSON">Sheila</option>
-              <option value="MBELLEAU">MJ</option>
+              <option v-for="(rep, index) in reps" :value="rep.value" :key="index">{{rep.text}}</option>
             </select>
           </div>
           <div class="form-group">
@@ -29,7 +25,6 @@
               v-model="order.enteredDate"
               input-class="form-control form-control-sm"
               id="requestDate"
-              use-utc="true"
             ></date-picker>
           </div>
           <hr>
@@ -39,7 +34,6 @@
               v-model="order.eventDate"
               input-class="form-control form-control-sm"
               id="eventDate"
-              :format="customFormatter"
             ></date-picker>
           </div>
           <div class="form-group mb-1">
@@ -48,7 +42,6 @@
               v-model="order.latestInHand"
               input-class="form-control form-control-sm"
               id="latestInHand"
-              :format="customFormatter"
             ></date-picker>
           </div>
           <div class="form-group mb-1">
@@ -57,7 +50,6 @@
               v-model="order.estShipDate"
               input-class="form-control form-control-sm"
               id="estShipDate"
-              :format="customFormatter"
             ></date-picker>
           </div>
           <div class="form-group">
@@ -126,15 +118,53 @@
                 v-model.trim="order.shipToCity"
               >
             </div>
-            <div class="form-group mb-1 col-sm-6">
+            <div
+              class="form-group mb-1 col-sm-6"
+              v-if="order.shipToCountry === 'CA'|| order.shipToCountry ==='Canada' || order.shipToCountry ==='CAN' || order.shipToCountry==='Can'"
+            >
+              <label for="shipToProvState" class="small">Province</label>
+              <select
+                class="form-control form-control-sm"
+                id="shipToProvState"
+                v-model="order.shipToProvState"
+                @change="setProvTax"
+              >
+                <option
+                  v-for="(prov, index) in provs"
+                  :value="prov.abbrev"
+                  :key="index"
+                >{{prov.abbrev}} - {{prov.province}}</option>
+              </select>
+            </div>
+            <div
+              class="form-group mb-1 col-sm-6"
+              v-else-if="order.shipToCountry ==='USA'|| order.shipToCountry==='US' || order.shipToCountry==='United States'"
+            >
+              <label for="shipToProvState" class="small">State</label>
+              <select
+                class="form-control form-control-sm"
+                id="shipToProvState"
+                v-model="order.shipToProvState"
+                @change="setTaxOther(null)"
+              >
+                <option
+                  v-for="(state, index) in states"
+                  :value="state.abbrev"
+                  :key="index"
+                >{{state.abbrev}} - {{state.state}}</option>
+              </select>
+            </div>
+            <div class="form-group mb-1 col-sm-6" v-else>
               <label for="shipToProvState" class="small">State/Prov</label>
               <input
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToProvState"
                 v-model.trim="order.shipToProvState"
+                @change="setTaxOther(null)"
               >
             </div>
+
             <div class="form-group mb-1 col-sm-6">
               <label for="shipToCountry" class="small">Country</label>
               <input
@@ -187,7 +217,7 @@
           </div>
         </div>
         <div class="col-sm-2">
-          <div class="form-group mb-1">
+          <div class="form-group mb-1" v-if="order.prePacks === 0 || order.prePacks === null">
             <label for="multiShips" class="small">Multi-Ships</label>
             <input
               type="number"
@@ -197,7 +227,7 @@
               v-model.number="order.multiShips"
             >
           </div>
-          <div class="form-group mb-1">
+          <div class="form-group mb-1" v-if="order.multiShips === 0 || order.multiShips === null">
             <label for="prePacks" class="small">Pre-Packs</label>
             <input
               type="number"
@@ -232,7 +262,7 @@
           <div class="input-group input-group-sm mb-2">
             <input
               type="number"
-              class="form-control"
+              class="form-control text-center"
               id="taxes"
               min="0"
               placeholder="Taxes"
@@ -243,7 +273,7 @@
             </div>
           </div>
 
-          <h3 class="text-center bg-success text-light rounded p-1 mb-2">Total: ${{order.netValue}}</h3>
+          <h3 class="text-center bg-dark text-light rounded p-1 mb-2">Total: ${{order.netValue}}</h3>
           <div class="input-group input-group-sm mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
@@ -257,11 +287,11 @@
               v-model.number="order.deposit"
             >
           </div>
-          <p class="text-center bg-danger text-light rounded">Balance Due:
+          <p class="text-center bg-dark text-light rounded">Balance Due:
             <br>
             ${{order.balanceOutstanding}}
           </p>
-          <button class="btn btn-primary d-print-none" @click.prevent>Submit
+          <button class="btn btn-success d-print-none" @click.prevent>Submit
             <br>Changes
           </button>
         </div>
@@ -272,7 +302,6 @@
 
 <script>
 import DatePicker from "vuejs-datepicker";
-import moment from "moment";
 
 export default {
   components: {
@@ -281,11 +310,25 @@ export default {
   computed: {
     order() {
       return this.$store.state.order;
+    },
+    reps() {
+      return this.$store.state.reps;
+    },
+    provs() {
+      return this.$store.state.provs;
+    },
+    states() {
+      return this.$store.state.states;
     }
   },
   methods: {
-    customFormatter(date) {
-      return moment(date).format("DD-MMM-YYYY");
+    setProvTax(e) {
+      let index = e.target.selectedIndex;
+      let tax = this.provs[index].tax;
+      this.$store.dispatch("setProvTax", tax);
+    },
+    setTaxOther(tax) {
+      this.$store.dispatch("setProvTax", tax);
     }
   },
   name: "OrderDetails"
