@@ -17,7 +17,6 @@ module.exports = {
   formatDate: function (date, format) {
     if (date) {
       let d = new Date(date);
-      //d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
       return moment(d)
         .utc()
         .format(format);
