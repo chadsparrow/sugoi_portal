@@ -5,3 +5,4 @@ docker-compose-dev.yml
 docker-compose.yml
 .DS_Store
 .vscode
+/index.html
