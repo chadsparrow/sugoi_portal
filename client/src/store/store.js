@@ -9,7 +9,6 @@ Vue.use(VueAxios, axios);
 export const store = new Vuex.Store({
   state: {
     order: {},
-    artists: [],
     reps: [],
     provs: [],
     states: []
@@ -49,6 +48,9 @@ export const store = new Vuex.Store({
     },
     setProvTax: ({ commit }, tax) => {
       commit('SET_PROV_TAX', tax);
+    },
+    setCurrency: ({ commit }, country) => {
+      commit('SET_CURRENCY', country)
     }
   },
   mutations: {
@@ -69,6 +71,21 @@ export const store = new Vuex.Store({
         state.order.taxes = tax;
       } else {
         state.order.taxes = null;
+      }
+    },
+    SET_CURRENCY: (state, country, getters) => {
+      country = country.toUpperCase();
+      if (country === 'CA' || country === 'CAN' || country === 'CANADA') {
+        state.order.country = country.toUpperCase();
+        state.order.currency = "CAD"
+      } else if (country === 'US' || country === 'USA' || country === 'UNITED STATES' || country === "UNITED STATES OF AMERICA") {
+        state.order.country = country.toUpperCase();
+        state.order.currency = "USD"
+      } else if (country === '') {
+        state.order.country = country.toUpperCase();
+        state.order.currency = null;
+      } else if (country === null) {
+        state.order.currency = null;
       }
     }
   },

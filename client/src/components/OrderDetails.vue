@@ -23,8 +23,11 @@
             <label for="requestDate" class="small">Order Date</label>
             <date-picker
               v-model="order.enteredDate"
-              input-class="form-control form-control-sm"
               id="requestDate"
+              :disabled="true"
+              :bootstrapStyling="true"
+              :use-utc="true"
+              input-class="form-control form-control-sm"
             ></date-picker>
           </div>
           <hr>
@@ -32,6 +35,9 @@
             <label for="eventDate" class="small">Event Date</label>
             <date-picker
               v-model="order.eventDate"
+              :bootstrapStyling="true"
+              :use-utc="true"
+              :clearButton="true"
               input-class="form-control form-control-sm"
               id="eventDate"
             ></date-picker>
@@ -40,6 +46,9 @@
             <label for="latestInHand" class="small">In-Hand Date</label>
             <date-picker
               v-model="order.latestInHand"
+              :bootstrapStyling="true"
+              :use-utc="true"
+              :clearButton="true"
               input-class="form-control form-control-sm"
               id="latestInHand"
             ></date-picker>
@@ -48,6 +57,9 @@
             <label for="estShipDate" class="small">Est. Ship Date</label>
             <date-picker
               v-model="order.estShipDate"
+              :bootstrapStyling="true"
+              :use-utc="true"
+              :clearButton="true"
               input-class="form-control form-control-sm"
               id="estShipDate"
             ></date-picker>
@@ -74,7 +86,7 @@
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
-              <label for="client" class="small">Account Name</label>
+              <label for="client" class="small">Client</label>
               <input
                 type="text"
                 class="form-control form-control-sm"
@@ -120,7 +132,7 @@
             </div>
             <div
               class="form-group mb-1 col-sm-6"
-              v-if="order.shipToCountry === 'CA'|| order.shipToCountry ==='Canada' || order.shipToCountry ==='CAN' || order.shipToCountry==='Can'"
+              v-if="order.shipToCountry === 'CA'|| order.shipToCountry ==='CANADA' || order.shipToCountry ==='CAN'"
             >
               <label for="shipToProvState" class="small">Province</label>
               <select
@@ -138,7 +150,7 @@
             </div>
             <div
               class="form-group mb-1 col-sm-6"
-              v-else-if="order.shipToCountry ==='USA'|| order.shipToCountry==='US' || order.shipToCountry==='United States'"
+              v-else-if="order.shipToCountry ==='USA'|| order.shipToCountry==='US' || order.shipToCountry==='UNITED STATES'"
             >
               <label for="shipToProvState" class="small">State</label>
               <select
@@ -171,9 +183,11 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToCountry"
-                v-model.trim="order.shipToCountry"
+                v-model.trim.lazy="order.shipToCountry"
+                @change="setCurrency"
               >
             </div>
+
             <div class="form-group mb-1 col-sm-6">
               <label for="shipToPostalZip" class="small">Zip/Postal</label>
               <input
@@ -212,7 +226,13 @@
             </div>
             <div class="form-group col-sm-12">
               <label for="signedOffDate" class="small">Signed-Off Date</label>
-              <date-picker v-model="order.signedOffDate" input-class="form-control form-control-sm"></date-picker>
+              <date-picker
+                v-model="order.signedOffDate"
+                :bootstrapStyling="true"
+                :use-utc="true"
+                input-class="form-control form-control-sm"
+                :disabled="true"
+              ></date-picker>
             </div>
           </div>
         </div>
@@ -253,7 +273,12 @@
 
           <div class="form-group mb-2">
             <label for="currency" class="small">Currency</label>
-            <select class="form-control form-control-sm" id="currency" v-model="order.currency">
+            <select
+              class="form-control form-control-sm"
+              id="currency"
+              v-model="order.currency"
+              disabled
+            >
               <option value="CAD">CAD</option>
               <option value="USD">USD</option>
             </select>
@@ -273,7 +298,9 @@
             </div>
           </div>
 
-          <h3 class="text-center bg-dark text-light rounded p-1 mb-2">Total: ${{order.netValue}}</h3>
+          <h3 class="text-center bg-dark text-light rounded p-1 mb-2">Total:
+            <h4>${{order.netValue}}</h4>
+          </h3>
           <div class="input-group input-group-sm mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
@@ -289,7 +316,7 @@
           </div>
           <p class="text-center bg-dark text-light rounded">Balance Due:
             <br>
-            ${{order.balanceOutstanding}}
+            <span>${{order.balanceOutstanding}}</span>
           </p>
           <button class="btn btn-success d-print-none" @click.prevent>Submit
             <br>Changes
@@ -302,10 +329,12 @@
 
 <script>
 import DatePicker from "vuejs-datepicker";
+import datepicker from "vue-date-picker";
 
 export default {
   components: {
-    DatePicker
+    DatePicker,
+    datepicker
   },
   computed: {
     order() {
@@ -329,6 +358,10 @@ export default {
     },
     setTaxOther(tax) {
       this.$store.dispatch("setProvTax", tax);
+    },
+    setCurrency(e) {
+      let country = e.target.value;
+      this.$store.dispatch("setCurrency", country);
     }
   },
   name: "OrderDetails"

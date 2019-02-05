@@ -10,7 +10,7 @@ const Order = require("../../models/Order");
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
 router.get("/:orderNum", (req, res) => {
-  Order.find({ orderNum: req.params.orderNum })
+  Order.find({ orderNum: req.params.orderNum }, { checkpoints: 0, instructions: 0 })
     .then(order => {
       res.json(order);
     })
