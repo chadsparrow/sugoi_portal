@@ -130,6 +130,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         isr: isr,
         client: client,
         instructions: instructions,
+        vendor: vendor
       });
 
       newOrder
@@ -209,28 +210,26 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
       } else {
         foundOrder.currentStatus = currentStatus;
-        if (foundOrder.currentStatus == "A. Waiting for Proof" && foundOrder.proofRequestDate == null) {
-          foundOrder.proofRequestDate = moment().utc().format();
-        } else if (foundOrder.currentStatus == "A. Waiting for Proof" && foundOrder.proofRequestDate != null) {
-          req.flash("error_msg", "Proof has not been requested!");
-          res.redirect("/orders");
-          return;
+        if (foundOrder.currentStatus == "A. Waiting for Proof") {
+          if (foundOrder.proofRequestDate === null) {
+            foundOrder.proofRequestDate = moment().utc().format();
+          }
         }
         if (
           foundOrder.currentStatus == "A. Waiting for Proof" ||
           foundOrder.currentStatus == "G. Waiting for Revision" ||
           foundOrder.currentStatus == "M. Waiting for Output"
         ) {
-          foundOrder.currentArtist = currentArtist;
+          foundOrder.currentArtist = "";
         }
-
 
         if (foundOrder.currentStatus === "U. Uploaded") {
           if (foundOrder.signedOffDate === null) {
             req.flash("error_msg", "Order has not been signed off yet");
             res.redirect("/orders");
             return;
-          } else {
+          }
+          if (foundOrder.uploadDate === null) {
             foundOrder.uploadDate = moment()
               .utc()
               .format();
@@ -294,168 +293,180 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             req.flash("error_msg", "Order has not been signed off");
             res.redirect("/orders");
             return;
-          } else {
+          }
+          if (foundOrder.sentVendor === null) {
             foundOrder.sentVendor = moment()
               .utc()
               .format();
           }
         } else if (foundOrder.currentStatus === "M. Waiting for Output") {
-          foundOrder.signedOffDate = moment()
-            .utc()
-            .format();
-          let reportWeek = moment()
-            .utc()
-            .format("W");
-          let reportYear = moment()
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment()
-            .utc()
-            .format("M");
+          if (foundOrder.signedOffDate === null) {
+            foundOrder.signedOffDate = moment()
+              .utc()
+              .format();
+            let reportWeek = moment()
+              .utc()
+              .format("W");
+            let reportYear = moment()
+              .utc()
+              .format("YYYY");
+            let reportMonth = moment()
+              .utc()
+              .format("M");
 
-          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+            let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
-            },
-            {
-              $inc: { signOffs: 1 }
-            },
-            { upsert: true, new: true },
-            function (err, result) {
-              if (err) {
-                return logger.error(err);
-              }
-            }
-          );
-        } else if (foundOrder.currentStatus === "F. Proof Complete") {
-          foundOrder.proofCompletionDate = moment()
-            .utc()
-            .format();
-          let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
-          let date2 = moment(Date.parse(foundOrder.proofRequestDate));
-          let diff = new DateDiff(date1, date2);
-          const proofTurnaround = parseInt(diff.days() + 1);
-          foundOrder.proofTurnaround = proofTurnaround;
-
-          let reportWeek = moment()
-            .utc()
-            .format("W");
-          let reportYear = moment()
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment()
-            .utc()
-            .format("M");
-
-          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
-
-          let proofsAvg = 0;
-
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
-            },
-            {
-              $inc: { proofsCompleted: 1 },
-              $push: { proofTurnArounds: proofTurnaround }
-            },
-            { upsert: true, new: true },
-            function (err, updatedReport) {
-              if (err) {
-                return logger.error(err);
-              }
-              let length = updatedReport.proofTurnArounds.length;
-              let sum = 0;
-              for (let i = 0; i < length; i++) {
-                sum += parseInt(updatedReport.proofTurnArounds[i]);
-              }
-              proofsAvg = Math.round(sum / length);
-
-              Report.updateOne(
-                {
-                  _id: updatedReport._id
-                },
-                { $set: { avgProofs: proofsAvg } },
-                function (error, finalUpdatedReport) {
-                  if (error) {
-                    return logger.error(error);
-                  }
+            Report.findOneAndUpdate(
+              {
+                reportWeekNumber: reportWeek,
+                reportYear: reportYear,
+                reportWeekRange: reportWeekRange,
+                reportMonth: reportMonth
+              },
+              {
+                $inc: { signOffs: 1 }
+              },
+              { upsert: true, new: true },
+              function (err, result) {
+                if (err) {
+                  return logger.error(err);
                 }
-              );
-            }
-          );
+              }
+            );
+          }
+        } else if (foundOrder.currentStatus === "F. Proof Complete") {
+          if (foundOrder.proofRequestDate == null) {
+            req.flash("error_msg", "Proof not requested");
+            res.redirect("/orders");
+            return;
+          }
+          if (foundOrder.proofCompletionDate === null) {
+            foundOrder.proofCompletionDate = moment()
+              .utc()
+              .format();
+            let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
+            let date2 = moment(Date.parse(foundOrder.proofRequestDate));
+            let diff = new DateDiff(date1, date2);
+            const proofTurnaround = parseInt(diff.days() + 1);
+            foundOrder.proofTurnaround = proofTurnaround;
+
+            let reportWeek = moment()
+              .utc()
+              .format("W");
+            let reportYear = moment()
+              .utc()
+              .format("YYYY");
+            let reportMonth = moment()
+              .utc()
+              .format("M");
+
+            let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+
+            let proofsAvg = 0;
+
+            Report.findOneAndUpdate(
+              {
+                reportWeekNumber: reportWeek,
+                reportYear: reportYear,
+                reportWeekRange: reportWeekRange,
+                reportMonth: reportMonth
+              },
+              {
+                $inc: { proofsCompleted: 1 },
+                $push: { proofTurnArounds: proofTurnaround }
+              },
+              { upsert: true, new: true },
+              function (err, updatedReport) {
+                if (err) {
+                  return logger.error(err);
+                }
+                let length = updatedReport.proofTurnArounds.length;
+                let sum = 0;
+                for (let i = 0; i < length; i++) {
+                  sum += parseInt(updatedReport.proofTurnArounds[i]);
+                }
+                proofsAvg = Math.round(sum / length);
+
+                Report.updateOne(
+                  {
+                    _id: updatedReport._id
+                  },
+                  { $set: { avgProofs: proofsAvg } },
+                  function (error, finalUpdatedReport) {
+                    if (error) {
+                      return logger.error(error);
+                    }
+                  }
+                );
+              }
+            );
+          }
         } else if (foundOrder.currentStatus === "L. Revision Complete") {
           if (foundOrder.revisionRequestDate == null) {
             req.flash("error_msg", "Revision not requested");
             res.redirect("/orders");
             return;
           }
-          foundOrder.revisionCompletionDate = moment()
-            .utc()
-            .format();
+          if (foundOrder.revisionCompletionDate === null) {
+            foundOrder.revisionCompletionDate = moment()
+              .utc()
+              .format();
 
-          let date1 = moment(Date.parse(foundOrder.revisionCompletionDate));
-          let date2 = moment(Date.parse(foundOrder.revisionRequestDate));
-          let diff = new DateDiff(date1, date2);
-          const revisionTurnaround = parseInt(diff.days() + 1);
+            let date1 = moment(Date.parse(foundOrder.revisionCompletionDate));
+            let date2 = moment(Date.parse(foundOrder.revisionRequestDate));
+            let diff = new DateDiff(date1, date2);
+            const revisionTurnaround = parseInt(diff.days() + 1);
 
-          let reportWeek = moment()
-            .utc()
-            .format("W");
-          let reportYear = moment()
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment()
-            .utc()
-            .format("M");
+            let reportWeek = moment()
+              .utc()
+              .format("W");
+            let reportYear = moment()
+              .utc()
+              .format("YYYY");
+            let reportMonth = moment()
+              .utc()
+              .format("M");
 
-          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
-          let revisionsAvg = 0;
+            let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+            let revisionsAvg = 0;
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
-            },
-            {
-              $inc: { revisionsCompleted: 1 },
-              $push: { revisionTurnArounds: revisionTurnaround }
-            },
-            { upsert: true, new: true },
-            function (err, updatedReport) {
-              if (err) {
-                return logger.error(err);
-              }
-              let length = updatedReport.revisionTurnArounds.length;
-              let sum = 0;
-              for (let i = 0; i < length; i++) {
-                sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
-              }
-              revisionsAvg = Math.round(sum / length);
-
-              Report.updateOne(
-                {
-                  _id: updatedReport._id
-                },
-                { $set: { avgRevisions: revisionsAvg } },
-                function (error, finalUpdatedReport) {
-                  if (error) {
-                    return logger.error(error);
-                  }
+            Report.findOneAndUpdate(
+              {
+                reportWeekNumber: reportWeek,
+                reportYear: reportYear,
+                reportWeekRange: reportWeekRange,
+                reportMonth: reportMonth
+              },
+              {
+                $inc: { revisionsCompleted: 1 },
+                $push: { revisionTurnArounds: revisionTurnaround }
+              },
+              { upsert: true, new: true },
+              function (err, updatedReport) {
+                if (err) {
+                  return logger.error(err);
                 }
-              );
-            }
-          );
+                let length = updatedReport.revisionTurnArounds.length;
+                let sum = 0;
+                for (let i = 0; i < length; i++) {
+                  sum += parseInt(updatedReport.revisionTurnArounds[i], 10);
+                }
+                revisionsAvg = Math.round(sum / length);
+
+                Report.updateOne(
+                  {
+                    _id: updatedReport._id
+                  },
+                  { $set: { avgRevisions: revisionsAvg } },
+                  function (error, finalUpdatedReport) {
+                    if (error) {
+                      return logger.error(error);
+                    }
+                  }
+                );
+              }
+            );
+          }
         }
       }
 
