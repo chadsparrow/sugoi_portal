@@ -9,7 +9,9 @@ const OrderSchema = new Schema({
     required: true
   },
   accountNum: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   currentStatus: {
     type: String,
@@ -42,7 +44,8 @@ const OrderSchema = new Schema({
   },
   priority: {
     type: String,
-    enum: ["", "VIP", "RUSH"]
+    enum: ["", "VIP", "RUSH"],
+    uppercase: true
   },
   enteredDate: {
     type: Date,
@@ -60,10 +63,12 @@ const OrderSchema = new Schema({
   },
   isr: {
     type: String,
-    uppercase: true
+    uppercase: true,
+    default: null
   },
   client: {
-    type: String
+    type: String,
+    default: null
   },
   instructions: [
     {
@@ -75,321 +80,444 @@ const OrderSchema = new Schema({
       },
       instruction: {
         type: String,
-        trim: true
+        trim: true,
+        default: null
       },
       instructionType: {
         type: String,
-        enum: ["Initial", "Revision", "Note", "System"]
+        enum: ["Initial", "Revision", "Note", "System"],
       },
       user: {
         type: String,
-        uppercase: true
+        uppercase: true,
+        default: null
       }
     }
   ],
   currentArtist: {
     type: String,
-    uppercase: true
+    uppercase: true,
+    default: null
   },
   uploadDate: {
     type: Date,
     default: null
   },
   vendor: {
-    type: String
+    type: String,
+    uppercase: true,
+    enum: ["CCN", "PNR", "MEX", ""]
   },
   sentVendor: {
     type: Date,
     default: null
   },
   qty: {
-    type: Number
+    type: Number,
+    default: null
   },
   netValue: {
-    type: Number
+    type: Number,
+    default: null
   },
   currency: {
     type: String,
-    enum: ["", "CAD", "USD"]
+    enum: ["", "CAD", "USD"],
+    uppercase: true
   },
   latestShipDate: {
     type: Date,
     default: null
   },
   markEvent: {
-    type: String
-  },
-  multishipPrePack: {
-    type: String
+    type: String,
+    default: null
   },
   vendorConfirmShip: {
     type: Date,
     default: null
   },
   shipStatus: {
-    type: String
+    type: String,
+    default: null
   },
   estDeliveryDate: {
     type: Date,
     default: null
   },
   tracking: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   confirmDeliveryDate: {
     type: Date,
     default: null
   },
   confirmDeliveryStatus: {
-    type: String
+    type: String,
+    default: null
   },
   jbaPONum: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   jbaGNRNum: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   jbaInvoiceNum: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   invoiceSent: {
-    type: Date
+    type: Date,
+    default: null
   },
   shippingNotes: {
-    type: String
+    type: String,
+    default: null
   },
   prodLeadTime: {
-    type: Number
+    type: Number,
+    default: null
   },
   shippingLeadTime: {
-    type: Number
+    type: Number,
+    default: null
   },
   totalLeadTime: {
-    type: Number
+    type: Number,
+    default: null
   },
   approvedTerms: {
-    type: String
+    type: String,
+    default: null
   },
   onTermPayment: {
-    type: Number
+    type: Number,
+    default: null
   },
   kitOrderPayment: {
-    type: Number
+    type: Number,
+    default: null
   },
   isrCollectedOrig: {
-    type: Number
+    type: Number,
+    default: null
   },
   isrCollectedCAD: {
-    type: Number
+    type: Number,
+    default: null
   },
   isrRefunded: {
-    type: Number
+    type: Number,
+    default: null
   },
   isrPaymentDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   isrPaymentType: {
-    type: String
+    type: String,
+    default: null
   },
   paymentNotes: {
-    type: String
+    type: String,
+    default: null
   },
   balanceOutstanding: {
-    type: Number
+    type: Number,
+    default: null
   },
   paymentStatus: {
-    type: String
+    type: String,
+    default: null
   },
   proofRequestDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   proofCompletionDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   signedOffDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   proofTurnaround: {
-    type: Number
+    type: Number,
+    default: null
   },
   outputTurnaround: {
-    type: Number
+    type: Number,
+    default: null
   },
   checkpoints: [],
   revisionRequestDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   revisionCompletionDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   orderNotes: {
-    type: String
-  },
-  accountName: {
-    type: String
+    type: String,
+    default: null
   },
   contactName: {
-    type: String
+    type: String,
+    default: null
   },
   shipToName: {
-    type: String
+    type: String,
+    default: null
   },
   shipToAddress: {
-    type: String
+    type: String,
+    default: null
   },
   shipToCity: {
-    type: String
+    type: String,
+    default: null
   },
   shipToProvState: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   shipToCountry: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   shipToPostalZip: {
-    type: String
+    type: String,
+    default: null,
+    uppercase: true
   },
   contactPhone: {
-    type: String
+    type: String,
+    default: null
   },
   contactEmail: {
-    type: String
-  },
-  orderDiscount: {
-    type: Number
+    type: String,
+    default: null
   },
   multiShips: {
-    type: Number
+    type: Number,
+    default: null
   },
   prePacks: {
-    type: Number
+    type: Number,
+    default: null
   },
   deposit: {
-    type: Number
+    type: Number,
+    default: null
+  },
+  taxes: {
+    type: Number,
+    default: null
+  },
+  orderDiscount: {
+    type: Number,
+    default: null
   },
   orderLines: [
     {
       lineNumber: {
-        type: String
+        type: String,
+        default: null
       },
       lineJobType: {
-        type: String
+        type: String,
+        default: null,
+        uppercase: true
       },
       swoReference: {
-        type: String
+        type: String,
+        default: null
       },
       priceBreak: {
-        type: Number
+        type: Number,
+        default: null
       },
       graphicCode: {
-        type: String
+        type: String,
+        default: null,
+        uppercase: true
       },
       qdCode: {
-        type: String
+        type: String,
+        default: null,
+        uppercase: true
+      },
+      colourWayCode: {
+        type: String,
+        default: null,
+        uppercase: true
       },
       colour1: {
-        type: String
+        type: String,
+        default: null,
+        uppercase: true
       },
       colour2: {
-        type: String
+        type: String,
+        default: null,
+        uppercase: true
       },
       colour3: {
-        type: String
+        type: String,
+        default: null,
+        uppercase: true
       },
       tracingCharge: {
-        type: Number
+        type: Number,
+        default: null
       },
       creativeCharge: {
-        type: Number
+        type: Number,
+        default: null
       },
       scaledArtCharge: {
-        type: Number
+        type: Number,
+        default: null
       },
       itemsSubTotal: {
-        type: Number
+        type: Number,
+        default: null
+      },
+      cancelled: {
+        type: Boolean,
+        default: false
       },
       items: [
         {
           itemNumber: {
-            type: String
+            type: String,
+            default: null
           },
           childReference: {
-            type: String
+            type: String,
+            default: null
           },
           description: {
-            type: String
+            type: String,
+            default: null
           },
           jbaCode: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           styleCode: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           autobahnCode: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           inkType: {
-            type: String
+            type: String,
+            default: null
           },
           zipper: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           thread: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           contrast: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           personalization: {
-            type: Boolean
+            type: Boolean,
+            default: false
           },
           zap: {
-            type: Boolean
+            type: Boolean,
+            default: false
           },
           sizeRange: {
-            type: String
+            type: String,
+            default: null,
+            uppercase: true
           },
           xxs: {
-            type: Number
+            type: Number,
+            default: null
           },
           xs: {
-            type: Number
+            type: Number,
+            default: null
           },
           s: {
-            type: Number
+            type: Number,
+            default: null
           },
           m: {
-            type: Number
+            type: Number,
+            default: null
           },
           l: {
-            type: Number
+            type: Number,
+            default: null
           },
           xl: {
-            type: Number
+            type: Number,
+            default: null
           },
           xxl: {
-            type: Number
+            type: Number,
+            default: null
           },
           xxxl: {
-            type: Number
+            type: Number,
+            default: null
           },
           totalUnits: {
-            type: Number
+            type: Number,
+            default: null
           },
           unitPrice: {
-            type: Number
+            type: Number,
+            default: null
           },
           addOns: {
-            type: Number
+            type: Number,
+            default: null
           },
           itemDiscount: {
-            type: Number
+            type: Number,
+            default: null
           },
           finalUnitPrice: {
-            type: Number
+            type: Number,
+            default: null
           },
           itemTotalPrice: {
-            type: Number
+            type: Number,
+            default: null
+          },
+          cancelled: {
+            type: Boolean,
+            default: false
           }
         }
       ]
