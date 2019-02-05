@@ -104,20 +104,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
+
   let instructions = [];
-  let currentArtist = "";
-  let multishipPrePack = "";
-  let shipStatus = "";
-  let tracking = "";
-  let confirmDeliveryStatus = "";
-  let shippingNotes = "";
-  let prodLeadTime = 0;
-  let shippingLeadTime = 0;
-  let totalLeadTime = 0;
-  let jbaPONum = "";
-  let jbaGNRNum = "";
-  let jbaInvoiceNum = "";
-  let signedOffDate = null;
 
   if (instruction) {
     instructions.push({
@@ -142,20 +130,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         isr: isr,
         client: client,
         instructions: instructions,
-        currentArtist: currentArtist,
-        vendor: vendor,
-        multishipPrePack: multishipPrePack,
-        shipStatus: shipStatus,
-        tracking: tracking,
-        confirmDeliveryStatus: confirmDeliveryStatus,
-        shippingNotes: shippingNotes,
-        prodLeadTime: prodLeadTime,
-        shippingLeadTime: shippingLeadTime,
-        totalLeadTime: totalLeadTime,
-        jbaPONum: jbaPONum,
-        jbaGNRNum: jbaGNRNum,
-        jbaInvoiceNum: jbaInvoiceNum,
-        signedOffDate: signedOffDate
       });
 
       newOrder
@@ -235,14 +209,21 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
       } else {
         foundOrder.currentStatus = currentStatus;
+        if (foundOrder.currentStatus == "A. Waiting for Proof" && foundOrder.proofRequestDate == null) {
+          foundOrder.proofRequestDate = moment().utc().format();
+        } else if (foundOrder.currentStatus == "A. Waiting for Proof" && foundOrder.proofRequestDate != null) {
+          req.flash("error_msg", "Proof has not been requested!");
+          res.redirect("/orders");
+          return;
+        }
         if (
           foundOrder.currentStatus == "A. Waiting for Proof" ||
           foundOrder.currentStatus == "G. Waiting for Revision" ||
           foundOrder.currentStatus == "M. Waiting for Output"
         ) {
-          currentArtist = "";
+          foundOrder.currentArtist = currentArtist;
         }
-        foundOrder.currentArtist = currentArtist;
+
 
         if (foundOrder.currentStatus === "U. Uploaded") {
           if (foundOrder.signedOffDate === null) {
@@ -356,7 +337,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             .utc()
             .format();
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
-          let date2 = moment(Date.parse(foundOrder.requestDate));
+          let date2 = moment(Date.parse(foundOrder.proofRequestDate));
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = parseInt(diff.days() + 1);
           foundOrder.proofTurnaround = proofTurnaround;
