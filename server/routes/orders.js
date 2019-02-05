@@ -245,17 +245,17 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         foundOrder.currentArtist = currentArtist;
       } else {
         foundOrder.currentStatus = currentStatus;
-        if (foundOrder.currentStatus == "A. Waiting for Proof") {
+        if (foundOrder.currentStatus === "A. Waiting for Proof") {
           if (foundOrder.proofRequestDate === null) {
             foundOrder.currentArtist = "";
             foundOrder.proofRequestDate = moment().utc().format();
           }
         }
         if (
-          foundOrder.currentStatus == "G. Waiting for Revision" ||
-          foundOrder.currentStatus == "M. Waiting for Output" ||
-          foundOrder.currentStatus == "W. CANCELLED" ||
-          foundOrder.currentStatus == "X. Archived"
+          foundOrder.currentStatus === "G. Waiting for Revision" ||
+          foundOrder.currentStatus === "M. Waiting for Output" ||
+          foundOrder.currentStatus === "W. CANCELLED" ||
+          foundOrder.currentStatus === "X. Archived"
         ) {
           foundOrder.currentArtist = "";
         }
