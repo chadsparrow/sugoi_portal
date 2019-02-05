@@ -104,6 +104,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
+  const proofRequestDate = moment().utc().format();
 
   let instructions = [];
 
@@ -130,7 +131,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         isr: isr,
         client: client,
         instructions: instructions,
-        vendor: vendor
+        vendor: vendor,
+        proofRequestDate: proofRequestDate
       });
 
       newOrder
