@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
     orderLines: [],
     reps: [],
     provs: [],
-    states: []
+    states: [],
+    styles: []
   },
   actions: {
     getOrderData: ({ commit }, orderNum) => {
@@ -64,6 +65,14 @@ export const store = new Vuex.Store({
           commit("SET_USA_STATES", states);
         });
     },
+    getStyles: ({ commit }) => {
+      axios
+        .get(`https://localhost:5000/api/styles`)
+        .then(r => r.data)
+        .then(styles => {
+          commit("SET_STYLES", styles);
+        });
+    },
     setProvTax: ({ commit }, tax) => {
       commit('SET_PROV_TAX', tax);
     },
@@ -96,6 +105,9 @@ export const store = new Vuex.Store({
     },
     SET_USA_STATES: (state, states) => {
       state.states = states;
+    },
+    SET_STYLES: (state, styles) => {
+      state.styles = styles;
     },
     SET_PROV_TAX: (state, tax) => {
       if (tax > 0) {

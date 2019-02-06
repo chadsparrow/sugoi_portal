@@ -39,6 +39,7 @@ const orderAPIRoutes = require("./routes/api/orders");
 const orderRepRoutes = require("./routes/api/reps");
 const provTaxRoutes = require("./routes/api/provTax");
 const stateRoutes = require("./routes/api/states");
+const apiStyleRoutes = require("./routes/api/styles");
 
 // Handlebars Helpers
 const {
@@ -224,6 +225,7 @@ app.use("/api/orders", orderAPIRoutes);
 app.use("/api/reps", orderRepRoutes);
 app.use("/api/provTax", provTaxRoutes);
 app.use("/api/states", stateRoutes);
+app.use("/api/states", apiStyleRoutes);
 
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {

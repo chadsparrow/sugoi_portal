@@ -10,7 +10,7 @@ const Style = require("../../models/Style");
 router.get("/", (req, res) => {
   Style.find()
     .then(styles => {
-      res.json(order);
+      res.json(styles);
     })
     .catch(err => {
       logger.error(err);

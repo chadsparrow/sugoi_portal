@@ -19,6 +19,7 @@ export default {
     this.$store.dispatch("getReps");
     this.$store.dispatch("getProvincialTaxes");
     this.$store.dispatch("getUSAStates");
+    this.$store.dispatch("getStyles");
   },
   components: {
     OrderDetails,
