@@ -9,60 +9,60 @@
               type="text"
               class="form-control form-control-sm"
               id="orderNum"
-              v-model.trim="order.orderNum"
+              v-model.trim="orderNum"
               readonly
             >
           </div>
           <div class="form-group mb-1">
             <label for="isr" class="small">Custom Rep</label>
-            <select class="form-control form-control-sm" id="isr" v-model="order.isr">
+            <select class="form-control form-control-sm" id="isr" v-model="isr">
               <option v-for="(rep, index) in reps" :value="rep.value" :key="index">{{rep.text}}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="requestDate" class="small">Order Date</label>
-            <date-picker
-              v-model="order.enteredDate"
+            <DatePicker
+              v-model="enteredDate"
               id="requestDate"
               :disabled="true"
               :bootstrapStyling="true"
               :use-utc="true"
               input-class="form-control form-control-sm"
-            ></date-picker>
+            ></DatePicker>
           </div>
           <hr>
           <div class="form-group mb-1">
             <label for="eventDate" class="small">Event Date</label>
-            <date-picker
-              v-model="order.eventDate"
+            <DatePicker
+              v-model="eventDate"
               :bootstrapStyling="true"
               :use-utc="true"
               :clearButton="true"
               input-class="form-control form-control-sm"
               id="eventDate"
-            ></date-picker>
+            ></DatePicker>
           </div>
           <div class="form-group mb-1">
             <label for="latestInHand" class="small">In-Hand Date</label>
-            <date-picker
-              v-model="order.latestInHand"
+            <DatePicker
+              v-model="latestInHand"
               :bootstrapStyling="true"
               :use-utc="true"
               :clearButton="true"
               input-class="form-control form-control-sm"
               id="latestInHand"
-            ></date-picker>
+            ></DatePicker>
           </div>
           <div class="form-group mb-1">
             <label for="estShipDate" class="small">Est. Ship Date</label>
-            <date-picker
-              v-model="order.estShipDate"
+            <DatePicker
+              v-model="estShipDate"
               :bootstrapStyling="true"
               :use-utc="true"
               :clearButton="true"
               input-class="form-control form-control-sm"
               id="estShipDate"
-            ></date-picker>
+            ></DatePicker>
           </div>
           <div class="form-group">
             <label for="orderNotes" class="small">Notes</label>
@@ -70,7 +70,7 @@
               class="form-control form-control-sm"
               rows="3"
               id="orderNotes"
-              v-model.trim="order.orderNotes"
+              v-model.trim="orderNotes"
             ></textarea>
           </div>
         </div>
@@ -82,7 +82,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="accountNum"
-                v-model.trim="order.accountNum"
+                v-model.trim="accountNum"
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
@@ -91,7 +91,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="client"
-                v-model.trim="order.client"
+                v-model.trim="client"
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
@@ -100,7 +100,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="contactName"
-                v-model.trim="order.contactName"
+                v-model.trim="contactName"
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
@@ -109,7 +109,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToName"
-                v-model.trim="order.shipToName"
+                v-model.trim="shipToName"
               >
             </div>
             <div class="form-group mb-1 col-sm-12">
@@ -118,7 +118,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToAddress"
-                v-model.trim="order.shipToAddress"
+                v-model.trim="shipToAddress"
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
@@ -127,18 +127,18 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToCity"
-                v-model.trim="order.shipToCity"
+                v-model.trim="shipToCity"
               >
             </div>
             <div
               class="form-group mb-1 col-sm-6"
-              v-if="order.shipToCountry === 'CA'|| order.shipToCountry ==='CANADA' || order.shipToCountry ==='CAN'"
+              v-if="shipToCountry === 'CA'|| shipToCountry ==='CANADA' || shipToCountry ==='CAN'"
             >
               <label for="shipToProvState" class="small">Province</label>
               <select
                 class="form-control form-control-sm"
                 id="shipToProvState"
-                v-model="order.shipToProvState"
+                v-model="shipToProvState"
                 @change="setProvTax"
               >
                 <option
@@ -150,13 +150,13 @@
             </div>
             <div
               class="form-group mb-1 col-sm-6"
-              v-else-if="order.shipToCountry ==='USA'|| order.shipToCountry==='US' || order.shipToCountry==='UNITED STATES'"
+              v-else-if="shipToCountry ==='USA'|| shipToCountry==='US' || shipToCountry==='UNITED STATES'"
             >
               <label for="shipToProvState" class="small">State</label>
               <select
                 class="form-control form-control-sm"
                 id="shipToProvState"
-                v-model="order.shipToProvState"
+                v-model="shipToProvState"
                 @change="setTaxOther(null)"
               >
                 <option
@@ -172,7 +172,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToProvState"
-                v-model.trim="order.shipToProvState"
+                v-model.trim="shipToProvState"
                 @change="setTaxOther(null)"
               >
             </div>
@@ -183,8 +183,8 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToCountry"
-                v-model.trim.lazy="order.shipToCountry"
-                @change="setCurrency"
+                v-model.trim.lazy="shipToCountry"
+                @change="setCountryUpper"
               >
             </div>
 
@@ -194,7 +194,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="shipToPostalZip"
-                v-model.trim="order.shipToPostalZip"
+                v-model.trim="shipToPostalZip"
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
@@ -203,7 +203,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="contactPhone"
-                v-model.trim="order.contactPhone"
+                v-model.trim="contactPhone"
               >
             </div>
             <div class="form-group mb-1 col-sm-6">
@@ -212,7 +212,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="contactEmail"
-                v-model.trim="order.contactEmail"
+                v-model.trim="contactEmail"
               >
             </div>
             <div class="form-group col-sm-12 mb-1">
@@ -221,64 +221,46 @@
                 type="text"
                 class="form-control form-control-sm"
                 id="approvedTerms"
-                v-model.trim="order.approvedTerms"
+                v-model.trim="approvedTerms"
               >
             </div>
             <div class="form-group col-sm-12">
               <label for="signedOffDate" class="small">Signed-Off Date</label>
-              <date-picker
-                v-model="order.signedOffDate"
+              <DatePicker
+                v-model="signedOffDate"
                 :bootstrapStyling="true"
                 :use-utc="true"
                 input-class="form-control form-control-sm"
                 :disabled="true"
-              ></date-picker>
+              ></DatePicker>
             </div>
           </div>
         </div>
         <div class="col-sm-2">
-          <div class="form-group mb-1" v-if="order.prePacks === 0 || order.prePacks === null">
+          <div class="form-group mb-1" v-if="prePacks === 0 || prePacks === null">
             <label for="multiShips" class="small">Multi-Ships</label>
             <input
               type="number"
               class="form-control form-control-sm"
               id="multiShips"
               min="0"
-              v-model.number="order.multiShips"
+              v-model.number="multiShips"
             >
           </div>
-          <div class="form-group mb-1" v-if="order.multiShips === 0 || order.multiShips === null">
+          <div class="form-group mb-1" v-if="multiShips === 0 || multiShips === null">
             <label for="prePacks" class="small">Pre-Packs</label>
             <input
               type="number"
               class="form-control form-control-sm"
               id="prePacks"
               min="0"
-              v-model.number="order.prePacks"
+              v-model.number="prePacks"
             >
           </div>
           <hr>
-          <div class="input-group input-group-sm mb-1">
-            <input
-              type="number"
-              class="form-control"
-              id="orderDiscount"
-              min="0"
-              v-model.number="order.orderDiscount"
-            >
-            <div class="input-group-append">
-              <span class="input-group-text">% Discount</span>
-            </div>
-          </div>
-
           <div class="form-group mb-2">
             <label for="currency" class="small">Currency</label>
-            <select
-              class="form-control form-control-sm"
-              id="currency"
-              v-model="order.currency"
-              disabled
-            >
+            <select class="form-control form-control-sm" id="currency" v-model="currency" disabled>
               <option value="CAD">CAD</option>
               <option value="USD">USD</option>
             </select>
@@ -291,32 +273,32 @@
               id="taxes"
               min="0"
               placeholder="Taxes"
-              v-model.number="order.taxes"
+              v-model.number="taxes"
             >
             <div class="input-group-append">
               <span class="input-group-text">% Tax</span>
             </div>
           </div>
 
-          <h3 class="text-center bg-dark text-light rounded p-1 mb-2">Total:
-            <h4>${{order.netValue}}</h4>
+          <h3 class="text-center bg-secondary text-light rounded p-1 mb-0">Total:
+            <h4>${{netValue}}</h4>
           </h3>
+          <small>Deposit</small>
           <div class="input-group input-group-sm mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
             </div>
             <input
               type="number"
-              class="form-control"
+              class="form-control text-center"
               id="deposit"
               min="0"
-              placeholder="Deposit"
-              v-model.number="order.deposit"
+              v-model.number="deposit"
             >
           </div>
-          <p class="text-center bg-dark text-light rounded">Balance Due:
+          <p class="text-center bg-secondary text-light rounded">Balance Due:
             <br>
-            <span>${{order.balanceOutstanding}}</span>
+            <span>${{balanceOutstanding}}</span>
           </p>
           <button class="btn btn-success d-print-none" @click.prevent>Submit
             <br>Changes
@@ -329,17 +311,43 @@
 
 <script>
 import DatePicker from "vuejs-datepicker";
-import datepicker from "vue-date-picker";
+import { mapFields } from "vuex-map-fields";
 
 export default {
+  name: "OrderDetails",
   components: {
-    DatePicker,
-    datepicker
+    DatePicker
   },
   computed: {
-    order() {
-      return this.$store.state.order;
-    },
+    ...mapFields([
+      "order.orderNum",
+      "order.isr",
+      "order.enteredDate",
+      "order.eventDate",
+      "order.latestInHand",
+      "order.estShipDate",
+      "order.orderNotes",
+      "order.accountNum",
+      "order.client",
+      "order.contactName",
+      "order.shipToName",
+      "order.shipToAddress",
+      "order.shipToCity",
+      "order.shipToProvState",
+      "order.shipToCountry",
+      "order.shipToPostalZip",
+      "order.contactPhone",
+      "order.contactEmail",
+      "order.approvedTerms",
+      "order.signedOffDate",
+      "order.multiShips",
+      "order.prePacks",
+      "order.currency",
+      "order.taxes",
+      "order.netValue",
+      "order.deposit",
+      "order.balanceOutstanding"
+    ]),
     reps() {
       return this.$store.state.reps;
     },
@@ -359,12 +367,12 @@ export default {
     setTaxOther(tax) {
       this.$store.dispatch("setProvTax", tax);
     },
-    setCurrency(e) {
-      let country = e.target.value;
-      this.$store.dispatch("setCurrency", country);
+    setCountryUpper(e) {
+      let text = e.target.value;
+      text = text.toUpperCase();
+      this.$store.dispatch("setCountryUpper", text);
     }
-  },
-  name: "OrderDetails"
+  }
 };
 </script>
 

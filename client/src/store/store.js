@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import { getField, updateField } from 'vuex-map-fields';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -9,6 +10,7 @@ Vue.use(VueAxios, axios);
 export const store = new Vuex.Store({
   state: {
     order: {},
+    orderLines: [],
     reps: [],
     provs: [],
     states: []
@@ -21,6 +23,22 @@ export const store = new Vuex.Store({
         .then(order => {
           commit("SET_ORDER_DATA", order);
         });
+    },
+    getOrderLines: ({ commit }, orderNum) => {
+      axios
+        .get(`https://localhost:5000/api/orders/${orderNum}/orderlines`)
+        .then(r => r.data)
+        .then(orderLines => {
+          commit("SET_ORDER_LINES", orderLines);
+        });
+    },
+    putOrderData: ({ commit }, orderNum) => {
+      axios
+        .put(`https://localhost:5000/api/orders/${orderNum}`)
+      //.then(r => r.data)
+      //.then(order =>{
+      //  commit("SET_ORDER_DATA", order);
+      //});
     },
     getReps: ({ commit }) => {
       axios
@@ -49,13 +67,26 @@ export const store = new Vuex.Store({
     setProvTax: ({ commit }, tax) => {
       commit('SET_PROV_TAX', tax);
     },
-    setCurrency: ({ commit }, country) => {
-      commit('SET_CURRENCY', country)
+    setCurrency: ({ commit }, text) => {
+      commit('SET_CURRENCY', text);
+    },
+    setCountryUpper: ({ commit, dispatch }, text) => {
+      text = text.toUpperCase();
+      commit('SET_COUNTRY_UPPER', text);
+      dispatch('resetStateProv');
+      dispatch('setCurrency', text);
+    },
+    resetStateProv: ({ commit }) => {
+      commit('RESET_STATE_PROV');
     }
   },
   mutations: {
+    updateField,
     SET_ORDER_DATA: (state, order) => {
       state.order = order;
+    },
+    SET_ORDER_LINES: (state, orderLines) => {
+      state.orderLines = orderLines;
     },
     SET_REPS: (state, reps) => {
       state.reps = reps;
@@ -73,21 +104,26 @@ export const store = new Vuex.Store({
         state.order.taxes = null;
       }
     },
-    SET_CURRENCY: (state, country, getters) => {
-      country = country.toUpperCase();
-      if (country === 'CA' || country === 'CAN' || country === 'CANADA') {
-        state.order.country = country.toUpperCase();
+    SET_CURRENCY: (state, text) => {
+      if (text === 'CA' || text === 'CAN' || text === 'CANADA') {
         state.order.currency = "CAD"
-      } else if (country === 'US' || country === 'USA' || country === 'UNITED STATES' || country === "UNITED STATES OF AMERICA") {
-        state.order.country = country.toUpperCase();
+      } else if (text === 'US' || text === 'USA' || text === 'UNITED STATES' || text === "UNITED STATES OF AMERICA") {
         state.order.currency = "USD"
-      } else if (country === '') {
-        state.order.country = country.toUpperCase();
+      } else if (text === '') {
         state.order.currency = null;
-      } else if (country === null) {
+      } else if (text === null) {
         state.order.currency = null;
       }
+    },
+    SET_COUNTRY_UPPER: (state, text) => {
+      state.order.shipToCountry = text;
+    },
+    RESET_STATE_PROV: (state) => {
+      state.order.shipToProvState = null;
+      state.order.taxes = null;
     }
   },
-  getters: {}
+  getters: {
+    getField,
+  }
 });
