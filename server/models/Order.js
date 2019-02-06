@@ -410,7 +410,11 @@ const OrderSchema = new Schema({
             type: String,
             default: null
           },
-          description: {
+          selectedStyle: {
+            type: String,
+            default: null
+          },
+          selectedConfig: {
             type: String,
             default: null
           },

@@ -225,7 +225,7 @@ app.use("/api/orders", orderAPIRoutes);
 app.use("/api/reps", orderRepRoutes);
 app.use("/api/provTax", provTaxRoutes);
 app.use("/api/states", stateRoutes);
-app.use("/api/states", apiStyleRoutes);
+app.use("/api/styles", apiStyleRoutes);
 
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {

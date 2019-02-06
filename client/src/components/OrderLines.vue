@@ -131,7 +131,191 @@
       </div>
       <hr>
       <div class="items">
-        <OrderItem></OrderItem>
+        <div class="item" v-for="(item) in orderline.items" :key="item._id">
+          <div class="card col-sm-12">
+            <small>{{item.itemNumber}}</small>
+            <div class="row p-1 small bg-secondary text-light rounded-top align-items-center">
+              <div class="col-sm-2">
+                <div class="input-group input-group-sm">
+                  <select class="form-control form-control-sm">
+                    <option
+                      v-for="(style, index) in styles"
+                      value="itemDesc"
+                      :key="index"
+                    >{{style.style}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group input-group-sm">
+                  <select class="form-control form-control-sm">
+                    <option value="itemDesc" selected>Config</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-2 small">A123121564</div>
+              <div class="col-sm-2 small">UCJ52M_SS.SP.FF_DRG</div>
+              <div class="col-sm-2 small">CJ52M-SSSPFF-DRG</div>
+            </div>
+            <div class="row mt-2 align-items-center">
+              <div class="col-sm-1">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadio1"
+                    id="ink"
+                    value="D"
+                    checked
+                  >
+                  <label class="form-check-label small" for="inlineRadio1">Standard</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadio2"
+                    id="ink"
+                    value="F"
+                  >
+                  <label class="form-check-label small" for="inlineRadio2">Fluorescent</label>
+                </div>
+              </div>
+              <div class="col-sm-2 offset-sm-1">
+                <div class="input-group input-group-sm mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">C.Ref #</span>
+                  </div>
+                  <input class="form-control form-control-sm" id="swoRef" type="text">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="input-group input-group-sm mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Zipper</span>
+                  </div>
+                  <input class="form-control form-control-sm" id="swoRef" type="text">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="input-group input-group-sm mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Thread</span>
+                  </div>
+                  <input class="form-control form-control-sm" id="swoRef" type="text">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="input-group input-group-sm mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Contrast</span>
+                  </div>
+                  <input class="form-control form-control-sm" id="swoRef" type="text">
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="input-group form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">PRS</label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="input-group form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">ZAP</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-12">
+                <div class="input-group input-group-sm mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Sizes</span>
+                  </div>
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="2XS"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="XS"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="S"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="M"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="L"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="XL"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="2XL"
+                  >
+                  <input
+                    class="form-control form-control-sm"
+                    id="swoRef"
+                    type="number"
+                    placeholder="3XL"
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row rounded-bottom pb-2 align-items-center text-center">
+              <div class="col-sm-2">
+                <span class="badge">Total Units</span>
+                <input class="form-control form-control-sm text-center" type="number">
+              </div>
+              <div class="col-sm-2">
+                <span class="badge">Unit Price</span>
+                <input class="form-control form-control-sm text-center" type="number">
+              </div>
+              <div class="col-sm-2">
+                <span class="badge">Add-Ons</span>
+                <input class="form-control form-control-sm text-center" type="number">
+              </div>
+              <div class="col-sm-2">
+                <span class="badge">Discount</span>
+                <input class="form-control form-control-sm text-center" type="number">
+              </div>
+              <div class="col-sm-2">
+                <span class="badge">Final Unit Price</span>
+                <input class="form-control form-control-sm text-center" type="number">
+              </div>
+              <div class="col-sm-2">
+                <span class="badge">Total Price</span>
+                <input class="form-control form-control-sm text-center" type="number">
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-success d-print-none mr-2" @click.prevent>Update Item</button>
+            <button class="btn btn-danger d-print-none" @click.prevent>Cancel Item</button>
+          </div>
+          <hr>
+        </div>
       </div>
       <button
         type="button"
@@ -145,15 +329,14 @@
 
 <script>
 import { mapMultiRowFields } from "vuex-map-fields";
-import OrderItem from "./OrderItem.vue";
 
 export default {
   name: "OrderLines",
-  components: {
-    OrderItem
-  },
   computed: {
-    ...mapMultiRowFields(["orderLines"])
+    ...mapMultiRowFields(["orderLines"]),
+    styles() {
+      return this.$store.state.styles;
+    }
   },
   data() {
     return {
