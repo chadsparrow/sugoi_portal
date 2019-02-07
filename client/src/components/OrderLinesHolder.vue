@@ -1,18 +1,19 @@
 <template>
-  <div class="card mt-2 bg-light">
-    <div class="card-header">
+  <div class="card border-dark mt-2 mb-3">
+    <div class="card-header bg-dark text-light">
       <h6>{{title}}</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body p-2">
       <small v-if="orderLines == undefined">Undefined!</small>
       <div v-else-if="orderLines.length ==0">
         <small>There are no lines as of yet!</small>
-        <hr>
       </div>
-      <div v-else class="card p-1">
+      <div v-else>
         <OrderLine v-for="(line, index) in orderLines" :key="line._id" :index="index"></OrderLine>
       </div>
-      <button @click.prevent type="button" class="btn btn-dark btn-block mt-3 d-print-none">Add Line</button>
+    </div>
+    <div class="card-footer bg-dark">
+      <button type="button" class="btn btn-dark btn-block d-print-none">Add Line</button>
     </div>
   </div>
 </template>

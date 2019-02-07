@@ -1,6 +1,6 @@
 <template>
-  <div class="card bg-light">
-    <div class="row card-body">
+  <div class="card border-dark">
+    <div class="row card-body p-2">
       <div class="col-sm-3">
         <div class="form-group mb-1">
           <label for="orderNum" class="small my-0">Order #</label>
@@ -63,7 +63,7 @@
             id="estShipDate"
           ></DatePicker>
         </div>
-        <div class="form-group mb-0">
+        <div class="form-group">
           <label for="orderNotes" class="small my-0">Notes</label>
           <textarea
             class="form-control form-control-sm"
@@ -223,7 +223,7 @@
               v-model.trim="approvedTerms"
             >
           </div>
-          <div class="form-group col-sm-12 mb-0">
+          <div class="form-group col-sm-12">
             <label for="signedOffDate" class="small my-0">Signed-Off Date</label>
             <DatePicker
               v-model="signedOffDate"
@@ -298,9 +298,8 @@
           <br>
           <span>${{balanceOutstanding}}</span>
         </p>
-        <button class="btn btn-success d-print-none mb-0" @click.prevent>Submit
-          <br>Changes
-        </button>
+        <hr>
+        <button class="btn btn-success btn-block d-print-none">Edit Details</button>
       </div>
     </div>
   </div>
@@ -372,10 +371,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-button {
-  width: 100%;
-  height: 80px;
-}
-</style>
