@@ -92,9 +92,6 @@ export default {
       return this.$store.state.order.orderLines[this.lineIndex].items[
         this.index
       ];
-    },
-    styles() {
-      return this.$store.state.styles;
     }
   }
 };
