@@ -16,6 +16,7 @@ const OrderSchema = new Schema({
   currentStatus: {
     type: String,
     enum: [
+      "1. Initial",
       "A. Waiting for Proof",
       "B. Proof Started",
       "C. Proof - Waiting on Someone else",
@@ -38,9 +39,10 @@ const OrderSchema = new Schema({
       "T. PNT QC Complete",
       "U. Uploaded",
       "V. Sent to Vendor",
-      "W. CANCELLED"
+      "W. CANCELLED",
+      "X. Archived"
     ],
-    default: "A. Waiting for Proof"
+    default: "1. Initial"
   },
   priority: {
     type: String,
@@ -353,10 +355,9 @@ const OrderSchema = new Schema({
         default: null,
         uppercase: true
       },
-      qdCode: {
-        type: String,
-        default: null,
-        uppercase: true
+      graphicColours: {
+        type: Number,
+        default: null
       },
       colourWayCode: {
         type: String,
