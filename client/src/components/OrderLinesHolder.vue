@@ -10,7 +10,7 @@
         <hr>
       </div>
       <div v-else class="card p-1">
-        <OrderLines v-for="(line, index) in orderLines" :key="index"></OrderLines>
+        <OrderLine v-for="(line, index) in orderLines" :key="line._id" :index="index"></OrderLine>
       </div>
       <button @click.prevent type="button" class="btn btn-dark btn-block mt-3 d-print-none">Add Line</button>
     </div>
@@ -18,16 +18,17 @@
 </template>
 
 <script>
-import OrderLines from "./OrderLines.vue";
-import { mapMultiRowFields } from "vuex-map-fields";
+import OrderLine from "./OrderLine.vue";
 
 export default {
   name: "OrderLinesHolder",
   components: {
-    OrderLines
+    OrderLine
   },
   computed: {
-    ...mapMultiRowFields(["orderLines"])
+    orderLines() {
+      return this.$store.state.order.orderLines;
+    }
   },
   data() {
     return {

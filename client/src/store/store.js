@@ -10,7 +10,6 @@ Vue.use(VueAxios, axios);
 export const store = new Vuex.Store({
   state: {
     order: {},
-    orderLines: [],
     reps: [],
     provs: [],
     states: [],
@@ -20,26 +19,10 @@ export const store = new Vuex.Store({
     getOrderData: ({ commit }, orderNum) => {
       axios
         .get(`https://localhost:5000/api/orders/${orderNum}`)
-        .then(r => r.data[0])
+        .then(r => r.data)
         .then(order => {
           commit("SET_ORDER_DATA", order);
         });
-    },
-    getOrderLines: ({ commit }, orderNum) => {
-      axios
-        .get(`https://localhost:5000/api/orders/${orderNum}/orderlines`)
-        .then(r => r.data)
-        .then(orderLines => {
-          commit("SET_ORDER_LINES", orderLines);
-        });
-    },
-    putOrderData: ({ commit }, orderNum) => {
-      axios
-        .put(`https://localhost:5000/api/orders/${orderNum}`)
-      //.then(r => r.data)
-      //.then(order =>{
-      //  commit("SET_ORDER_DATA", order);
-      //});
     },
     getReps: ({ commit }) => {
       axios
@@ -93,9 +76,6 @@ export const store = new Vuex.Store({
     updateField,
     SET_ORDER_DATA: (state, order) => {
       state.order = order;
-    },
-    SET_ORDER_LINES: (state, orderLines) => {
-      state.orderLines = orderLines;
     },
     SET_REPS: (state, reps) => {
       state.reps = reps;

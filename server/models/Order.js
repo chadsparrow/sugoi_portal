@@ -355,10 +355,9 @@ const OrderSchema = new Schema({
         default: null,
         uppercase: true
       },
-      qdCode: {
-        type: String,
-        default: null,
-        uppercase: true
+      graphicColours: {
+        type: Number,
+        default: null
       },
       colourWayCode: {
         type: String,
