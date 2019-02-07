@@ -355,7 +355,7 @@ const OrderSchema = new Schema({
         default: null,
         uppercase: true
       },
-      graphicColours: {
+      ç: {
         type: Number,
         default: null
       },
