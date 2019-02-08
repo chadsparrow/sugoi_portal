@@ -16,6 +16,9 @@ export const store = new Vuex.Store({
     styles: []
   },
   actions: {
+    saveOrder: ({ commit }, order) => {
+      commit("SET_ORDER_DATA", order);
+    },
     getOrderData: ({ commit }, orderNum) => {
       axios
         .get(`https://localhost:5000/api/orders/${orderNum}`)

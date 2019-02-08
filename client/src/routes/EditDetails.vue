@@ -299,8 +299,7 @@
       </div>
     </div>
     <div class="card-footer bg-dark text-right">
-      <button type="button" class="btn btn-danger mr-2" @click.prevent="goBack">Cancel</button>
-      <button type="button" class="btn btn-success" @click.prevent>Save Details</button>
+      <button type="button" class="btn btn-success" @click.prevent="goBack">Save Details</button>
     </div>
   </div>
 </template>
@@ -342,7 +341,8 @@ export default {
       this.$store.dispatch("setCountryUpper", text);
     },
     goBack() {
-      this.$router.push({ path: `/${this.orderNum}` });
+      this.$store.dispatch("saveOrder", this.order);
+      this.$router.push({ path: `/${this.order.orderNum}` });
     }
   }
 };
