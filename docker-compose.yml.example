@@ -16,7 +16,7 @@ services:
     # node runs server app
     command: npm run start
     # use gitlab url to sugoi/custom-proofs/server docker image registry
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server:1.0.0
     restart: always
     ports:
     ## This needs to change to available web server ports - confirm with Jordin/Jonathan

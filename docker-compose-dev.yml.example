@@ -10,7 +10,7 @@ services:
     container_name: sugoi_portal
     command: npm run dev
 	# gitlab url is url to server image registry 
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server:1.0.0
     restart: always
 	# pulls port for node app from env file
     ports:
