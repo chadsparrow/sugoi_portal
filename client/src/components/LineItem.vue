@@ -1,7 +1,7 @@
 <template>
   <div class="item card border-dark mb-2">
-    <div class="card-header bg-secondary mb-0">
-      <div class="row bg-secondary text-light align-items-center">
+    <div class="card-header bg-secondary mb-0 p-2">
+      <div class="row text-light align-items-center">
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
         <div class="col sm-3">Description: {{item.selectedConfig}}</div>
         <div class="col-sm-2">Style: {{item.selectedStyle}}</div>
@@ -76,7 +76,7 @@
         </div>
       </div>
     </div>
-    <div class="card-footer text-right d-print-none">
+    <div class="card-footer text-right d-print-none p-2">
       <button class="btn btn-sm btn-success mr-1">Edit Item</button>
       <button class="btn btn-sm btn-danger">Cancel Item</button>
     </div>

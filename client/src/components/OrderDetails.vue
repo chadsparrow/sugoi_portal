@@ -2,304 +2,68 @@
   <div class="card border-dark">
     <div class="row card-body p-2">
       <div class="col-sm-3">
-        <div class="form-group mb-1">
-          <label for="orderNum" class="small my-0">Order #</label>
-          <input
-            type="text"
-            class="form-control form-control-sm"
-            id="orderNum"
-            v-model.trim="orderNum"
-            readonly
-          >
-        </div>
-        <div class="form-group mb-1">
-          <label for="isr" class="small my-0">Custom Rep</label>
-          <select class="form-control form-control-sm" id="isr" v-model="isr">
-            <option v-for="(rep, index) in reps" :value="rep.value" :key="index">{{rep.text}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="requestDate" class="small my-0">Order Date</label>
-          <DatePicker
-            v-model="enteredDate"
-            id="requestDate"
-            :disabled="true"
-            :bootstrapStyling="true"
-            :use-utc="true"
-            input-class="form-control form-control-sm"
-          ></DatePicker>
-        </div>
-        <hr>
-        <div class="form-group mb-1">
-          <label for="eventDate" class="small my-0">Event Date</label>
-          <DatePicker
-            v-model="eventDate"
-            :bootstrapStyling="true"
-            :use-utc="true"
-            :clearButton="true"
-            input-class="form-control form-control-sm"
-            id="eventDate"
-          ></DatePicker>
-        </div>
-        <div class="form-group mb-1">
-          <label for="latestInHand" class="small my-0">In-Hand Date</label>
-          <DatePicker
-            v-model="latestInHand"
-            :bootstrapStyling="true"
-            :use-utc="true"
-            :clearButton="true"
-            input-class="form-control form-control-sm"
-            id="latestInHand"
-          ></DatePicker>
-        </div>
-        <div class="form-group mb-1">
-          <label for="estShipDate" class="small my-0">Est. Ship Date</label>
-          <DatePicker
-            v-model="estShipDate"
-            :bootstrapStyling="true"
-            :use-utc="true"
-            :clearButton="true"
-            input-class="form-control form-control-sm"
-            id="estShipDate"
-          ></DatePicker>
-        </div>
-        <div class="form-group">
-          <label for="orderNotes" class="small my-0">Notes</label>
-          <textarea
-            class="form-control form-control-sm"
-            rows="3"
-            id="orderNotes"
-            v-model.trim="orderNotes"
-          ></textarea>
-        </div>
-      </div>
-      <div class="col-sm-7 border-left border-right mb-0">
-        <div class="row">
-          <div class="form-group mb-1 col-sm-6">
-            <label for="accountNum" class="small my-0">Account #</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="accountNum"
-              v-model.trim="accountNum"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-6">
-            <label for="client" class="small my-0">Client</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="client"
-              v-model.trim="client"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-6">
-            <label for="contactName" class="small my-0">Contact Name</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="contactName"
-              v-model.trim="contactName"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-6">
-            <label for="shipToName" class="small my-0">Ship To Name</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToName"
-              v-model.trim="shipToName"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-12">
-            <label for="shipToAddress" class="small my-0">Ship To Address</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToAddress"
-              v-model.trim="shipToAddress"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-6">
-            <label for="shipToCity" class="small my-0">City</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToCity"
-              v-model.trim="shipToCity"
-            >
-          </div>
-          <div
-            class="form-group mb-1 col-sm-6"
-            v-if="shipToCountry === 'CA'|| shipToCountry ==='CANADA' || shipToCountry ==='CAN'"
-          >
-            <label for="shipToProvState" class="small my-0">Province</label>
-            <select
-              class="form-control form-control-sm"
-              id="shipToProvState"
-              v-model="shipToProvState"
-              @change="setProvTax"
-            >
-              <option
-                v-for="(prov, index) in provs"
-                :value="prov.abbrev"
-                :key="index"
-              >{{prov.abbrev}} - {{prov.province}}</option>
-            </select>
-          </div>
-          <div
-            class="form-group mb-1 col-sm-6"
-            v-else-if="shipToCountry ==='USA'|| shipToCountry==='US' || shipToCountry==='UNITED STATES'"
-          >
-            <label for="shipToProvState" class="small my-0">State</label>
-            <select
-              class="form-control form-control-sm"
-              id="shipToProvState"
-              v-model="shipToProvState"
-              @change="setTaxOther(null)"
-            >
-              <option
-                v-for="(state, index) in states"
-                :value="state.abbrev"
-                :key="index"
-              >{{state.abbrev}} - {{state.state}}</option>
-            </select>
-          </div>
-          <div class="form-group mb-1 col-sm-6" v-else>
-            <label for="shipToProvState" class="small my-0">State/Prov</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToProvState"
-              v-model.trim="shipToProvState"
-              @change="setTaxOther(null)"
-            >
-          </div>
-
-          <div class="form-group mb-1 col-sm-6">
-            <label for="shipToCountry" class="small my-0">Country</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToCountry"
-              v-model.trim.lazy="shipToCountry"
-              @change="setCountryUpper"
-            >
-          </div>
-
-          <div class="form-group mb-1 col-sm-6">
-            <label for="shipToPostalZip" class="small my-0">Zip/Postal</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToPostalZip"
-              v-model.trim="shipToPostalZip"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-6">
-            <label for="contactPhone" class="small my-0">Phone</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="contactPhone"
-              v-model.trim="contactPhone"
-            >
-          </div>
-          <div class="form-group mb-1 col-sm-6">
-            <label for="contactEmail" class="small my-0">Email</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="contactEmail"
-              v-model.trim="contactEmail"
-            >
-          </div>
-          <div class="form-group col-sm-12 mb-1">
-            <label for="approvedTerms" class="small my-0">Terms</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="approvedTerms"
-              v-model.trim="approvedTerms"
-            >
-          </div>
-          <div class="form-group col-sm-12">
-            <label for="signedOffDate" class="small my-0">Signed-Off Date</label>
-            <DatePicker
-              v-model="signedOffDate"
-              :bootstrapStyling="true"
-              :use-utc="true"
-              input-class="form-control form-control-sm"
-              :disabled="true"
-            ></DatePicker>
+        <div class="row m-0">
+          <div class="col-sm-12 mb-2 p-2">Order: {{order.orderNum}}</div>
+          <div class="col-sm-12 mb-2 p-2">Custom Rep: {{order.isr}}</div>
+          <div class="col-sm-12 mb-2 p-2">Order Date: {{formatDate(order.enteredDate)}}</div>
+          <div class="col-sm-12 mb-2 p-2">Event Date: {{formatDate(order.eventDate)}}</div>
+          <div class="col-sm-12 mb-2 p-2">In-Hand Date: {{formatDate(order.latestInHand)}}</div>
+          <div class="col-sm-12 mb-2 p-2">Est. Ship Date: {{formatDate(order.estDeliveryDate)}}</div>
+          <div class="col-sm-12 mb-2 p-2">Notes:
+            <br>
+            {{order.orderNotes}}
           </div>
         </div>
       </div>
-      <div class="col-sm-2">
-        <div class="form-group mb-1" v-if="prePacks === 0 || prePacks === null">
-          <label for="multiShips" class="small my-0">Multi-Ships</label>
-          <input
-            type="number"
-            class="form-control form-control-sm"
-            id="multiShips"
-            min="0"
-            v-model.number="multiShips"
-          >
+      <div class="col-sm-6 border-left border-right">
+        <div class="row m-0">
+          <div class="col-sm-6 mb-2 p-2">Account #: {{order.accountNum}}</div>
+          <div class="col-sm-6 mb-2 p-2">Client: {{order.client}}</div>
+          <div class="col-sm-6 mb-2 p-2">Contact Name: {{order.contactName}}</div>
+          <div class="col-sm-6 mb-2 p-2">Ship To Name: {{order.shipToName}}</div>
+          <div class="col-sm-12 mb-2 p-2">Ship To Address:
+            <br>
+            {{order.shipToAddress}}
+          </div>
+          <div class="col-sm-6 mb-2 p-2">City: {{order.shipToCity}}</div>
+          <div class="col-sm-6 mb-2 p-2">State/Prov: {{order.shipToProvState}}</div>
+          <div class="col-sm-6 mb-2 p-2">Country: {{order.shipToCountry}}</div>
+          <div class="col-sm-6 mb-2 p-2">Zip/Postal: {{order.shipToPostalZip}}</div>
+          <div class="col-sm-6 mb-2 p-2">Phone: {{order.contactPhone}}</div>
+          <div class="col-sm-6 mb-2 p-2">Email: {{order.contactEmail}}</div>
+          <div class="col-sm-12 mb-2 p-2">Terms: {{order.approvedTerms}}</div>
+          <div class="col-sm-12 mb-2 p-2">Signed Off Date: {{formatDate(order.signedOffDate)}}</div>
         </div>
-        <div class="form-group mb-1" v-if="multiShips === 0 || multiShips === null">
-          <label for="prePacks" class="small my-0">Pre-Packs</label>
-          <input
-            type="number"
-            class="form-control form-control-sm"
-            id="prePacks"
-            min="0"
-            v-model.number="prePacks"
-          >
-        </div>
-
-        <div class="form-group mb-2 mt-3">
-          <label for="currency" class="small my-0">Currency</label>
-          <select class="form-control form-control-sm" id="currency" v-model="currency" disabled>
-            <option value="CAD">CAD</option>
-            <option value="USD">USD</option>
-          </select>
-        </div>
-        <div class="input-group input-group-sm mb-2">
-          <input
-            type="number"
-            class="form-control text-center"
-            id="taxes"
-            min="0"
-            placeholder="Taxes"
-            v-model.number="taxes"
-          >
-          <div class="input-group-append">
-            <span class="input-group-text">% Tax</span>
+      </div>
+      <div class="col-sm-3">
+        <div class="row m-0">
+          <div
+            v-if="order.multiShips > 0"
+            class="col-sm-6 mb-2 p-2"
+          >MultiShips: {{order.multiShips}}</div>
+          <div v-if="order.prePacks > 0" class="col-sm-6 mb-2 p-2">PrePacks: {{order.prePacks}}</div>
+          <div class="col-sm-12 mb-2 p-2">Currency: {{order.currency}}</div>
+          <div v-if="order.taxes" class="col-sm-12 mb-2 p-2">Taxes: {{order.taxes}}%</div>
+          <div class="col-sm-12 mb-2 p-2 text-center bg-secondary text-light rounded">
+            <h3>Total:
+              <br>
+              ${{order.netValue}}
+            </h3>
+          </div>
+          <div v-if="order.deposit" class="col-sm-12 mb-2 p-2">Deposit: {{order.deposit}}%</div>
+          <div class="col-sm-12 mb-2 p-2 text-center bg-secondary text-light rounded">
+            <h5>Balance Due:
+              <br>
+              ${{order.balanceOutstanding}}
+            </h5>
+          </div>
+          <div class="col-sm-12 border-top pt-2">
+            <button
+              class="btn btn-success btn-block d-print-none"
+              @click.prevent="goToEdit()"
+            >Edit Details</button>
           </div>
         </div>
-
-        <h3 class="text-center bg-secondary text-light rounded p-1 mb-0">Total:
-          <h4>${{netValue}}</h4>
-        </h3>
-        <small>Deposit</small>
-        <div class="input-group input-group-sm mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text">$</span>
-          </div>
-          <input
-            type="number"
-            class="form-control text-center"
-            id="deposit"
-            min="0"
-            v-model.number="deposit"
-          >
-        </div>
-        <p class="text-center bg-secondary text-light rounded">Balance Due:
-          <br>
-          <span>${{balanceOutstanding}}</span>
-        </p>
-        <hr>
-        <button class="btn btn-success btn-block d-print-none">Edit Details</button>
       </div>
     </div>
   </div>
@@ -308,6 +72,7 @@
 <script>
 import DatePicker from "vuejs-datepicker";
 import { mapFields } from "vuex-map-fields";
+import moment from "moment";
 
 export default {
   name: "OrderDetails",
@@ -315,59 +80,28 @@ export default {
     DatePicker
   },
   computed: {
-    ...mapFields([
-      "order.orderNum",
-      "order.isr",
-      "order.enteredDate",
-      "order.eventDate",
-      "order.latestInHand",
-      "order.estShipDate",
-      "order.orderNotes",
-      "order.accountNum",
-      "order.client",
-      "order.contactName",
-      "order.shipToName",
-      "order.shipToAddress",
-      "order.shipToCity",
-      "order.shipToProvState",
-      "order.shipToCountry",
-      "order.shipToPostalZip",
-      "order.contactPhone",
-      "order.contactEmail",
-      "order.approvedTerms",
-      "order.signedOffDate",
-      "order.multiShips",
-      "order.prePacks",
-      "order.currency",
-      "order.taxes",
-      "order.netValue",
-      "order.deposit",
-      "order.balanceOutstanding"
-    ]),
-    reps() {
-      return this.$store.state.reps;
-    },
-    provs() {
-      return this.$store.state.provs;
-    },
-    states() {
-      return this.$store.state.states;
+    order() {
+      return this.$store.state.order;
     }
   },
   methods: {
-    setProvTax(e) {
-      let index = e.target.selectedIndex;
-      let tax = this.provs[index].tax;
-      this.$store.dispatch("setProvTax", tax);
+    goToEdit() {
+      this.$router.push({ path: `/${this.order.orderNum}/editdetails` });
     },
-    setTaxOther(tax) {
-      this.$store.dispatch("setProvTax", tax);
-    },
-    setCountryUpper(e) {
-      let text = e.target.value;
-      text = text.toUpperCase();
-      this.$store.dispatch("setCountryUpper", text);
+    formatDate(date) {
+      if (date) {
+        return moment(date).format("DD-MMM-YYYY");
+      } else {
+        return null;
+      }
     }
   }
 };
 </script>
+
+<style scoped>
+.card {
+  font-size: 14px;
+}
+</style>
+

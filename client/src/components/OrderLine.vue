@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-2 border-secondary">
+  <div class="card mb-2 border-secondary" v-if="orderLine.cancelled == false">
     <div class="card-header bg-secondary text-light p-1">
       <h6 class="ml-2 mb-0">Line: {{orderLine.lineNumber}}</h6>
     </div>
@@ -36,7 +36,11 @@
         ></LineItem>
       </div>
       <div class="buttons mt-2 d-print-none">
-        <button type="button" class="btn btn-sm btn-success mr-1" @click.prevent>Edit Line Details</button>
+        <button
+          type="button"
+          class="btn btn-sm btn-success mr-1"
+          @click.prevent="goToEdit()"
+        >Edit Line</button>
         <button type="button" class="btn btn-sm btn-secondary mr-1" @click.prevent>Add Item</button>
         <button type="button" class="btn btn-sm btn-danger" @click.prevent>Cancel Full Line</button>
       </div>
@@ -65,6 +69,11 @@ export default {
     return {
       title: "Lines"
     };
+  },
+  methods: {
+    goToEdit() {
+      this.$router.push({ path: `editline/${this.index}` });
+    }
   }
 };
 </script>

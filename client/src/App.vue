@@ -1,28 +1,28 @@
 <template>
   <div id="app" class="container">
     <Header/>
-    <OrderDetails></OrderDetails>
-    <OrderLinesHolder></OrderLinesHolder>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import OrderDetails from "./components/OrderDetails.vue";
-import OrderLinesHolder from "./components/OrderLinesHolder.vue";
-import Header from "./Header.vue";
+import Header from "./components/Header.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      orderNum: this.$route.params.orderNum
+    };
+  },
   created() {
-    this.$store.dispatch("getOrderData", "1234567");
+    this.$store.dispatch("getOrderData", this.orderNum);
     this.$store.dispatch("getReps");
     this.$store.dispatch("getProvincialTaxes");
     this.$store.dispatch("getUSAStates");
     this.$store.dispatch("getStyles");
   },
   components: {
-    OrderDetails,
-    OrderLinesHolder,
     Header
   }
 };
