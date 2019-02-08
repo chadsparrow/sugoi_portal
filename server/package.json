@@ -1,7 +1,7 @@
 {
-  "name": "sugoiproofs-restapi-server",
+  "name": "sugoi-custom-portal",
   "version": "1.0.0",
-  "description": "Sugoi Proofs REST API Server",
+  "description": "Sugoi Custom Portal",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
