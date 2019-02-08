@@ -17,7 +17,12 @@ export const store = new Vuex.Store({
   },
   actions: {
     saveOrder: ({ commit }, order) => {
-      commit("SET_ORDER_DATA", order);
+      axios
+        .put(`https://localhost:5000/api/orders/${order.orderNum}`, order)
+      //.then(r => data)
+      //.then(order => {
+      //  commit("SAVE_ORDER_DATA", order);
+      //});
     },
     getOrderData: ({ commit }, orderNum) => {
       axios
@@ -78,6 +83,9 @@ export const store = new Vuex.Store({
   mutations: {
     updateField,
     SET_ORDER_DATA: (state, order) => {
+      state.order = order;
+    },
+    SAVE_ORDER_DATA: (state, order) => {
       state.order = order;
     },
     SET_REPS: (state, reps) => {

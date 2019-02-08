@@ -20,6 +20,18 @@ router.get("/:orderNum", (req, res) => {
 });
 
 router.put("/:orderNum", (req, res) => {
+  const requestOrder = req.body;
+  console.log(requestOrder);
+  Order.findOneAndUpdate({ orderNum: req.params.orderNum })
+    .then(order => {
+      console.log(order);
+    })
+    .catch(err => {
+      logger.error(err);
+    })
+});
+
+router.put("/:orderNum", (req, res) => {
   console.log(req.body);
 });
 
