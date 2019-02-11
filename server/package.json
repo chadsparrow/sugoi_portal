@@ -8,7 +8,7 @@
     "dev": "nodemon -L server.js"
   },
   "author": "Chad Sparrow",
-  "license": "MIT",
+  "license": "Unlicense",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",

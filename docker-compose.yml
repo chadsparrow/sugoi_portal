@@ -1,8 +1,13 @@
 version: "3"
 
+networks :
+  default :
+    ipam :
+      driver: default
+      config:
+        - subnet: ${LGS_HOST_SUBNET}/24
 services:
   mongo:
-    container_name: mongo
     restart: always
     image: mongo
     ports:
@@ -17,13 +22,17 @@ services:
       - .env
   app:
     command: npm run start
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/app:1.0.0
+    image: ${LGS_DOCKER_IMAGE}
     restart: always
+    working_dir: /usr/src/app/server
     ports:
       - "8448:443"
     volumes:
-      - ./server:/usr/src/app/
+      - /data/sites/ssl-certs/sugoi:/usr/src/app/server/certs
+      - /data/logs/sugoi-custom-proofs/npm:/root/.npm/
     depends_on:
       - mongo
     env_file:
       - .env
+
+

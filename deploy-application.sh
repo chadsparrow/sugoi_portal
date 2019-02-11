@@ -3,14 +3,10 @@ set -e
 shopt -s nocasematch
 
 
-HostToolsIp="172.16.22.103"
 HostStageIp="172.16.22.102"
 HostProdIp="172.16.22.101"
-HostExtIp="172.16.23.104"
 
-HostToolsNetPart="103"
 HostStageNetPart="102"
-HostProdNetPart="101"
 HostExtNetPart="104"
 
 
@@ -34,8 +30,6 @@ function checkDependency {
 
 # Check script dependencies and help users find installations
 checkDependency "jq" "https://stedolan.github.io/jq/"
-checkDependency "yarn" "https://yarnpkg.com"
-checkDependency "composer" "https://getcomposer.org"
 checkDependency "sshpass" "https://gist.github.com/arunoda/7790979"
 
 
@@ -56,7 +50,6 @@ printf "\nLOADING MANIFEST >>>\n"
        exit 1
     fi
     export LGS_DOCKER_IMAGE1="${LGS_DOCKER_REGISTRY_SERVER}:${LGS_APP_VER}"
-    export LGS_LOGGER_IMAGE="${LGS_DOCKER_REGISTRY_LOGGER}:${LGS_LOGGER_VER}"
 
 printf "\n<<< LOADING DONE\n"
 
@@ -69,7 +62,7 @@ printf "\nSTART DEPLOYMENT >>>\n"
     LGS_HOST_ENVIRONMENT=$1
     LGS_HOST_ENVIRONMENT_DOMAIN=""
 
-    if [[ $LGS_HOST_ENVIRONMENT =~ ^stage|prod|tools|ext$ ]]; then
+    if [[ $LGS_HOST_ENVIRONMENT =~ ^stage|prod|ext$ ]]; then
 
         LGS_HOST_ENVIRONMENT_DOMAIN=".${LGS_HOST_ENVIRONMENT}"
 
@@ -78,20 +71,12 @@ printf "\nSTART DEPLOYMENT >>>\n"
             LGS_HOST_SUBNET_PART=${HostStageNetPart}
         fi
 
-        if [[ $LGS_HOST_ENVIRONMENT = "tools" ]]; then
-            LGS_HOST_IP=${HostToolsIp}
-            LGS_HOST_SUBNET_PART=${HostToolsNetPart}
-        fi
 
         if [[ $LGS_HOST_ENVIRONMENT =~ ^prod|ext$ ]]; then
 
-            if [[ $LGS_HOST_ENVIRONMENT = "prod" ]]; then
-                LGS_HOST_IP=${HostProdIp}
-                LGS_HOST_SUBNET_PART=${HostProdNetPart}
-            else
-                LGS_HOST_IP=${HostExtIp}
-                LGS_HOST_SUBNET_PART=${HostExtNetPart}
-            fi
+            LGS_HOST_IP=${HostExtIp}
+            LGS_HOST_SUBNET_PART=${HostExtNetPart}
+
 
             printf "\n\n****  WARNING: Deploying on Production Server: ${LGS_HOST_IP}! ****"
             printf "\nContinue? (y/n) "
@@ -131,21 +116,6 @@ printf "\nSTART DEPLOYMENT >>>\n"
         read -s host_password
     printf "<<< GATHERING INFORMATION\n"
 
-
-    printf "\nCOMPILING ASSETS >>>\n"
-        #sleep 1
-        if [ -f composer.json ]; then
-            echo "composer.json file detected... performing composer install:"
-            composer install
-        fi
-
-        if [ -f package.json ]; then
-            echo "package.json file detected... performing yarn run ${LGS_YARN_RUN_TASK}"
-            yarn run ${LGS_YARN_RUN_TASK}
-        fi
-    printf "<<< DONE COMPILING ASSETS\n"
-
-
     printf "\nBUILDING IMAGE >>>\n"
         sleep 1
         docker login registry.gitlab.com -u ${GitLab_user} -p ${GitLab_password} && \
@@ -157,16 +127,6 @@ printf "\nSTART DEPLOYMENT >>>\n"
         sleep 1
         docker push ${LGS_DOCKER_IMAGE1}
     printf "<<< PUSH DONE\n"
-
-    echo "BUILD FILEBEAT >>>"
-    sleep 1
-    if [ -f DockerfileFilebeat ]; then
-        docker build -t ${LGS_LOGGER_IMAGE1} -f DockerfileFilebeat .
-        docker push ${LGS_LOGGER_IMAGE}
-    else
-       echo "No DockerfileFilebeat found, No Filebeat image to build."
-    fi
-    echo "<<< BUILD FILEBEAT DONE"
 
     printf "\nCONFIGURING REMOTE HOST >>>\n"
         #Create Application Directory on Host
@@ -212,8 +172,7 @@ printf "\nSTART DEPLOYMENT >>>\n"
         sleep 1
         sshpass -p ${host_password} ssh lgdeployer@${LGS_HOST_IP} -t  "echo 'EXPORT ENV VARS ON HOST [ADD AS REQUIRED BY docker-compose.yml] >>>'
                                                                        export LGS_HOST_APP_DIR=${LGS_HOST_APP_DIR}
-                                                                       export LGS_DOCKER_IMAGE1=${LGS_DOCKER_IMAGE1}
-                                                                       export LGS_LOGGER_IMAGE=${LGS_LOGGER_IMAGE}
+                                                                       export LGS_DOCKER_IMAGE=${LGS_DOCKER_IMAGE1}
                                                                        export LGS_CONTAINER_NAME=${LGS_CONTAINER_NAME}
                                                                        export LGS_HOST_SUBNET=${LGS_HOST_SUBNET}
                                                                        export LGS_ENV=${LGS_HOST_ENVIRONMENT}
@@ -221,7 +180,6 @@ printf "\nSTART DEPLOYMENT >>>\n"
                                                                        echo 'PULL DOCKER IMAGE FROM GITLAB [ADD AS REQUIRED FOR SERVICES IN docker-compose.yml] >>>'
                                                                        docker login registry.gitlab.com -u ${GitLab_user} -p ${GitLab_password}
                                                                        docker pull ${LGS_DOCKER_IMAGE1}
-                                                                       docker pull ${LGS_LOGGER_IMAGE}
                                                                        printf '<<< DONE PULL\n'
 
                                                                        if [ ! -f /etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf.bak ]; then
