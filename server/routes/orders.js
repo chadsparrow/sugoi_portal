@@ -151,7 +151,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
 // @DESC - GETS ORDER FROM ORDERS COLLECTION BASED ON ID#
 // SEC - PUBLIC ACCESS
-router.get("/view/:id", (req, res) => {
+router.get("/view/:id", ensureAuthenticated, (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {

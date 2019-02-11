@@ -231,7 +231,7 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
 //**************************** UN COMMMENT WHEN CERTS ARE FIXED
 //sets https server with certificates and keys

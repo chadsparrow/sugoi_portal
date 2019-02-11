@@ -98,7 +98,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
     editProd = false;
   }
 
-  User.findOne({ _id: id }, function(err, foundEmployee) {
+  User.findOne({ _id: id }, function (err, foundEmployee) {
     if (err) {
       logger.error(err);
       return;
@@ -109,7 +109,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
       foundEmployee.viewProd = viewProd;
       foundEmployee.editProd = editProd;
 
-      foundEmployee.save(function(err, updatedEmployee) {
+      foundEmployee.save(function (err, updatedEmployee) {
         if (err) {
           logger.error(err);
           return;
@@ -125,7 +125,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 router.get("/delete/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let id = req.params.id;
-  User.findOneAndRemove({ _id: id }, function(err) {
+  User.findOneAndRemove({ _id: id }, function (err) {
     if (err) {
       logger.error(err);
       req.flash("error_msg", err);
@@ -191,7 +191,7 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
     req.flash("error_msg", "Password needs to match");
     res.redirect("/users/register");
   } else {
-    User.findOne({ username: userName }, function(err, user) {
+    User.findOne({ username: userName }, function (err, user) {
       if (user) {
         req.flash("error_msg", "User already registered");
         res.redirect("/users/register");
@@ -255,7 +255,7 @@ router.put("/password", ensureAuthenticated, (req, res) => {
     req.flash("error_msg", "Password fields need to match");
     res.redirect("/users/password");
   } else {
-    User.findOne({ username: userName }, function(err, foundObject) {
+    User.findOne({ username: userName }, function (err, foundObject) {
       if (err) {
         logger.error(err);
         return;

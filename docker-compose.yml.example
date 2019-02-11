@@ -32,7 +32,7 @@ services:
       - mongo
     # env file needs to be changed to name of your env file (eg .env)
     env_file:
-      - .env
+      - server.env
   mongo:
     container_name: mongo
     restart: always
@@ -42,14 +42,12 @@ services:
       - "enter port from wiki:27017"
 	  # Creates volume to persist database data with server folder
     volumes:
-      - mongodbdata:/data/db
+      - /data/storage/sugoi-custom-proofs.mongodb:/data/db
     # these set mongodb admin and password when first deployed, set in env file
+    env_file:
+      - mongo.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     # starts mongo in -authenticated necessary mode
     command: mongod --auth
-# do not change lines below (creates volume on server named mongodbdata which persists /data/db above in mongo docker service)
-# if you change name, also needs to change in volumes in mongo service above
-volumes:
-  mongodbdata:

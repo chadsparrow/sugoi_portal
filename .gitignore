@@ -1,4 +1,5 @@
-.env
+mongo.env
+server.env
 /logs
 node_modules
 docker-compose-dev.yml
