@@ -21,10 +21,9 @@ router.get("/:orderNum", (req, res) => {
 
 router.put("/:orderNum", (req, res) => {
   const requestOrder = req.body;
-  console.log(requestOrder);
-  Order.findOneAndUpdate({ orderNum: req.params.orderNum })
+  Order.findOneAndUpdate({ orderNum: req.params.orderNum }, requestOrder, { new: true, upsert: true })
     .then(order => {
-      console.log(order);
+      res.status(200).json(order);
     })
     .catch(err => {
       logger.error(err);
