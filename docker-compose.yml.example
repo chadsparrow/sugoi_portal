@@ -14,7 +14,7 @@ services:
     restart: always
     ports:
     ## This needs to change to available web server ports - confirm with Jordin/Jonathan
-      - "LG_WEBAPP_PORT:${PORT}"
+      - "use server port from wiki:${PORT}"
     # mounts volume for persistant data
     # also mounts volume for node_modules on mac / not sure if needed for server
     volumes:
@@ -31,19 +31,18 @@ services:
     container_name: mongo
     restart: always
     image: mongo
-    # ports for mongodb is always 27017
+    # ports for mongodb docker image is always 27017
     ports:
-      - "LG_DOCKER_PORT:27017"
+      - "use db port from wiki:27017"
 	  # Creates volume to persist database data with server folder
     volumes:
-      - mongodbdata:/data/db
+      - /data/storage/sugoi-custom-proofs.mongodb:/data/db
     # these set mongodb admin and password when first deployed, set in env file
+    env_file:
+      - mongo.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     # starts mongo in -authenticated necessary mode
     command: mongod --auth
-# do not change lines below (creates volume on server named mongodbdata which persists /data/db above in mongo docker service)
-# if you change name, also needs to change in volumes in mongo service above
-volumes:
-  mongodbdata:
+
