@@ -30,7 +30,7 @@ services:
       - mongo
     links:
       - mongo
-    # env file needs to be changed to name of your env file (eg .env)
+    # env file for server service
     env_file:
       - server.env
   mongo:
@@ -44,6 +44,7 @@ services:
     volumes:
       - /data/storage/sugoi-custom-proofs.mongodb:/data/db
     # these set mongodb admin and password when first deployed, set in env file
+    #env file for mongo service
     env_file:
       - mongo.env
     environment:
