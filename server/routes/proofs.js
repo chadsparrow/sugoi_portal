@@ -165,8 +165,8 @@ const Order = require("../models/Order");
 //   });
 // });
 
-router.get("/:id", ensureAuthenticated, (req, res) => {
-  Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
+router.get("/:id", (req, res) => {
+  Proof.findOne({ _id: req.params.id }, ensureAuthenticated, (err, foundProof) => {
     if (err) {
       logger.error(err);
       return;

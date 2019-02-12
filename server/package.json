@@ -1,14 +1,14 @@
 {
-  "name": "sugoiproofs-restapi-server",
+  "name": "sugoi-custom-portal",
   "version": "1.0.0",
-  "description": "Sugoi Proofs REST API Server",
+  "description": "Sugoi Custom Portal",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon -L server.js"
   },
   "author": "Chad Sparrow",
-  "license": "MIT",
+  "license": "Unlicense",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -39,11 +39,5 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "public/uploads/*",
-      "public/3d_assets/*"
-    ]
   }
 }

@@ -14,7 +14,7 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
@@ -24,7 +24,14 @@ const DateDiff = require("date-diff");
 
 // initializes the app using express
 const app = express();
+//initialize helmet security
 app.use(helmet());
+
+//initialize CORS
+app.use(cors());
+
+// Trust Proxies
+app.enable('trust proxy');
 
 // Load Routes
 const userRoutes = require("./routes/users");
@@ -111,7 +118,6 @@ require("./config/passport")(passport);
 //Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
 
 // Method Override
 app.use(methodOverride("_method"));
@@ -122,7 +128,7 @@ app.use(flash());
 const sessionOptions = {
   name: "session",
   secret: process.env.SESSION_SECRET,
-  httpOnly: true,
+  //httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000 //24 hours
 };
 
@@ -147,20 +153,6 @@ app.use(
     maxage: "2m"
   })
 );
-
-//set access control security
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});
-  }
-  next();
-});
 
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function () {
@@ -241,9 +233,8 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
-//**************************** UN COMMMENT WHEN CERTS ARE FIXED
 //sets https server with certificates and keys
 const httpsServer = https.createServer(credentials, app);
 
