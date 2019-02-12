@@ -1,7 +1,0 @@
-/server/logs/logfile.log {
-    rotate 6
-    monthly
-    compress
-    missingok
-    notifempty
-}

@@ -1,8 +1,5 @@
-mongo.env
-server.env
+.env
 /logs
+server/logs
 node_modules
 docker-compose-dev.yml
-docker-compose.yml
-.DS_Store
-.vscode
