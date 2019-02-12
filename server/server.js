@@ -14,7 +14,9 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+// uncomment before deploying
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
@@ -30,8 +32,8 @@ app.use(helmet());
 //initialize CORS
 app.use(cors());
 
-// Trust Proxies
-app.enable('trust proxy');
+// Trust Proxies - Uncomment during deployment
+//app.enable('trust proxy');
 
 // Load Routes
 const userRoutes = require("./routes/users");
@@ -128,7 +130,7 @@ app.use(flash());
 const sessionOptions = {
   name: "session",
   secret: process.env.SESSION_SECRET,
-  //httpOnly: true,
+  httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000 //24 hours
 };
 
@@ -235,10 +237,17 @@ app.use((error, req, res, next) => {
 
 const port = process.env.PORT || 5000;
 
+
+// Uncomment after dev is ok
+
 //sets https server with certificates and keys
-const httpsServer = https.createServer(credentials, app);
+// const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
-httpsServer.listen(port, (req, res) => {
-  logger.info(`App listening...`);
-});
+// httpsServer.listen(port, (req, res) => {
+//   logger.info(`App listening...`);
+// });
+
+app.listen(port, function () {
+  logger.info(`App listening on port ${port}`);
+})

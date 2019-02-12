@@ -2,6 +2,5 @@
 /logs
 server/logs
 node_modules
-docker-compose-dev.yml
 .DS_Store
 .vscode
