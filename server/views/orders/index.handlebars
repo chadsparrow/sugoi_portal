@@ -53,12 +53,19 @@
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "DD-MMM"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">
-          <span>
+          <span style="margin-right: 8px;">
             <a class="black-text" href="/orders/view/{{_id}}">
-              <i class="material-icons">remove_red_eye</i>
+              <i class="tiny material-icons">remove_red_eye</i>
             </a>
+          </span>
+          <span style="margin-right: 8px;">
             <a class="green-text" href="/orders/edit/{{_id}}">
-              <i class="material-icons">edit</i>
+              <i class="tiny material-icons">edit</i>
+            </a>
+          </span>
+          <span>
+            <a class="blue-text" href="http://localhost:8080/{{orderNum}}">
+              <i class="tiny material-icons">description</i>
             </a>
           </span>
         </td>
@@ -68,8 +75,8 @@
   </table>
   {{#if user.editOrders}}
   <div class="fixed-action-btn">
-    <a class="btn-floating waves-effect waves-light btn-large green tooltipped" data-position="left" data-tooltip="Add Order"
-      href="/orders/add">
+    <a class="btn-floating waves-effect waves-light btn-large green tooltipped" data-position="left"
+      data-tooltip="Add Order" href="/orders/add">
       <i class="large material-icons">add</i>
     </a>
     <ul>

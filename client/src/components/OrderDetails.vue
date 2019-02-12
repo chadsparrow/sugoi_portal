@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6 border-left border-right">
+      <div class="col-sm-6 border-left">
         <div class="row m-0">
           <div class="col-sm-6 mb-2 p-2">Account #: {{order.accountNum}}</div>
           <div class="col-sm-6 mb-2 p-2">Client: {{order.client}}</div>
@@ -35,7 +35,7 @@
           <div class="col-sm-12 mb-2 p-2">Signed Off Date: {{formatDate(order.signedOffDate)}}</div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 border-left">
         <div class="row m-0">
           <div
             v-if="order.multiShips > 0"
@@ -70,15 +70,10 @@
 </template>
 
 <script>
-import DatePicker from "vuejs-datepicker";
-import { mapFields } from "vuex-map-fields";
 import moment from "moment";
 
 export default {
   name: "OrderDetails",
-  components: {
-    DatePicker
-  },
   computed: {
     order() {
       return this.$store.state.order;
@@ -101,7 +96,13 @@ export default {
 
 <style scoped>
 .card {
-  font-size: 14px;
+  font-size: 0.75em;
+}
+.textBlock {
+  background-color: lightgrey;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-right: 2px;
 }
 </style>
 

@@ -163,8 +163,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         orderNum,
         accountNum,
         priority,
-        eventDate: eventDate,
-        llatestInHand,
+        eventDate,
+        latestInHand,
         isr,
         client,
         instructions,
@@ -248,9 +248,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
-          foundOrder.currentArtist = "";
           foundOrder.proofRequestDate = moment().utc().format();
         }
+        foundOrder.currentArtist = "";
       }
       if (
         foundOrder.currentStatus === "G. Waiting for Revision" ||

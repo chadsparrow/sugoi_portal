@@ -19,7 +19,7 @@ export const store = new Vuex.Store({
     saveOrder: ({ commit }, order) => {
       axios
         .put(`https://localhost:5000/api/orders/${order.orderNum}`, order)
-        .then(r => data)
+        .then(r => r.data)
         .then(order => {
           commit("SAVE_ORDER_DATA", order);
         });

@@ -33,7 +33,7 @@ app.use(helmet());
 app.use(cors());
 
 // Trust Proxies - Uncomment during deployment
-//app.enable('trust proxy');
+app.enable('trust proxy');
 
 // Load Routes
 const userRoutes = require("./routes/users");
@@ -237,17 +237,14 @@ app.use((error, req, res, next) => {
 
 const port = process.env.PORT || 5000;
 
-
-// Uncomment after dev is ok
-
 //sets https server with certificates and keys
-// const httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
-// httpsServer.listen(port, (req, res) => {
-//   logger.info(`App listening...`);
-// });
+httpsServer.listen(port, (req, res) => {
+  logger.info(`App listening...`);
+});
 
-app.listen(port, function () {
-  logger.info(`App listening on port ${port}`);
-})
+// app.listen(port, function () {
+//   logger.info(`App listening on port ${port}`);
+// })
