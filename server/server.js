@@ -9,14 +9,14 @@ const flash = require("connect-flash");
 const session = require("cookie-session");
 const exphbs = require("express-handlebars");
 const path = require("path");
-//const https = require("https");
-//const fs = require("fs");
+const https = require("https");
+const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-//const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
-//const credentials = { key: privateKey, cert: certificate };
+const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
+const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
@@ -226,13 +226,13 @@ const port = process.env.PORT || 5000;
 
 //**************************** UN COMMMENT WHEN CERTS ARE FIXED
 //sets https server with certificates and keys
-// const httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
-// httpsServer.listen(port, (req, res) => {
-//   logger.info(`App listening...`);
-// });
+httpsServer.listen(port, (req, res) => {
+  logger.info(`App listening...`);
+});
 
-app.listen(port, function () {
-  logger.info(`App listening on port ${port}`);
-})
+// app.listen(port, function () {
+//   logger.info(`App listening on port ${port}`);
+// })
