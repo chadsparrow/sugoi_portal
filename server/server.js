@@ -9,14 +9,14 @@ const flash = require("connect-flash");
 const session = require("cookie-session");
 const exphbs = require("express-handlebars");
 const path = require("path");
-const https = require("https");
-const fs = require("fs");
+//const https = require("https");
+//const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
-const credentials = { key: privateKey, cert: certificate };
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+//const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
+//const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
@@ -24,7 +24,10 @@ const DateDiff = require("date-diff");
 
 // initializes the app using express
 const app = express();
+//initialize helmet security
 app.use(helmet());
+//initialize CORS
+app.use(cors());
 
 // Load Routes
 const userRoutes = require("./routes/users");
@@ -106,7 +109,6 @@ require("./config/passport")(passport);
 //Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
 
 // Method Override
 app.use(methodOverride("_method"));
@@ -142,20 +144,6 @@ app.use(
     maxage: "2m"
   })
 );
-
-//set access control security
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});
-  }
-  next();
-});
 
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function () {
@@ -235,9 +223,13 @@ const port = process.env.PORT || 5000;
 
 //**************************** UN COMMMENT WHEN CERTS ARE FIXED
 //sets https server with certificates and keys
-const httpsServer = https.createServer(credentials, app);
+// const httpsServer = https.createServer(credentials, app);
 
 // start the secure server and listen for requests
-httpsServer.listen(port, (req, res) => {
-  logger.info(`App listening...`);
-});
+// httpsServer.listen(port, (req, res) => {
+//   logger.info(`App listening...`);
+// });
+
+app.listen(port, function () {
+  logger.info(`App listening on port ${port}`);
+})
