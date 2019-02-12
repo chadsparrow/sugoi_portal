@@ -30,7 +30,7 @@ app.use(helmet());
 app.use(cors());
 
 // Trust Proxies
-app.set('trust proxy');
+app.enable('trust proxy');
 
 // Load Routes
 const userRoutes = require("./routes/users");
