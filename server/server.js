@@ -29,6 +29,9 @@ app.use(helmet());
 //initialize CORS
 app.use(cors());
 
+// Trust Proxies
+app.set('trust proxy');
+
 // Load Routes
 const userRoutes = require("./routes/users");
 const styleRoutes = require("./routes/styles");
@@ -119,7 +122,7 @@ app.use(flash());
 const sessionOptions = {
   name: "session",
   secret: process.env.SESSION_SECRET,
-  httpOnly: true,
+  //httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000 //24 hours
 };
 
