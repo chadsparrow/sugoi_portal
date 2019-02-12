@@ -5,9 +5,9 @@
         <a href="#" class="brand-logo"><img src="/images/sugoi_sombrio_logos.png"></a>
         <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li>
+          {{!-- <li>
             <a href="/styles"><i class="fas fa-tshirt"></i> Styles</a>
-          </li>
+          </li> --}}
           {{#if user}}
           <li>
             <a href="/orders"><i class="fas fa-box-open"></i> Orders</a>
@@ -28,9 +28,9 @@
           </li>
           <ul id="dropdown1" class="dropdown-content">
             {{#if user.admin}}
-            <li>
+            {{!-- <li>
               <a href="/reports"><i class="material-icons">assignment</i>Reports</a>
-            </li>
+            </li> --}}
             <li>
               <a href="/users/admin"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
             </li>
@@ -64,9 +64,9 @@
     {{/if}}
   </li>
   {{/if}}
-  <li>
+  {{!-- <li>
     <a href="/styles"><i class="material-icons">style</i>Styles</a>
-  </li>
+  </li> --}}
   {{#if user}}
   <li>
     <a href="/orders"><i class="material-icons">color_lens</i>Orders</a>
@@ -85,9 +85,9 @@
   {{/if}}
   <li class="divider"></li>
   {{#if user.admin}}
-  <li>
+  {{!-- <li>
     <a href="/reports"><i class="material-icons">assignment</i>Reports</a>
-  </li>
+  </li> --}}
   <li>
     <a href="/users/admin"><i class="material-icons">supervised_user_circle</i>Manage Users</a>
   </li>
