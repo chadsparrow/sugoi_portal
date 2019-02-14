@@ -7,5 +7,5 @@ export default [
     { path: '/:orderNum', component: Home },
     { path: '/:orderNum/editdetails', component: EditDetails },
     { path: '/editline/:index', component: EditLine },
-    { path: '/edititem/:index', component: EditItem }
+    { path: '/edititem/:lineIndex/:index', component: EditItem }
 ]

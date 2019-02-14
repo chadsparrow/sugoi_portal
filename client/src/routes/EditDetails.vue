@@ -299,7 +299,7 @@
       </div>
     </div>
     <div class="card-footer bg-dark text-right">
-      <button type="button" class="btn btn-success" @click.prevent="goBack">Save Details</button>
+      <button type="button" class="btn btn-success" @click.prevent="goBack">Commit Changes</button>
     </div>
   </div>
 </template>

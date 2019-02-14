@@ -1,5 +1,8 @@
 <template>
   <div class="card border-dark">
+    <div class="card-header bg-dark text-light p-1">
+      <span>Order Details</span>
+    </div>
     <div class="row card-body p-2">
       <div class="col-sm-3">
         <ul class="list-group list-group-flush">

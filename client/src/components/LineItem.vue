@@ -72,11 +72,12 @@
           <br>$
         </div>
         <div class="col-sm-2 text-center">Total Price
-          <br>$
+          <br>
+          $ {{formatPrice(item.itemTotalPrice)}}
         </div>
       </div>
     </div>
-    <div class="card-footer text-right d-print-none p-2">
+    <div class="card-footer text-center d-print-none p-2">
       <button class="btn btn-sm btn-success mr-1">Edit Item</button>
       <button class="btn btn-sm btn-danger">Cancel Item</button>
     </div>
@@ -93,11 +94,18 @@ export default {
         this.index
       ];
     }
+  },
+  methods: {
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
   }
 };
 </script>
-<style scoped>
+
+<style>
 .card {
-  font-size: 14px;
+  font-size: 12px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <div class="card mb-2 border-secondary" v-if="orderLine.cancelled == false">
+  <div class="card border-secondary mb-2" v-if="orderLine.cancelled == false">
     <div class="card-header bg-secondary text-light p-1">
-      <h6 class="ml-2 mb-0">Line: {{orderLine.lineNumber}}</h6>
+      <span>Line: {{orderLine.lineNumber}}</span>
     </div>
     <div class="card-body p-1">
       <div class="row">
@@ -21,28 +21,49 @@
           >ColourWay: {{orderLine.colourWayCode}}</div>
         </div>
         <div class="col-sm-3 border-left">
-          <div class="mb-2 col-sm-12">Tracing: ${{orderLine.tracingCharge}}</div>
-          <div class="mb-2 col-sm-12">Creative: ${{orderLine.creativeCharge}}</div>
-          <div class="mb-2 col-sm-12">Scaled Art: ${{orderLine.scaledArtCharge}}</div>
+          <div class="mb-2 col-sm-12">
+            Tracing:
+            <span class="float-right">${{formatPrice(orderLine.tracingCharge)}}</span>
+          </div>
+          <div class="mb-2 col-sm-12">
+            Creative:
+            <span class="float-right">${{formatPrice(orderLine.creativeCharge)}}</span>
+          </div>
+          <div class="mb-2 col-sm-12">
+            Scaled Art:
+            <span class="float-right">${{formatPrice(orderLine.scaledArtCharge)}}</span>
+          </div>
         </div>
       </div>
-      <div class="items">
-        <LineItem
-          v-for="(lineitem, childIndex) in lineItems"
-          :key="lineitem._id"
-          :index="childIndex"
-          :lineIndex="index"
-          :lineNumber="orderLine.lineNumber"
-        ></LineItem>
-      </div>
-      <div class="buttons mt-2 d-print-none">
+      <div class="text-center d-print-none">
         <button
           type="button"
           class="btn btn-sm btn-success mr-1"
           @click.prevent="goToEdit()"
-        >Edit Line</button>
-        <button type="button" class="btn btn-sm btn-secondary mr-1" @click.prevent>Add Item</button>
-        <button type="button" class="btn btn-sm btn-danger" @click.prevent>Cancel Full Line</button>
+        >Edit Line Details</button>
+      </div>
+      <div class="items mt-2">
+        <LineItem
+          v-for="(lineitem, childIndex) in orderLine.items"
+          :key="lineitem._id"
+          :index="childIndex"
+          :lineIndex="index"
+        ></LineItem>
+      </div>
+      <div class="buttons mt-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-secondary mr-1 d-print-none"
+          @click.prevent
+        >Add Item</button>
+        <button
+          type="button"
+          class="btn btn-sm btn-danger d-print-none"
+          @click.prevent
+        >Cancel Full Line</button>
+        <div
+          class="rounded bg-secondary text-light float-right p-2"
+        >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
       </div>
     </div>
   </div>
@@ -60,9 +81,6 @@ export default {
   computed: {
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
-    },
-    lineItems() {
-      return this.$store.state.order.orderLines[this.index].items;
     }
   },
   data() {
@@ -73,14 +91,12 @@ export default {
   methods: {
     goToEdit() {
       this.$router.push({ path: `editline/${this.index}` });
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   }
 };
 </script>
-
-<style scoped>
-.row {
-  font-size: 14px;
-}
-</style>
 

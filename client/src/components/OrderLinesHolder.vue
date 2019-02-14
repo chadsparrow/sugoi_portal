@@ -1,7 +1,7 @@
 <template>
   <div class="card border-dark mt-2 mb-3">
     <div class="card-header bg-dark text-light p-1">
-      <h6 class="ml-2">{{title}}</h6>
+      <span>{{title}}</span>
     </div>
     <div class="card-body p-2">
       <small v-if="orderLines == undefined">Undefined!</small>
@@ -38,3 +38,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.card {
+  font-size: 12px;
+}
+</style>
