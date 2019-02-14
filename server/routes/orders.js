@@ -115,8 +115,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       user: isr
     });
   } else {
-    req.flash("error_msg", "Instructions Missing!");
-    res.redirect("/orders/add");
+    res.render("/orders/add", { orderNum, accountNum, priority, eventDate, latestInHand, isr, client, instruction, vendor, expressFlash: req.flash("error_msg", "Instructions Missing!") });
     return;
   }
 
