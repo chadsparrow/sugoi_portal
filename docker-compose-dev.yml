@@ -21,7 +21,7 @@ services:
     links:
       - mongo
     env_file:
-      - .env
+      - dev.env
   mongo:
     container_name: mongo
     restart: always
@@ -31,7 +31,7 @@ services:
     volumes:
       - mongodbdata:/data/db
     env_file:
-      - .env
+      - dev.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
