@@ -15,14 +15,12 @@ const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 
-if (process.env.NODE_ENV === "production") {
-  const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-} else {
-  const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
-}
 
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
+
 const express = require("express");
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
