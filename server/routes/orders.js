@@ -114,9 +114,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       instructionType: "Initial",
       user: isr
     });
-  } else {
-    res.render("orders/add", { orderNum, accountNum, priority, eventDate, latestInHand, isr, client, instruction, vendor, expressFlash: req.flash("error_msg", "Instructions Missing!") });
-    return;
   }
 
   Order.findOne({ orderNum: orderNum }, function (err, order) {
