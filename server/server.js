@@ -14,9 +14,13 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-// uncomment before deploying
-//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+
+if (process.env.NODE_ENV === "production") {
+  const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+} else {
+  const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+}
+
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
@@ -199,8 +203,6 @@ var cronJob = cron.job("0 * * * *", function () {
         });
       });
       logger.info(`Shipment Tracking information updated`);
-    } else {
-      //logger.info(`Shipment Tracking Skipped`);
     }
   });
 });
@@ -245,6 +247,3 @@ httpsServer.listen(port, (req, res) => {
   logger.info(`App listening...`);
 });
 
-// app.listen(port, function () {
-//   logger.info(`App listening on port ${port}`);
-// })

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3">
+  <div class>
     <!-- Default switch -->
     <div class="custom-control custom-switch d-print-none">
       <input type="checkbox" class="custom-control-input" id="customSwitches" v-model="quoteToggle">
@@ -17,7 +17,7 @@ export default {
   name: "Header",
   data() {
     return {
-      quoteToggle: false
+      quoteToggle: true
     };
   },
   computed: {

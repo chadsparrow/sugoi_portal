@@ -2,67 +2,88 @@
   <div class="card border-dark">
     <div class="row card-body p-2">
       <div class="col-sm-3">
-        <div class="row m-0">
-          <div class="col-sm-12 mb-2 p-2">Order: {{order.orderNum}}</div>
-          <div class="col-sm-12 mb-2 p-2">Custom Rep: {{order.isr}}</div>
-          <div class="col-sm-12 mb-2 p-2">Order Date: {{formatDate(order.enteredDate)}}</div>
-          <div class="col-sm-12 mb-2 p-2">Event Date: {{formatDate(order.eventDate)}}</div>
-          <div class="col-sm-12 mb-2 p-2">In-Hand Date: {{formatDate(order.latestInHand)}}</div>
-          <div class="col-sm-12 mb-2 p-2">Est. Ship Date: {{formatDate(order.estDeliveryDate)}}</div>
-          <div class="col-sm-12 mb-2 p-2">Notes:
-            <br>
-            {{order.orderNotes}}
-          </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Order: {{order.orderNum}}</li>
+          <li class="list-group-item">Custom Rep: {{order.isr}}</li>
+          <li class="list-group-item">Order Date: {{formatDate(order.enteredDate)}}</li>
+          <li class="list-group-item">Event Date: {{formatDate(order.eventDate)}}</li>
+          <li class="list-group-item">In-Hand Date: {{formatDate(order.latestInHand)}}</li>
+          <li class="list-group-item">Est. Ship Date: {{formatDate(order.estDeliveryDate)}}</li>
+        </ul>
+        <div class="d-print-none">
+          <label for="orderNotes" class="mb-0 mt-2">Notes:</label>
+          <textarea
+            v-model="order.orderNotes"
+            class="form-control"
+            style="font-size: 12px; width: 100%; height: 80px; white-space: pre-wrap;"
+            readonly
+            id="orderNotes"
+          ></textarea>
         </div>
       </div>
       <div class="col-sm-6 border-left">
         <div class="row m-0">
-          <div class="col-sm-6 mb-2 p-2">Account #: {{order.accountNum}}</div>
-          <div class="col-sm-6 mb-2 p-2">Client: {{order.client}}</div>
-          <div class="col-sm-6 mb-2 p-2">Contact Name: {{order.contactName}}</div>
-          <div class="col-sm-6 mb-2 p-2">Ship To Name: {{order.shipToName}}</div>
-          <div class="col-sm-12 mb-2 p-2">Ship To Address:
-            <br>
-            {{order.shipToAddress}}
-          </div>
-          <div class="col-sm-6 mb-2 p-2">City: {{order.shipToCity}}</div>
-          <div class="col-sm-6 mb-2 p-2">State/Prov: {{order.shipToProvState}}</div>
-          <div class="col-sm-6 mb-2 p-2">Country: {{order.shipToCountry}}</div>
-          <div class="col-sm-6 mb-2 p-2">Zip/Postal: {{order.shipToPostalZip}}</div>
-          <div class="col-sm-6 mb-2 p-2">Phone: {{order.contactPhone}}</div>
-          <div class="col-sm-6 mb-2 p-2">Email: {{order.contactEmail}}</div>
-          <div class="col-sm-12 mb-2 p-2">Terms: {{order.approvedTerms}}</div>
-          <div class="col-sm-12 mb-2 p-2">Signed Off Date: {{formatDate(order.signedOffDate)}}</div>
+          <ul class="list-group list-group-flush col-sm-6">
+            <li class="list-group-item">Account #: {{order.accountNum}}</li>
+            <li class="list-group-item">Contact: {{order.contactName}}</li>
+          </ul>
+          <ul class="list-group list-group-flush col-sm-6">
+            <li class="list-group-item">Client: {{order.client}}</li>
+            <li class="list-group-item">Ship To Name: {{order.shipToName}}</li>
+          </ul>
+          <ul class="list-group list-group-flush col-sm-12">
+            <li class="list-group-item">Ship To Address:
+              <br>
+              {{order.shipToAddress}}
+            </li>
+          </ul>
+          <ul class="list-group list-group-flush col-sm-6">
+            <li class="list-group-item">City: {{order.shipToCity}}</li>
+            <li class="list-group-item">Country: {{order.shipToCountry}}</li>
+            <li class="list-group-item">Phone: {{order.contactPhone}}</li>
+          </ul>
+          <ul class="list-group list-group-flush col-sm-6">
+            <li class="list-group-item">State/Prov: {{order.shipToProvState}}</li>
+            <li class="list-group-item">Zip/Postal: {{order.shipToPostalZip}}</li>
+            <li class="list-group-item">Email: {{order.contactEmail}}</li>
+          </ul>
+          <ul class="list-group list-group-flush col-sm-12">
+            <li class="list-group-item">Terms: {{order.approvedTerms}}</li>
+            <li class="list-group-item">Signed Off Date: {{formatDate(order.signedOffDate)}}</li>
+          </ul>
         </div>
       </div>
       <div class="col-sm-3 border-left">
-        <div class="row m-0">
-          <div
-            v-if="order.multiShips > 0"
-            class="col-sm-6 mb-2 p-2"
-          >MultiShips: {{order.multiShips}}</div>
-          <div v-if="order.prePacks > 0" class="col-sm-6 mb-2 p-2">PrePacks: {{order.prePacks}}</div>
-          <div class="col-sm-12 mb-2 p-2">Currency: {{order.currency}}</div>
-          <div v-if="order.taxes" class="col-sm-12 mb-2 p-2">Taxes: {{order.taxes}}%</div>
-          <div class="col-sm-12 mb-2 p-2 text-center bg-secondary text-light rounded">
-            <h3>Total:
-              <br>
-              ${{order.netValue}}
-            </h3>
-          </div>
-          <div v-if="order.deposit" class="col-sm-12 mb-2 p-2">Deposit: {{order.deposit}}%</div>
-          <div class="col-sm-12 mb-2 p-2 text-center bg-secondary text-light rounded">
-            <h5>Balance Due:
-              <br>
-              ${{order.balanceOutstanding}}
-            </h5>
-          </div>
-          <div class="col-sm-12 border-top pt-2">
-            <button
-              class="btn btn-success btn-block d-print-none"
-              @click.prevent="goToEdit()"
-            >Edit Details</button>
-          </div>
+        <ul class="list-group list-group-flush">
+          <li v-if="order.multiShips >0" class="list-group-item">MultiShips: {{order.multiShips}}</li>
+          <li v-if="order.prePacks >0" class="list-group-item">PrePacks: {{order.prePacks}}</li>
+          <li class="list-group-item">Currency: {{order.currency}}</li>
+          <li
+            v-if="order.taxes"
+            class="list-group-item"
+            style="border-bottom:none;"
+          >Taxes: {{order.taxes}} %</li>
+        </ul>
+        <div class="col-sm-12 mb-2 p-1 text-center border border-3 rounded">
+          <h4>Total:
+            <br>
+            $ {{order.netValue}}
+          </h4>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li v-if="order.deposit" class="list-group-item">Deposit: $ {{order.deposit}}</li>
+        </ul>
+        <div class="mb-2 p-1 text-center border rounded">
+          <h6>Balance Due:
+            <br>
+            $ {{order.balanceOutstanding}}
+          </h6>
+        </div>
+        <div class="border-top pt-2">
+          <button
+            class="btn btn-success btn-block d-print-none"
+            @click.prevent="goToEdit()"
+          >Edit Details</button>
         </div>
       </div>
     </div>
@@ -98,11 +119,16 @@ export default {
 .card {
   font-size: 0.75em;
 }
+
 .textBlock {
   background-color: lightgrey;
   border-radius: 5px;
   padding: 2px 5px;
   margin-right: 2px;
+}
+
+.list-group-flush li:first-child {
+  border-top: none;
 }
 </style>
 
