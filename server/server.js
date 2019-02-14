@@ -151,7 +151,7 @@ app.use(
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function () {
   Order.find({
-    tracking: { $ne: "" },
+    tracking: { $nin: ["", null] },
     confirmDeliveryStatus: { $ne: "Delivered" }
   }).then(foundOrders => {
     if (foundOrders.length > 0) {
