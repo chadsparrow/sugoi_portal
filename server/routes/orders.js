@@ -114,6 +114,10 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       instructionType: "Initial",
       user: isr
     });
+  } else {
+    req.flash("error_msg", "Instructions Missing!");
+    res.redirect("/orders/add");
+    return;
   }
 
   Order.findOne({ orderNum: orderNum }, function (err, order) {
