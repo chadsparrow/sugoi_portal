@@ -1,9 +1,9 @@
 <template>
-  <div class="card border-dark mt-2 mb-3">
+  <div class="card border-dark mt-2 mb-4">
     <div class="card-header bg-dark text-light p-1">
       <span>{{title}}</span>
     </div>
-    <div class="card-body p-2">
+    <div class="card-body p-1">
       <small v-if="orderLines == undefined">Undefined!</small>
       <div v-else-if="orderLines.length ==0">
         <small>There are no lines as of yet!</small>
@@ -12,7 +12,7 @@
         <OrderLine v-for="(line, index) in orderLines" :key="index" :index="index"></OrderLine>
       </div>
     </div>
-    <div class="card-footer bg-dark">
+    <div class="card-footer bg-dark p-1">
       <button type="button" class="btn btn-dark btn-block d-print-none">Add Line</button>
     </div>
   </div>

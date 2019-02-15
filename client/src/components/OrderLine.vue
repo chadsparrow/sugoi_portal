@@ -2,6 +2,7 @@
   <div class="card border-secondary mb-2" v-if="orderLine.cancelled == false">
     <div class="card-header bg-secondary text-light p-1">
       <span>Line: {{orderLine.lineNumber}}</span>
+      <span class="float-right">Details</span>
     </div>
     <div class="card-body p-1">
       <div class="row">
@@ -9,7 +10,7 @@
         <div class="col-sm-3 border-right">
           <div class="mb-2 col-sm-12">Job Type: {{orderLine.lineJobType}}</div>
           <div class="mb-2 col-sm-12">SO.Ref#: {{orderLine.swoReference}}</div>
-          <div class="mb-2 col-sm-12">Price Break: {{orderLine.priceBreak}} units</div>
+          <div class="col-sm-12">Price Break: {{orderLine.priceBreak}} units</div>
         </div>
         <!-- MIDDLE SECTION -->
         <div class="col-sm-6">
@@ -36,42 +37,40 @@
             Creative:
             <span class="float-right">${{formatPrice(orderLine.creativeCharge)}}</span>
           </div>
-          <div class="mb-2 col-sm-12">
+          <div class="col-sm-12">
             Scaled Art:
             <span class="float-right">${{formatPrice(orderLine.scaledArtCharge)}}</span>
           </div>
         </div>
       </div>
-      <div class="text-center d-print-none">
-        <button
-          type="button"
-          class="btn btn-sm btn-success mr-1"
-          @click.prevent="goToEdit()"
-        >Edit Line Details</button>
-      </div>
-      <div class="items mt-2">
-        <!-- <LineItem
+      <div class="items mt-2" v-if="orderLine.items.length">
+        <LineItem
           v-for="(lineitem, childIndex) in orderLine.items"
           :key="childIndex"
           :index="childIndex"
           :lineIndex="index"
-        ></LineItem>-->
+        ></LineItem>
       </div>
-      <div class="buttons mt-2">
-        <button
-          type="button"
-          class="btn btn-sm btn-secondary mr-1 d-print-none"
-          @click.prevent
-        >Add Item</button>
-        <button
-          type="button"
-          class="btn btn-sm btn-danger d-print-none"
-          @click.prevent
-        >Cancel Full Line</button>
-        <div
-          class="rounded bg-secondary text-light float-right p-2"
-        >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
-      </div>
+    </div>
+    <div class="card-footer p-1">
+      <button
+        type="button"
+        class="btn btn-sm btn-secondary mr-1 d-print-none"
+        @click.prevent
+      >Add Item</button>
+      <button
+        type="button"
+        class="btn btn-sm btn-danger mr-1 d-print-none"
+        @click.prevent
+      >Cancel Full Line</button>
+      <button
+        type="button"
+        class="btn btn-sm btn-success"
+        @click.prevent="goToEdit()"
+      >Edit Line Details</button>
+      <div
+        class="rounded bg-secondary text-light float-right p-2"
+      >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
     </div>
   </div>
 </template>

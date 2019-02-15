@@ -1,6 +1,6 @@
 <template>
   <div class="item card border-dark mb-2">
-    <div class="card-header bg-secondary mb-0 p-2">
+    <div class="card-header bg-secondary mb-0 p-1">
       <div class="row text-light align-items-center">
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
         <div class="col sm-3">Description: {{item.selectedConfig}}</div>
@@ -9,7 +9,7 @@
         <div class="col-sm-2">JBA: {{item.jbaCode}}</div>
       </div>
     </div>
-    <div class="card-body p-2">
+    <div class="card-body p-1">
       <div class="row align-items-center text-center">
         <div class="col-sm-2">Ink: {{item.inkType}}</div>
         <div v-if="item.childReference" class="col-sm-2">Child Ref#: {{item.childReference}}</div>
@@ -55,29 +55,34 @@
         </div>
       </div>
       <hr class="my-2">
-      <div class="row rounded-bottom align-items-center text-center">
+      <div class="row p-0 m-0">
         <div class="col-sm-2 text-center">Total Units
           <br>units
         </div>
+
         <div class="col-sm-2 text-center">Unit Price
           <br>$
         </div>
+
         <div class="col-sm-2 text-center">Add-Ons
           <br>$
         </div>
+
         <div class="col-sm-2 text-center">Discount
           <br>$
         </div>
+
         <div class="col-sm-2 text-center">Final Unit Price
           <br>$
         </div>
-        <div class="col-sm-2 text-center">Total Price
+
+        <div class="col-sm-2 text-center border border-dark rounded p-2">Item Total:
           <br>
           $ {{formatPrice(item.itemTotalPrice)}}
         </div>
       </div>
     </div>
-    <div class="card-footer text-center d-print-none p-2">
+    <div class="card-footer text-center d-print-none p-1">
       <button class="btn btn-sm btn-success mr-1">Edit Item</button>
       <button class="btn btn-sm btn-danger">Cancel Item</button>
     </div>

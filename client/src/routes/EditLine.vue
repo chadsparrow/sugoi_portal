@@ -55,20 +55,27 @@
                 class="form-control form-control-sm"
                 id="graphicCode"
                 v-model="orderLine.graphicCode"
-                @change="selectColourWay"
+                @change="loadColourWays"
               >
                 <option v-for="(code, index) in graphicCodes" :key="index">{{code.graphicCode}}</option>
               </select>
             </div>
-            {{orderLine.colourWayCode}}
-            <div class="form-group mb-1 col-sm-6">
-              <label for="colourWay" class="small my-0">Colour Way:</label>
+            <div
+              class="form-group mb-1 col-sm-6"
+              v-if="orderLine.graphicCode && colourWays.length || orderLine.colourWayCode"
+            >
+              <label for="colourWayCode" class="small my-0">Colour Way:</label>
               <select
                 class="form-control form-control-sm"
-                id="colourWay"
+                id="colourWayCode"
+                v-if="colourWays.length || orderLine.colourWayCode"
                 v-model="orderLine.colourWayCode"
               >
-                <option v-for="(code, index) in graphicCodes" :key="index">{{code.graphicCode}}</option>
+                <option
+                  v-for="(colourWay, index) in colourWays"
+                  :key="index"
+                  selected
+                >{{colourWay.code}}</option>
               </select>
             </div>
           </div>
@@ -116,7 +123,7 @@
               type="number"
               class="form-control form-control-sm"
               id="tracingCharge"
-              v-model="orderLine.tracingCharge"
+              v-model.number="orderLine.tracingCharge"
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
@@ -125,7 +132,7 @@
               type="number"
               class="form-control form-control-sm"
               id="creativeCharge"
-              v-model="orderLine.creativeCharge"
+              v-model.number="orderLine.creativeCharge"
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
@@ -134,7 +141,7 @@
               type="number"
               class="form-control form-control-sm"
               id="creativeCharge"
-              v-model="orderLine.scaledArtCharge"
+              v-model.number="orderLine.scaledArtCharge"
             >
           </div>
         </div>
@@ -157,7 +164,8 @@ export default {
   data() {
     return {
       index: this.$route.params.index,
-      colourWays: []
+      colourWays: [],
+      selectedOption: ""
     };
   },
   computed: {
@@ -183,14 +191,14 @@ export default {
       this.$store.dispatch("saveOrder", this.order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
-    selectColourWay(e) {
+    loadColourWays(e) {
       let index = e.target.selectedIndex;
+      this.colourWays = this.graphicCodes[index].colourWays;
+      this.orderLine.colourWayCode = "";
       this.orderLine.graphicColours = this.graphicCodes[index].colours;
-      this.colourWays = this.$store.getters.getColourWays(index);
-      this.orderLine.colourWayCode = null;
-      this.orderLine.colour1 = null;
-      this.orderLine.colour2 = null;
-      this.orderLine.colour3 = null;
+      this.orderLine.colour1 = "";
+      this.orderLine.colour2 = "";
+      this.orderLine.colour3 = "";
     }
   }
 };

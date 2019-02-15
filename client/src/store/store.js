@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
     graphicCodes: []
   },
   actions: {
-    saveOrder: ({ commit }, order) => {
+    saveOrder: ({ commit, dispatch }, order) => {
+      dispatch('calculateLineTotal');
       axios
         .put(`https://localhost:5000/api/orders/${order.orderNum}`, order)
         .then(r => r.data)
@@ -87,6 +88,9 @@ export const store = new Vuex.Store({
     },
     resetStateProv: ({ commit }) => {
       commit('RESET_STATE_PROV');
+    },
+    calculateLineTotal: ({ commit }) => {
+      commit("CALC_LINE_TOTALS");
     }
   },
   mutations: {
@@ -136,6 +140,15 @@ export const store = new Vuex.Store({
     RESET_STATE_PROV: (state) => {
       state.order.shipToProvState = null;
       state.order.taxes = null;
+    },
+    CALC_LINE_TOTALS: (state) => {
+      let lineSum = 0;
+      for (let x = 0; x < state.order.orderLines.length; x++) {
+        let currentLine = state.order.orderLines[x];
+        let { tracingCharge, scaledArtCharge, creativeCharge } = currentLine;
+
+        state.order.orderLines[x].itemsSubTotal = tracingCharge + scaledArtCharge + creativeCharge;
+      }
     }
   },
   getters: {
