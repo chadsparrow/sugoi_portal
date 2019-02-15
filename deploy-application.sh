@@ -132,31 +132,7 @@ printf "\nSTART DEPLOYMENT >>>\n"
         #Create Application Directory on Host
         sshpass -p ${host_password} ssh lgdeployer@${LGS_HOST_IP} -t "mkdir -p ${LGS_HOST_BASE_DIR}/${LGS_HOST_APP_DIR}"
 
-        #Autodetect presence of Vhost on host.  Create new if it doesn't exist
-        sshpass -p ${host_password} ssh lgdeployer@${LGS_HOST_IP} -t "
 
-            if [ ! -f '/etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf' ]; then
-                echo 'No vhost file found... starting to creating a new vhost:'
-                echo ${host_password} | sudo -S touch /etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf
-                echo ${host_password} | sudo -S chown lgdeployer:lgdeployer /etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf
-                echo $'
-<VirtualHost *:80>\n\
-    ProxyPreserveHost On \n\
-    ServerName ${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN} \n\
-    <Proxy *> \n\
-        Allow from localhost \n\
-    </Proxy> \n\
-    <Location /> \n\
-        ProxyPass http://localhost:${LGS_HTTP_PORT_APPLICATION}/ \n\
-    </Location> \n\
-</VirtualHost>' > /etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf;
-
-               echo ${host_password} | sudo -S chown root:root /etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf
-               echo ${host_password} | sudo -S chmod 644 /etc/apache2/sites-available/${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf
-               echo ${host_password} | sudo -S a2ensite ${LGS_APP_SUBDOMAIN}${LGS_HOST_ENVIRONMENT_DOMAIN}.${LGS_APP_DOMAIN}.conf
-               echo ${host_password} | sudo -S service apache2 reload
-            fi
-        "
     printf "<<< DONE CONFIGURING REMOTE HOST\n"
 
     printf "\nCOPY DOCKER-COMPOSE TO SERVER >>>\n"
