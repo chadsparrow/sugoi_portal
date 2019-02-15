@@ -21,6 +21,7 @@ export default {
     this.$store.dispatch("getProvincialTaxes");
     this.$store.dispatch("getUSAStates");
     this.$store.dispatch("getStyles");
+    this.$store.dispatch("getGraphicCodes");
   },
   components: {
     Header

@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
     reps: [],
     provs: [],
     states: [],
-    styles: []
+    styles: [],
+    graphicCodes: []
   },
   actions: {
     saveOrder: ({ commit }, order) => {
@@ -64,6 +65,14 @@ export const store = new Vuex.Store({
           commit("SET_STYLES", styles);
         });
     },
+    getGraphicCodes: ({ commit }) => {
+      axios
+        .get(`https://localhost:5000/api/graphicCodes`)
+        .then(r => r.data)
+        .then(graphicCodes => {
+          commit("SET_GRAPHIC_CODES", graphicCodes);
+        });
+    },
     setProvTax: ({ commit }, tax) => {
       commit('SET_PROV_TAX', tax);
     },
@@ -100,6 +109,9 @@ export const store = new Vuex.Store({
     SET_STYLES: (state, styles) => {
       state.styles = styles;
     },
+    SET_GRAPHIC_CODES: (state, graphicCodes) => {
+      state.graphicCodes = graphicCodes;
+    },
     SET_PROV_TAX: (state, tax) => {
       if (tax > 0) {
         state.order.taxes = tax;
@@ -128,5 +140,8 @@ export const store = new Vuex.Store({
   },
   getters: {
     getField,
+    getColourWays: (state) => (index) => {
+      return state.graphicCodes[index].colourWays;
+    }
   }
 });

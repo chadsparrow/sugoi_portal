@@ -9,7 +9,7 @@
         <small>There are no lines as of yet!</small>
       </div>
       <div v-else>
-        <OrderLine v-for="(line, index) in orderLines" :key="line._id" :index="index"></OrderLine>
+        <OrderLine v-for="(line, index) in orderLines" :key="index" :index="index"></OrderLine>
       </div>
     </div>
     <div class="card-footer bg-dark">

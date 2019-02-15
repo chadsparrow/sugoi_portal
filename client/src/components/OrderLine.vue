@@ -5,21 +5,28 @@
     </div>
     <div class="card-body p-1">
       <div class="row">
+        <!-- LEFT SECTION -->
         <div class="col-sm-3 border-right">
           <div class="mb-2 col-sm-12">Job Type: {{orderLine.lineJobType}}</div>
           <div class="mb-2 col-sm-12">SO.Ref#: {{orderLine.swoReference}}</div>
           <div class="mb-2 col-sm-12">Price Break: {{orderLine.priceBreak}} units</div>
         </div>
+        <!-- MIDDLE SECTION -->
         <div class="col-sm-6">
-          <div class="mb-2 col-sm-12">Graphic: {{orderLine.graphicCode}}</div>
-          <div v-if="orderLine.colour1" class="mb-2 col-sm-4">Colour 1: {{orderLine.colour1}}</div>
-          <div v-if="orderLine.colour2" class="mb-2 col-sm-4">Colour 2: {{orderLine.colour2}}</div>
-          <div v-if="orderLine.colour3" class="mb-2 col-sm-4">Colour 3: {{orderLine.colour3}}</div>
-          <div
-            v-if="orderLine.colourWayCode"
-            class="mb-2 col-sm-12"
-          >ColourWay: {{orderLine.colourWayCode}}</div>
+          <div class="row">
+            <div class="mb-2 col-sm-6">Graphic: {{orderLine.graphicCode}}</div>
+            <div
+              class="mb-2 col-sm-6"
+              v-if="orderLine.colourWayCode"
+            >ColourWay: {{orderLine.colourWayCode}}</div>
+          </div>
+          <div class="row">
+            <div v-if="orderLine.colour1" class="col-sm-4">Colour 1: {{orderLine.colour1}}</div>
+            <div v-if="orderLine.colour2" class="col-sm-4">Colour 2: {{orderLine.colour2}}</div>
+            <div v-if="orderLine.colour3" class="col-sm-4">Colour 3: {{orderLine.colour3}}</div>
+          </div>
         </div>
+        <!-- RIGHT SECTION -->
         <div class="col-sm-3 border-left">
           <div class="mb-2 col-sm-12">
             Tracing:
@@ -43,12 +50,12 @@
         >Edit Line Details</button>
       </div>
       <div class="items mt-2">
-        <LineItem
+        <!-- <LineItem
           v-for="(lineitem, childIndex) in orderLine.items"
-          :key="lineitem._id"
+          :key="childIndex"
           :index="childIndex"
           :lineIndex="index"
-        ></LineItem>
+        ></LineItem>-->
       </div>
       <div class="buttons mt-2">
         <button
@@ -82,6 +89,9 @@ export default {
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
     }
+  },
+  created() {
+    this.$store.dispatch("getStyles");
   },
   data() {
     return {
