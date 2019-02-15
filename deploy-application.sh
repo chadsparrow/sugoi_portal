@@ -4,7 +4,7 @@ shopt -s nocasematch
 
 
 HostStageIp="172.16.22.102"
-HostProdIp="172.16.22.101"
+HostExtIp="172.16.23.104"
 
 HostStageNetPart="102"
 HostExtNetPart="104"
