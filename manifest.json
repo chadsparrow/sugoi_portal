@@ -9,5 +9,5 @@
   "LGS_HOST_APP_DIR": "sugoi-custom-proofs",
   "LGS_HTTP_PORT_MAINTENANCE": "8498",
   "LGS_HTTP_PORT_APPLICATION": "5000",
-  "LGS_APP_SUBNET_ID": "19"
+  "LGS_APP_SUBNET_ID": "20"
 }

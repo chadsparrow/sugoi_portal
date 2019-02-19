@@ -42,7 +42,7 @@ const OrderSchema = new Schema({
       "W. CANCELLED",
       "X. Archived"
     ],
-    default: "1. Initial"
+    default: "A. Waiting for Proof"
   },
   priority: {
     type: String,
@@ -51,7 +51,7 @@ const OrderSchema = new Schema({
   },
   enteredDate: {
     type: Date,
-    default: moment()
+    default: moment
       .utc()
       .format()
   },
@@ -76,8 +76,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: moment()
-          .utc()
+        default: moment.utc()
           .format()
       },
       instruction: {

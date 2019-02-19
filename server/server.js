@@ -15,7 +15,6 @@ const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 
-
 const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 //const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
@@ -162,7 +161,7 @@ app.use(
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function () {
   Order.find({
-    tracking: { $ne: "" },
+    tracking: { $nin: ["", null] },
     confirmDeliveryStatus: { $ne: "Delivered" }
   }).then(foundOrders => {
     if (foundOrders.length > 0) {

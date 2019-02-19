@@ -3,5 +3,3 @@ dev.env
 /logs
 server/logs
 node_modules
-.DS_Store
-.vscode
