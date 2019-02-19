@@ -51,7 +51,7 @@ const OrderSchema = new Schema({
   },
   enteredDate: {
     type: Date,
-    default: moment(Date(Date.now()))
+    default: moment
       .utc()
       .format()
   },
@@ -76,8 +76,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: moment(Date(Date.now()))
-          .utc()
+        default: moment.utc()
           .format()
       },
       instruction: {
