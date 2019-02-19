@@ -83,7 +83,7 @@
       </div>
     </div>
     <div class="card-footer text-center d-print-none p-1">
-      <button class="btn btn-sm btn-success mr-1">Edit Item</button>
+      <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
       <button class="btn btn-sm btn-danger">Cancel Item</button>
     </div>
   </div>
@@ -104,6 +104,9 @@ export default {
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    goToEdit() {
+      this.$router.push({ path: `edititem/${this.lineIndex}/${this.index}` });
     }
   }
 };

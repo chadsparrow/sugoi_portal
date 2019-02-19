@@ -43,12 +43,21 @@
           </div>
         </div>
       </div>
+      <div class="text-center mt-2">
+        <button
+          type="button"
+          class="btn btn-sm btn-success"
+          @click.prevent="goToEdit()"
+        >Edit Line Details</button>
+      </div>
       <div class="items mt-2" v-if="orderLine.items.length">
         <LineItem
           v-for="(lineitem, childIndex) in orderLine.items"
           :key="childIndex"
           :index="childIndex"
           :lineIndex="index"
+          :priceBreak="orderLine.priceBreak"
+          :graphicCode="orderLine.graphicCode"
         ></LineItem>
       </div>
     </div>
@@ -63,11 +72,6 @@
         class="btn btn-sm btn-danger mr-1 d-print-none"
         @click.prevent
       >Cancel Full Line</button>
-      <button
-        type="button"
-        class="btn btn-sm btn-success"
-        @click.prevent="goToEdit()"
-      >Edit Line Details</button>
       <div
         class="rounded bg-secondary text-light float-right p-2"
       >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>

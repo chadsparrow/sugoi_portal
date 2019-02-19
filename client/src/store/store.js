@@ -142,11 +142,9 @@ export const store = new Vuex.Store({
       state.order.taxes = null;
     },
     CALC_LINE_TOTALS: (state) => {
-      let lineSum = 0;
       for (let x = 0; x < state.order.orderLines.length; x++) {
         let currentLine = state.order.orderLines[x];
         let { tracingCharge, scaledArtCharge, creativeCharge } = currentLine;
-
         state.order.orderLines[x].itemsSubTotal = tracingCharge + scaledArtCharge + creativeCharge;
       }
     }

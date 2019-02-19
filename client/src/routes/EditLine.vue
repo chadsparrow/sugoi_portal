@@ -68,14 +68,13 @@
               <select
                 class="form-control form-control-sm"
                 id="colourWayCode"
-                v-if="colourWays.length || orderLine.colourWayCode"
                 v-model="orderLine.colourWayCode"
               >
-                <option
-                  v-for="(colourWay, index) in colourWays"
-                  :key="index"
-                  selected
-                >{{colourWay.code}}</option>
+                <option value="MSS">Moss</option>
+                <option value="RSK">Risk</option>
+                <option value="DEJ">Deep Jade</option>
+                <option value="LCH">Lichen</option>
+                <option value="LGR">Light Grey</option>
               </select>
             </div>
           </div>

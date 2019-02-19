@@ -1,5 +1,118 @@
 <template>
-  <div id="editItem">ITEM {{item.itemNumber}}</div>
+  <div class="item card border-dark mb-2">
+    <div class="card-header bg-secondary mb-0 p-1">
+      <div class="row text-light align-items-center">
+        <div class="col-sm-1">Item: {{item.itemNumber}}</div>
+        <div class="col sm-1">
+          <label for="selectedStyle" class="small my-0">Style:</label>
+          <select
+            class="form-control form-control-sm"
+            id="selectedStyle"
+            v-model="selectedStyle"
+            @change="selectStyle"
+          >
+            <option
+              v-for="(style, index) in styles"
+              :key="index"
+              :index="index"
+              :value="index"
+            >{{style.style}}-{{style.description}}</option>
+          </select>
+        </div>
+        <div class="col sm-5">
+          <label for="selectedConfig" class="small my-0">Config:</label>
+          <select class="form-control form-control-sm" id="selectedConfig" v-model="selectedConfig">
+            <option
+              v-for="(config, index) in configs"
+              :key="index"
+              :index="index"
+              :value="config.configuration"
+              @change="selectConfig"
+            >{{config.configuration}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">StyleCode: {{item.styleCode}}</div>
+        <div class="col-sm-2">JBA: {{item.jbaCode}}</div>
+      </div>
+    </div>
+    <div class="card-body p-1">
+      <div class="row align-items-center text-center">
+        <div class="col-sm-2">Ink: {{item.inkType}}</div>
+        <div v-if="item.childReference" class="col-sm-2">Child Ref#: {{item.childReference}}</div>
+        <div class="col-sm-2">Thread: {{item.thread}}</div>
+        <div v-if="item.zipper" class="col-sm-2">Zipper: {{item.zipper}}</div>
+        <div v-if="item.contrast" class="col-sm-2">Contrast: {{item.contrast}}</div>
+        <div v-if="item.personalization" class="col-sm-2">PRS: {{item.personalization}}</div>
+        <div v-if="item.zap" class="col-sm-2">ZAP: {{item.zap}}</div>
+      </div>
+      <hr class="my-2">
+      <div class="row align-items-center text-center">
+        <div class="col-sm-1 offset-sm-2">
+          2XS:
+          <span class="badge badge-dark">{{item.xxs}}</span>
+        </div>
+        <div class="col-sm-1">
+          XS:
+          <span class="badge badge-dark">{{item.xs}}</span>
+        </div>
+        <div class="col-sm-1">
+          S:
+          <span class="badge badge-dark">{{item.s}}</span>
+        </div>
+        <div class="col-sm-1">
+          M:
+          <span class="badge badge-dark">{{item.m}}</span>
+        </div>
+        <div class="col-sm-1">
+          L:
+          <span class="badge badge-dark">{{item.l}}</span>
+        </div>
+        <div class="col-sm-1">
+          XL:
+          <span class="badge badge-dark">{{item.xl}}</span>
+        </div>
+        <div class="col-sm-1">
+          2XL:
+          <span class="badge badge-dark">{{item.xxl}}</span>
+        </div>
+        <div class="col-sm-1">
+          3XL:
+          <span class="badge badge-dark">{{item.xxxl}}</span>
+        </div>
+      </div>
+      <hr class="my-2">
+      <div class="row p-0 m-0">
+        <div class="col-sm-2 text-center">Total Units
+          <br>units
+        </div>
+
+        <div class="col-sm-2 text-center">Unit Price
+          <br>$
+        </div>
+
+        <div class="col-sm-2 text-center">Add-Ons
+          <br>$
+        </div>
+
+        <div class="col-sm-2 text-center">Discount
+          <br>$
+        </div>
+
+        <div class="col-sm-2 text-center">Final Unit Price
+          <br>$
+        </div>
+
+        <div class="col-sm-2 text-center border border-dark rounded p-2">Item Total:
+          <br>
+          $ {{formatPrice(item.itemTotalPrice)}}
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-center d-print-none p-1">
+      <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
+      <button class="btn btn-sm btn-danger">Cancel Item</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -8,12 +121,37 @@ export default {
   data() {
     return {
       index: this.$route.params.index,
-      lineIndex: this.$route.params.lineIndex
+      lineIndex: this.$route.params.lineIndex,
+      configs: [],
+      selectedStyle: -1,
+      selectedConfig: -1,
+      selectedStyleCode: ""
     };
   },
   computed: {
     item() {
-      console.log(lineIndex, index);
+      return this.$store.state.order.orderLines[this.lineIndex].items[
+        this.index
+      ];
+    },
+    styles() {
+      return this.$store.state.styles;
+    }
+  },
+  methods: {
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    selectStyle() {
+      this.configs = this.styles[this.selectedStyle].configurations;
+      this.selectedConfig = -1;
+      this.selectedStyleCode = "";
+    },
+    selectConfig() {
+      this.item.autobahnCode = this.styles[this.selectedStyle].configurations[
+        this.selectedConfig
+      ].autobahnCode;
     }
   }
 };
