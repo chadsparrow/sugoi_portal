@@ -237,7 +237,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     qty,
     netValue,
     currency,
-    latestShipDate
+    latestShipDate,
+    accountNum
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -246,7 +247,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       foundOrder.currentArtist = currentArtist;
       foundOrder.client = client;
+      foundOrder.accountNum = accountNum
       foundOrder.priority = priority;
+
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
