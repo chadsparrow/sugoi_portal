@@ -1,8 +1,6 @@
 <template>
   <div class="card border-dark">
-    <div
-      class="card-header bg-dark text-light"
-    >Edit Order Details for Order: {{order.orderNum}} - {{order.client}}</div>
+    <div class="card-header bg-dark text-light p-2">Contract#: {{order.orderNum}}</div>
     <div class="row card-body p-2">
       <div class="col-sm-3">
         <div class="form-group mb-1">
@@ -48,7 +46,7 @@
         <div class="form-group mb-1">
           <label for="estShipDate" class="small my-0">Est. Ship Date</label>
           <DatePicker
-            v-model="order.estShipDate"
+            v-model="order.estDeliveryDate"
             :bootstrapStyling="true"
             :use-utc="true"
             :clearButton="true"
@@ -84,6 +82,7 @@
               class="form-control form-control-sm"
               id="client"
               v-model.trim="order.client"
+              readonly
             >
           </div>
           <div class="form-group mb-1 col-sm-6">

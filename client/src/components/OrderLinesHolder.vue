@@ -1,6 +1,6 @@
 <template>
   <div class="card border-dark mt-2 mb-4">
-    <div class="card-header bg-dark text-light p-1">
+    <div class="card-header bg-dark text-light p-2">
       <span>{{title}}</span>
     </div>
     <div class="card-body p-1">

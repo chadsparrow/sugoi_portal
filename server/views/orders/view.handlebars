@@ -9,12 +9,14 @@
               <span style="font-weight:100; font-size:1.5rem;">Order Details: {{order.orderNum}}</span>
             </div>
             <div class="col s12">
-              <a class="btn green waves-block waves-effect waves-light" href="/3d_assets/{{order.orderNum}}/{{order.orderNum}}.pdf">VIEW
+              <a class="btn green waves-block waves-effect waves-light"
+                href="/3d_assets/{{order.orderNum}}/{{order.orderNum}}.pdf">VIEW
                 FLAT PDF</a>
             </div>
           </div>
           <div class="col s12 center-align" style="padding: 10px;">
-            <span style="font-weight:300; font-size:1.25em; margin-right: 5px;">Current Status:</span><br><span style="font-weight:600; font-size:1.5rem;">{{stripStatusCode
+            <span style="font-weight:300; font-size:1.25em; margin-right: 5px;">Current Status:</span><br><span
+              style="font-weight:600; font-size:1.5rem;">{{stripStatusCode
               order.currentStatus}}</span>
           </div>
           {{else}}
@@ -23,7 +25,8 @@
               <span style="font-weight:100; font-size:1.5rem;">Order Details: {{order.orderNum}}</span>
             </div>
             <div class="col s12">
-              <a class="btn green waves-block waves-effect waves-light" href="/3d_assets/{{order.orderNum}}/{{order.orderNum}}.pdf">VIEW
+              <a class="btn green waves-block waves-effect waves-light"
+                href="/3d_assets/{{order.orderNum}}/{{order.orderNum}}.pdf">VIEW
                 FLAT PDF</a>
             </div>
           </div>
@@ -108,7 +111,8 @@
             <a href="/proofs/{{_id}}"><img src="{{viewImgLink}}" onerror="this.src='/images/missing.jpg'"></a>
           </div>
           <div class="card-content" style="line-height: normal;">
-            <span style="font-weight:700; font-size: 12px;">{{gender}} {{styleName}}<i class="material-icons right activator">more_vert</i></span><br>
+            <span style="font-weight:700; font-size: 12px;">{{gender}} {{styleName}}<i
+                class="material-icons right activator">more_vert</i></span><br>
             <small class="grey-text text-darken-2">{{styleNumber}}</small><br>
             <small class="grey-text">{{itemNumber}}</small>
           </div>
@@ -116,7 +120,8 @@
             <a href="/proofs/{{_id}}" class="btn-small black waves-effect waves-block waves-light">VIEW 3D</a>
           </div>
           <div class="card-reveal" style="font-size: 12px;">
-            <span class="card-title grey-text text-darken-4" style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
+            <span class="card-title grey-text text-darken-4"
+              style="font-weight:300; font-size:1.15rem; margin-bottom: 0px;">{{itemNumber}}<i
                 class="material-icons right">close</i></span><br>
             <span class="grey-text">{{styleNumber}}</span><br>
             <span class="grey-text">{{styleName}}</span>
@@ -155,8 +160,8 @@
     <ul>
       {{#if user.editProofs}}
       {{#if (checkForQCStatus order.currentStatus)}}
-      <li><a href="/proofs/qc/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left" data-tooltip="QC Order"><i
-            class="material-icons">touch_app</i></a></li>
+      <li><a href="/proofs/qc/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
+          data-tooltip="QC Order"><i class="material-icons">touch_app</i></a></li>
       {{/if}}
       <li><a href="/proofs/qc/archive/view/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
           data-tooltip="QC Archive"><i class="material-icons">
@@ -190,6 +195,7 @@
         <div class="modal-content">
           <div class="row">
             <div class="input-field col s12">
+              {{#select order.isr}}
               <select name="isr">
                 <option value="DOSULLIVAN">Dean</option>
                 <option value="RPILLER">Reed</option>
@@ -197,6 +203,7 @@
                 <option value="MBELLEAU">MJ</option>
                 <option value="TKAINTH">TJ</option>
               </select>
+              {{/select}}
               <label for="isr">Revision Requested By:</label>
             </div>
           </div>
@@ -212,8 +219,8 @@
 
       </div>
       <div class="modal-footer">
-        <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
-            class="fas fa-check-square"></i>
+        <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action"
+          style="margin-right: 10px;"><i class="fas fa-check-square"></i>
           Submit
         </button>
         <a href="#" id="cancel" name="cancel" class="modal-action modal-close btn waves-effect waves-light red"><i
@@ -227,14 +234,13 @@
   <div class="container">
     <div class="container"></div>
     <div id="modal2" class="modal">
-
       <form action="/orders/notes/{{order._id}}?_method=PUT" method="post">
         <input type="hidden" name="_method" value="PUT">
         <div class="modal-content">
           <div class="row">
             <div class="input-field col s12 m6">
-              <input style="text-transform: uppercase;" placeholder="enter name..." name="noteUser" type="text" class="validate"
-                {{#if user}} value="{{getHandle
+              <input style="text-transform: uppercase;" placeholder="enter name..." name="noteUser" type="text"
+                class="validate" {{#if user}} value="{{getHandle
               user.username}}" {{/if}} required>
               <label for="noteUser">Note By:</label>
             </div>
@@ -248,8 +254,8 @@
         </div>
 
         <div class="modal-footer">
-          <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
-              class="fas fa-check-square"></i>
+          <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action"
+            style="margin-right: 10px;"><i class="fas fa-check-square"></i>
             Submit
           </button>
           <a href="#" id="cancel" name="cancel" class="modal-action modal-close btn waves-effect waves-light red"><i

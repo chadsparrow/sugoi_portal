@@ -40,7 +40,7 @@ $(document).ready(function () {
     setDefaultDate: true
   });
 
-  //latest in hand\
+  //latest in hand
   $("#latestInHand").datepicker({
     minDate: new Date(),
     setDefaultDate: true
@@ -122,11 +122,6 @@ $(document).ready(function () {
       $(".main-loader").hide();
     },
     responsive: true,
-    fixedHeader: {
-      header: true,
-      headerOffset: 64,
-      footer: false
-    },
     select: true,
     pageLength: -1,
     order: [[1, "asc"], [3, "asc"]],
@@ -428,7 +423,6 @@ $(document).ready(function () {
   });
 
   $("#userTable").dataTable({
-    responsive: true,
     pageLength: -1,
     oLanguage: {
       sSearch: "Search",

@@ -42,7 +42,7 @@ const OrderSchema = new Schema({
       "W. CANCELLED",
       "X. Archived"
     ],
-    default: "A. Waiting for Proof"
+    default: "1. Initial"
   },
   priority: {
     type: String,
