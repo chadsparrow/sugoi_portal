@@ -201,7 +201,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     netValue,
     currency,
     latestShipDate,
-    multishipPrePack
+    multishipPrePack,
+    accountNum
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -210,7 +211,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       foundOrder.currentArtist = currentArtist;
       foundOrder.client = client;
+      foundOrder.accountNum = accountNum
       foundOrder.priority = priority;
+
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus == "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
@@ -241,8 +244,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = parseInt(diff.days() + 1);
           foundOrder.outputTurnaround = outputTurnaround;
-          let reportWeek = moment.utc(d).format("W");
-          let reportYear = moment.utc(d).format("YYYY");
+          let reportWeek = moment.utc().format("W");
+          let reportYear = moment.utc().format("YYYY");
           let reportMonth = moment
             .utc()
             .format("M");

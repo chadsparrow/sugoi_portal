@@ -17,12 +17,12 @@
                   <div class="input-field col s12">
                     <input type="text" name="client" id="client" class="validate" value="{{order.client}}" required
                       {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
-                      <label for="client">Client:</label>
+                    <label for="client">Client:</label>
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
-                      class="validate" required {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}}
-                      {{else}} readonly{{/if}}{{/if}}> <label for="accountNum">Account #:</label>
+                      class="validate" required {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}> <label
+                      for="accountNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
                     {{#if user.admin}}
@@ -79,7 +79,8 @@
                   <div class="input-field col s12">
                     {{#if user.admin}}
                     <i class="small material-icons prefix">today</i>
-                    <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
+                    <input type="text" class="input-date" name="eventDate" id="eventDate"
+                      value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
@@ -89,7 +90,8 @@
                     <label for="eventDate">Event Date:</label>
                     {{else}}
                     <i class="small material-icons prefix">today</i>
-                    <input type="text" class="input-date" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
+                    <input type="text" class="input-date" name="eventDate" id="eventDate"
+                      value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{/if}}
                     {{/if}}
@@ -97,7 +99,8 @@
                   <div class="input-field col s12">
                     {{#if user.admin}}
                     <i class="small material-icons prefix">today</i>
-                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
+                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand"
+                      value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
@@ -106,7 +109,8 @@
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{else}}
                     <i class="small material-icons prefix">today</i>
-                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand" value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
+                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand"
+                      value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
                     {{/if}}
                     {{/if}}
@@ -156,8 +160,9 @@
                   <div id="productionDiv">
                     <div class="input-field col s6 l4">
                       <input type="number" name="qty" id="qty" value="{{order.qty}}"
-                        {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
-                        <label for="qty">Qty:</label>
+                        {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}}
+                        readonly{{/if}}{{/if}}>
+                      <label for="qty">Qty:</label>
                     </div>
                     <div class="input-field col s6 l4">
                       <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue"
@@ -212,7 +217,8 @@
                       {{/if}}
                     </div>
                     <div class="input-field col s12">
-                      <input type="text" name="multishipPrePack" id="multishipPrePack" value="{{order.multishipPrePack}}">
+                      <input type="text" name="multishipPrePack" id="multishipPrePack"
+                        value="{{order.multishipPrePack}}">
                       <label for="multishipPrePack">Added Services:</label>
                     </div>
                   </div>
@@ -235,8 +241,8 @@
                     class="fas fa-check-square"></i>
                   Submit
                 </button>
-                <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
-                    class="fas fa-times"></i>
+                <a href="javascript:history.back()" id="cancel" name="cancel"
+                  class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
                   Cancel</a>
               </div>
             </div>
