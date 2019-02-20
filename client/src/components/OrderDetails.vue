@@ -9,9 +9,14 @@
           <li class="list-group-item">Order: {{order.orderNum}}</li>
           <li class="list-group-item">Custom Rep: {{order.isr}}</li>
           <li class="list-group-item">Order Date: {{formatDate(order.enteredDate)}}</li>
-          <li class="list-group-item">Event Date: {{formatDate(order.eventDate)}}</li>
-          <li class="list-group-item">In-Hand Date: {{formatDate(order.latestInHand)}}</li>
-          <li class="list-group-item">Est. Ship Date: {{formatDate(order.estDeliveryDate)}}</li>
+          <li
+            class="list-group-item"
+            v-if="order.eventDate"
+          >Event Date: {{formatDate(order.eventDate)}}</li>
+          <li
+            class="list-group-item"
+            v-if="order.eventDate"
+          >In-Hand Date: {{formatDate(order.latestInHand)}}</li>
         </ul>
         <div class="d-print-none">
           <label for="orderNotes" class="mb-0 mt-2">Notes:</label>

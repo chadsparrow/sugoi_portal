@@ -1,7 +1,11 @@
 <template>
   <div class="card border-secondary mb-2" v-if="orderLine.cancelled == false">
-    <div class="card-header bg-secondary text-light p-1">
+    <div class="card-header bg-secondary text-light p-1 justify-items-center">
       <span>Line: {{orderLine.lineNumber}}</span>
+      <div
+        class="badge badge-warning text-center ml-3"
+        v-if="orderLine.graphicCode != 'CUSTM'"
+      >Quick Design</div>
       <span class="float-right">Details</span>
     </div>
     <div class="card-body p-1">
@@ -74,7 +78,7 @@
       >Cancel Full Line</button>
       <div
         class="rounded bg-secondary text-light float-right p-2"
-      >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
+      >Line Total: $ {{formatPrice(lineTotal)}}</div>
     </div>
   </div>
 </template>
@@ -91,6 +95,12 @@ export default {
   computed: {
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
+    },
+    lineTotal() {
+      let { tracingCharge, scaledArtCharge, creativeCharge } = this.orderLine;
+      this.orderLine.itemSubTotal =
+        tracingCharge + scaledArtCharge + creativeCharge;
+      return this.orderLine.itemSubTotal;
     }
   },
   created() {
