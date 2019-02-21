@@ -20,39 +20,39 @@
       </div>
       <hr class="my-2">
       <div class="row align-items-center text-center">
-        <div class="col">
+        <div class="col" v-if="item.one">
           ONE:
           <span style="font-size: 15px; font-weight: bold;">{{item.one}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.xxs">
           2XS:
           <span style="font-size: 15px; font-weight: bold;">{{item.xxs}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.xs">
           XS:
           <span style="font-size: 15px; font-weight: bold;">{{item.xs}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.s">
           S:
           <span style="font-size: 15px; font-weight: bold;">{{item.s}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.m">
           M:
           <span style="font-size: 15px; font-weight: bold;">{{item.m}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.l">
           L:
           <span style="font-size: 15px; font-weight: bold;">{{item.l}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.xl">
           XL:
           <span style="font-size: 15px; font-weight: bold;">{{item.xl}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.xxl">
           2XL:
           <span style="font-size: 15px; font-weight: bold;">{{item.xxl}}</span>
         </div>
-        <div class="col">
+        <div class="col" v-if="item.xxxl">
           3XL:
           <span style="font-size: 15px; font-weight: bold;">{{item.xxxl}}</span>
         </div>
@@ -61,27 +61,27 @@
       <div class="row m-0 p-0">
         <div class="col text-center">Total Units
           <br>
-          <span style="font-weight: bold; font-size: 14px;">0</span>
+          <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
         </div>
 
         <div class="col text-center">Unit Price
           <br>
-          <span style="font-weight: bold; font-size: 14px;">$</span>
+          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.unitPrice)}}</span>
         </div>
 
         <div class="col text-center">Add-Ons
           <br>
-          <span style="font-weight: bold; font-size: 14px;">$</span>
+          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.addOns)}}</span>
         </div>
 
         <div class="col text-center">Discount
           <br>
-          <span style="font-weight: bold; font-size: 14px;">%</span>
+          <span style="font-weight: bold; font-size: 14px;">{{item.itemDiscount}}%</span>
         </div>
 
         <div class="col text-center">Final Unit Price
           <br>
-          <span style="font-weight: bold; font-size: 14px;">$</span>
+          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
 
         <div

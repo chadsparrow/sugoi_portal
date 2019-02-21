@@ -276,7 +276,7 @@
         </div>
 
         <h3 class="text-center bg-secondary text-light rounded p-1 mb-0">Total:
-          <h4>${{order.netValue}}</h4>
+          <h4>${{formatPrice(totalPrice)}}</h4>
         </h3>
         <small>Deposit</small>
         <div class="input-group input-group-sm mb-2">
@@ -293,7 +293,7 @@
         </div>
         <p class="text-center bg-secondary text-light rounded">Balance Due:
           <br>
-          <span>${{order.balanceOutstanding}}</span>
+          <span>${{formatPrice(balanceDue)}}</span>
         </p>
       </div>
     </div>
@@ -323,9 +323,37 @@ export default {
     },
     states() {
       return this.$store.state.states;
+    },
+    totalPrice() {
+      let linesTotal = 0;
+      for (let x = 0; x < this.order.orderLines.length; x++) {
+        let currentLine = this.order.orderLines[x];
+        if (!currentLine.cancelled) {
+          linesTotal += currentLine.itemSubTotal;
+        }
+      }
+
+      linesTotal += linesTotal * (this.order.taxes / 100);
+
+      this.order.netValue = linesTotal;
+
+      return linesTotal;
+    },
+    balanceDue() {
+      let balance = this.order.netValue;
+      balance -= this.order.deposit;
+      balance -= this.order.isrCollectedCAD;
+      balance += this.order.isrRefunded;
+
+      this.order.balanceOutstanding = balance;
+      return balance;
     }
   },
   methods: {
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     setProvTax(e) {
       let index = e.target.selectedIndex;
       let tax = this.provs[index].tax;

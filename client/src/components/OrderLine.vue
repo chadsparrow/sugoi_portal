@@ -108,15 +108,26 @@ export default {
         graphicCode
       } = this.orderLine;
 
-      this.orderLine.itemSubTotal =
-        tracingCharge + scaledArtCharge + creativeCharge;
+      let itemsTotal = 0;
 
-      //  FIX THIS SO IT ONLY DISCOUNT LINE ITEMS TOTALS - NOT CHARGES
-      if (graphicCode != "CUSTM") {
-        return this.orderLine.itemSubTotal;
-      } else {
-        return this.orderLine.itemSubTotal;
+      // cycles through items in the line and adds all the final item prices
+      for (let x = 0; x < this.orderLine.items.length; x++) {
+        let currentItem = this.orderLine.items[x];
+        if (!currentItem.cancelled) {
+          itemsTotal += currentItem.itemTotalPrice;
+        }
       }
+
+      //if line is quick design, decreases the total by 10%
+      if (graphicCode != "CUSTM") {
+        itemsTotal *= 0.9;
+      }
+
+      itemsTotal += tracingCharge;
+      itemsTotal += scaledArtCharge;
+      itemsTotal += creativeCharge;
+      this.orderLine.itemSubTotal = itemsTotal;
+      return itemsTotal;
     }
   },
   created() {

@@ -109,6 +109,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="one"
             v-model.number="item.one"
           >
@@ -124,6 +125,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="xxs"
             v-model.number="item.xxs"
           >
@@ -134,6 +136,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="xs"
             v-model.number="item.xs"
           >
@@ -144,6 +147,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="s"
             v-model.number="item.s"
           >
@@ -154,6 +158,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="m"
             v-model.number="item.m"
           >
@@ -164,6 +169,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="l"
             v-model.number="item.l"
           >
@@ -174,6 +180,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="xl"
             v-model.number="item.xl"
           >
@@ -187,6 +194,7 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step="1"
             id="xxl"
             v-model.number="item.xxl"
           >
@@ -206,18 +214,18 @@
       <div class="row p-0 m-0 align-items-center text-center">
         <div class="col text-center">Total Units
           <br>
-          {{unitTotal}}
+          <span>{{unitTotal}}</span>
         </div>
 
         <div class="col">
           Unit Price ({{orderLine.priceBreak}})
           <br>
-          $ {{formatPrice(unitPrice)}}
+          <span>$ {{formatPrice(unitPrice)}}</span>
         </div>
 
         <div class="col">Add-Ons
           <br>
-          $ {{formatPrice(addOns)}}
+          <span>$ {{formatPrice(addOns)}}</span>
         </div>
 
         <div class="col">
@@ -226,23 +234,29 @@
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
+            step=".5"
             id="itemDiscount"
             v-model.number="item.itemDiscount"
+            style="font-weight: bold; font-size: 14px;"
           >
         </div>
 
         <div class="col">Final Unit Price
-          <br>$
+          <br>
+          <span>$ {{formatPrice(finalUnitPrice)}}</span>
         </div>
 
-        <div class="col border border-dark rounded p-2">Item Total:
+        <div
+          class="col border border-dark rounded p-2"
+          style="font-size: 16px; font-weight: bold;"
+        >Item Total:
           <br>
-          $ {{formatPrice(item.itemTotalPrice)}}
+          $ {{formatPrice(finalTotalPrice)}}
         </div>
       </div>
     </div>
     <div class="card-footer bg-dark text-light text-right p-2">
-      <button class="btn btn-sm btn-success mr-1" @click.prevent>Commit Changes</button>
+      <button class="btn btn-sm btn-success mr-1" @click.prevent="goBack">Commit Changes</button>
       <div class="form-check float-left ml-3">
         <input
           class="form-check-input"
@@ -398,6 +412,13 @@ export default {
       } else {
         return 0;
       }
+    },
+    finalUnitPrice() {
+      let subUnitPrice = this.unitPrice + this.addOns;
+      return subUnitPrice - subUnitPrice * (this.item.itemDiscount / 100);
+    },
+    finalTotalPrice() {
+      return this.finalUnitPrice * this.unitTotal;
     }
   },
   methods: {
@@ -450,7 +471,23 @@ export default {
         this.item.xxl = 0;
         this.item.xxxl = 0;
       }
+    },
+    goBack() {
+      this.item.totalUnits = this.unitTotal;
+      this.item.unitPrice = this.unitPrice;
+      this.item.addOns = this.addOns;
+      this.item.finalUnitPrice = this.finalUnitPrice;
+      this.item.itemTotalPrice = this.finalTotalPrice;
+      this.$store.dispatch("saveOrder", this.order);
+      this.$router.push({ path: `/${this.order.orderNum}` });
     }
   }
 };
 </script>
+
+<style scoped>
+span {
+  font-weight: bold;
+  font-size: 14px;
+}
+</style>

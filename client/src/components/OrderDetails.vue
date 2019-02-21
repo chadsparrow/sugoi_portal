@@ -75,16 +75,16 @@
         <div class="col-sm-12 mb-2 p-1 text-center border border-3 rounded">
           <h4>Total:
             <br>
-            $ {{order.netValue}}
+            $ {{formatPrice(order.netValue)}}
           </h4>
         </div>
         <ul class="list-group list-group-flush">
-          <li v-if="order.deposit" class="list-group-item">Deposit: $ {{order.deposit}}</li>
+          <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
         </ul>
         <div class="mb-2 p-1 text-center border rounded">
           <h6>Balance Due:
             <br>
-            $ {{order.balanceOutstanding}}
+            $ {{formatPrice(order.balanceOutstanding)}}
           </h6>
         </div>
         <div class="border-top pt-2">
@@ -109,6 +109,10 @@ export default {
     }
   },
   methods: {
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
     goToEdit() {
       this.$router.push({ path: `/${this.order.orderNum}/editdetails` });
     },
