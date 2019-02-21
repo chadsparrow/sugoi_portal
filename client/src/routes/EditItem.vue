@@ -1,14 +1,16 @@
 <template>
-  <div class="item card border-dark mb-2">
-    <div class="card-header bg-secondary mb-0 p-1">
-      <div class="row text-light align-items-center">
-        <div class="col-sm-1">Item: {{item.itemNumber}}</div>
-        <div class="col sm-1">
+  <div class="item card border-dark">
+    <div class="card-header bg-dark text-light p-2">
+      <div>Item#: {{item.itemNumber}}</div>
+    </div>
+    <div class="card-body p-3">
+      <div class="row align-items-center mb-2">
+        <div class="col-sm-3">
           <label for="selectedStyle" class="small my-0">Style:</label>
           <select
             class="form-control form-control-sm"
             id="selectedStyle"
-            v-model="selectedStyle"
+            v-model="item.selectedStyle"
             @change="selectStyle"
           >
             <option
@@ -19,98 +21,238 @@
             >{{style.style}}-{{style.description}}</option>
           </select>
         </div>
-        <div class="col sm-5">
+        <div class="col-sm-4">
           <label for="selectedConfig" class="small my-0">Config:</label>
-          <select class="form-control form-control-sm" id="selectedConfig" v-model="selectedConfig">
+          <select
+            class="form-control form-control-sm"
+            id="selectedConfig"
+            v-model="item.selectedConfig"
+            @change="selectConfig"
+          >
             <option
-              v-for="(config, index) in configs"
+              v-for="(config, index) in item.configs"
               :key="index"
               :index="index"
-              :value="config.configuration"
-              @change="selectConfig"
-            >{{config.configuration}}</option>
+              :value="index"
+            >{{config.extendedDescription}}</option>
           </select>
         </div>
-        <div class="col-sm-2">StyleCode: {{item.styleCode}}</div>
+        <div class="col-sm-3">StyleCode: {{item.styleCode}}</div>
         <div class="col-sm-2">JBA: {{item.jbaCode}}</div>
       </div>
-    </div>
-    <div class="card-body p-1">
       <div class="row align-items-center text-center">
-        <div class="col-sm-2">Ink: {{item.inkType}}</div>
-        <div v-if="item.childReference" class="col-sm-2">Child Ref#: {{item.childReference}}</div>
-        <div class="col-sm-2">Thread: {{item.thread}}</div>
-        <div v-if="item.zipper" class="col-sm-2">Zipper: {{item.zipper}}</div>
-        <div v-if="item.contrast" class="col-sm-2">Contrast: {{item.contrast}}</div>
-        <div v-if="item.personalization" class="col-sm-2">PRS: {{item.personalization}}</div>
-        <div v-if="item.zap" class="col-sm-2">ZAP: {{item.zap}}</div>
+        <div class="col-sm-2">
+          <label for="inkType" class="small my-0">Ink:</label>
+          <select class="form-control form-control-sm" id="inkType" v-model="item.inkType">
+            <option value="D" selected>Standard</option>
+            <option value="F">Fluorescent</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label for="childReference" class="small my-0">Child Ref#:</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="childReference"
+            v-model.trim="item.childReference"
+          >
+        </div>
+        <div class="col-sm-1">
+          <label for="thread" class="small my-0">Thread:</label>
+          <select class="form-control form-control-sm" id="thread" v-model="item.thread">
+            <option value="BLK">BLK</option>
+            <option value="WHT">WHT</option>
+            <option value="GNM">GNM</option>
+            <option value="INC">INC</option>
+            <option value="REF">REF</option>
+            <option value="IND">IND</option>
+            <option value="F1R">F1R</option>
+            <option value="VPK">VPK</option>
+            <option value="FLY">FLY</option>
+          </select>
+        </div>
+        <div class="col-sm-1" v-if="item.zipperOptions.length">
+          <label for="zipper" class="small my-0">Zipper:</label>
+          <select class="form-control form-control-sm" id="zipper" v-model="item.zipper">
+            <option v-for="(zipper, index) in item.zipperOptions" :key="index">{{zipper}}</option>
+          </select>
+        </div>
+        <div class="col-sm-1" v-if="item.contrastOptions.length">
+          <label for="contrast" class="small my-0">Contrast:</label>
+          <select class="form-control form-control-sm" id="contrast" v-model="item.contrast">
+            <option v-for="(contrast, index) in item.contrastOptions" :key="index">{{contrast}}</option>
+          </select>
+        </div>
+        <div class="col-sm-1">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="true"
+            id="personalization"
+            v-model="item.personalization"
+          >
+          <label class="form-check-label" for="personalization">PRS</label>
+        </div>
+        <div class="col-sm-1">
+          <input class="form-check-input" type="checkbox" value="true" id="zap" v-model="item.zap">
+          <label class="form-check-label" for="zap">ZAP</label>
+        </div>
       </div>
       <hr class="my-2">
-      <div class="row align-items-center text-center">
-        <div class="col-sm-1 offset-sm-2">
-          2XS:
-          <span class="badge badge-dark">{{item.xxs}}</span>
+      <div
+        class="row align-items-center text-center"
+        v-if="item.sizeRange ==='ONE' && item.sizeRange"
+      >
+        <div class="form-group col-sm-2 offset-sm-5">
+          <label for="one" class="small my-0">ONE</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="one"
+            v-model.number="item.one"
+          >
         </div>
-        <div class="col-sm-1">
-          XS:
-          <span class="badge badge-dark">{{item.xs}}</span>
+      </div>
+      <div
+        class="row align-items-center text-center"
+        v-else-if="item.sizeRange !=='ONE' && item.sizeRange"
+      >
+        <div class="form-group col" v-if="item.sizeRange.includes('2XS')">
+          <label for="xxs" class="small my-0">2XS</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="xxs"
+            v-model.number="item.xxs"
+          >
         </div>
-        <div class="col-sm-1">
-          S:
-          <span class="badge badge-dark">{{item.s}}</span>
+        <div class="form-group col">
+          <label for="xs" class="small my-0">XS</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="xs"
+            v-model.number="item.xs"
+          >
         </div>
-        <div class="col-sm-1">
-          M:
-          <span class="badge badge-dark">{{item.m}}</span>
+        <div class="form-group col">
+          <label for="s" class="small my-0">S</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="s"
+            v-model.number="item.s"
+          >
         </div>
-        <div class="col-sm-1">
-          L:
-          <span class="badge badge-dark">{{item.l}}</span>
+        <div class="form-group col">
+          <label for="m" class="small my-0">M</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="m"
+            v-model.number="item.m"
+          >
         </div>
-        <div class="col-sm-1">
-          XL:
-          <span class="badge badge-dark">{{item.xl}}</span>
+        <div class="form-group col">
+          <label for="l" class="small my-0">L</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="l"
+            v-model.number="item.l"
+          >
         </div>
-        <div class="col-sm-1">
-          2XL:
-          <span class="badge badge-dark">{{item.xxl}}</span>
+        <div class="form-group col">
+          <label for="xl" class="small my-0">XL</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="xl"
+            v-model.number="item.xl"
+          >
         </div>
-        <div class="col-sm-1">
-          3XL:
-          <span class="badge badge-dark">{{item.xxxl}}</span>
+        <div
+          class="form-group col"
+          v-if="item.sizeRange.includes('2XL') || item.sizeRange.includes('3XL')"
+        >
+          <label for="xxl" class="small my-0">2XL</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="xxl"
+            v-model.number="item.xxl"
+          >
+        </div>
+        <div class="form-group col" v-if="item.sizeRange.includes('3XL')">
+          <label for="xxxl" class="small my-0">3XL</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="xxxl"
+            v-model.number="item.xxxl"
+          >
         </div>
       </div>
       <hr class="my-2">
-      <div class="row p-0 m-0">
-        <div class="col-sm-2 text-center">Total Units
-          <br>units
+      <div class="row p-0 m-0 align-items-center text-center">
+        <div class="col text-center">Total Units
+          <br>
+          {{unitTotal}}
         </div>
 
-        <div class="col-sm-2 text-center">Unit Price
+        <div class="col">
+          Unit Price ({{orderLine.priceBreak}})
+          <br>
+          $ {{formatPrice(unitPrice)}}
+        </div>
+
+        <div class="col">Add-Ons
+          <br>
+          $ {{formatPrice(addOns)}}
+        </div>
+
+        <div class="col">
+          <label for="itemDiscount" class="small my-0">Discount %</label>
+          <input
+            type="number"
+            class="form-control form-control-sm text-center"
+            min="0"
+            id="itemDiscount"
+            v-model.number="item.itemDiscount"
+          >
+        </div>
+
+        <div class="col">Final Unit Price
           <br>$
         </div>
 
-        <div class="col-sm-2 text-center">Add-Ons
-          <br>$
-        </div>
-
-        <div class="col-sm-2 text-center">Discount
-          <br>$
-        </div>
-
-        <div class="col-sm-2 text-center">Final Unit Price
-          <br>$
-        </div>
-
-        <div class="col-sm-2 text-center border border-dark rounded p-2">Item Total:
+        <div class="col border border-dark rounded p-2">Item Total:
           <br>
           $ {{formatPrice(item.itemTotalPrice)}}
         </div>
       </div>
     </div>
-    <div class="card-footer text-center d-print-none p-1">
-      <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
-      <button class="btn btn-sm btn-danger">Cancel Item</button>
+    <div class="card-footer bg-dark text-light text-right p-2">
+      <button class="btn btn-sm btn-success mr-1" @click.prevent>Commit Changes</button>
+      <div class="form-check float-left ml-3">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="true"
+          id="sketch"
+          v-model="item.sketch"
+        >
+        <label class="form-check-label" for="sketh">Sketch</label>
+      </div>
     </div>
   </div>
 </template>
@@ -121,14 +263,16 @@ export default {
   data() {
     return {
       index: this.$route.params.index,
-      lineIndex: this.$route.params.lineIndex,
-      configs: [],
-      selectedStyle: -1,
-      selectedConfig: -1,
-      selectedStyleCode: ""
+      lineIndex: this.$route.params.lineIndex
     };
   },
   computed: {
+    order() {
+      return this.$store.state.order;
+    },
+    orderLine() {
+      return this.$store.state.order.orderLines[this.lineIndex];
+    },
     item() {
       return this.$store.state.order.orderLines[this.lineIndex].items[
         this.index
@@ -136,6 +280,124 @@ export default {
     },
     styles() {
       return this.$store.state.styles;
+    },
+    unitTotal() {
+      return (
+        this.item.one +
+        this.item.xxs +
+        this.item.xs +
+        this.item.s +
+        this.item.m +
+        this.item.l +
+        this.item.xl +
+        this.item.xxl +
+        this.item.xxxl
+      );
+    },
+    unitPrice() {
+      if (this.order.currency === "CAD" && this.item.selectedConfig > -1) {
+        switch (this.orderLine.priceBreak) {
+          case 1:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad1;
+            break;
+          case 6:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad6;
+            break;
+          case 12:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad12;
+            break;
+          case 24:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad24;
+            break;
+          case 50:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad50;
+            break;
+          case 100:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad100;
+            break;
+          case 200:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad200;
+            break;
+          case 500:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad500;
+            break;
+        }
+      } else if (
+        this.order.currency === "USD" &&
+        this.item.selectedConfig > -1
+      ) {
+        switch (this.orderLine.priceBreak) {
+          case 1:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd1;
+            break;
+          case 6:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd6;
+            break;
+          case 12:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd12;
+            break;
+          case 24:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd24;
+            break;
+          case 50:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd50;
+            break;
+          case 100:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd100;
+            break;
+          case 200:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd200;
+            break;
+          case 500:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd500;
+            break;
+        }
+      } else {
+        return 0;
+      }
+    },
+    addOns() {
+      if (this.item.zap && this.item.personalization) {
+        return 10;
+      } else if (this.item.zap && !this.item.personalization) {
+        return 5;
+      } else if (!this.item.zap && this.item.personalization) {
+        return 5;
+      } else {
+        return 0;
+      }
     }
   },
   methods: {
@@ -144,14 +406,50 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     selectStyle() {
-      this.configs = this.styles[this.selectedStyle].configurations;
-      this.selectedConfig = -1;
-      this.selectedStyleCode = "";
+      let { selectedStyle } = this.item;
+      this.item.configs = this.styles[selectedStyle].configurations;
+      this.item.zipperOptions = this.styles[selectedStyle].zipperOptions;
+      this.item.contrastOptions = this.styles[selectedStyle].contrastOptions;
+      this.item.selectedConfig = -1;
+      this.item.zipper = null;
+      this.item.contrast = null;
     },
-    selectConfig() {
-      this.item.autobahnCode = this.styles[this.selectedStyle].configurations[
-        this.selectedConfig
-      ].autobahnCode;
+    selectConfig(e) {
+      let index = e.target.selectedIndex;
+      this.item.selectedConfig = index;
+      if (index > -1) {
+        let { selectedStyle } = this.item;
+
+        let {
+          autobahnCode,
+          jbaCode,
+          sizeRange,
+          styleCode,
+          extendedDescription
+        } = this.styles[selectedStyle].configurations[index];
+
+        this.item.autobahnCode = autobahnCode;
+        this.item.jbaCode = jbaCode;
+        this.item.sizeRange = sizeRange;
+        this.item.styleCode = styleCode;
+        this.item.extendedDescription = extendedDescription;
+
+        if (this.item.extendedDescription.includes("ZAP")) {
+          this.item.zap = true;
+        } else {
+          this.item.zap = false;
+        }
+
+        this.item.one = 0;
+        this.item.xxs = 0;
+        this.item.xs = 0;
+        this.item.s = 0;
+        this.item.m = 0;
+        this.item.l = 0;
+        this.item.xl = 0;
+        this.item.xxl = 0;
+        this.item.xxxl = 0;
+      }
     }
   }
 };

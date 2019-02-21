@@ -5,7 +5,7 @@
     </div>
     <div class="card-body p-1">
       <small v-if="orderLines == undefined">Undefined!</small>
-      <div v-else-if="orderLines.length ==0">
+      <div v-else-if="orderLines.length == 0">
         <small>There are no lines as of yet!</small>
       </div>
       <div v-else>

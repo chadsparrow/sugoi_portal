@@ -1,10 +1,9 @@
 <template>
-  <div class="item card border-dark mb-2">
+  <div class="item card border-dark mb-2" v-if="!item.cancelled">
     <div class="card-header bg-secondary mb-0 p-1">
       <div class="row text-light align-items-center">
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
-        <div class="col sm-3">Description: {{item.selectedConfig}}</div>
-        <div class="col-sm-2">Style: {{item.selectedStyle}}</div>
+        <div class="col sm-3">Description: {{item.extendedDescription}}</div>
         <div class="col-sm-3">StyleCode: {{item.styleCode}}</div>
         <div class="col-sm-2">JBA: {{item.jbaCode}}</div>
       </div>
@@ -17,66 +16,78 @@
         <div v-if="item.zipper" class="col-sm-2">Zipper: {{item.zipper}}</div>
         <div v-if="item.contrast" class="col-sm-2">Contrast: {{item.contrast}}</div>
         <div v-if="item.personalization" class="col-sm-2">PRS: {{item.personalization}}</div>
-        <div v-if="item.zap" class="col-sm-2">ZAP: {{item.zap}}</div>
+        <div v-if="item.zap" class="col-sm-2">ZAP: YES</div>
       </div>
       <hr class="my-2">
       <div class="row align-items-center text-center">
-        <div class="col-sm-1 offset-sm-2">
+        <div class="col">
+          ONE:
+          <span style="font-size: 15px; font-weight: bold;">{{item.one}}</span>
+        </div>
+        <div class="col">
           2XS:
-          <span class="badge badge-dark">{{item.xxs}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.xxs}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           XS:
-          <span class="badge badge-dark">{{item.xs}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.xs}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           S:
-          <span class="badge badge-dark">{{item.s}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.s}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           M:
-          <span class="badge badge-dark">{{item.m}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.m}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           L:
-          <span class="badge badge-dark">{{item.l}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.l}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           XL:
-          <span class="badge badge-dark">{{item.xl}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.xl}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           2XL:
-          <span class="badge badge-dark">{{item.xxl}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.xxl}}</span>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           3XL:
-          <span class="badge badge-dark">{{item.xxxl}}</span>
+          <span style="font-size: 15px; font-weight: bold;">{{item.xxxl}}</span>
         </div>
       </div>
       <hr class="my-2">
-      <div class="row p-0 m-0">
-        <div class="col-sm-2 text-center">Total Units
-          <br>units
+      <div class="row m-0 p-0">
+        <div class="col text-center">Total Units
+          <br>
+          <span style="font-weight: bold; font-size: 14px;">0</span>
         </div>
 
-        <div class="col-sm-2 text-center">Unit Price
-          <br>$
+        <div class="col text-center">Unit Price
+          <br>
+          <span style="font-weight: bold; font-size: 14px;">$</span>
         </div>
 
-        <div class="col-sm-2 text-center">Add-Ons
-          <br>$
+        <div class="col text-center">Add-Ons
+          <br>
+          <span style="font-weight: bold; font-size: 14px;">$</span>
         </div>
 
-        <div class="col-sm-2 text-center">Discount
-          <br>$
+        <div class="col text-center">Discount
+          <br>
+          <span style="font-weight: bold; font-size: 14px;">%</span>
         </div>
 
-        <div class="col-sm-2 text-center">Final Unit Price
-          <br>$
+        <div class="col text-center">Final Unit Price
+          <br>
+          <span style="font-weight: bold; font-size: 14px;">$</span>
         </div>
 
-        <div class="col-sm-2 text-center border border-dark rounded p-2">Item Total:
+        <div
+          class="col text-center border border-dark rounded p-1"
+          style="font-weight: bold; font-size: 14px;"
+        >Item Total:
           <br>
           $ {{formatPrice(item.itemTotalPrice)}}
         </div>

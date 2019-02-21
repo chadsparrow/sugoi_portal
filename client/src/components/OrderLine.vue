@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-secondary mb-2" v-if="orderLine.cancelled == false">
+  <div class="card border-secondary mb-2" v-if="!orderLine.cancelled">
     <div class="card-header bg-secondary text-light p-1 justify-items-center">
       <span>Line: {{orderLine.lineNumber}}</span>
       <div
@@ -60,8 +60,6 @@
           :key="childIndex"
           :index="childIndex"
           :lineIndex="index"
-          :priceBreak="orderLine.priceBreak"
-          :graphicCode="orderLine.graphicCode"
         ></LineItem>
       </div>
     </div>
@@ -76,9 +74,15 @@
         class="btn btn-sm btn-danger mr-1 d-print-none"
         @click.prevent
       >Cancel Full Line</button>
-      <div
-        class="rounded bg-secondary text-light float-right p-2"
-      >Line Total: $ {{formatPrice(lineTotal)}}</div>
+      <div class="float-right">
+        <div
+          class="rounded bg-warning text-center text-dark p-1"
+          v-if="orderLine.graphicCode != 'CUSTM'"
+        >QD Discount: 10%</div>
+        <div
+          class="rounded bg-secondary text-center text-light p-2"
+        >Line Total: $ {{formatPrice(lineTotal)}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -97,10 +101,22 @@ export default {
       return this.$store.state.order.orderLines[this.index];
     },
     lineTotal() {
-      let { tracingCharge, scaledArtCharge, creativeCharge } = this.orderLine;
+      let {
+        tracingCharge,
+        scaledArtCharge,
+        creativeCharge,
+        graphicCode
+      } = this.orderLine;
+
       this.orderLine.itemSubTotal =
         tracingCharge + scaledArtCharge + creativeCharge;
-      return this.orderLine.itemSubTotal;
+
+      //  FIX THIS SO IT ONLY DISCOUNT LINE ITEMS TOTALS - NOT CHARGES
+      if (graphicCode != "CUSTM") {
+        return this.orderLine.itemSubTotal;
+      } else {
+        return this.orderLine.itemSubTotal;
+      }
     }
   },
   created() {

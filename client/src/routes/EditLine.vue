@@ -1,9 +1,9 @@
 <template>
-  <div class="card border-secondary mb-2" v-if="orderLine.cancelled == false">
-    <div class="card-header bg-secondary text-light p-1">
+  <div class="card border-secondary" v-if="orderLine.cancelled == false">
+    <div class="card-header bg-dark text-light p-2">
       <span>Line: {{orderLine.lineNumber}}</span>
     </div>
-    <div class="card-body p-2">
+    <div class="card-body p-3">
       <div class="row">
         <div class="col-sm-3 border-right">
           <div class="form-group mb-1">
@@ -145,14 +145,13 @@
           </div>
         </div>
       </div>
-      <hr>
-      <div class="buttons mt-0">
-        <button
-          type="button"
-          class="btn btn-sm btn-success d-print-none float-right"
-          @click.prevent="goBack"
-        >Commit Changes</button>
-      </div>
+    </div>
+    <div class="card-footer bg-dark text-light p-2">
+      <button
+        type="button"
+        class="btn btn-sm btn-success d-print-none float-right"
+        @click.prevent="goBack"
+      >Commit Changes</button>
     </div>
   </div>
 </template>

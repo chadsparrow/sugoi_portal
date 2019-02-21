@@ -402,6 +402,14 @@ const OrderSchema = new Schema({
         type: Boolean,
         default: false
       },
+      need3d: {
+        type: Boolean,
+        default: false
+      },
+      sketchOnly: {
+        type: Boolean,
+        default: false
+      },
       items: [
         {
           itemNumber: {
@@ -412,13 +420,17 @@ const OrderSchema = new Schema({
             type: String,
             default: null
           },
-          selectedStyle: {
+          extendedDescription: {
             type: String,
             default: null
           },
+          selectedStyle: {
+            type: String,
+            default: -1
+          },
           selectedConfig: {
             type: String,
-            default: null
+            default: -1
           },
           jbaCode: {
             type: String,
@@ -437,7 +449,8 @@ const OrderSchema = new Schema({
           },
           inkType: {
             type: String,
-            default: null
+            default: "D",
+            uppercase: true
           },
           zipper: {
             type: String,
@@ -467,66 +480,77 @@ const OrderSchema = new Schema({
             default: null,
             uppercase: true
           },
+          one: {
+            type: Number,
+            default: 0
+          },
           xxs: {
             type: Number,
-            default: null
+            default: 0
           },
           xs: {
             type: Number,
-            default: null
+            default: 0
           },
           s: {
             type: Number,
-            default: null
+            default: 0
           },
           m: {
             type: Number,
-            default: null
+            default: 0
           },
           l: {
             type: Number,
-            default: null
+            default: 0
           },
           xl: {
             type: Number,
-            default: null
+            default: 0
           },
           xxl: {
             type: Number,
-            default: null
+            default: 0
           },
           xxxl: {
             type: Number,
-            default: null
+            default: 0
           },
           totalUnits: {
             type: Number,
-            default: null
+            default: 0
           },
           unitPrice: {
             type: Number,
-            default: null
+            default: 0
           },
           addOns: {
             type: Number,
-            default: null
+            default: 0
           },
           itemDiscount: {
             type: Number,
-            default: null
+            default: 0
           },
           finalUnitPrice: {
             type: Number,
-            default: null
+            default: 0
           },
           itemTotalPrice: {
             type: Number,
-            default: null
+            default: 0
           },
           cancelled: {
             type: Boolean,
             default: false
-          }
+          },
+          sketch: {
+            type: Boolean,
+            default: false
+          },
+          configs: [],
+          contrastOptions: [],
+          zipperOptions: []
         }
       ]
     }
