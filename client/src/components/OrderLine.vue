@@ -109,10 +109,10 @@ export default {
       } = this.orderLine;
 
       let itemsTotal = 0;
-
+      let items = this.orderLine.items;
       // cycles through items in the line and adds all the final item prices
-      for (let x = 0; x < this.orderLine.items.length; x++) {
-        let currentItem = this.orderLine.items[x];
+      for (let x = 0; x < items.length; x++) {
+        let currentItem = items[x];
         if (!currentItem.cancelled) {
           itemsTotal += currentItem.itemTotalPrice;
         }
@@ -126,17 +126,18 @@ export default {
       itemsTotal += tracingCharge;
       itemsTotal += scaledArtCharge;
       itemsTotal += creativeCharge;
-      this.orderLine.itemSubTotal = itemsTotal;
+      this.orderLine.itemsSubTotal = itemsTotal;
+      this.commitChanges;
       return itemsTotal;
+    },
+    order() {
+      return this.$store.state.order;
     }
   },
   data() {
     return {
       title: "Lines"
     };
-  },
-  mounted() {
-    this.commitChanges;
   },
   methods: {
     goToEdit() {
