@@ -36,7 +36,7 @@ module.exports = {
         return "light-blue lighten-2";
         break;
       case "C. Proof - Waiting on Someone else":
-        return "light-blue lighten-2";
+        return "deep-purple lighten-4";
         break;
       case "D. Proof Ready for QC":
         return "yellow accent-2";
@@ -51,7 +51,7 @@ module.exports = {
         return "red white-text";
         break;
       case "H. Revision - Waiting on Someone else":
-        return "light-blue lighten-2";
+        return "deep-purple lighten-4";
         break;
       case "I. Revision Started":
         return "light-blue lighten-2";
@@ -69,7 +69,7 @@ module.exports = {
         return "red white-text";
         break;
       case "N. Output - Waiting on Someone else":
-        return "light-blue lighten";
+        return "deep-purple lighten-4";
         break;
       case "O. Output Started":
         return "light-blue lighten-2";

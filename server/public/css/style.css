@@ -208,8 +208,8 @@ ul.collapsible > li {
 }
 
 .modal-content {
-  height: 400px;
-  max-height: 700px;
+  min-height: 400px;
+  max-height: 600px;
   overflow: auto;
 }
 
