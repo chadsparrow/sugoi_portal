@@ -261,44 +261,28 @@
             <option value="USD">USD</option>
           </select>
         </div>
-        <div class="input-group input-group-sm mb-2">
+        <div class="mb-1">
+          <label for="taxes" class="small my-0">Taxes</label>
           <input
-            type="number"
-            class="form-control text-center"
+            type="text"
+            class="form-control form-control-sm"
             id="taxes"
-            min="0"
-            placeholder="Taxes"
             v-model.number="order.taxes"
           >
-          <div class="input-group-append">
-            <span class="input-group-text">% Tax</span>
-          </div>
         </div>
-
-        <h3 class="text-center bg-secondary text-light rounded p-1 mb-0">Total:
-          <h4>${{formatPrice(totalPrice)}}</h4>
-        </h3>
-        <small>Deposit</small>
-        <div class="input-group input-group-sm mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text">$</span>
-          </div>
+        <div class="mb-1">
+          <label for="deposit" class="small my-0">Deposit $</label>
           <input
-            type="number"
-            class="form-control text-center"
+            type="text"
+            class="form-control form-control-sm"
             id="deposit"
-            min="0"
             v-model.number="order.deposit"
           >
         </div>
-        <p class="text-center bg-secondary text-light rounded">Balance Due:
-          <br>
-          <span>${{formatPrice(balanceDue)}}</span>
-        </p>
       </div>
     </div>
     <div class="card-footer bg-dark text-right">
-      <button type="button" class="btn btn-success" @click.prevent="goBack">Commit Changes</button>
+      <button type="button" class="btn btn-success" @click.prevent="commitChanges">Commit Changes</button>
     </div>
   </div>
 </template>
@@ -323,30 +307,6 @@ export default {
     },
     states() {
       return this.$store.state.states;
-    },
-    totalPrice() {
-      let linesTotal = 0;
-      for (let x = 0; x < this.order.orderLines.length; x++) {
-        let currentLine = this.order.orderLines[x];
-        if (!currentLine.cancelled) {
-          linesTotal += currentLine.itemSubTotal;
-        }
-      }
-
-      linesTotal += linesTotal * (this.order.taxes / 100);
-
-      this.order.netValue = linesTotal;
-
-      return linesTotal;
-    },
-    balanceDue() {
-      let balance = this.order.netValue;
-      balance -= this.order.deposit;
-      balance -= this.order.isrCollectedCAD;
-      balance += this.order.isrRefunded;
-
-      this.order.balanceOutstanding = balance;
-      return balance;
     }
   },
   methods: {
@@ -367,7 +327,7 @@ export default {
       text = text.toUpperCase();
       this.$store.dispatch("setCountryUpper", text);
     },
-    goBack() {
+    commitChanges() {
       this.$store.dispatch("saveOrder", this.order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     }

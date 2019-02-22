@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
     graphicCodes: []
   },
   actions: {
-    saveOrder: ({ commit, dispatch }, order) => {
+    saveOrder: ({ commit }, order) => {
       axios
         .put(`https://localhost:5000/api/orders/${order.orderNum}`, order)
         .then(r => r.data)
@@ -76,20 +76,11 @@ export const store = new Vuex.Store({
     setProvTax: ({ commit }, tax) => {
       commit('SET_PROV_TAX', tax);
     },
-    setCurrency: ({ commit }, text) => {
-      commit('SET_CURRENCY', text);
-    },
-    setCountryUpper: ({ commit, dispatch }, text) => {
+    setCountryUpper: ({ commit }, text) => {
       text = text.toUpperCase();
       commit('SET_COUNTRY_UPPER', text);
-      dispatch('resetStateProv');
-      dispatch('setCurrency', text);
-    },
-    resetStateProv: ({ commit }) => {
       commit('RESET_STATE_PROV');
-    },
-    calculateLineTotal: ({ commit }) => {
-      commit("RECALCULATE_TOTAL");
+      commit('SET_CURRENCY', text);
     }
   },
   mutations: {

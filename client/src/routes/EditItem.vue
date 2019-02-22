@@ -245,19 +245,11 @@
           <br>
           <span>$ {{formatPrice(finalUnitPrice)}}</span>
         </div>
-
-        <div
-          class="col border border-dark rounded p-2"
-          style="font-size: 16px; font-weight: bold;"
-        >Item Total:
-          <br>
-          $ {{formatPrice(finalTotalPrice)}}
-        </div>
       </div>
     </div>
     <div class="card-footer bg-dark text-light text-right p-2">
-      <button class="btn btn-sm btn-success mr-1" @click.prevent="goBack">Commit Changes</button>
-      <div class="form-check float-left ml-3">
+      <button class="btn btn-sm btn-success mr-1" @click.prevent="commitItem">Commit Item</button>
+      <!-- <div class="form-check float-left ml-3">
         <input
           class="form-check-input"
           type="checkbox"
@@ -266,7 +258,7 @@
           v-model="item.sketch"
         >
         <label class="form-check-label" for="sketh">Sketch</label>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -472,7 +464,7 @@ export default {
         this.item.xxxl = 0;
       }
     },
-    goBack() {
+    commitItem() {
       this.item.totalUnits = this.unitTotal;
       this.item.unitPrice = this.unitPrice;
       this.item.addOns = this.addOns;

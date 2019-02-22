@@ -130,17 +130,21 @@ export default {
       return itemsTotal;
     }
   },
-  created() {
-    this.$store.dispatch("getStyles");
-  },
   data() {
     return {
       title: "Lines"
     };
   },
+  mounted() {
+    this.commitChanges;
+  },
   methods: {
     goToEdit() {
       this.$router.push({ path: `editline/${this.index}` });
+    },
+    commitChanges() {
+      this.$store.dispatch("saveOrder", this.order);
+      this.$router.push({ path: `/${this.order.orderNum}` });
     },
     formatPrice(value) {
       let val = (value / 1).toFixed(2);

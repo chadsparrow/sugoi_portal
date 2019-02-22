@@ -150,7 +150,7 @@
       <button
         type="button"
         class="btn btn-sm btn-success d-print-none float-right"
-        @click.prevent="goBack"
+        @click.prevent="commitChanges"
       >Commit Changes</button>
     </div>
   </div>
@@ -185,7 +185,7 @@ export default {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    goBack() {
+    commitChanges() {
       this.$store.dispatch("saveOrder", this.order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
