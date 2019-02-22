@@ -15,14 +15,12 @@
                     <label for="orderNum">Contract #:</label>
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="client" id="client" class="validate" value="{{order.client}}" required
-                      {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}>
+                    <input type="text" name="client" id="client" class="validate" value="{{order.client}}" required>
                     <label for="client">Client:</label>
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="accountNum" id="accountNum" maxlength="10" value="{{order.accountNum}}"
-                      class="validate" required {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}> <label
-                      for="accountNum">Account #:</label>
+                      class="validate" required> <label for="accountNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
                     <select name="priority" id="priority">
@@ -35,10 +33,7 @@
                     <label for="priority">Priority:</label>
                   </div>
                   <div class="input-field col s12 m6">
-                    {{#if (checkForSignOff order.currentStatus)}}
-                    <input type="text" name="vendor" id="vendor" value="{{order.vendor}}" readonly>
-                    <label for="vendor">Vendor:</label>
-                    {{else}}
+
                     <select name="vendor" id="vendor">
                       {{#select order.vendor}}
                       <option value="CCN">CCN</option>
@@ -47,32 +42,23 @@
                       {{/select}}
                     </select>
                     <label for="vendor">Vendor:</label>
-                    {{/if}}
+
                   </div>
                   <div class="input-field col s12">
-                    {{#if (checkForSignOff order.currentStatus)}}
-                    <i class="small material-icons prefix">today</i>
-                    <input type="text" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}"
-                      readonly>
-                    <label for="eventDate">Event Date:</label>
-                    {{else}}
+
                     <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date" name="eventDate" id="eventDate"
                       value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
-                    {{/if}}
+
                   </div>
                   <div class="input-field col s12">
-                    {{#if (checkForSignOff order.currentStatus)}}
-                    <i class="small material-icons prefix">today</i>
-                    <input type="text" name="latestInHand" value="{{formatDate order.latestInHand "DD-MMM"}}" readonly>
-                    <label for="latestInHand">Latest In-Hand Date:</label>
-                    {{else}}
+
                     <i class="small material-icons prefix">today</i>
                     <input type="text" class="input-date3" name="latestInHand" id="latestInHand"
                       value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
-                    {{/if}}
+
                   </div>
                 </div>
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">
@@ -122,20 +108,15 @@
                   </div>
                   <div id="productionDiv">
                     <div class="input-field col s6 l4">
-                      <input type="number" name="qty" id="qty" value="{{order.qty}}"
-                        {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}>
+                      <input type="number" name="qty" id="qty" value="{{order.qty}}">
                       <label for="qty">Qty:</label>
                     </div>
                     <div class="input-field col s6 l4">
                       <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue"
-                        value="{{order.netValue}}" {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}> <label
-                        for="netValue">Total Value:</label>
+                        value="{{order.netValue}}"> <label for="netValue">Total Value:</label>
                     </div>
                     <div class="input-field col s12 l4">
-                      {{#if (checkForSignOff order.currentStatus)}}
-                      <input type="text" name="currency" value="{{order.currency}}" readonly>
-                      <label for="currency">Currency:</label>
-                      {{else}}
+
                       <select name="currency" id="currency">
                         {{#select order.currency}}
                         <option value=""></option>
@@ -144,21 +125,14 @@
                         {{/select}}
                       </select>
                       <label for="currency">Currency:</label>
-                      {{/if}}
                     </div>
                     <div class="input-field col s12">
 
-                      {{#if (checkForSignOff order.currentStatus)}}
-                      <i class="small material-icons prefix">today</i>
-                      <input type="text" name="latestShipDate" value="{{formatDate order.latestShipDate "DD-MMM"}}"
-                        readonly>
-                      <label for="latestShipDate">Latest Ship Date:</label>
-                      {{else}}
+
                       <i class="small material-icons prefix">today</i>
                       <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
                       "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>
-                      {{/if}}
                     </div>
                     <div class="input-field col s12">
                       <input type="text" name="multishipPrePack" id="multishipPrePack"
