@@ -25,21 +25,16 @@
                       for="accountNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
-                    {{#if (checkForSignOff order.currentStatus)}}
-                    <input type="text" id="priority" name="priority" value="{{order.priority}}" readonly>
-                    <label for="priority">Priority:</label>
-                    {{else}}
                     <select name="priority" id="priority">
-                      {{#select order.priority}} <option value=""></option>
+                      {{#select order.priority}}
+                      <option value=""></option>
                       <option value="RUSH">RUSH</option>
                       <option value="VIP">VIP</option>
                       {{/select}}
                     </select>
                     <label for="priority">Priority:</label>
-                    {{/if}}
                   </div>
                   <div class="input-field col s12 m6">
-
                     {{#if (checkForSignOff order.currentStatus)}}
                     <input type="text" name="vendor" id="vendor" value="{{order.vendor}}" readonly>
                     <label for="vendor">Vendor:</label>
@@ -53,7 +48,6 @@
                     </select>
                     <label for="vendor">Vendor:</label>
                     {{/if}}
-
                   </div>
                   <div class="input-field col s12">
                     {{#if (checkForSignOff order.currentStatus)}}
