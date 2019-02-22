@@ -60,7 +60,6 @@
           :key="childIndex"
           :index="childIndex"
           :lineIndex="index"
-          :priceBreak="orderLine.priceBreak"
         ></LineItem>
       </div>
     </div>
@@ -112,7 +111,7 @@ export default {
       this.$router.push({ path: `editline/${this.index}` });
     },
     commitChanges(order) {
-      //this.$store.dispatch("saveOrder", order);
+      this.$store.dispatch("saveOrder", order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
     formatPrice(value) {

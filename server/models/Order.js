@@ -326,6 +326,14 @@ const OrderSchema = new Schema({
     type: Number,
     default: null
   },
+  beforeTaxes: {
+    type: Number,
+    default: null
+  },
+  taxAmount: {
+    type: Number,
+    default: null
+  },
   taxes: {
     type: Number,
     default: null

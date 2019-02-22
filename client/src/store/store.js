@@ -20,13 +20,16 @@ export const store = new Vuex.Store({
     saveOrder: ({ commit, dispatch }, order) => {
       let orderLines = order.orderLines;
       let linesTotal = 0;
+      let linesQty = 0;
       for (let x = 0; x < orderLines.length; x++) {
         let currentLine = orderLines[x];
         if (!currentLine.cancelled) {
           linesTotal += currentLine.itemsSubTotal;
         }
       }
-      order.netValue = linesTotal + (linesTotal * (order.taxes / 100)) + (order.prePacks * 5) + (order.multiShips * 15);
+      order.beforeTaxes = linesTotal;
+      order.taxAmount = linesTotal * (order.taxes / 100);
+      order.netValue = linesTotal + order.taxAmount + (order.prePacks * 5) + (order.multiShips * 15);
 
       order.balanceOutstanding = order.netValue - order.deposit - order.isrCollectedOrig + order.isrRefunded;
 

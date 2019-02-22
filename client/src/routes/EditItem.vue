@@ -256,16 +256,6 @@
     </div>
     <div class="card-footer bg-dark text-light text-right p-2">
       <button class="btn btn-sm btn-success mr-1" @click.prevent="commitItem">Commit Item</button>
-      <!-- <div class="form-check float-left ml-3">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="true"
-          id="sketch"
-          v-model="item.sketch"
-        >
-        <label class="form-check-label" for="sketh">Sketch</label>
-      </div>-->
     </div>
   </div>
 </template>
@@ -307,100 +297,6 @@ export default {
         this.item.xxxl
       );
     },
-    unitPrice() {
-      if (this.order.currency === "CAD" && this.item.selectedConfig > -1) {
-        switch (this.orderLine.priceBreak) {
-          case 1:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad1;
-            break;
-          case 6:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad6;
-            break;
-          case 12:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad12;
-            break;
-          case 24:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad24;
-            break;
-          case 50:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad50;
-            break;
-          case 100:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad100;
-            break;
-          case 200:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad200;
-            break;
-          case 500:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].cad500;
-            break;
-        }
-      } else if (
-        this.order.currency === "USD" &&
-        this.item.selectedConfig > -1
-      ) {
-        switch (this.orderLine.priceBreak) {
-          case 1:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd1;
-            break;
-          case 6:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd6;
-            break;
-          case 12:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd12;
-            break;
-          case 24:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd24;
-            break;
-          case 50:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd50;
-            break;
-          case 100:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd100;
-            break;
-          case 200:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd200;
-            break;
-          case 500:
-            return this.styles[this.item.selectedStyle].configurations[
-              this.item.selectedConfig
-            ].usd500;
-            break;
-        }
-      } else {
-        return 0;
-      }
-    },
     addOns() {
       if (this.item.zap && this.item.personalization) {
         return 10;
@@ -418,6 +314,54 @@ export default {
     },
     finalTotalPrice() {
       return this.finalUnitPrice * this.unitTotal;
+    },
+    unitPrice() {
+      const { selectedStyle, selectedConfig } = this.item;
+      const currency = this.order.currency;
+      const { priceBreak } = this.orderLine;
+      const currentConfig = this.styles[selectedStyle].configurations[
+        selectedConfig
+      ];
+      let foundUnitPrice = 0;
+      if (currency === "CAD" && selectedConfig > -1) {
+        if (priceBreak === 1) {
+          foundUnitPrice = currentConfig.cad1;
+        } else if (priceBreak === 6) {
+          foundUnitPrice = currentConfig.cad6;
+        } else if (priceBreak === 12) {
+          foundUnitPrice = currentConfig.cad12;
+        } else if (priceBreak === 24) {
+          foundUnitPrice = currentConfig.cad24;
+        } else if (priceBreak === 50) {
+          foundUnitPrice = currentConfig.cad50;
+        } else if (priceBreak === 100) {
+          foundUnitPrice = currentConfig.cad100;
+        } else if (priceBreak === 200) {
+          foundUnitPrice = currentConfig.cad200;
+        } else if (priceBreak === 500) {
+          foundUnitPrice = currentConfig.cad500;
+        }
+      } else if (currency === "USD" && selectedConfig > -1) {
+        if (priceBreak === 1) {
+          foundUnitPrice = currentConfig.usd1;
+        } else if (priceBreak === 6) {
+          foundUnitPrice = currentConfig.usd6;
+        } else if (priceBreak === 12) {
+          foundUnitPrice = currentConfig.usd12;
+        } else if (priceBreak === 24) {
+          foundUnitPrice = currentConfig.usd24;
+        } else if (priceBreak === 50) {
+          foundUnitPrice = currentConfig.usd50;
+        } else if (priceBreak === 100) {
+          foundUnitPrice = currentConfig.usd100;
+        } else if (priceBreak === 200) {
+          foundUnitPrice = currentConfig.usd200;
+        } else if (priceBreak === 500) {
+          foundUnitPrice = currentConfig.usd500;
+        }
+      }
+
+      return foundUnitPrice;
     }
   },
   methods: {
@@ -486,12 +430,14 @@ export default {
       } = this.orderLine;
 
       let itemsTotal = 0;
+      this.order.qty = 0;
       let items = this.orderLine.items;
       // cycles through items in the line and adds all the final item prices
       for (let x = 0; x < items.length; x++) {
         let currentItem = items[x];
         if (!currentItem.cancelled) {
           itemsTotal += currentItem.itemTotalPrice;
+          this.order.qty += currentItem.totalUnits;
         }
       }
 

@@ -61,22 +61,28 @@
           </ul>
         </div>
       </div>
-      <div class="col-sm-3 border-left">
+      <div class="col-sm-3 border-left text-center">
         <ul class="list-group list-group-flush">
           <li v-if="order.multiShips >0" class="list-group-item">MultiShips: {{order.multiShips}}</li>
           <li v-if="order.prePacks >0" class="list-group-item">PrePacks: {{order.prePacks}}</li>
-          <li class="list-group-item">Currency: {{order.currency}}</li>
-          <li
-            v-if="order.taxes"
-            class="list-group-item"
-            style="border-bottom:none;"
-          >Taxes: {{order.taxes}} %</li>
+          <li class="list-group-item">
+            Currency:
+            <span>{{order.currency}}</span>
+          </li>
+          <li v-if="order.taxes" class="list-group-item">
+            Sub Total:
+            <span>${{formatPrice(order.beforeTaxes)}}</span>
+          </li>
+          <li v-if="order.taxes" class="list-group-item" style="border-bottom:none;">
+            Taxes: {{order.taxes}}% -
+            <span>${{formatPrice(order.taxAmount)}}</span>
+          </li>
         </ul>
         <div class="col-sm-12 mb-2 p-1 text-center border border-3 rounded">
-          <h4>Total:
+          <span style="font-size: 18px; font-weight: bold;">Total:
             <br>
-            $ {{formatPrice(order.netValue)}}
-          </h4>
+            ${{formatPrice(order.netValue)}}
+          </span>
         </div>
         <ul class="list-group list-group-flush">
           <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
@@ -84,7 +90,7 @@
         <div class="mb-2 p-1 text-center border rounded">
           <h6>Balance Due:
             <br>
-            $ {{formatPrice(order.balanceOutstanding)}}
+            ${{formatPrice(order.balanceOutstanding)}}
           </h6>
         </div>
         <div class="border-top pt-2">
@@ -130,6 +136,11 @@ export default {
 </script>
 
 <style scoped>
+span {
+  font-weight: bold;
+  font-size: 14px;
+}
+
 .card {
   font-size: 0.75em;
 }
