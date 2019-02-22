@@ -16,7 +16,7 @@
                   </div>
                   <div class="input-field col s12">
                     <input type="text" name="client" id="client" class="validate" value="{{order.client}}" required
-                      {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}} readonly{{/if}}{{/if}}>
+                      {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}>
                     <label for="client">Client:</label>
                   </div>
                   <div class="input-field col s12">
@@ -25,15 +25,6 @@
                       for="accountNum">Account #:</label>
                   </div>
                   <div class="input-field col s12 m6">
-                    {{#if user.admin}}
-                    <select name="priority" id="priority">
-                      {{#select order.priority}} <option value=""></option>
-                      <option value="RUSH">RUSH</option>
-                      <option value="VIP">VIP</option>
-                      {{/select}}
-                    </select>
-                    <label for="priority">Priority:</label>
-                    {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
                     <input type="text" id="priority" name="priority" value="{{order.priority}}" readonly>
                     <label for="priority">Priority:</label>
@@ -46,21 +37,9 @@
                     </select>
                     <label for="priority">Priority:</label>
                     {{/if}}
-                    {{/if}}
-
                   </div>
                   <div class="input-field col s12 m6">
 
-                    {{#if user.admin}}
-                    <select name="vendor" id="vendor">
-                      {{#select order.vendor}}
-                      <option value="CCN">CCN</option>
-                      <option value="PNR">PNR</option>
-                      <option value="MEX">MEX</option>
-                      {{/select}}
-                    </select>
-                    <label for="vendor">Vendor:</label>
-                    {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
                     <input type="text" name="vendor" id="vendor" value="{{order.vendor}}" readonly>
                     <label for="vendor">Vendor:</label>
@@ -74,15 +53,9 @@
                     </select>
                     <label for="vendor">Vendor:</label>
                     {{/if}}
-                    {{/if}}
+
                   </div>
                   <div class="input-field col s12">
-                    {{#if user.admin}}
-                    <i class="small material-icons prefix">today</i>
-                    <input type="text" class="input-date" name="eventDate" id="eventDate"
-                      value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
-                    <label for="eventDate">Event Date:</label>
-                    {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
                     <i class="small material-icons prefix">today</i>
                     <input type="text" name="eventDate" id="eventDate" value="{{formatDate order.eventDate "DD-MMM"}}"
@@ -94,15 +67,8 @@
                       value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
                     <label for="eventDate">Event Date:</label>
                     {{/if}}
-                    {{/if}}
                   </div>
                   <div class="input-field col s12">
-                    {{#if user.admin}}
-                    <i class="small material-icons prefix">today</i>
-                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand"
-                      value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
-                    <label for="latestInHand">Latest In-Hand Date:</label>
-                    {{else}}
                     {{#if (checkForSignOff order.currentStatus)}}
                     <i class="small material-icons prefix">today</i>
                     <input type="text" name="latestInHand" value="{{formatDate order.latestInHand "DD-MMM"}}" readonly>
@@ -112,7 +78,6 @@
                     <input type="text" class="input-date3" name="latestInHand" id="latestInHand"
                       value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
                     <label for="latestInHand">Latest In-Hand Date:</label>
-                    {{/if}}
                     {{/if}}
                   </div>
                 </div>
@@ -164,26 +129,15 @@
                   <div id="productionDiv">
                     <div class="input-field col s6 l4">
                       <input type="number" name="qty" id="qty" value="{{order.qty}}"
-                        {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}} {{else}}
-                        readonly{{/if}}{{/if}}>
+                        {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}>
                       <label for="qty">Qty:</label>
                     </div>
                     <div class="input-field col s6 l4">
                       <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue"
-                        value="{{order.netValue}}" {{#if (checkForSignOff order.currentStatus)}} {{#if user.admin}}
-                        {{else}} readonly{{/if}}{{/if}}> <label for="netValue">Total Value:</label>
+                        value="{{order.netValue}}" {{#if (checkForSignOff order.currentStatus)}} readonly{{/if}}> <label
+                        for="netValue">Total Value:</label>
                     </div>
                     <div class="input-field col s12 l4">
-                      {{#if user.admin}}
-                      <select name="currency" id="currency">
-                        {{#select order.currency}}
-                        <option value=""></option>
-                        <option value="CAD">CAD</option>
-                        <option value="USD">USD</option>
-                        {{/select}}
-                      </select>
-                      <label for="currency">Currency:</label>
-                      {{else}}
                       {{#if (checkForSignOff order.currentStatus)}}
                       <input type="text" name="currency" value="{{order.currency}}" readonly>
                       <label for="currency">Currency:</label>
@@ -197,16 +151,9 @@
                       </select>
                       <label for="currency">Currency:</label>
                       {{/if}}
-                      {{/if}}
                     </div>
                     <div class="input-field col s12">
 
-                      {{#if user.admin}}
-                      <i class="small material-icons prefix">today</i>
-                      <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
-                      "MM/DD/YYYY"}}">
-                      <label for="latestShipDate">Latest Ship Date:</label>
-                      {{else}}
                       {{#if (checkForSignOff order.currentStatus)}}
                       <i class="small material-icons prefix">today</i>
                       <input type="text" name="latestShipDate" value="{{formatDate order.latestShipDate "DD-MMM"}}"
@@ -217,7 +164,6 @@
                       <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
                       "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>
-                      {{/if}}
                       {{/if}}
                     </div>
                     <div class="input-field col s12">

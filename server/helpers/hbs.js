@@ -1,12 +1,12 @@
 const moment = require("moment-timezone");
 
 module.exports = {
-  getHandle: function(username) {
+  getHandle: function (username) {
     //let userArray = username.split("@");
     //username = userArray[0];
     return username;
   },
-  select: function(selected, options) {
+  select: function (selected, options) {
     return options
       .fn(this)
       .replace(
@@ -14,7 +14,7 @@ module.exports = {
         '$& selected="selected"'
       );
   },
-  formatDate: function(date, format) {
+  formatDate: function (date, format) {
     if (date) {
       let d = new Date(date);
       d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
@@ -25,7 +25,7 @@ module.exports = {
       return null;
     }
   },
-  setStatusDiv: function(status) {
+  setStatusDiv: function (status) {
     switch (status) {
       case "A. Waiting for Proof":
         return "red white-text";
@@ -34,7 +34,7 @@ module.exports = {
         return "light-blue lighten-2";
         break;
       case "C. Proof - Waiting on Someone else":
-        return "light-blue lighten-2";
+        return "deep-purple lighten-4";
         break;
       case "D. Proof Ready for QC":
         return "yellow accent-2";
@@ -49,7 +49,7 @@ module.exports = {
         return "red white-text";
         break;
       case "H. Revision - Waiting on Someone else":
-        return "light-blue lighten-2";
+        return "deep-purple lighten-4";
         break;
       case "I. Revision Started":
         return "light-blue lighten-2";
@@ -67,7 +67,7 @@ module.exports = {
         return "red white-text";
         break;
       case "N. Output - Waiting on Someone else":
-        return "light-blue lighten";
+        return "deep-purple lighten-4";
         break;
       case "O. Output Started":
         return "light-blue lighten-2";
@@ -98,13 +98,13 @@ module.exports = {
         break;
     }
   },
-  stripStatusCode: function(status) {
+  stripStatusCode: function (status) {
     return status.substr(3);
   },
-  getInstructions: function(instructions) {
+  getInstructions: function (instructions) {
     return instructions.reverse();
   },
-  checkForQCStatus: function(status) {
+  checkForQCStatus: function (status) {
     if (
       status === "S. PNT Ready for QC" ||
       status === "P. Output Ready for QC" ||
@@ -114,12 +114,12 @@ module.exports = {
       return true;
     }
   },
-  checkForRevisionStatus: function(status) {
+  checkForRevisionStatus: function (status) {
     if (status === "F. Proof Complete" || status === "L. Revision Complete") {
       return true;
     }
   },
-  checkForSignOff: function(status) {
+  checkForSignOff: function (status) {
     if (
       status === "M. Waiting for Output" ||
       status === "N. Output - Waiting on Someone else" ||
@@ -136,7 +136,7 @@ module.exports = {
       return true;
     }
   },
-  catNotes: function(type) {
+  catNotes: function (type) {
     switch (type) {
       case "Initial":
         return "grey lighten-1";
@@ -155,7 +155,7 @@ module.exports = {
         break;
     }
   },
-  setPaymentStatus: function(paymentStatus) {
+  setPaymentStatus: function (paymentStatus) {
     switch (paymentStatus) {
       case "Balance Outstanding":
         return "red lighten-4";
@@ -168,7 +168,7 @@ module.exports = {
         break;
     }
   },
-  setConfirmDeliveryStatus: function(confirmDeliveryStatus) {
+  setConfirmDeliveryStatus: function (confirmDeliveryStatus) {
     switch (confirmDeliveryStatus) {
       case "Delivered":
         return "green lighten-4 green-text";
@@ -193,7 +193,7 @@ module.exports = {
         break;
     }
   },
-  setShipStatus: function(shipStatus) {
+  setShipStatus: function (shipStatus) {
     if (shipStatus == "Shipped") {
       return "green lighten-4 green-text";
     } else {
