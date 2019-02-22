@@ -90,7 +90,7 @@
         <div class="border-top pt-2">
           <button
             class="btn btn-success btn-block d-print-none"
-            @click.prevent="goToEdit()"
+            @click.prevent="goToEdit"
           >Edit Details</button>
         </div>
       </div>
@@ -111,23 +111,10 @@ export default {
   methods: {
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     goToEdit() {
       this.$router.push({ path: `/${this.order.orderNum}/editdetails` });
-    },
-    calculateTotal() {
-      let orderLines = this.order.orderLines;
-      let linesTotal = 0;
-      for (let x = 0; x < orderLines.length; x++) {
-        let currentLine = orderLines[x];
-        if (!currentLine.cancelled) {
-          linesTotal += currentLine.itemSubTotal;
-        }
-      }
-      this.order.netValue = linesTotal + (linesTotal * this.order.taxes) / 100;
-      console.log(this.order.netValue);
-      this.$store.dispatch("saveOrder", this.order);
     },
     formatDate(date) {
       if (date) {

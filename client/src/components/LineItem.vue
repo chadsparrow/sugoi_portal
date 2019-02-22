@@ -64,9 +64,10 @@
           <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
         </div>
 
-        <div class="col text-center">Unit Price
+        <div class="col text-center">
+          Unit Price ({{priceBreak}})
           <br>
-          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.unitPrice)}}</span>
+          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(unitPrice)}}</span>
         </div>
 
         <div class="col text-center">Add-Ons
@@ -103,12 +104,109 @@
 <script>
 export default {
   name: "LineItem",
-  props: ["lineIndex", "index", "lineNumber"],
+  props: ["lineIndex", "index", "lineNumber", "priceBreak"],
   computed: {
     item() {
       return this.$store.state.order.orderLines[this.lineIndex].items[
         this.index
       ];
+    },
+    order() {
+      return this.$store.state.order;
+    },
+    unitPrice() {
+      if (this.order.currency === "CAD" && this.item.selectedConfig > -1) {
+        switch (this.priceBreak) {
+          case 1:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad1;
+            break;
+          case 6:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad6;
+            break;
+          case 12:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad12;
+            break;
+          case 24:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad24;
+            break;
+          case 50:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad50;
+            break;
+          case 100:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad100;
+            break;
+          case 200:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad200;
+            break;
+          case 500:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].cad500;
+            break;
+        }
+      } else if (
+        this.order.currency === "USD" &&
+        this.item.selectedConfig > -1
+      ) {
+        switch (this.priceBreak) {
+          case 1:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd1;
+            break;
+          case 6:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd6;
+            break;
+          case 12:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd12;
+            break;
+          case 24:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd24;
+            break;
+          case 50:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd50;
+            break;
+          case 100:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd100;
+            break;
+          case 200:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd200;
+            break;
+          case 500:
+            return this.styles[this.item.selectedStyle].configurations[
+              this.item.selectedConfig
+            ].usd500;
+            break;
+        }
+      } else {
+        return 0;
+      }
     }
   },
   methods: {

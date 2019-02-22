@@ -150,7 +150,7 @@
       <button
         type="button"
         class="btn btn-sm btn-success d-print-none float-right"
-        @click.prevent="commitChanges"
+        @click.prevent="commitLine"
       >Commit Changes</button>
     </div>
   </div>
@@ -165,6 +165,9 @@ export default {
       colourWays: [],
       selectedOption: ""
     };
+  },
+  beforeMount() {
+    this.$store.dispatch("getGraphicCodes");
   },
   computed: {
     order() {
@@ -185,7 +188,34 @@ export default {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    commitChanges() {
+    commitLine() {
+      let {
+        tracingCharge,
+        scaledArtCharge,
+        creativeCharge,
+        graphicCode
+      } = this.orderLine;
+
+      let itemsTotal = 0;
+      let items = this.orderLine.items;
+      // cycles through items in the line and adds all the final item prices
+      for (let x = 0; x < items.length; x++) {
+        let currentItem = items[x];
+        if (!currentItem.cancelled) {
+          itemsTotal += currentItem.itemTotalPrice;
+        }
+      }
+
+      //if line is quick design, decreases the total by 10%
+      if (graphicCode != "CUSTM") {
+        itemsTotal *= 0.9;
+      }
+
+      itemsTotal += tracingCharge;
+      itemsTotal += scaledArtCharge;
+      itemsTotal += creativeCharge;
+      this.orderLine.itemsSubTotal = itemsTotal;
+
       this.$store.dispatch("saveOrder", this.order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     },

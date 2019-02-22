@@ -60,6 +60,7 @@
           :key="childIndex"
           :index="childIndex"
           :lineIndex="index"
+          :priceBreak="orderLine.priceBreak"
         ></LineItem>
       </div>
     </div>
@@ -81,7 +82,7 @@
         >QD Discount: 10%</div>
         <div
           class="rounded bg-secondary text-center text-light p-2"
-        >Line Total: $ {{formatPrice(lineTotal)}}</div>
+        >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
       </div>
     </div>
   </div>
@@ -99,39 +100,6 @@ export default {
   computed: {
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
-    },
-    lineTotal() {
-      let {
-        tracingCharge,
-        scaledArtCharge,
-        creativeCharge,
-        graphicCode
-      } = this.orderLine;
-
-      let itemsTotal = 0;
-      let items = this.orderLine.items;
-      // cycles through items in the line and adds all the final item prices
-      for (let x = 0; x < items.length; x++) {
-        let currentItem = items[x];
-        if (!currentItem.cancelled) {
-          itemsTotal += currentItem.itemTotalPrice;
-        }
-      }
-
-      //if line is quick design, decreases the total by 10%
-      if (graphicCode != "CUSTM") {
-        itemsTotal *= 0.9;
-      }
-
-      itemsTotal += tracingCharge;
-      itemsTotal += scaledArtCharge;
-      itemsTotal += creativeCharge;
-      this.orderLine.itemsSubTotal = itemsTotal;
-      this.commitChanges;
-      return itemsTotal;
-    },
-    order() {
-      return this.$store.state.order;
     }
   },
   data() {
@@ -143,8 +111,8 @@ export default {
     goToEdit() {
       this.$router.push({ path: `editline/${this.index}` });
     },
-    commitChanges() {
-      this.$store.dispatch("saveOrder", this.order);
+    commitChanges(order) {
+      //this.$store.dispatch("saveOrder", order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
     formatPrice(value) {

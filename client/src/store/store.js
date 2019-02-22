@@ -17,12 +17,25 @@ export const store = new Vuex.Store({
     graphicCodes: []
   },
   actions: {
-    saveOrder: ({ commit }, order) => {
+    saveOrder: ({ commit, dispatch }, order) => {
+      let orderLines = order.orderLines;
+      let linesTotal = 0;
+      for (let x = 0; x < orderLines.length; x++) {
+        let currentLine = orderLines[x];
+        if (!currentLine.cancelled) {
+          linesTotal += currentLine.itemsSubTotal;
+        }
+      }
+      order.netValue = linesTotal + (linesTotal * (order.taxes / 100)) + (order.prePacks * 5) + (order.multiShips * 15);
+
+      order.balanceOutstanding = order.netValue - order.deposit - order.isrCollectedOrig + order.isrRefunded;
+
       axios
         .put(`https://localhost:5000/api/orders/${order.orderNum}`, order)
         .then(r => r.data)
         .then(order => {
           commit("SAVE_ORDER_DATA", order);
+          dispatch("getOrderData", order.orderNum);
         });
     },
     getOrderData: ({ commit }, orderNum) => {
