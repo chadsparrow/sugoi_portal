@@ -20,7 +20,6 @@ export const store = new Vuex.Store({
     saveOrder: ({ commit, dispatch }, order) => {
       let orderLines = order.orderLines;
       let linesTotal = 0;
-      let linesQty = 0;
       for (let x = 0; x < orderLines.length; x++) {
         let currentLine = orderLines[x];
         if (!currentLine.cancelled) {
