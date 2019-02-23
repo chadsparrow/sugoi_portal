@@ -96,12 +96,13 @@ export const store = new Vuex.Store({
       commit('RESET_STATE_PROV');
       commit('SET_CURRENCY', text);
     },
-    setItemUnitPrice: ({ commit }) => {
-
-    },
     setItemTotalUnits: ({ commit }) => {
 
     },
+    setItemUnitPrice: ({ commit }) => {
+
+    },
+
     setItemAddOns: ({ commit }) => {
 
     },
