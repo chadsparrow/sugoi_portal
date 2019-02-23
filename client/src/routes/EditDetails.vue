@@ -148,7 +148,7 @@
               class="form-control form-control-sm"
               id="shipToProvState"
               v-model="order.shipToProvState"
-              @change="setTaxOther(null)"
+              @change="setTaxOther(0)"
             >
               <option
                 v-for="(state, index) in states"
@@ -164,7 +164,7 @@
               class="form-control form-control-sm"
               id="shipToProvState"
               v-model.trim="order.shipToProvState"
-              @change="setTaxOther(null)"
+              @change="setTaxOther(0)"
             >
           </div>
 
@@ -324,8 +324,10 @@ export default {
     },
     setProvTax(e) {
       let index = e.target.selectedIndex;
-      let tax = this.provs[index].tax;
-      this.$store.dispatch("setProvTax", tax);
+      if (index > 0) {
+        let tax = this.provs[index].tax;
+        this.$store.dispatch("setProvTax", tax);
+      }
     },
     setTaxOther(tax) {
       this.$store.dispatch("setProvTax", tax);

@@ -37,7 +37,6 @@ export const store = new Vuex.Store({
         .then(r => r.data)
         .then(order => {
           commit("SAVE_ORDER_DATA", order);
-          dispatch("getOrderData", order.orderNum);
         });
     },
     getOrderData: ({ commit }, orderNum) => {
@@ -96,6 +95,36 @@ export const store = new Vuex.Store({
       commit('SET_COUNTRY_UPPER', text);
       commit('RESET_STATE_PROV');
       commit('SET_CURRENCY', text);
+    },
+    setItemUnitPrice: ({ commit }) => {
+
+    },
+    setItemTotalUnits: ({ commit }) => {
+
+    },
+    setItemAddOns: ({ commit }) => {
+
+    },
+    setItemFinalUnitPrice: ({ commit }) => {
+
+    },
+    setItemTotalPrice: ({ commit }) => {
+
+    },
+    setLineSubTotal: ({ commit }) => {
+
+    },
+    setOrderSubTotal: ({ commit }) => {
+
+    },
+    setTaxAmount: ({ commit }, tax) => {
+
+    },
+    setOrderNetValue: ({ commit }) => {
+
+    },
+    setOrderBalanceOutstanding: ({ commit }) => {
+
     }
   },
   mutations: {
