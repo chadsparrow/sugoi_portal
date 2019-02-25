@@ -155,7 +155,7 @@ export const store = new Vuex.Store({
       if (tax > 0) {
         state.order.taxes = tax;
       } else {
-        state.order.taxes = null;
+        state.order.taxes = 0;
       }
     },
     SET_CURRENCY: (state, text) => {
@@ -181,6 +181,9 @@ export const store = new Vuex.Store({
     getField,
     getColourWays: (state) => (index) => {
       return state.graphicCodes[index].colourWays;
+    },
+    getConfigInfo: (state) => (selectedStyle, selectedConfig) => {
+
     }
   }
 });

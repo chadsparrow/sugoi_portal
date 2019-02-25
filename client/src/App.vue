@@ -20,7 +20,6 @@ export default {
     this.$store.dispatch("getStyles");
   },
   updated() {
-    console.log("App updated");
     this.$store.dispatch("getOrderData", this.orderNum);
   },
   components: {

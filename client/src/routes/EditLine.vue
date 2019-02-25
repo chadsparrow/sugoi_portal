@@ -221,7 +221,8 @@ export default {
     },
     loadColourWays(e) {
       let index = e.target.selectedIndex;
-      this.colourWays = this.graphicCodes[index].colourWays;
+      this.colourWays = this.$store.getters.getColourWays(index);
+      console.log(colourWays);
       this.orderLine.colourWayCode = "";
       this.orderLine.graphicColours = this.graphicCodes[index].colours;
       this.orderLine.colour1 = "";
