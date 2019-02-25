@@ -311,12 +311,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
                 sum += parseInt(updatedReport.outputTurnArounds[i], 10);
               }
 
-              let length = updatedReport.outputTurnArounds.length;
-              let sum = 0;
-              for (let i = 0; i < length; i++) {
-                sum += parseInt(updatedReport.outputTurnArounds[i], 10);
-              }
-
               outputAvg = Math.round(sum / length);
 
               Report.updateOne(
