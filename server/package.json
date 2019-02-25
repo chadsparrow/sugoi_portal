@@ -1,6 +1,10 @@
 {
   "name": "sugoi-custom-portal",
+<<<<<<< HEAD
   "version": "1.1.0",
+=======
+  "version": "1.0.5",
+>>>>>>> master
   "description": "Sugoi Custom Portal",
   "main": "server.js",
   "scripts": {

@@ -29,9 +29,7 @@ const Order = require("../models/Order");
 //       null,
 //       path.basename(file.originalname, path.extname(file.originalname)) +
 //         "_" +
-//         moment()
-//           .utc()
-//           .format() +
+//         moment().format() +
 //         path.extname(file.originalname)
 //     );
 //   }
@@ -230,9 +228,7 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: moment()
-        .utc()
-        .format(),
+      noteDate: moment().format(),
       noteUser: noteUser,
       note: note
     };
