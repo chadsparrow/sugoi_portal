@@ -19,9 +19,6 @@ export default {
     this.$store.dispatch("getOrderData", this.orderNum);
     this.$store.dispatch("getStyles");
   },
-  updated() {
-    this.$store.dispatch("getOrderData", this.orderNum);
-  },
   components: {
     Header
   }

@@ -250,7 +250,7 @@
         </div>
 
         <div class="col">
-          Unit Price ({{orderLine.priceBreak}})
+          Unit Price ({{priceBreak}})
           <br>
           <span>$ {{formatPrice(item.unitPrice)}}</span>
         </div>
@@ -298,9 +298,6 @@ export default {
     order() {
       return this.$store.state.order;
     },
-    orderLine() {
-      return this.$store.state.order.orderLines[this.lineIndex];
-    },
     item() {
       return this.$store.state.order.orderLines[this.lineIndex].items[
         this.itemIndex
@@ -319,6 +316,9 @@ export default {
       } else {
         return 0;
       }
+    },
+    priceBreak() {
+      return this.$store.getters.getPriceBreak(this.lineIndex);
     },
     finalTotalPrice() {
       return this.finalUnitPrice * this.unitTotal;
@@ -411,8 +411,8 @@ export default {
       // itemsTotal += creativeCharge;
       // this.orderLine.itemsSubTotal = itemsTotal;
 
-      // this.$store.dispatch("saveOrder", this.order);
-      // this.$router.push({ path: `/${this.order.orderNum}` });
+      this.$store.dispatch("saveOrder", this.order);
+      this.$router.push({ path: `/${this.order.orderNum}` });
     }
   }
 };

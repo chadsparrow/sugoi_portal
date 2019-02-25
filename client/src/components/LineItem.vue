@@ -69,7 +69,7 @@
         </div>
 
         <div class="col text-center">
-          Unit Price ({{orderLine.priceBreak}})
+          Unit Price ({{priceBreak}})
           <br>
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.unitPrice)}}</span>
         </div>
@@ -120,6 +120,10 @@ export default {
     },
     orderLine() {
       return this.$store.state.order.orderLines[this.lineIndex];
+    },
+
+    priceBreak() {
+      return this.$store.getters.getPriceBreak(this.lineIndex);
     }
   },
   methods: {

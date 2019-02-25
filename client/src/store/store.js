@@ -99,8 +99,8 @@ export const store = new Vuex.Store({
     setItemTotalUnits: ({ commit }, { lineIndex, itemIndex }) => {
       commit('SET_ITEM_TOTAL_UNITS', { lineIndex, itemIndex });
     },
-    getItemUnitPrice: ({ commit }, { lineIndex, itemIndex }) => {
-      commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
+    getItemUnitPrice: ({ commit, dispatch, getters }, { lineIndex, itemIndex }) => {
+      commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex, getters });
     },
     setItemAddOns: ({ commit }) => {
 
@@ -255,11 +255,12 @@ export const store = new Vuex.Store({
       item.finalUnitPrice = 0;
       item.totalUnits = 0;
     },
-    GET_ITEM_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
+    GET_ITEM_UNIT_PRICE: (state, { lineIndex, itemIndex, getters }) => {
+
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       const { selectedStyle, selectedConfig } = item;
       const currency = state.order.currency;
-      const { priceBreak } = state.order.orderLines[lineIndex];
+      const priceBreak = getters.getPriceBreak(lineIndex);
       const currentConfig = state.styles[selectedStyle].configurations[selectedConfig];
 
       if (currency === "CAD" && selectedConfig > -1) {
@@ -305,6 +306,9 @@ export const store = new Vuex.Store({
     getField,
     getColourWays: (state) => (index) => {
       return state.graphicCodes[index].colourWays;
+    },
+    getPriceBreak: (state) => (lineIndex) => {
+      return state.order.orderLines[lineIndex].priceBreak;
     }
   }
 });
