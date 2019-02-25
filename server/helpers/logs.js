@@ -1,6 +1,6 @@
 const winston = require("winston");
 const fs = require("fs");
-const path = require ("path");
+const path = require("path");
 const logDir = "logs";
 const moment = require("moment-timezone");
 
@@ -35,7 +35,7 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.File({
       filename: path.join(logDir, "logfile.log"),
-      colorize:true
+      colorize: true
     })
   ]
 });

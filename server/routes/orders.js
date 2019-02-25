@@ -106,7 +106,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-  const proofRequestDate = moment.utc().format();
+  const proofRequestDate = moment().format();
 
   let instructions = [];
 
@@ -217,7 +217,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus == "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
-          foundOrder.proofRequestDate = moment.utc().format();
+          foundOrder.proofRequestDate = moment().format();
         }
         foundOrder.currentArtist = "";
       }
@@ -235,20 +235,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.uploadDate === null) {
-          foundOrder.uploadDate = moment
-            .utc()
-            .format();
+          foundOrder.uploadDate = moment().format();
           foundOrder.sentVendor = null;
           let date1 = moment(Date.parse(foundOrder.uploadDate));
           let date2 = moment(Date.parse(foundOrder.signedOffDate));
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = parseInt(diff.days() + 1);
           foundOrder.outputTurnaround = outputTurnaround;
-          let reportWeek = moment.utc().format("W");
-          let reportYear = moment.utc().format("YYYY");
-          let reportMonth = moment
-            .utc()
-            .format("M");
+          let reportWeek = moment().format("W");
+          let reportYear = moment().format("YYYY");
+          let reportMonth = moment().format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let outputAvg = 0;
@@ -299,24 +295,14 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.sentVendor === null) {
-          foundOrder.sentVendor = moment
-            .utc()
-            .format();
+          foundOrder.sentVendor = moment().format();
         }
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
         if (foundOrder.signedOffDate === null) {
-          foundOrder.signedOffDate = moment
-            .utc()
-            .format();
-          let reportWeek = moment
-            .utc()
-            .format("W");
-          let reportYear = moment
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment
-            .utc()
-            .format("M");
+          foundOrder.signedOffDate = moment().format();
+          let reportWeek = moment().format("W");
+          let reportYear = moment().format("YYYY");
+          let reportMonth = moment().format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -345,24 +331,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.proofCompletionDate === null) {
-          foundOrder.proofCompletionDate = moment
-            .utc()
-            .format();
+          foundOrder.proofCompletionDate = moment().format();
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
           let date2 = moment(Date.parse(foundOrder.proofRequestDate));
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = parseInt(diff.days() + 1);
           foundOrder.proofTurnaround = proofTurnaround;
 
-          let reportWeek = moment
-            .utc()
-            .format("W");
-          let reportYear = moment
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment
-            .utc()
-            .format("M");
+          let reportWeek = moment().format("W");
+          let reportYear = moment().format("YYYY");
+          let reportMonth = moment().format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -412,24 +390,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.revisionCompletionDate === null) {
-          foundOrder.revisionCompletionDate = moment
-            .utc()
-            .format();
+          foundOrder.revisionCompletionDate = moment().format();
 
           let date1 = moment(Date.parse(foundOrder.revisionCompletionDate));
           let date2 = moment(Date.parse(foundOrder.revisionRequestDate));
           let diff = new DateDiff(date1, date2);
           const revisionTurnaround = parseInt(diff.days() + 1);
 
-          let reportWeek = moment
-            .utc()
-            .format("W");
-          let reportYear = moment
-            .utc()
-            .format("YYYY");
-          let reportMonth = moment
-            .utc()
-            .format("M");
+          let reportWeek = moment().format("W");
+          let reportYear = moment().format("YYYY");
+          let reportMonth = moment().format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let revisionsAvg = 0;
@@ -576,9 +546,7 @@ router.put(
     let instructionType = "Revision";
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
-    let revisionRequestDate = moment
-      .utc()
-      .format();
+    let revisionRequestDate = moment().format();
 
     Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
