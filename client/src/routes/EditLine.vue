@@ -161,7 +161,7 @@ export default {
   name: "EditLine",
   data() {
     return {
-      index: this.$route.params.index,
+      lineIndex: this.$route.params.lineIndex,
       colourWays: [],
       selectedOption: ""
     };
@@ -174,7 +174,7 @@ export default {
       return this.$store.state.order;
     },
     orderLine() {
-      return this.$store.state.order.orderLines[this.index];
+      return this.$store.state.order.orderLines[this.lineIndex];
     },
     styles() {
       return this.$store.state.styles;
@@ -222,7 +222,6 @@ export default {
     loadColourWays(e) {
       let index = e.target.selectedIndex;
       this.colourWays = this.$store.getters.getColourWays(index);
-      console.log(colourWays);
       this.orderLine.colourWayCode = "";
       this.orderLine.graphicColours = this.graphicCodes[index].colours;
       this.orderLine.colour1 = "";

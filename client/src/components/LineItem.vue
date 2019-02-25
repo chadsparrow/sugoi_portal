@@ -20,41 +20,45 @@
       </div>
       <hr class="my-2">
       <div class="row align-items-center text-center">
-        <div class="col" v-if="item.one">
+        <div class="col-sm-1 offset-sm-10" v-if="item.one">
           ONE:
           <span style="font-size: 15px; font-weight: bold;">{{item.one}}</span>
         </div>
-        <div class="col" v-if="item.xxs">
-          2XS:
-          <span style="font-size: 15px; font-weight: bold;">{{item.xxs}}</span>
-        </div>
-        <div class="col" v-if="item.xs">
-          XS:
-          <span style="font-size: 15px; font-weight: bold;">{{item.xs}}</span>
-        </div>
-        <div class="col" v-if="item.s">
-          S:
-          <span style="font-size: 15px; font-weight: bold;">{{item.s}}</span>
-        </div>
-        <div class="col" v-if="item.m">
-          M:
-          <span style="font-size: 15px; font-weight: bold;">{{item.m}}</span>
-        </div>
-        <div class="col" v-if="item.l">
-          L:
-          <span style="font-size: 15px; font-weight: bold;">{{item.l}}</span>
-        </div>
-        <div class="col" v-if="item.xl">
-          XL:
-          <span style="font-size: 15px; font-weight: bold;">{{item.xl}}</span>
-        </div>
-        <div class="col" v-if="item.xxl">
-          2XL:
-          <span style="font-size: 15px; font-weight: bold;">{{item.xxl}}</span>
-        </div>
-        <div class="col" v-if="item.xxxl">
-          3XL:
-          <span style="font-size: 15px; font-weight: bold;">{{item.xxxl}}</span>
+        <div class="col-sm-12" v-else>
+          <div class="row">
+            <div class="col-sm-1 offset-sm-2">
+              2XS:
+              <span style="font-size: 15px; font-weight: bold;">{{item.xxs}}</span>
+            </div>
+            <div class="col-sm-1">
+              XS:
+              <span style="font-size: 15px; font-weight: bold;">{{item.xs}}</span>
+            </div>
+            <div class="col-sm-1">
+              S:
+              <span style="font-size: 15px; font-weight: bold;">{{item.s}}</span>
+            </div>
+            <div class="col-sm-1">
+              M:
+              <span style="font-size: 15px; font-weight: bold;">{{item.m}}</span>
+            </div>
+            <div class="col-sm-1">
+              L:
+              <span style="font-size: 15px; font-weight: bold;">{{item.l}}</span>
+            </div>
+            <div class="col-sm-1">
+              XL:
+              <span style="font-size: 15px; font-weight: bold;">{{item.xl}}</span>
+            </div>
+            <div class="col-sm-1">
+              2XL:
+              <span style="font-size: 15px; font-weight: bold;">{{item.xxl}}</span>
+            </div>
+            <div class="col-sm-1">
+              3XL:
+              <span style="font-size: 15px; font-weight: bold;">{{item.xxxl}}</span>
+            </div>
+          </div>
         </div>
       </div>
       <hr class="my-2">
@@ -64,7 +68,8 @@
           <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
         </div>
 
-        <div class="col text-center">Unit Price
+        <div class="col text-center">
+          Unit Price ({{orderLine.priceBreak}})
           <br>
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.unitPrice)}}</span>
         </div>
@@ -112,6 +117,9 @@ export default {
     },
     order() {
       return this.$store.state.order;
+    },
+    orderLine() {
+      return this.$store.state.order.orderLines[this.lineIndex];
     }
   },
   methods: {

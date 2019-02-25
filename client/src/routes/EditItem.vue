@@ -12,6 +12,7 @@
             id="selectedStyle"
             v-model="item.selectedStyle"
             @change="selectStyle"
+            ref="styleInput"
           >
             <option
               v-for="(style, index) in styles"
@@ -59,7 +60,12 @@
         </div>
         <div class="col-sm-1">
           <label for="thread" class="small my-0">Thread:</label>
-          <select class="form-control form-control-sm" id="thread" v-model="item.thread">
+          <select
+            class="form-control form-control-sm"
+            id="thread"
+            v-model="item.thread"
+            ref="threadInput"
+          >
             <option value="BLK">BLK</option>
             <option value="WHT">WHT</option>
             <option value="GNM">GNM</option>
@@ -73,13 +79,23 @@
         </div>
         <div class="col-sm-1" v-if="item.zipperOptions.length">
           <label for="zipper" class="small my-0">Zipper:</label>
-          <select class="form-control form-control-sm" id="zipper" v-model="item.zipper">
+          <select
+            class="form-control form-control-sm"
+            id="zipper"
+            v-model="item.zipper"
+            ref="zipperInput"
+          >
             <option v-for="(zipper, index) in item.zipperOptions" :key="index">{{zipper}}</option>
           </select>
         </div>
         <div class="col-sm-1" v-if="item.contrastOptions.length">
           <label for="contrast" class="small my-0">Contrast:</label>
-          <select class="form-control form-control-sm" id="contrast" v-model="item.contrast">
+          <select
+            class="form-control form-control-sm"
+            id="contrast"
+            v-model="item.contrast"
+            ref="contrastInput"
+          >
             <option v-for="(contrast, index) in item.contrastOptions" :key="index">{{contrast}}</option>
           </select>
         </div>
@@ -100,7 +116,7 @@
             value="true"
             id="zap"
             v-model="item.zap"
-            readonly
+            disabled
           >
           <label class="form-check-label" for="zap">ZAP</label>
         </div>
@@ -119,6 +135,7 @@
             step="1"
             id="one"
             v-model.number="item.one"
+            @change="setTotalUnits"
           >
         </div>
       </div>
@@ -135,6 +152,7 @@
             step="1"
             id="xxs"
             v-model.number="item.xxs"
+            @change="setTotalUnits"
           >
         </div>
         <div class="form-group col">
@@ -146,6 +164,7 @@
             step="1"
             id="xs"
             v-model.number="item.xs"
+            @change="setTotalUnits"
           >
         </div>
         <div class="form-group col">
@@ -157,6 +176,7 @@
             step="1"
             id="s"
             v-model.number="item.s"
+            @change="setTotalUnits"
           >
         </div>
         <div class="form-group col">
@@ -168,6 +188,7 @@
             step="1"
             id="m"
             v-model.number="item.m"
+            @change="setTotalUnits"
           >
         </div>
         <div class="form-group col">
@@ -179,6 +200,7 @@
             step="1"
             id="l"
             v-model.number="item.l"
+            @change="setTotalUnits"
           >
         </div>
         <div class="form-group col">
@@ -190,6 +212,7 @@
             step="1"
             id="xl"
             v-model.number="item.xl"
+            @change="setTotalUnits"
           >
         </div>
         <div
@@ -204,6 +227,7 @@
             step="1"
             id="xxl"
             v-model.number="item.xxl"
+            @change="setTotalUnits"
           >
         </div>
         <div class="form-group col" v-if="item.sizeRange.includes('3XL')">
@@ -214,6 +238,7 @@
             min="0"
             id="xxxl"
             v-model.number="item.xxxl"
+            @change="setTotalUnits"
           >
         </div>
       </div>
@@ -221,18 +246,18 @@
       <div class="row p-0 m-0 align-items-center text-center">
         <div class="col text-center">Total Units
           <br>
-          <span>{{unitTotal}}</span>
+          <span>{{item.totalUnits}}</span>
         </div>
 
         <div class="col">
           Unit Price ({{orderLine.priceBreak}})
           <br>
-          <span>$ {{formatPrice(unitPrice)}}</span>
+          <span>$ {{formatPrice(item.unitPrice)}}</span>
         </div>
 
         <div class="col">Add-Ons
           <br>
-          <span>$ {{formatPrice(addOns)}}</span>
+          <span>$ {{formatPrice(item.addOns)}}</span>
         </div>
 
         <div class="col">
@@ -250,7 +275,7 @@
 
         <div class="col">Final Unit Price
           <br>
-          <span>$ {{formatPrice(finalUnitPrice)}}</span>
+          <span>$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
       </div>
     </div>
@@ -265,7 +290,7 @@ export default {
   name: "EditItem",
   data() {
     return {
-      index: this.$route.params.index,
+      itemIndex: this.$route.params.itemIndex,
       lineIndex: this.$route.params.lineIndex
     };
   },
@@ -278,24 +303,11 @@ export default {
     },
     item() {
       return this.$store.state.order.orderLines[this.lineIndex].items[
-        this.index
+        this.itemIndex
       ];
     },
     styles() {
       return this.$store.state.styles;
-    },
-    unitTotal() {
-      return (
-        this.item.one +
-        this.item.xxs +
-        this.item.xs +
-        this.item.s +
-        this.item.m +
-        this.item.l +
-        this.item.xl +
-        this.item.xxl +
-        this.item.xxxl
-      );
     },
     addOns() {
       if (this.item.zap && this.item.personalization) {
@@ -308,60 +320,8 @@ export default {
         return 0;
       }
     },
-    finalUnitPrice() {
-      let subUnitPrice = this.unitPrice + this.addOns;
-      return subUnitPrice - subUnitPrice * (this.item.itemDiscount / 100);
-    },
     finalTotalPrice() {
       return this.finalUnitPrice * this.unitTotal;
-    },
-    unitPrice() {
-      const { selectedStyle, selectedConfig } = this.item;
-      const currency = this.order.currency;
-      const { priceBreak } = this.orderLine;
-      const currentConfig = this.styles[selectedStyle].configurations[
-        selectedConfig
-      ];
-      let foundUnitPrice = 0;
-      if (currency === "CAD" && selectedConfig > -1) {
-        if (priceBreak === 1) {
-          foundUnitPrice = currentConfig.cad1;
-        } else if (priceBreak === 6) {
-          foundUnitPrice = currentConfig.cad6;
-        } else if (priceBreak === 12) {
-          foundUnitPrice = currentConfig.cad12;
-        } else if (priceBreak === 24) {
-          foundUnitPrice = currentConfig.cad24;
-        } else if (priceBreak === 50) {
-          foundUnitPrice = currentConfig.cad50;
-        } else if (priceBreak === 100) {
-          foundUnitPrice = currentConfig.cad100;
-        } else if (priceBreak === 200) {
-          foundUnitPrice = currentConfig.cad200;
-        } else if (priceBreak === 500) {
-          foundUnitPrice = currentConfig.cad500;
-        }
-      } else if (currency === "USD" && selectedConfig > -1) {
-        if (priceBreak === 1) {
-          foundUnitPrice = currentConfig.usd1;
-        } else if (priceBreak === 6) {
-          foundUnitPrice = currentConfig.usd6;
-        } else if (priceBreak === 12) {
-          foundUnitPrice = currentConfig.usd12;
-        } else if (priceBreak === 24) {
-          foundUnitPrice = currentConfig.usd24;
-        } else if (priceBreak === 50) {
-          foundUnitPrice = currentConfig.usd50;
-        } else if (priceBreak === 100) {
-          foundUnitPrice = currentConfig.usd100;
-        } else if (priceBreak === 200) {
-          foundUnitPrice = currentConfig.usd200;
-        } else if (priceBreak === 500) {
-          foundUnitPrice = currentConfig.usd500;
-        }
-      }
-
-      return foundUnitPrice;
     }
   },
   methods: {
@@ -370,89 +330,89 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     selectStyle() {
-      let { selectedStyle } = this.item;
-      this.item.configs = this.styles[selectedStyle].configurations;
-      this.item.zipperOptions = this.styles[selectedStyle].zipperOptions;
-      this.item.contrastOptions = this.styles[selectedStyle].contrastOptions;
-      this.item.selectedConfig = -1;
-      this.item.zipper = null;
-      this.item.contrast = null;
-    },
-    selectConfig(e) {
-      let index = e.target.selectedIndex;
-      this.item.selectedConfig = index;
-      if (index > -1) {
-        let { selectedStyle } = this.item;
-
-        let {
-          autobahnCode,
-          jbaCode,
-          sizeRange,
-          styleCode,
-          extendedDescription
-        } = this.styles[selectedStyle].configurations[index];
-
-        this.item.autobahnCode = autobahnCode;
-        this.item.jbaCode = jbaCode;
-        this.item.sizeRange = sizeRange;
-        this.item.styleCode = styleCode;
-        this.item.extendedDescription = extendedDescription;
-
-        if (this.item.extendedDescription.includes("ZAP")) {
-          this.item.zap = true;
-        } else {
-          this.item.zap = false;
-        }
-
-        this.item.one = 0;
-        this.item.xxs = 0;
-        this.item.xs = 0;
-        this.item.s = 0;
-        this.item.m = 0;
-        this.item.l = 0;
-        this.item.xl = 0;
-        this.item.xxl = 0;
-        this.item.xxxl = 0;
+      if (this.item.selectedStyle != -1) {
+        this.$store.dispatch("setSelectedStyle", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
       }
+    },
+    selectConfig() {
+      if (
+        this.item.selectedConfig !== undefined ||
+        this.item.selectedConfig > -1
+      ) {
+        this.$store.dispatch("setSelectedConfig", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+    },
+    setTotalUnits() {
+      this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+        lineIndex: this.lineIndex,
+        itemIndex: this.itemIndex
+      });
     },
     commitItem() {
-      this.item.totalUnits = this.unitTotal;
-      this.item.unitPrice = this.unitPrice;
-      this.item.addOns = this.addOns;
-      this.item.finalUnitPrice = this.finalUnitPrice;
-      this.item.itemTotalPrice = this.finalTotalPrice;
-
-      let {
-        tracingCharge,
-        scaledArtCharge,
-        creativeCharge,
-        graphicCode
-      } = this.orderLine;
-
-      let itemsTotal = 0;
-      this.order.qty = 0;
-      let items = this.orderLine.items;
-      // cycles through items in the line and adds all the final item prices
-      for (let x = 0; x < items.length; x++) {
-        let currentItem = items[x];
-        if (!currentItem.cancelled) {
-          itemsTotal += currentItem.itemTotalPrice;
-          this.order.qty += currentItem.totalUnits;
-        }
+      if (this.$refs.threadInput.value === "") {
+        this.$refs.threadInput.focus();
+        alert("Thread not selected!");
+        return;
+      }
+      if (
+        this.$refs.zipperInput != undefined &&
+        this.$refs.zipperInput.value === ""
+      ) {
+        this.$refs.zipperInput.focus();
+        alert("Zipper not selected!");
+        return;
       }
 
-      //if line is quick design, decreases the total by 10%
-      if (graphicCode != "CUSTM") {
-        itemsTotal *= 0.9;
+      if (
+        this.$refs.contrastInput != undefined &&
+        this.$refs.contrastInput.value === ""
+      ) {
+        this.$refs.contrastInput.focus();
+        alert("Contrast not selected!");
+        return;
       }
 
-      itemsTotal += tracingCharge;
-      itemsTotal += scaledArtCharge;
-      itemsTotal += creativeCharge;
-      this.orderLine.itemsSubTotal = itemsTotal;
+      //this.item.addOns = this.addOns;
+      //this.item.finalUnitPrice = this.finalUnitPrice;
+      //this.item.itemTotalPrice = this.finalTotalPrice;
 
-      this.$store.dispatch("saveOrder", this.order);
-      this.$router.push({ path: `/${this.order.orderNum}` });
+      // let {
+      //   tracingCharge,
+      //   scaledArtCharge,
+      //   creativeCharge,
+      //   graphicCode
+      // } = this.orderLine;
+
+      // let itemsTotal = 0;
+      // this.order.qty = 0;
+      // let items = this.orderLine.items;
+      // // cycles through items in the line and adds all the final item prices
+      // for (let x = 0; x < items.length; x++) {
+      //   let currentItem = items[x];
+      //   if (!currentItem.cancelled) {
+      //     itemsTotal += currentItem.itemTotalPrice;
+      //     this.order.qty += currentItem.totalUnits;
+      //   }
+      // }
+
+      // //if line is quick design, decreases the total by 10%
+      // if (graphicCode != "CUSTM") {
+      //   itemsTotal *= 0.9;
+      // }
+
+      // itemsTotal += tracingCharge;
+      // itemsTotal += scaledArtCharge;
+      // itemsTotal += creativeCharge;
+      // this.orderLine.itemsSubTotal = itemsTotal;
+
+      // this.$store.dispatch("saveOrder", this.order);
+      // this.$router.push({ path: `/${this.order.orderNum}` });
     }
   }
 };

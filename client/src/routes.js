@@ -6,6 +6,6 @@ import EditItem from './routes/EditItem.vue'
 export default [
     { path: '/:orderNum', component: Home },
     { path: '/:orderNum/editdetails', component: EditDetails },
-    { path: '/editline/:index', component: EditLine },
-    { path: '/edititem/:lineIndex/:index', component: EditItem }
+    { path: '/editline/:lineIndex', component: EditLine },
+    { path: '/edititem/:lineIndex/:itemIndex', component: EditItem }
 ]
