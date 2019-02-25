@@ -216,7 +216,7 @@ export default {
       itemsTotal += creativeCharge;
       this.orderLine.itemsSubTotal = itemsTotal;
 
-      this.$store.dispatch("saveOrder", this.order);
+      this.$store.dispatch("saveOrder");
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
     loadColourWays(e) {
