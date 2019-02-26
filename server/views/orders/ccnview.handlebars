@@ -39,13 +39,14 @@
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{qty}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
-          "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
+        </td>
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{shippingNotes}}</td>
       </tr>

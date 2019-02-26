@@ -28,10 +28,11 @@
       {{#each foundProofs}}
       {{#each this.qcnotearchive}}
       <tr>
-        <td style="font-size: 12px;" class="center-align">{{formatDate this.noteDate "DD-MMM"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate this.noteDate "D-MMM-YYYY"}}</td>
         <td style="font-size: 12px;" class="center-align">{{this.noteUser}}</td>
         <td style="font-size: 12px;" class="center-align">{{../this.itemNumber}}<br>{{../this.styleNumber}}</td>
-        <td style="font-size: 14px; text-align: justify; white-space: pre-line; padding: 20px;" class="grey white-text">{{this.note}}</td>
+        <td style="font-size: 14px; text-align: justify; white-space: pre-line; padding: 20px;" class="grey white-text">
+          {{this.note}}</td>
       </tr>
       {{/each}}
       {{/each}}

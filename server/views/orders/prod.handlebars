@@ -58,15 +58,16 @@
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
-          "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
+        </td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{tracking}}</td>
         <!-- pull from Shippo API -->
@@ -78,7 +79,7 @@
           </a>{{/if}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaPONum}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaGNRNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>
