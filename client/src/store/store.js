@@ -90,41 +90,31 @@ export const store = new Vuex.Store({
     setProvTax: ({ commit }, tax) => {
       commit('SET_PROV_TAX', tax);
     },
-    setCountryUpper: ({ commit }, text) => {
+    setCountryUpper: ({ commit, dispatch }, text) => {
       text = text.toUpperCase();
       commit('SET_COUNTRY_UPPER', text);
       commit('RESET_STATE_PROV');
       commit('SET_CURRENCY', text);
+      dispatch('updateAllLinesCurrency');
+    },
+    updateAllLinesCurrency: ({ state, dispatch }) => {
+      const orderLines = state.order.orderLines;
+      for (let [lineIndex, orderLine] of orderLines.entries()) {
+        if (!orderLine.cancelled) {
+          const items = orderLine.items;
+          for (let [itemIndex, item] of items.entries()) {
+            if (!item.cancelled) {
+              dispatch('getItemUnitPrice', { lineIndex, itemIndex })
+            }
+          }
+        }
+      }
     },
     setItemTotalUnits: ({ commit }, { lineIndex, itemIndex }) => {
       commit('SET_ITEM_TOTAL_UNITS', { lineIndex, itemIndex });
     },
     getItemUnitPrice: ({ commit, dispatch, getters }, { lineIndex, itemIndex }) => {
       commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex, getters });
-    },
-    setItemAddOns: ({ commit }) => {
-
-    },
-    setItemFinalUnitPrice: ({ commit }) => {
-
-    },
-    setItemTotalPrice: ({ commit }) => {
-
-    },
-    setLineSubTotal: ({ commit }) => {
-
-    },
-    setOrderSubTotal: ({ commit }) => {
-
-    },
-    setTaxAmount: ({ commit }, tax) => {
-
-    },
-    setOrderNetValue: ({ commit }) => {
-
-    },
-    setOrderBalanceOutstanding: ({ commit }) => {
-
     },
     setSelectedStyle: ({ commit }, { lineIndex, itemIndex }) => {
       commit('SET_SELECTED_STYLE', { lineIndex, itemIndex });
@@ -256,7 +246,6 @@ export const store = new Vuex.Store({
       item.totalUnits = 0;
     },
     GET_ITEM_UNIT_PRICE: (state, { lineIndex, itemIndex, getters }) => {
-
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       const { selectedStyle, selectedConfig } = item;
       const currency = state.order.currency;

@@ -18,9 +18,6 @@ export default {
     };
   },
   computed: {
-    order() {
-      return this.$store.state.order;
-    },
     headerTitle() {
       return this.quoteToggle ? "Initial Quote" : "Order Confirmation";
     }
