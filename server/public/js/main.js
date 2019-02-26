@@ -283,7 +283,31 @@ $(document).ready(function () {
         targets: 4,
         data: "netValue",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
-      }
+      },
+      {
+        targets: 8,
+        type: 'date'
+      },
+      {
+        targets: 9,
+        type: 'date'
+      },
+      {
+        targets: 10,
+        type: 'date'
+      },
+      {
+        targets: 11,
+        type: 'date'
+      },
+      {
+        targets: 13,
+        type: 'date'
+      },
+      {
+        targets: 17,
+        type: 'date'
+      },
     ],
     scrollX: true,
     scrollCollapse: true,
@@ -323,7 +347,7 @@ $(document).ready(function () {
         }
       },
       {
-        text: "CCN Copy",
+        text: "Vendor Copy",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/ccn");
         },
@@ -368,6 +392,24 @@ $(document).ready(function () {
       leftColumns: 1,
       rightColumns: 1
     },
+    columnDefs: [
+      {
+        targets: 4,
+        type: 'date'
+      },
+      {
+        targets: 5,
+        type: 'date'
+      },
+      {
+        targets: 6,
+        type: 'date'
+      },
+      {
+        targets: 8,
+        type: 'date'
+      }
+    ],
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
@@ -422,6 +464,14 @@ $(document).ready(function () {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       },
       {
+        targets: 6,
+        type: 'date'
+      },
+      {
+        targets: 8,
+        type: 'date'
+      },
+      {
         targets: 10,
         data: "onTermPayment",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
@@ -437,9 +487,17 @@ $(document).ready(function () {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       },
       {
+        targets: 13,
+        type: 'date'
+      },
+      {
         targets: 15,
         data: "isrRefunded",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 18,
+        type: 'date'
       },
       {
         targets: 19,
