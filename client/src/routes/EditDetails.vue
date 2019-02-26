@@ -338,6 +338,7 @@ export default {
       this.$store.dispatch("setCountryUpper", text);
     },
     commitChanges() {
+      this.$store.dispatch("setOrderTotal");
       this.$store.dispatch("saveOrder", this.order);
       this.$router.push({ path: `/${this.order.orderNum}` });
     }

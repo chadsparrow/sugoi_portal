@@ -18,20 +18,6 @@ export const store = new Vuex.Store({
   },
   actions: {
     saveOrder: ({ commit, state }) => {
-      let orderLines = state.order.orderLines;
-      let linesTotal = 0;
-      for (let x = 0; x < orderLines.length; x++) {
-        let currentLine = orderLines[x];
-        if (!currentLine.cancelled) {
-          linesTotal += currentLine.itemsSubTotal;
-        }
-      }
-      state.order.beforeTaxes = linesTotal;
-      state.order.taxAmount = linesTotal * (state.order.taxes / 100);
-      state.order.netValue = linesTotal + state.order.taxAmount + (state.order.prePacks * 5) + (state.order.multiShips * 15);
-
-      state.order.balanceOutstanding = state.order.netValue - state.order.deposit - state.order.isrCollectedOrig + state.order.isrRefunded;
-
       axios
         .put(`https://localhost:5000/api/orders/${state.order.orderNum}`, state.order)
         .then(r => r.data)
@@ -109,12 +95,13 @@ export const store = new Vuex.Store({
           }
         }
       }
+      dispatch('setOrderTotal');
     },
     setItemTotalUnits: ({ commit }, { lineIndex, itemIndex }) => {
       commit('SET_ITEM_TOTAL_UNITS', { lineIndex, itemIndex });
     },
-    getItemUnitPrice: ({ commit, dispatch, getters }, { lineIndex, itemIndex }) => {
-      commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex, getters });
+    getItemUnitPrice: ({ commit }, { lineIndex, itemIndex }) => {
+      commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
     },
     setSelectedStyle: ({ commit }, { lineIndex, itemIndex }) => {
       commit('SET_SELECTED_STYLE', { lineIndex, itemIndex });
@@ -122,6 +109,9 @@ export const store = new Vuex.Store({
     setSelectedConfig: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit('SET_SELECTED_CONFIG', { lineIndex, itemIndex });
       dispatch('getItemUnitPrice', { lineIndex, itemIndex });
+    },
+    setOrderTotal: ({ commit }) => {
+      commit('SET_ORDER_TOTALS');
     }
   },
   mutations: {
@@ -245,11 +235,11 @@ export const store = new Vuex.Store({
       item.finalUnitPrice = 0;
       item.totalUnits = 0;
     },
-    GET_ITEM_UNIT_PRICE: (state, { lineIndex, itemIndex, getters }) => {
+    GET_ITEM_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       const { selectedStyle, selectedConfig } = item;
       const currency = state.order.currency;
-      const priceBreak = getters.getPriceBreak(lineIndex);
+      const priceBreak = state.order.orderLines[lineIndex].priceBreak;
       const currentConfig = state.styles[selectedStyle].configurations[selectedConfig];
 
       if (currency === "CAD" && selectedConfig > -1) {
@@ -289,6 +279,20 @@ export const store = new Vuex.Store({
           item.unitPrice = currentConfig.usd500;
         }
       }
+    },
+    SET_ORDER_TOTALS: (state) => {
+      state.order.beforeTaxes = 0;
+      const orderLines = state.order.orderLines;
+      for (let orderLine of orderLines) {
+        if (!orderLine.cancelled) {
+          state.order.beforeTaxes += orderLine.itemsSubTotal;
+        }
+      }
+      state.order.beforeTaxes += state.order.multiShips * 15;
+      state.order.beforeTaxes += state.order.prePacks * 5;
+      state.order.taxAmount = state.order.beforeTaxes * (state.order.taxes / 100);
+      state.order.netValue = state.order.beforeTaxes + state.order.taxAmount;
+      state.order.balanceOutstanding = state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded
     }
   },
   getters: {

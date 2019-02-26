@@ -63,8 +63,14 @@
       </div>
       <div class="col-sm-3 border-left text-center">
         <ul class="list-group list-group-flush">
-          <li v-if="order.multiShips >0" class="list-group-item">MultiShips: {{order.multiShips}}</li>
-          <li v-if="order.prePacks >0" class="list-group-item">PrePacks: {{order.prePacks}}</li>
+          <li v-if="order.multiShips >0" class="list-group-item">
+            MultiShips:
+            <span>{{order.multiShips}} @ $15 = ${{formatPrice(order.multiShips * 15)}}</span>
+          </li>
+          <li v-if="order.prePacks >0" class="list-group-item">
+            PrePacks:
+            <span>{{order.prePacks}} @ $5 = ${{formatPrice(order.prePacks * 5)}}</span>
+          </li>
           <li class="list-group-item">
             Currency:
             <span>{{order.currency}}</span>

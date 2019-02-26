@@ -166,7 +166,7 @@ export default {
       selectedOption: ""
     };
   },
-  beforeMount() {
+  created() {
     this.$store.dispatch("getGraphicCodes");
   },
   computed: {
@@ -215,7 +215,6 @@ export default {
       itemsTotal += scaledArtCharge;
       itemsTotal += creativeCharge;
       this.orderLine.itemsSubTotal = itemsTotal;
-
       this.$store.dispatch("saveOrder");
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
