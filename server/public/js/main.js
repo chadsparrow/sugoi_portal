@@ -1,10 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
   $("#productionDiv").hide();
 
   if ($("#currentStatus").val() == "V. Sent to Vendor") {
     $("#productionDiv").show();
   }
-  $("#currentStatus").change(function() {
+  $("#currentStatus").change(function () {
     if ($("#currentStatus").val() == "V. Sent to Vendor") {
       $("#productionDiv").show();
     } else {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#admin").click(function() {
+  $("#admin").click(function () {
     if ($("#admin").is(":checked")) {
       $(".form-check-input").attr("checked", true);
     } else {
@@ -20,12 +20,12 @@ $(document).ready(function() {
     }
   });
 
-  $("input.number").keyup(function(event) {
+  $("input.number").keyup(function (event) {
     // skip for arrow keys
     if (event.which >= 37 && event.which <= 40) return;
 
     // format number
-    $(this).val(function(index, value) {
+    $(this).val(function (index, value) {
       return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     });
   });
@@ -69,7 +69,7 @@ $(document).ready(function() {
   $("#eventDate").datepicker({
     minDate: new Date(),
     setDefaultDate: true,
-    onSelect: function(date) {
+    onSelect: function (date) {
       var selectedDate = new Date(date);
       var msecsInADay = 86400000;
       var endDate = new Date(selectedDate.getTime() + msecsInADay - 1);
@@ -87,7 +87,7 @@ $(document).ready(function() {
   }
 
   $("#styleTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
     responsive: true,
@@ -116,9 +116,10 @@ $(document).ready(function() {
     buttons: ["excelHtml5"]
   });
 
+  $.fn.dataTable.moment('DD-MMM');
   //ORDER TABLE
   $("#orderTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
     responsive: true,
@@ -127,6 +128,28 @@ $(document).ready(function() {
       headerOffset: 64,
       footer: false
     },
+    columnDefs: [
+      {
+        targets: 3,
+        type: 'date'
+      },
+      {
+        targets: 4,
+        type: 'date'
+      },
+      {
+        targets: 5,
+        type: 'date'
+      },
+      {
+        targets: 10,
+        type: 'date'
+      },
+      {
+        targets: 11,
+        type: 'date'
+      },
+    ],
     select: true,
     pageLength: -1,
     order: [[1, "asc"], [3, "asc"]],
@@ -149,28 +172,28 @@ $(document).ready(function() {
     buttons: [
       {
         text: "In Progress",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/orders");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "Completed",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/orders/completed");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "Cancelled",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/orders/cancelled");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "All",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/orders/all");
         },
         className: "waves-effect waves-light btn-small"
@@ -180,7 +203,7 @@ $(document).ready(function() {
         className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
-        filename: function() {
+        filename: function () {
           var d = new Date();
           var n = d.getTime();
           return "Orders-Report " + n;
@@ -196,7 +219,7 @@ $(document).ready(function() {
   });
 
   $("#prodTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
     fixedColumns: {
@@ -235,7 +258,7 @@ $(document).ready(function() {
         className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
-        filename: function() {
+        filename: function () {
           var d = new Date();
           var n = d.getTime();
           return "Production-Report " + n;
@@ -249,35 +272,35 @@ $(document).ready(function() {
       },
       {
         text: "CCN Copy",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/ccn");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "All Orders",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "Open Orders",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/open");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "Pending Delivery",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/pending");
         },
         className: "waves-effect waves-light btn-small"
       },
       {
         text: "Cancelled",
-        action: function(e, dt, node, config) {
+        action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/cancelled");
         },
         className: "waves-effect waves-light btn-small"
@@ -286,7 +309,7 @@ $(document).ready(function() {
   });
 
   $("#prodCCNTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
     fixedColumns: {
@@ -318,7 +341,7 @@ $(document).ready(function() {
         className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
-        filename: function() {
+        filename: function () {
           var d = new Date();
           var n = d.getTime();
           return "Production-Report-CCN " + n;
@@ -333,7 +356,7 @@ $(document).ready(function() {
   });
 
   $("#paymentTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
     fixedColumns: {
@@ -398,7 +421,7 @@ $(document).ready(function() {
         className: "waves-effect waves-light btn-small",
         text: "Export Excel",
         title: "",
-        filename: function() {
+        filename: function () {
           var d = new Date();
           var n = d.getTime();
           return "Payments-Report " + n;
@@ -435,7 +458,7 @@ $(document).ready(function() {
   });
 
   $("#qcTable").dataTable({
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
     columnDefs: [
@@ -463,7 +486,7 @@ $(document).ready(function() {
     dom: "lrftip"
   });
 
-  $("#orderNum").keydown(function(e) {
+  $("#orderNum").keydown(function (e) {
     // Allow: backspace, delete, tab, escape, enter and .
     if (
       $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
