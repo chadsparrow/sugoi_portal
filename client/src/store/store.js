@@ -81,9 +81,9 @@ export const store = new Vuex.Store({
       commit('SET_COUNTRY_UPPER', text);
       commit('RESET_STATE_PROV');
       commit('SET_CURRENCY', text);
-      dispatch('updateAllLinesCurrency');
+      dispatch('updateAllLines');
     },
-    updateAllLinesCurrency: ({ state, dispatch }) => {
+    updateAllLines: ({ state, dispatch }) => {
       const orderLines = state.order.orderLines;
       for (let [lineIndex, orderLine] of orderLines.entries()) {
         if (!orderLine.cancelled) {
@@ -92,6 +92,18 @@ export const store = new Vuex.Store({
             if (!item.cancelled) {
               dispatch('getItemUnitPrice', { lineIndex, itemIndex })
             }
+          }
+        }
+      }
+      dispatch('setOrderTotal');
+    },
+    updateSingleLine: ({ state, dispatch }, lineIndex) => {
+      const orderLine = state.order.orderLines[lineIndex];
+      if (!orderLine.cancelled) {
+        const items = orderLine.items;
+        for (let [itemIndex, item] of items.entries()) {
+          if (!item.cancelled) {
+            dispatch('getItemUnitPrice', { lineIndex, itemIndex })
           }
         }
       }
@@ -299,9 +311,6 @@ export const store = new Vuex.Store({
     getField,
     getColourWays: (state) => (index) => {
       return state.graphicCodes[index].colourWays;
-    },
-    getPriceBreak: (state) => (lineIndex) => {
-      return state.order.orderLines[lineIndex].priceBreak;
     }
   }
 });

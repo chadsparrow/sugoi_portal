@@ -122,7 +122,7 @@ export default {
       return this.$store.state.order.orderLines[this.lineIndex];
     },
     priceBreak() {
-      return this.$store.getters.getPriceBreak(this.lineIndex);
+      return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
     }
   },
   methods: {

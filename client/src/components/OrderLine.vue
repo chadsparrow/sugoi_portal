@@ -106,13 +106,12 @@ export default {
       title: "Lines"
     };
   },
+  updated() {
+    this.$store.dispatch("updateSingleLine", this.index);
+  },
   methods: {
     goToEdit() {
       this.$router.push({ path: `editline/${this.index}` });
-    },
-    commitChanges(order) {
-      this.$store.dispatch("saveOrder", order);
-      this.$router.push({ path: `/${this.order.orderNum}` });
     },
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
