@@ -106,6 +106,7 @@
             value="true"
             id="personalization"
             v-model="item.personalization"
+            @change="addOns"
           >
           <label class="form-check-label" for="personalization">PRS</label>
         </div>
@@ -250,7 +251,7 @@
         </div>
 
         <div class="col">
-          Unit Price ({{priceBreak}})
+          Unit Price ({{order.currency}}{{priceBreak}})
           <br>
           <span>$ {{formatPrice(item.unitPrice)}}</span>
         </div>
@@ -306,19 +307,8 @@ export default {
     styles() {
       return this.$store.state.styles;
     },
-    addOns() {
-      if (this.item.zap && this.item.personalization) {
-        return 10;
-      } else if (this.item.zap && !this.item.personalization) {
-        return 5;
-      } else if (!this.item.zap && this.item.personalization) {
-        return 5;
-      } else {
-        return 0;
-      }
-    },
     priceBreak() {
-      return this.$store.getters.getPriceBreak(this.lineIndex);
+      return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
     },
     finalTotalPrice() {
       return this.finalUnitPrice * this.unitTotal;
@@ -354,6 +344,12 @@ export default {
         itemIndex: this.itemIndex
       });
     },
+    addOns() {
+      this.$store.commit("ADD_ONS", {
+        lineIndex: this.lineIndex,
+        itemIndex: this.itemIndex
+      });
+    },
     commitItem() {
       if (this.$refs.threadInput.value === "") {
         this.$refs.threadInput.focus();
@@ -378,7 +374,6 @@ export default {
         return;
       }
 
-      //this.item.addOns = this.addOns;
       //this.item.finalUnitPrice = this.finalUnitPrice;
       //this.item.itemTotalPrice = this.finalTotalPrice;
 

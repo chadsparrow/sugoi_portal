@@ -131,6 +131,7 @@
               id="shipToProvState"
               v-model="order.shipToProvState"
               @change="setProvTax"
+              ref="province"
             >
               <option
                 v-for="(prov, index) in provs"
@@ -149,6 +150,7 @@
               id="shipToProvState"
               v-model="order.shipToProvState"
               @change="setTaxOther(0)"
+              ref="state"
             >
               <option
                 v-for="(state, index) in states"
@@ -165,6 +167,7 @@
               id="shipToProvState"
               v-model.trim="order.shipToProvState"
               @change="setTaxOther(0)"
+              ref="provincestate"
             >
           </div>
 
@@ -338,6 +341,30 @@ export default {
       this.$store.dispatch("setCountryUpper", text);
     },
     commitChanges() {
+      if (
+        this.$refs.province != undefined &&
+        this.$refs.province.value === ""
+      ) {
+        this.$refs.province.focus();
+        alert("Province not selected");
+        return;
+      }
+
+      if (this.$refs.state != undefined && this.$refs.state.value === "") {
+        this.$refs.state.focus();
+        alert("State not selected");
+        return;
+      }
+
+      if (
+        this.$refs.provincestate != undefined &&
+        this.$refs.provincestate.value === ""
+      ) {
+        this.$refs.provincestate.focus();
+        alert("Province/State not entered");
+        return;
+      }
+
       this.$store.dispatch("setOrderTotal");
       this.$store.dispatch("saveOrder", this.order);
       this.$router.push({ path: `/${this.order.orderNum}` });

@@ -109,9 +109,6 @@ export const store = new Vuex.Store({
       }
       dispatch('setOrderTotal');
     },
-    setItemTotalUnits: ({ commit }, { lineIndex, itemIndex }) => {
-      commit('SET_ITEM_TOTAL_UNITS', { lineIndex, itemIndex });
-    },
     getItemUnitPrice: ({ commit }, { lineIndex, itemIndex }) => {
       commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
     },
@@ -178,6 +175,21 @@ export const store = new Vuex.Store({
       const { one, xxs, xs, s, m, l, xl, xxl, xxxl } = state.order.orderLines[lineIndex].items[itemIndex];
       state.order.orderLines[lineIndex].items[itemIndex].totalUnits = one + xxs + xs + s + m + l + xl + xxl + xxxl;
     },
+    ADD_ONS: (state, { lineIndex, itemIndex }) => {
+      let item = state.order.orderLines[lineIndex].items[itemIndex];
+
+      item.addOns = 0;
+
+      if (item.personalization && item.zap) {
+        item.addOns = 15;
+      } else if (item.personalization && !item.zap) {
+        item.addOns = 10;
+      } else if (!item.personalization && item.zap) {
+        item.addOns = 5;
+      } else {
+        item.addOns = 0;
+      }
+    },
     SET_SELECTED_STYLE: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];
       let { selectedStyle } = item;
@@ -226,11 +238,22 @@ export const store = new Vuex.Store({
       item.styleCode = styleCode;
       item.extendedDescription = extendedDescription;
 
+      item.addOns = 0;
+
       if (item.extendedDescription.includes("ZAP")) {
         item.zap = true;
       } else {
         item.zap = false;
       }
+
+      if (item.personalization && item.zap) {
+        item.addOns = 15;
+      } else if (item.personalization && !item.zap) {
+        item.addOns = 10;
+      } else if (!item.personalization && item.zap) {
+        item.addOns = 5;
+      }
+
       item.zipper = null;
       item.contrast = null;
       item.thread = null;

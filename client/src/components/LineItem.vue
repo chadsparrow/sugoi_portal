@@ -15,8 +15,8 @@
         <div class="col-sm-2">Thread: {{item.thread}}</div>
         <div v-if="item.zipper" class="col-sm-2">Zipper: {{item.zipper}}</div>
         <div v-if="item.contrast" class="col-sm-2">Contrast: {{item.contrast}}</div>
-        <div v-if="item.personalization" class="col-sm-2">PRS: {{item.personalization}}</div>
-        <div v-if="item.zap" class="col-sm-2">ZAP: YES</div>
+        <div v-if="item.personalization" class="col-sm-2">Personalized</div>
+        <div v-if="item.zap" class="col-sm-2">ZAP</div>
       </div>
       <hr class="my-2">
       <div class="row align-items-center text-center">
