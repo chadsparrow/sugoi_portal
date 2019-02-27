@@ -24,6 +24,7 @@
         <th>Qty</th>
         <th>Total Value</th>
         <th>Currency</th>
+        <th>Vendor</th>
         <th>Created By</th>
         <th>Sent to Vendor</th>
         <th>Event Date</th>
@@ -54,27 +55,31 @@
         <td style="font-size: 12px;" class="center-align">{{qty}}</td>
         <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
         <td style="font-size: 12px;" class="center-align">{{currency}}</td>
+        <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
-          "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
+        </td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{tracking}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align {{setConfirmDeliveryStatus confirmDeliveryStatus}}">{{#if
-          tracking}}<a href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
-            target="_blank" class="text-decoration:none !important;">{{confirmDeliveryStatus}} <i class="material-icons tiny">flight</i></a>
+          tracking}}<a
+            href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
+            target="_blank" class="text-decoration:none !important;">{{confirmDeliveryStatus}} <i
+              class="material-icons tiny">flight</i></a>
           </a>{{/if}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaPONum}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaGNRNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>
