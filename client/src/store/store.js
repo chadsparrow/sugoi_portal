@@ -83,6 +83,9 @@ export const store = new Vuex.Store({
       commit('SET_CURRENCY', text);
       dispatch('updateAllLines');
     },
+    setAddOns: ({ commit }, lineIndex) => {
+      commit('SET_ADD_ONS', lineIndex);
+    },
     updateAllLines: ({ state, dispatch }) => {
       const orderLines = state.order.orderLines;
       for (let [lineIndex, orderLine] of orderLines.entries()) {
@@ -328,6 +331,15 @@ export const store = new Vuex.Store({
       state.order.taxAmount = state.order.beforeTaxes * (state.order.taxes / 100);
       state.order.netValue = state.order.beforeTaxes + state.order.taxAmount;
       state.order.balanceOutstanding = state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded
+    },
+    SET_ADD_ONS: (state, lineIndex) => {
+      state.order.orderLines[lineIndex].totalAddOns = 0;
+      const items = state.order.orderLines[lineIndex].items;
+      for (let item of items) {
+        if (!item.cancelled) {
+          state.order.orderLines[lineIndex].totalAddOns += parseInt(item.addOns);
+        }
+      }
     }
   },
   getters: {

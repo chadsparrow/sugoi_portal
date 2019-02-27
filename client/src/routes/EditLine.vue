@@ -189,6 +189,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     commitLine() {
+      this.$store.dispatch("setAddOns", this.lineIndex);
       let {
         tracingCharge,
         scaledArtCharge,
@@ -197,6 +198,7 @@ export default {
       } = this.orderLine;
 
       let itemsTotal = 0;
+
       let items = this.orderLine.items;
       // cycles through items in the line and adds all the final item prices
       for (let x = 0; x < items.length; x++) {

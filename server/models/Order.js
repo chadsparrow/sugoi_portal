@@ -419,6 +419,10 @@ const OrderSchema = new Schema({
         type: Boolean,
         default: false
       },
+      totalAddOns: {
+        type: Number,
+        default: null
+      },
       items: [
         {
           itemNumber: {

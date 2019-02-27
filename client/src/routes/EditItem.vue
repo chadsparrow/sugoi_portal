@@ -374,6 +374,8 @@ export default {
         return;
       }
 
+      this.$store.dispatch("setAddOns", this.lineIndex);
+
       //this.item.finalUnitPrice = this.finalUnitPrice;
       //this.item.itemTotalPrice = this.finalTotalPrice;
 

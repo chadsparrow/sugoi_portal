@@ -10,13 +10,17 @@
     </div>
     <div class="card-body p-1">
       <div class="row align-items-center text-center">
-        <div class="col-sm-2">Ink: {{item.inkType}}</div>
+        <div class="col">Ink: {{item.inkType}}</div>
         <div v-if="item.childReference" class="col-sm-2">Child Ref#: {{item.childReference}}</div>
-        <div class="col-sm-2">Thread: {{item.thread}}</div>
-        <div v-if="item.zipper" class="col-sm-2">Zipper: {{item.zipper}}</div>
-        <div v-if="item.contrast" class="col-sm-2">Contrast: {{item.contrast}}</div>
-        <div v-if="item.personalization" class="col-sm-2">Personalized</div>
-        <div v-if="item.zap" class="col-sm-2">ZAP</div>
+        <div class="col">Thread: {{item.thread}}</div>
+        <div v-if="item.zipper" class="col">Zipper: {{item.zipper}}</div>
+        <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
+        <div v-if="item.zap" class="col">
+          <span class="badge badge-warning">ZAP</span>
+        </div>
+        <div v-if="item.personalization" class="col">
+          <span class="badge badge-warning">Personalized</span>
+        </div>
       </div>
       <hr class="my-2">
       <div class="row align-items-center text-center">
