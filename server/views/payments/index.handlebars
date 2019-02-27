@@ -72,11 +72,11 @@
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{balanceOutstanding}}</td>
         <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{paymentStatus}}</td>
-        <td style="font-size: 12px;" class="center-align">
+        <td style="font-size: 12px;" class="center-align valign-wrapper">
           <span>
             {{#if ../user.editOrders}}
             <a class="green-text" href="/payments/edit/{{_id}}">
-              <i class="material-icons">edit</i>
+              <i class="tiny material-icons">edit</i>
             </a>
             {{/if}}
           </span>
