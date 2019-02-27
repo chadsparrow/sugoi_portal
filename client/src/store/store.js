@@ -337,6 +337,10 @@ export const store = new Vuex.Store({
       for (let item of items) {
         if (!item.cancelled) {
           state.order.orderLines[lineIndex].totalAddOns += parseInt(item.addOns * item.totalUnits);
+          state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
+          state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
+          state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
+
         }
       }
     },
@@ -355,7 +359,6 @@ export const store = new Vuex.Store({
       const tracingCharge = orderLine.tracingCharge;
       const scaledArtCharge = orderLine.scaledArtCharge;
       const creativeCharge = orderLine.creativeCharge;
-      const graphicCode = orderLine.graphicCode;
       const totalAddOns = orderLine.totalAddOns;
 
 
@@ -370,9 +373,6 @@ export const store = new Vuex.Store({
         itemsTotal += totalAddOns;
       }
 
-      itemsTotal += tracingCharge;
-      itemsTotal += scaledArtCharge;
-      itemsTotal += creativeCharge;
       state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
 
     }

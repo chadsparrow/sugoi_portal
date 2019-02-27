@@ -5,7 +5,7 @@
       <div
         class="badge badge-warning text-center ml-3"
         v-if="orderLine.graphicCode != 'CUSTM'"
-      >Quick Design</div>
+      >Quick Design - 10% OFF</div>
       <span class="float-right">Details</span>
     </div>
     <div class="card-body p-1">
@@ -33,17 +33,24 @@
         </div>
         <!-- RIGHT SECTION -->
         <div class="col-sm-3 border-left">
+          <div class="mb-2 col-sm-12 bg-dark text-white text-center rounded">Line Add-Ons</div>
           <div class="mb-2 col-sm-12">
             Tracing:
-            <span class="float-right">${{formatPrice(orderLine.tracingCharge)}}</span>
+            <span
+              class="float-right badge badge-dark text-light"
+            >${{formatPrice(orderLine.tracingCharge)}}</span>
           </div>
           <div class="mb-2 col-sm-12">
             Creative:
-            <span class="float-right">${{formatPrice(orderLine.creativeCharge)}}</span>
+            <span
+              class="float-right badge badge-dark text-light"
+            >${{formatPrice(orderLine.creativeCharge)}}</span>
           </div>
           <div class="col-sm-12">
             Scaled Art:
-            <span class="float-right">${{formatPrice(orderLine.scaledArtCharge)}}</span>
+            <span
+              class="float-right badge badge-dark text-light"
+            >${{formatPrice(orderLine.scaledArtCharge)}}</span>
           </div>
         </div>
       </div>
@@ -76,7 +83,7 @@
       >Cancel Full Line</button>
       <div class="float-right">
         <div
-          class="rounded bg-success text-center text-white p-1"
+          class="rounded bg-dark text-center text-white p-1"
           v-if="orderLine.totalAddOns >0"
         >Total Add-Ons: ${{formatPrice(orderLine.totalAddOns)}}</div>
         <div

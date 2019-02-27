@@ -15,12 +15,14 @@
         <div class="col">Thread: {{item.thread}}</div>
         <div v-if="item.zipper" class="col">Zipper: {{item.zipper}}</div>
         <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
-        <div v-if="item.zap" class="col">
-          <span class="badge badge-warning">ZAP - $5</span>
+        <div v-if="item.zap" class="col" style="font-size: 16px;">
+          <span class="badge badge-dark">ZAP - $5</span>
         </div>
-        <div v-if="item.personalization" class="col">
-          <span class="badge badge-warning">Personalized - $10</span>
+        <div v-if="item.personalization" class="col" style="font-size: 16px;">
+          <span class="badge badge-dark">PRS - $10</span>
         </div>
+
+        <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
       </div>
       <hr class="my-2">
       <div class="row align-items-center text-center">
@@ -89,26 +91,31 @@
           <br>
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
-
-        <div
-          class="col text-center border border-dark rounded p-1"
-          style="font-weight: bold; font-size: 16px;"
-        >
+      </div>
+      <div class="card-footer d-print-none p-1">
+        <div class="float-left m-0">
+          <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
+          <button class="btn btn-sm btn-danger">Cancel Item</button>
+        </div>
+        <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
+          <div class="col bg-secondary rounded text-white align-middle p-1 mr-1">SubTotal:
+            <br>
+            ${{formatPrice(subTotal)}}
+          </div>
+          <div v-if="qdDiscount >0" class="col bg-warning rounded p-1">QD Discount:
+            <br>
+            - ${{formatPrice(qdDiscount)}}
+          </div>
           <div
-            class="text-center"
-            style="font-weight: bold; font-size: 11px;"
-          >SubTotal: $ {{formatPrice(subTotal)}}</div>
-          <div
-            class="text-center bg-warning rounded p-1 mb-2"
-            style="font-weight: bold; font-size: 11px;"
-          >QD Discount: $ {{formatPrice(qdDiscount)}}</div>
-          Item Total: ${{formatPrice(item.itemTotalPrice)}}
+            class="col"
+            style="font-size: 16px;"
+          >Item Total: ${{formatPrice(item.itemTotalPrice)}}</div>
+          <div v-if="item.addOns >0" class="col bg-dark rounded text-light p-1 ml-1">Add-Ons:
+            <br>
+            ${{formatPrice(item.addOns * item.totalUnits)}}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card-footer text-center d-print-none p-1">
-      <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
-      <button class="btn btn-sm btn-danger">Cancel Item</button>
     </div>
   </div>
 </template>
