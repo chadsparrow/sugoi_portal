@@ -343,7 +343,11 @@ export const store = new Vuex.Store({
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100));
-      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = item.totalUnits * item.finalUnitPrice;
+      let qdDiscountAmount = 0;
+      if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM') {
+        qdDiscountAmount = (item.totalUnits * item.finalUnitPrice) * .1;
+      }
+      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice) - qdDiscountAmount;
     },
     SET_LINE_TOTAL: (state, { lineIndex }) => {
       const orderLine = state.order.orderLines[lineIndex];
@@ -354,16 +358,12 @@ export const store = new Vuex.Store({
       const graphicCode = orderLine.graphicCode;
       const totalAddOns = orderLine.totalAddOns;
 
+
       let itemsTotal = 0;
       for (let item of items) {
         if (!item.cancelled) {
           itemsTotal += item.itemTotalPrice;
         }
-      }
-
-      //if line is quick design, decreases the total by 10%
-      if (graphicCode != "CUSTM") {
-        itemsTotal *= 0.9;
       }
 
       if (totalAddOns > 0) {

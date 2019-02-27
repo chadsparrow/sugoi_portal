@@ -92,10 +92,17 @@
 
         <div
           class="col text-center border border-dark rounded p-1"
-          style="font-weight: bold; font-size: 14px;"
-        >Item Total:
-          <br>
-          $ {{formatPrice(item.itemTotalPrice)}}
+          style="font-weight: bold; font-size: 16px;"
+        >
+          <div
+            class="text-center"
+            style="font-weight: bold; font-size: 11px;"
+          >SubTotal: $ {{formatPrice(subTotal)}}</div>
+          <div
+            class="text-center bg-warning rounded p-1 mb-2"
+            style="font-weight: bold; font-size: 11px;"
+          >QD Discount: $ {{formatPrice(qdDiscount)}}</div>
+          Item Total: ${{formatPrice(item.itemTotalPrice)}}
         </div>
       </div>
     </div>
@@ -127,6 +134,12 @@ export default {
     },
     discountAmount() {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
+    },
+    qdDiscount() {
+      return this.subTotal * 0.1;
+    },
+    subTotal() {
+      return this.item.totalUnits * this.item.finalUnitPrice;
     }
   },
   methods: {

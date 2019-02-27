@@ -76,10 +76,6 @@
       >Cancel Full Line</button>
       <div class="float-right">
         <div
-          class="rounded bg-warning text-center text-dark p-1"
-          v-if="orderLine.graphicCode != 'CUSTM'"
-        >QD Discount: 10%</div>
-        <div
           class="rounded bg-success text-center text-white p-1"
           v-if="orderLine.totalAddOns >0"
         >Total Add-Ons: ${{formatPrice(orderLine.totalAddOns)}}</div>
