@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $.fn.dataTable.moment('D-MMM-YY');
   $("#productionDiv").hide();
 
   if ($("#currentStatus").val() == "V. Sent to Vendor") {
@@ -240,6 +241,30 @@ $(document).ready(function () {
     dom: "lBrftip",
     buttons: [
       {
+        extend: "excelHtml5",
+        className: "waves-effect waves-light btn-small",
+        text: "Export Excel",
+        title: "",
+        filename: function () {
+          var d = new Date();
+          var n = d.getTime();
+          return "Production-Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
+      },
+      {
+        text: "Vendor Copy",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/prod/ccn");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
         text: "All Orders",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/");
@@ -283,13 +308,6 @@ $(document).ready(function () {
           },
           columns: ":not(:last-child)"
         }
-      },
-      {
-        text: "CCN Copy",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/ccn");
-        },
-        className: "waves-effect waves-light btn-small"
       }
     ]
   });

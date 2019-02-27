@@ -139,6 +139,10 @@ const OrderSchema = new Schema({
     type: Date,
     default: null
   },
+  multishipPrePack: {
+    type: String,
+    default: null
+  },
   shipStatus: {
     type: String,
     default: null

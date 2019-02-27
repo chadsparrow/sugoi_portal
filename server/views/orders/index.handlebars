@@ -40,22 +40,23 @@
         <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
         </td>
         <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
-        <td style="font-size: 12px;" class="center-align">{{formatDate enteredDate "DD-MMM"}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "DD-MMM"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate enteredDate "D-MMM-YY"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
+        </td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{currentArtist}}</td>
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
-          "DD-MMM"}}{{/if}}</td>
+          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
-          "DD-MMM"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">
-          <span style="margin-right: 8px;">
-            <a class="black-text" href="/orders/view/{{_id}}">
-              <i class="tiny material-icons">remove_red_eye</i>
+          "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;">
+          <span class="right">
+            <a class="black-text btn-flat btn-small" href="/orders/view/{{_id}}">
+              <i class="material-icons">remove_red_eye</i>
             </a>
           </span>
           <span style="margin-right: 8px;">

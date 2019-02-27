@@ -34,10 +34,10 @@
                       <span class="grey-text">Priority: </span>{{order.priority}}
                     </div>
                     <div class="col s12 m4">
-                      <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "DD-MMM"}}
+                      <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "D-MMM-YY"}}
                     </div>
                     <div class="col s12 m8">
-                      <span class="grey-text">Latest In-Hand: </span>{{formatDate order.latestInHand "DD-MMM"}}
+                      <span class="grey-text">Latest In-Hand: </span>{{formatDate order.latestInHand "D-MMM-YY"}}
                     </div>
                   </div>
                 </div>
@@ -47,7 +47,8 @@
                 </div>
                 <div class="input-field col s6 l4">
                   <i class="small material-icons prefix">attach_money</i>
-                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue" value="{{order.netValue}}">
+                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue"
+                    value="{{order.netValue}}">
                   <label for="netValue">Total Value:</label>
                 </div>
                 <div class="input-field col s12 l4">
@@ -66,7 +67,8 @@
                 </div>
                 <div class="input-field col s12 l6">
                   <i class="small material-icons prefix">today</i>
-                  <input type="text" class="input-date2" name="vendorConfirmShip" id="vendorConfirmShip" value="{{formatDate order.vendorConfirmShip "MM/DD/YYYY"}}">
+                  <input type="text" class="input-date2" name="vendorConfirmShip" id="vendorConfirmShip"
+                    value="{{formatDate order.vendorConfirmShip "MM/DD/YYYY"}}">
                   <label for="vendorConfirmShip">Confirmed Ship Date:</label>
                 </div>
 
@@ -86,7 +88,7 @@
               <div class="col s12 m6">
                 <div class="row">
                   <div class="col s12 black white-text" style="padding: 10px; margin-bottom: 10px;">
-                    <span>Sent to Vendor:</span> {{formatDate order.sentVendor "DD-MMM"}}
+                    <span>Sent to Vendor:</span> {{formatDate order.sentVendor "D-MMM-YY"}}
                   </div>
                   <div class="input-field col s12">
                     <select name="shipStatus" id="shipStatus">
@@ -101,7 +103,8 @@
                     <h6 class="black white-text" style="padding: 5px;">Shipping Information</h6>
                   </div>
                   <div class="input-field col s12">
-                    <input type="text" name="tracking" id="tracking" class="input-numeral" maxlength="12" value="{{order.tracking}}">
+                    <input type="text" name="tracking" id="tracking" class="input-numeral" maxlength="12"
+                      value="{{order.tracking}}">
                     <label for="tracking">Tracking #:</label>
                   </div>
                   <div class="col s12 l6">
@@ -109,10 +112,11 @@
                   </div>
                   <div class="col s12 l6">
                     <span class="grey-text">Confirmed Delivery Date: </span><br>{{formatDate order.confirmDeliveryDate
-                    "DD-MMM"}}
+                    "D-MMM-YY"}}
                   </div>
                   <div class="input-field col s12">
-                    <textarea name="shippingNotes" id="shippingNotes" class="materialize-textarea">{{order.shippingNotes}}</textarea>
+                    <textarea name="shippingNotes" id="shippingNotes"
+                      class="materialize-textarea">{{order.shippingNotes}}</textarea>
                     <label for="shippingNotes">Production Notes:</label>
                   </div>
                 </div>

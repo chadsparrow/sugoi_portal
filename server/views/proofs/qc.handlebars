@@ -4,18 +4,22 @@
     {{#each foundProofs}}
     <li>
       {{#if hasQCNote}}
-      <div class="collapsible-header red white-text" style="font-size: 14px; padding: 10px; display: block;"><span>{{itemNumber}}
+      <div class="collapsible-header red white-text" style="font-size: 14px; padding: 10px; display: block;">
+        <span>{{itemNumber}}
           -
           {{styleNumber}}<a class="right" href="/proofs/qc/archive/{{_id}}"><i class="material-icons white-text">
               archive
-            </i></a><a class="right" href="/proofs/qc/edit/{{_id}}"><i class="material-icons white-text">create</i></a></span>
+            </i></a><a class="right" href="/proofs/qc/edit/{{_id}}"><i
+              class="material-icons white-text">create</i></a></span>
       </div>
       <div class="collapsible-body"><small class="grey-text">{{formatDate qcnote.noteDate
-          "DD-MMM"}} - {{qcnote.noteUser}}</small><br><span>{{qcnote.note}}</span>
+          "D-MMM-YY"}} - {{qcnote.noteUser}}</small><br><span>{{qcnote.note}}</span>
       </div>
       {{else}}
-      <div class="collapsible-header green white-text" style="font-size: 14px; padding: 10px; display: block;"><span>{{itemNumber}}
-          - {{styleNumber}}<a class="right" href="/proofs/qc/edit/{{_id}}"><i class="material-icons white-text">create</i></a></span>
+      <div class="collapsible-header green white-text" style="font-size: 14px; padding: 10px; display: block;">
+        <span>{{itemNumber}}
+          - {{styleNumber}}<a class="right" href="/proofs/qc/edit/{{_id}}"><i
+              class="material-icons white-text">create</i></a></span>
       </div>
       <div class="collapsible-body"><span>No changes required</span></div>
       {{/if}}
