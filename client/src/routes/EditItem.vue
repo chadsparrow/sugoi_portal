@@ -42,14 +42,14 @@
         <div class="col-sm-2">JBA: {{item.jbaCode}}</div>
       </div>
       <div class="row align-items-center text-center">
-        <div class="col-sm-2">
+        <div class="col">
           <label for="inkType" class="small my-0">Ink:</label>
           <select class="form-control form-control-sm" id="inkType" v-model="item.inkType">
             <option value="D" selected>Standard</option>
             <option value="F">Fluorescent</option>
           </select>
         </div>
-        <div class="col-sm-2">
+        <div class="col">
           <label for="childReference" class="small my-0">Child Ref#:</label>
           <input
             type="text"
@@ -58,7 +58,7 @@
             v-model.trim="item.childReference"
           >
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           <label for="thread" class="small my-0">Thread:</label>
           <select
             class="form-control form-control-sm"
@@ -77,7 +77,7 @@
             <option value="FLY">FLY</option>
           </select>
         </div>
-        <div class="col-sm-1" v-if="item.zipperOptions.length">
+        <div class="col" v-if="item.zipperOptions.length">
           <label for="zipper" class="small my-0">Zipper:</label>
           <select
             class="form-control form-control-sm"
@@ -88,7 +88,7 @@
             <option v-for="(zipper, index) in item.zipperOptions" :key="index">{{zipper}}</option>
           </select>
         </div>
-        <div class="col-sm-1" v-if="item.contrastOptions.length">
+        <div class="col" v-if="item.contrastOptions.length">
           <label for="contrast" class="small my-0">Contrast:</label>
           <select
             class="form-control form-control-sm"
@@ -99,7 +99,7 @@
             <option v-for="(contrast, index) in item.contrastOptions" :key="index">{{contrast}}</option>
           </select>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           <input
             class="form-check-input"
             type="checkbox"
@@ -108,9 +108,9 @@
             v-model="item.personalization"
             @change="addOns"
           >
-          <label class="form-check-label" for="personalization">PRS</label>
+          <label class="form-check-label" for="personalization">PRS - $10</label>
         </div>
-        <div class="col-sm-1">
+        <div class="col">
           <input
             class="form-check-input"
             type="checkbox"
@@ -119,7 +119,7 @@
             v-model="item.zap"
             disabled
           >
-          <label class="form-check-label" for="zap">ZAP</label>
+          <label class="form-check-label" for="zap">ZAP - $5</label>
         </div>
       </div>
       <hr class="my-2">
@@ -256,19 +256,15 @@
           <span>$ {{formatPrice(item.unitPrice)}}</span>
         </div>
 
-        <div class="col">Add-Ons
-          <br>
-          <span>$ {{formatPrice(item.addOns)}}</span>
-        </div>
-
         <div class="col">
-          <label for="itemDiscount" class="small my-0">Discount %</label>
+          <label for="itemDiscount" class="small my-0">Discount % - ${{formatPrice(discountAmount)}}</label>
           <input
             type="number"
             class="form-control form-control-sm text-center"
             min="0"
             step=".5"
             id="itemDiscount"
+            @change="finalUnitPrice"
             v-model.number="item.itemDiscount"
             style="font-weight: bold; font-size: 14px;"
           >
@@ -310,8 +306,8 @@ export default {
     priceBreak() {
       return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
     },
-    finalTotalPrice() {
-      return this.finalUnitPrice * this.unitTotal;
+    discountAmount() {
+      return this.item.unitPrice * (this.item.itemDiscount / 100);
     }
   },
   methods: {
@@ -350,6 +346,12 @@ export default {
         itemIndex: this.itemIndex
       });
     },
+    finalUnitPrice() {
+      this.$store.dispatch("setFinalUnitPrice", {
+        lineIndex: this.lineIndex,
+        itemIndex: this.itemIndex
+      });
+    },
     commitItem() {
       if (this.$refs.threadInput.value === "") {
         this.$refs.threadInput.focus();
@@ -375,40 +377,11 @@ export default {
       }
 
       this.$store.dispatch("setAddOns", this.lineIndex);
-
-      //this.item.finalUnitPrice = this.finalUnitPrice;
-      //this.item.itemTotalPrice = this.finalTotalPrice;
-
-      // let {
-      //   tracingCharge,
-      //   scaledArtCharge,
-      //   creativeCharge,
-      //   graphicCode
-      // } = this.orderLine;
-
-      // let itemsTotal = 0;
-      // this.order.qty = 0;
-      // let items = this.orderLine.items;
-      // // cycles through items in the line and adds all the final item prices
-      // for (let x = 0; x < items.length; x++) {
-      //   let currentItem = items[x];
-      //   if (!currentItem.cancelled) {
-      //     itemsTotal += currentItem.itemTotalPrice;
-      //     this.order.qty += currentItem.totalUnits;
-      //   }
-      // }
-
-      // //if line is quick design, decreases the total by 10%
-      // if (graphicCode != "CUSTM") {
-      //   itemsTotal *= 0.9;
-      // }
-
-      // itemsTotal += tracingCharge;
-      // itemsTotal += scaledArtCharge;
-      // itemsTotal += creativeCharge;
-      // this.orderLine.itemsSubTotal = itemsTotal;
-
-      this.$store.dispatch("saveOrder", this.order);
+      this.$store.dispatch("setFinalUnitPrice", {
+        lineIndex: this.lineIndex,
+        itemIndex: this.itemIndex
+      });
+      this.$store.dispatch("setLineTotal", { lineIndex: this.lineIndex });
       this.$router.push({ path: `/${this.order.orderNum}` });
     }
   }

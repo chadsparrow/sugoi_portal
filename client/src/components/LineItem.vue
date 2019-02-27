@@ -16,10 +16,10 @@
         <div v-if="item.zipper" class="col">Zipper: {{item.zipper}}</div>
         <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
         <div v-if="item.zap" class="col">
-          <span class="badge badge-warning">ZAP</span>
+          <span class="badge badge-warning">ZAP - $5</span>
         </div>
         <div v-if="item.personalization" class="col">
-          <span class="badge badge-warning">Personalized</span>
+          <span class="badge badge-warning">Personalized - $10</span>
         </div>
       </div>
       <hr class="my-2">
@@ -78,14 +78,11 @@
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.unitPrice)}}</span>
         </div>
 
-        <div class="col text-center">Add-Ons
-          <br>
-          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.addOns)}}</span>
-        </div>
-
         <div class="col text-center">Discount
           <br>
-          <span style="font-weight: bold; font-size: 14px;">{{item.itemDiscount}}%</span>
+          <span
+            style="font-weight: bold; font-size: 14px;"
+          >{{item.itemDiscount}}% - ${{formatPrice(discountAmount)}}</span>
         </div>
 
         <div class="col text-center">Final Unit Price
@@ -127,6 +124,9 @@ export default {
     },
     priceBreak() {
       return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
+    },
+    discountAmount() {
+      return this.item.unitPrice * (this.item.itemDiscount / 100);
     }
   },
   methods: {

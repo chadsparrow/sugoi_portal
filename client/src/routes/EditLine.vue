@@ -190,34 +190,7 @@ export default {
     },
     commitLine() {
       this.$store.dispatch("setAddOns", this.lineIndex);
-      let {
-        tracingCharge,
-        scaledArtCharge,
-        creativeCharge,
-        graphicCode
-      } = this.orderLine;
-
-      let itemsTotal = 0;
-
-      let items = this.orderLine.items;
-      // cycles through items in the line and adds all the final item prices
-      for (let x = 0; x < items.length; x++) {
-        let currentItem = items[x];
-        if (!currentItem.cancelled) {
-          itemsTotal += currentItem.itemTotalPrice;
-        }
-      }
-
-      //if line is quick design, decreases the total by 10%
-      if (graphicCode != "CUSTM") {
-        itemsTotal *= 0.9;
-      }
-
-      itemsTotal += tracingCharge;
-      itemsTotal += scaledArtCharge;
-      itemsTotal += creativeCharge;
-      this.orderLine.itemsSubTotal = itemsTotal;
-      this.$store.dispatch("saveOrder");
+      this.$store.dispatch("setLineTotal", { lineIndex: this.lineIndex });
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
     loadColourWays(e) {

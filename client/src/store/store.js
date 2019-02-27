@@ -98,22 +98,10 @@ export const store = new Vuex.Store({
           }
         }
       }
-      dispatch('setOrderTotal');
     },
-    updateSingleLine: ({ state, dispatch }, lineIndex) => {
-      const orderLine = state.order.orderLines[lineIndex];
-      if (!orderLine.cancelled) {
-        const items = orderLine.items;
-        for (let [itemIndex, item] of items.entries()) {
-          if (!item.cancelled) {
-            dispatch('getItemUnitPrice', { lineIndex, itemIndex })
-          }
-        }
-      }
-      dispatch('setOrderTotal');
-    },
-    getItemUnitPrice: ({ commit }, { lineIndex, itemIndex }) => {
+    getItemUnitPrice: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
+      dispatch('setFinalUnitPrice', { lineIndex, itemIndex });
     },
     setSelectedStyle: ({ commit }, { lineIndex, itemIndex }) => {
       commit('SET_SELECTED_STYLE', { lineIndex, itemIndex });
@@ -122,8 +110,17 @@ export const store = new Vuex.Store({
       commit('SET_SELECTED_CONFIG', { lineIndex, itemIndex });
       dispatch('getItemUnitPrice', { lineIndex, itemIndex });
     },
-    setOrderTotal: ({ commit }) => {
+    setOrderTotal: ({ commit, dispatch }) => {
       commit('SET_ORDER_TOTALS');
+      dispatch('saveOrder');
+    },
+    setFinalUnitPrice: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
+      commit('SET_FINAL_UNIT_PRICE', { lineIndex, itemIndex });
+      dispatch('setLineTotal', { lineIndex });
+    },
+    setLineTotal: ({ commit, dispatch }, { lineIndex }) => {
+      commit("SET_LINE_TOTAL", { lineIndex });
+      dispatch('setOrderTotal');
     }
   },
   mutations: {
@@ -279,44 +276,46 @@ export const store = new Vuex.Store({
       const currency = state.order.currency;
       const priceBreak = state.order.orderLines[lineIndex].priceBreak;
       const currentConfig = state.styles[selectedStyle].configurations[selectedConfig];
+      let unitPrice = state.order.orderLines[lineIndex].items[itemIndex].unitPrice;
 
       if (currency === "CAD" && selectedConfig > -1) {
         if (priceBreak === 1) {
-          item.unitPrice = currentConfig.cad1;
+          unitPrice = currentConfig.cad1;
         } else if (priceBreak === 6) {
-          item.unitPrice = currentConfig.cad6;
+          unitPrice = currentConfig.cad6;
         } else if (priceBreak === 12) {
-          item.unitPrice = currentConfig.cad12;
+          unitPrice = currentConfig.cad12;
         } else if (priceBreak === 24) {
-          item.unitPrice = currentConfig.cad24;
+          unitPrice = currentConfig.cad24;
         } else if (priceBreak === 50) {
-          item.unitPrice = currentConfig.cad50;
+          unitPrice = currentConfig.cad50;
         } else if (priceBreak === 100) {
-          item.unitPrice = currentConfig.cad100;
+          unitPrice = currentConfig.cad100;
         } else if (priceBreak === 200) {
-          item.unitPrice = currentConfig.cad200;
+          unitPrice = currentConfig.cad200;
         } else if (priceBreak === 500) {
-          item.unitPrice = currentConfig.cad500;
+          unitPrice = currentConfig.cad500;
         }
       } else if (currency === "USD" && selectedConfig > -1) {
         if (priceBreak === 1) {
-          item.unitPrice = currentConfig.usd1;
+          unitPrice = currentConfig.usd1;
         } else if (priceBreak === 6) {
-          item.unitPrice = currentConfig.usd6;
+          unitPrice = currentConfig.usd6;
         } else if (priceBreak === 12) {
-          item.unitPrice = currentConfig.usd12;
+          unitPrice = currentConfig.usd12;
         } else if (priceBreak === 24) {
-          item.unitPrice = currentConfig.usd24;
+          unitPrice = currentConfig.usd24;
         } else if (priceBreak === 50) {
-          item.unitPrice = currentConfig.usd50;
+          unitPrice = currentConfig.usd50;
         } else if (priceBreak === 100) {
-          item.unitPrice = currentConfig.usd100;
+          unitPrice = currentConfig.usd100;
         } else if (priceBreak === 200) {
-          item.unitPrice = currentConfig.usd200;
+          unitPrice = currentConfig.usd200;
         } else if (priceBreak === 500) {
-          item.unitPrice = currentConfig.usd500;
+          unitPrice = currentConfig.usd500;
         }
       }
+      state.order.orderLines[lineIndex].items[itemIndex].unitPrice = unitPrice;
     },
     SET_ORDER_TOTALS: (state) => {
       state.order.beforeTaxes = 0;
@@ -337,9 +336,45 @@ export const store = new Vuex.Store({
       const items = state.order.orderLines[lineIndex].items;
       for (let item of items) {
         if (!item.cancelled) {
-          state.order.orderLines[lineIndex].totalAddOns += parseInt(item.addOns);
+          state.order.orderLines[lineIndex].totalAddOns += parseInt(item.addOns * item.totalUnits);
         }
       }
+    },
+    SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
+      const item = state.order.orderLines[lineIndex].items[itemIndex];
+      state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100));
+      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = item.totalUnits * item.finalUnitPrice;
+    },
+    SET_LINE_TOTAL: (state, { lineIndex }) => {
+      const orderLine = state.order.orderLines[lineIndex];
+      const items = orderLine.items;
+      const tracingCharge = orderLine.tracingCharge;
+      const scaledArtCharge = orderLine.scaledArtCharge;
+      const creativeCharge = orderLine.creativeCharge;
+      const graphicCode = orderLine.graphicCode;
+      const totalAddOns = orderLine.totalAddOns;
+
+      let itemsTotal = 0;
+      for (let item of items) {
+        if (!item.cancelled) {
+          itemsTotal += item.itemTotalPrice;
+        }
+      }
+
+      //if line is quick design, decreases the total by 10%
+      if (graphicCode != "CUSTM") {
+        itemsTotal *= 0.9;
+      }
+
+      if (totalAddOns > 0) {
+        itemsTotal += totalAddOns;
+      }
+
+      itemsTotal += tracingCharge;
+      itemsTotal += scaledArtCharge;
+      itemsTotal += creativeCharge;
+      state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
+
     }
   },
   getters: {
