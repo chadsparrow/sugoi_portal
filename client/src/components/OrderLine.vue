@@ -4,7 +4,7 @@
       <span>Line: {{orderLine.lineNumber}}</span>
       <div
         class="badge badge-warning text-center ml-3"
-        v-if="orderLine.graphicCode != 'CUSTM'"
+        v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
       >Quick Design - 10% OFF</div>
       <span class="float-right">Details</span>
     </div>
@@ -34,19 +34,19 @@
         <!-- RIGHT SECTION -->
         <div class="col-sm-3 border-left">
           <div class="mb-2 col-sm-12 bg-dark text-white text-center rounded">Line Add-Ons</div>
-          <div class="mb-2 col-sm-12">
+          <div v-if="orderLine.tracingCharge" class="mb-2 col-sm-12">
             Tracing:
             <span
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.tracingCharge)}}</span>
           </div>
-          <div class="mb-2 col-sm-12">
+          <div v-if="orderLine.creativeCharge" class="mb-2 col-sm-12">
             Creative:
             <span
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.creativeCharge)}}</span>
           </div>
-          <div class="col-sm-12">
+          <div v-if="orderLine.scaledArtCharge" class="col-sm-12">
             Scaled Art:
             <span
               class="float-right badge badge-dark text-light"

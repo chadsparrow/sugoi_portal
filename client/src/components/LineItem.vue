@@ -102,7 +102,7 @@
             <br>
             ${{formatPrice(subTotal)}}
           </div>
-          <div v-if="qdDiscount >0" class="col bg-warning rounded p-1">QD Discount:
+          <div v-if="qdDiscount > 0" class="col bg-warning rounded p-1">QD Discount:
             <br>
             - ${{formatPrice(qdDiscount)}}
           </div>
@@ -143,7 +143,14 @@ export default {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
     },
     qdDiscount() {
-      return this.subTotal * 0.1;
+      if (
+        this.orderLine.graphicCode === "CUSTM" ||
+        this.orderLine.graphicCode === null
+      ) {
+        return 0;
+      } else {
+        return this.subTotal * 0.1;
+      }
     },
     subTotal() {
       return this.item.totalUnits * this.item.finalUnitPrice;

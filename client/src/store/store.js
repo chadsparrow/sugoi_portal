@@ -94,6 +94,7 @@ export const store = new Vuex.Store({
           for (let [itemIndex, item] of items.entries()) {
             if (!item.cancelled) {
               dispatch('getItemUnitPrice', { lineIndex, itemIndex })
+
             }
           }
         }
@@ -101,6 +102,7 @@ export const store = new Vuex.Store({
     },
     getItemUnitPrice: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
+      commit('ADD_ONS', { lineIndex, itemIndex });
       dispatch('setFinalUnitPrice', { lineIndex, itemIndex });
     },
     setSelectedStyle: ({ commit }, { lineIndex, itemIndex }) => {
@@ -337,18 +339,17 @@ export const store = new Vuex.Store({
       for (let item of items) {
         if (!item.cancelled) {
           state.order.orderLines[lineIndex].totalAddOns += parseInt(item.addOns * item.totalUnits);
-          state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
-          state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
-          state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
-
         }
       }
+      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
+      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
+      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
     },
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100));
       let qdDiscountAmount = 0;
-      if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM') {
+      if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM' && state.order.orderLines[lineIndex].graphicCode != null) {
         qdDiscountAmount = (item.totalUnits * item.finalUnitPrice) * .1;
       }
       state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice) - qdDiscountAmount;
@@ -356,11 +357,7 @@ export const store = new Vuex.Store({
     SET_LINE_TOTAL: (state, { lineIndex }) => {
       const orderLine = state.order.orderLines[lineIndex];
       const items = orderLine.items;
-      const tracingCharge = orderLine.tracingCharge;
-      const scaledArtCharge = orderLine.scaledArtCharge;
-      const creativeCharge = orderLine.creativeCharge;
       const totalAddOns = orderLine.totalAddOns;
-
 
       let itemsTotal = 0;
       for (let item of items) {
@@ -374,7 +371,6 @@ export const store = new Vuex.Store({
       }
 
       state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
-
     }
   },
   getters: {
