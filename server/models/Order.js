@@ -428,11 +428,11 @@ const OrderSchema = new Schema({
           },
           selectedStyle: {
             type: String,
-            default: -1
+            default: 0
           },
           selectedConfig: {
             type: String,
-            default: -1
+            default: 0
           },
           jbaCode: {
             type: String,
@@ -555,17 +555,17 @@ const OrderSchema = new Schema({
           zipperOptions: [],
           colour1: {
             type: String,
-            default: null,
+            default: "",
             uppercase: true
           },
           colour2: {
             type: String,
-            default: null,
+            default: "",
             uppercase: true
           },
           colour3: {
             type: String,
-            default: null,
+            default: "",
             uppercase: true
           },
         }

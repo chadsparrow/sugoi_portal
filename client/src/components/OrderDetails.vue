@@ -25,6 +25,7 @@
             class="form-control"
             style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
             id="orderNotes"
+            @change="saveNotes"
           ></textarea>
         </div>
       </div>
@@ -136,6 +137,9 @@ export default {
       } else {
         return null;
       }
+    },
+    saveNotes() {
+      this.$store.dispatch("saveOrder");
     }
   }
 };
