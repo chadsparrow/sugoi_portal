@@ -8,7 +8,7 @@
       >Quick Design - 10% OFF</div>
       <span class="float-right">Details</span>
     </div>
-    <div class="card-body p-1">
+    <div class="card-body m-0 p-1">
       <div class="row">
         <!-- LEFT SECTION -->
         <div class="col-sm-3 border-right">
@@ -32,7 +32,7 @@
           </div>
         </div>
         <!-- RIGHT SECTION -->
-        <div class="col-sm-3 border-left">
+        <div class="col-sm-3 border-left m-0">
           <div class="mb-2 col-sm-12 bg-dark text-white text-center rounded">Line Add-Ons</div>
           <div v-if="orderLine.tracingCharge" class="mb-2 col-sm-12">
             Tracing:

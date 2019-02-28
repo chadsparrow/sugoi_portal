@@ -18,13 +18,12 @@
             v-if="order.eventDate"
           >In-Hand Date: {{formatDate(order.latestInHand)}}</li>
         </ul>
-        <div class="d-print-none">
+        <div class="d-print-none text-center">
           <label for="orderNotes" class="mb-0 mt-2">Notes:</label>
           <textarea
             v-model="order.orderNotes"
             class="form-control"
-            style="font-size: 12px; width: 100%; height: 80px; white-space: pre-wrap;"
-            readonly
+            style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
             id="orderNotes"
           ></textarea>
         </div>
