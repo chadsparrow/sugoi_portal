@@ -67,6 +67,13 @@
       </div>
       <hr class="my-2">
       <div class="row m-0 p-0">
+        <div class="col text-center" v-if="orderLine.graphicColours > 0">
+          <div class="row">
+            <div v-if="item.colour1" class="col-sm-12">Colour 1: {{item.colour1}}</div>
+            <div v-if="item.colour2" class="col-sm-12">Colour 2: {{item.colour2}}</div>
+            <div v-if="item.colour3" class="col-sm-12">Colour 3: {{item.colour3}}</div>
+          </div>
+        </div>
         <div class="col text-center">Total Units
           <br>
           <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
@@ -90,8 +97,8 @@
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
       </div>
-      <div class="card-footer d-print-none p-1">
-        <div class="float-left m-0">
+      <div class="card-footer p-1">
+        <div class="float-left m-0 d-print-none">
           <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
           <button class="btn btn-sm btn-danger" @click.prevent="cancelItem">Cancel Item</button>
         </div>

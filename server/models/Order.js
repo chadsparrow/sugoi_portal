@@ -376,21 +376,6 @@ const OrderSchema = new Schema({
         default: null,
         uppercase: true
       },
-      colour1: {
-        type: String,
-        default: null,
-        uppercase: true
-      },
-      colour2: {
-        type: String,
-        default: null,
-        uppercase: true
-      },
-      colour3: {
-        type: String,
-        default: null,
-        uppercase: true
-      },
       tracingCharge: {
         type: Number,
         default: null
@@ -567,7 +552,22 @@ const OrderSchema = new Schema({
           },
           configs: [],
           contrastOptions: [],
-          zipperOptions: []
+          zipperOptions: [],
+          colour1: {
+            type: String,
+            default: null,
+            uppercase: true
+          },
+          colour2: {
+            type: String,
+            default: null,
+            uppercase: true
+          },
+          colour3: {
+            type: String,
+            default: null,
+            uppercase: true
+          },
         }
       ]
     }

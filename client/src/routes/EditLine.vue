@@ -81,45 +81,6 @@
               </select>
             </div>
           </div>
-          <!-- COLOURS -->
-          <div class="row" v-if="orderLine.graphicColours > 0 || orderLine.colour1">
-            <div class="form-group mb-1 col-sm-4">
-              <label for="colour1" class="small my-0">Colour 1:</label>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                id="colour1"
-                v-model.trim="orderLine.colour1"
-                ref="colour1"
-              >
-            </div>
-            <div
-              class="form-group mb-1 col-sm-4"
-              v-if="orderLine.graphicColours >= 2 || orderLine.colour2"
-            >
-              <label for="colour2" class="small my-0">Colour 2:</label>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                id="colour2"
-                v-model.trim="orderLine.colour2"
-                ref="colour2"
-              >
-            </div>
-            <div
-              class="form-group mb-1 col-sm-4"
-              v-if="orderLine.graphicColours == 3 || orderLine.colour"
-            >
-              <label for="colour3" class="small my-0">Colour 3:</label>
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                id="colour3"
-                v-model.trim="orderLine.colour3"
-                ref="colour3"
-              >
-            </div>
-          </div>
         </div>
         <div class="col-sm-3 border-left">
           <div class="form-group mb-1 col-sm-12">
@@ -233,21 +194,6 @@ export default {
         alert("ColourWay not selected!");
         return;
       }
-      if (this.$refs.colour1 != undefined && this.$refs.colour1.value === "") {
-        this.$refs.colour1.focus();
-        alert("Fill in Colour 1");
-        return;
-      }
-      if (this.$refs.colour2 != undefined && this.$refs.colour2.value === "") {
-        this.$refs.colour2.focus();
-        alert("Fill in Colour 2");
-        return;
-      }
-      if (this.$refs.colour3 != undefined && this.$refs.colour3.value === "") {
-        this.$refs.colour3.focus();
-        alert("Fill in Colour 3");
-        return;
-      }
 
       this.$store.dispatch("setAddOns", this.lineIndex);
       this.$router.push({ path: `/${this.order.orderNum}` });
@@ -257,9 +203,11 @@ export default {
       this.colourWays = this.$store.getters.getColourWays(index);
       this.orderLine.colourWayCode = "";
       this.orderLine.graphicColours = this.graphicCodes[index].colours;
-      this.orderLine.colour1 = "";
-      this.orderLine.colour2 = "";
-      this.orderLine.colour3 = "";
+      for (let item of this.orderLine.items) {
+        item.colour1 = "";
+        item.colour2 = "";
+        item.colour3 = "";
+      }
       this.$store.dispatch("updateAllItems", this.lineIndex);
     }
   }

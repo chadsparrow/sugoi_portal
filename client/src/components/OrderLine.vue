@@ -11,24 +11,13 @@
     <div class="card-body m-0 p-1">
       <div class="row">
         <!-- LEFT SECTION -->
-        <div class="col-sm-3 border-right">
-          <div class="mb-2 col-sm-12">Job Type: {{orderLine.lineJobType}}</div>
-          <div class="mb-2 col-sm-12">SO.Ref#: {{orderLine.swoReference}}</div>
-          <div class="col-sm-12">Price Break: {{orderLine.priceBreak}} units</div>
-        </div>
-        <!-- MIDDLE SECTION -->
-        <div class="col-sm-6">
-          <div class="row">
-            <div class="mb-2 col-sm-6">Graphic: {{orderLine.graphicCode}}</div>
-            <div
-              class="mb-2 col-sm-6"
-              v-if="orderLine.colourWayCode"
-            >ColourWay: {{orderLine.colourWayCode}}</div>
-          </div>
-          <div class="row">
-            <div v-if="orderLine.colour1" class="col-sm-4">Colour 1: {{orderLine.colour1}}</div>
-            <div v-if="orderLine.colour2" class="col-sm-4">Colour 2: {{orderLine.colour2}}</div>
-            <div v-if="orderLine.colour3" class="col-sm-4">Colour 3: {{orderLine.colour3}}</div>
+        <div class="col-sm-9 border-right">
+          <div class="row p-2">
+            <div class="col">Job Type: {{orderLine.lineJobType}}</div>
+            <div class="col" v-if="orderLine.swoReference">SO.Ref#: {{orderLine.swoReference}}</div>
+            <div class="col">Price Break: {{orderLine.priceBreak}} units</div>
+            <div class="col">Graphic: {{orderLine.graphicCode}}</div>
+            <div class="col" v-if="orderLine.colourWayCode">ColourWay: {{orderLine.colourWayCode}}</div>
           </div>
         </div>
         <!-- RIGHT SECTION -->

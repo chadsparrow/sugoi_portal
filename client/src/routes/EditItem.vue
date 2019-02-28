@@ -2,6 +2,10 @@
   <div class="item card border-dark">
     <div class="card-header bg-dark text-light p-2">
       <div>Item#: {{item.itemNumber}}</div>
+      <div
+        class="badge badge-warning text-center"
+        v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
+      >Quick Design - 10% OFF</div>
     </div>
     <div class="card-body p-3">
       <div class="row align-items-center mb-2">
@@ -247,6 +251,47 @@
       </div>
       <hr class="my-2">
       <div class="row p-0 m-0 align-items-center text-center">
+        <div class="col" v-if="orderLine.graphicColours > 0 || orderLine.colour1">
+          <div class="row">
+            <div class="form-group mb-1 col-sm-12">
+              <label for="colour1" class="small my-0">Colour 1:</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="colour1"
+                v-model.trim="item.colour1"
+                ref="colour1"
+              >
+            </div>
+            <div
+              class="form-group mb-1 col-sm-12"
+              v-if="orderLine.graphicColours >= 2 || orderLine.colour2"
+            >
+              <label for="colour2" class="small my-0">Colour 2:</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="colour2"
+                v-model.trim="item.colour2"
+                ref="colour2"
+              >
+            </div>
+            <div
+              class="form-group mb-1 col-sm-12"
+              v-if="orderLine.graphicColours == 3 || orderLine.colour"
+            >
+              <label for="colour3" class="small my-0">Colour 3:</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="colour3"
+                v-model.trim="item.colour3"
+                ref="colour3"
+              >
+            </div>
+          </div>
+        </div>
+
         <div class="col text-center">Total Units
           <br>
           <span>{{item.totalUnits}}</span>
@@ -296,6 +341,9 @@ export default {
   computed: {
     order() {
       return this.$store.state.order;
+    },
+    orderLine() {
+      return this.$store.state.order.orderLines[this.lineIndex];
     },
     item() {
       return this.$store.state.order.orderLines[this.lineIndex].items[
@@ -391,6 +439,22 @@ export default {
       ) {
         this.$refs.contrastInput.focus();
         alert("Contrast not selected!");
+        return;
+      }
+
+      if (this.$refs.colour1 != undefined && this.$refs.colour1.value === "") {
+        this.$refs.colour1.focus();
+        alert("Fill in Colours for QD");
+        return;
+      }
+      if (this.$refs.colour2 != undefined && this.$refs.colour2.value === "") {
+        this.$refs.colour2.focus();
+        alert("Fill in Colours for QD");
+        return;
+      }
+      if (this.$refs.colour3 != undefined && this.$refs.colour3.value === "") {
+        this.$refs.colour3.focus();
+        alert("Fill in Colours for QD");
         return;
       }
 
