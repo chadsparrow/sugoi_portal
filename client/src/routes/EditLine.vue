@@ -33,7 +33,7 @@
             <select
               class="form-control form-control-sm"
               id="jobType"
-              v-model="orderLine.priceBreak"
+              v-model.number="orderLine.priceBreak"
             >
               <option>1</option>
               <option>6</option>
@@ -123,6 +123,7 @@
               class="form-control form-control-sm"
               id="tracingCharge"
               v-model.number="orderLine.tracingCharge"
+              min="0"
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
@@ -132,6 +133,7 @@
               class="form-control form-control-sm"
               id="creativeCharge"
               v-model.number="orderLine.creativeCharge"
+              min="0"
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
@@ -141,6 +143,18 @@
               class="form-control form-control-sm"
               id="creativeCharge"
               v-model.number="orderLine.scaledArtCharge"
+              min="0"
+            >
+          </div>
+          <div class="form-group mb-1 col-sm-12">
+            <label for="colourWashCharge" class="small my-0">Colour Wash:</label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="colourWashCharge"
+              v-model.number="orderLine.colourWashCharge"
+              min="0"
+              step="10"
             >
           </div>
         </div>
@@ -190,7 +204,6 @@ export default {
     },
     commitLine() {
       this.$store.dispatch("setAddOns", this.lineIndex);
-      this.$store.dispatch("setLineTotal", { lineIndex: this.lineIndex });
       this.$router.push({ path: `/${this.order.orderNum}` });
     },
     loadColourWays(e) {
@@ -201,6 +214,7 @@ export default {
       this.orderLine.colour1 = "";
       this.orderLine.colour2 = "";
       this.orderLine.colour3 = "";
+      this.$store.dispatch("updateAllItems", this.lineIndex);
     }
   }
 };

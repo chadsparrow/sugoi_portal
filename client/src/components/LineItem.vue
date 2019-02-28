@@ -24,45 +24,45 @@
 
         <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
       </div>
-      <hr class="my-2">
-      <div class="row align-items-center text-center">
-        <div class="col-sm-1 offset-sm-10" v-if="item.one">
+      <div class="row align-items-center text-center m-0 rounded bg-light">
+        <div class="col-sm-12 p-1">Quantities:</div>
+        <div class="col" v-if="item.one">
           ONE:
-          <span style="font-size: 15px; font-weight: bold;">{{item.one}}</span>
+          <span>{{item.one}}</span>
         </div>
-        <div class="col-sm-12" v-else>
-          <div class="row">
-            <div class="col-sm-1 offset-sm-2">
+        <div class="col-sm-12 p-1" v-else>
+          <div class="row m-0">
+            <div class="col">
               2XS:
-              <span style="font-size: 15px; font-weight: bold;">{{item.xxs}}</span>
+              <span>{{item.xxs}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               XS:
-              <span style="font-size: 15px; font-weight: bold;">{{item.xs}}</span>
+              <span>{{item.xs}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               S:
-              <span style="font-size: 15px; font-weight: bold;">{{item.s}}</span>
+              <span>{{item.s}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               M:
-              <span style="font-size: 15px; font-weight: bold;">{{item.m}}</span>
+              <span>{{item.m}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               L:
-              <span style="font-size: 15px; font-weight: bold;">{{item.l}}</span>
+              <span>{{item.l}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               XL:
-              <span style="font-size: 15px; font-weight: bold;">{{item.xl}}</span>
+              <span>{{item.xl}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               2XL:
-              <span style="font-size: 15px; font-weight: bold;">{{item.xxl}}</span>
+              <span>{{item.xxl}}</span>
             </div>
-            <div class="col-sm-1">
+            <div class="col">
               3XL:
-              <span style="font-size: 15px; font-weight: bold;">{{item.xxxl}}</span>
+              <span>{{item.xxxl}}</span>
             </div>
           </div>
         </div>
@@ -77,10 +77,10 @@
         <div class="col text-center">
           Unit Price ({{order.currency}}{{priceBreak}})
           <br>
-          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.unitPrice)}}</span>
+          <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(unitPrice)}}</span>
         </div>
 
-        <div class="col text-center">Discount
+        <div v-if="item.itemDiscount > 0" class="col text-center">Discount
           <br>
           <span
             style="font-weight: bold; font-size: 14px;"
@@ -142,6 +142,11 @@ export default {
     priceBreak() {
       return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
     },
+    unitPrice() {
+      return this.$store.state.order.orderLines[this.lineIndex].items[
+        this.index
+      ].unitPrice;
+    },
     discountAmount() {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
     },
@@ -174,5 +179,9 @@ export default {
 <style>
 .card {
   font-size: 12px;
+}
+span {
+  font-size: 15px;
+  font-weight: bold;
 }
 </style>

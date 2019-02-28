@@ -395,6 +395,10 @@ const OrderSchema = new Schema({
         type: Number,
         default: null
       },
+      colourWashCharge: {
+        type: Number,
+        default: null
+      },
       creativeCharge: {
         type: Number,
         default: null

@@ -253,7 +253,7 @@
         <div class="col">
           Unit Price ({{order.currency}}{{priceBreak}})
           <br>
-          <span>$ {{formatPrice(item.unitPrice)}}</span>
+          <span>$ {{formatPrice(unitPrice)}}</span>
         </div>
 
         <div class="col">
@@ -305,6 +305,11 @@ export default {
     },
     priceBreak() {
       return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
+    },
+    unitPrice() {
+      return this.$store.state.order.orderLines[this.lineIndex].items[
+        this.itemIndex
+      ].unitPrice;
     },
     discountAmount() {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
@@ -381,7 +386,6 @@ export default {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex
       });
-      this.$store.dispatch("setLineTotal", { lineIndex: this.lineIndex });
       this.$router.push({ path: `/${this.order.orderNum}` });
     }
   }

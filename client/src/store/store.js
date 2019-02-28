@@ -82,8 +82,10 @@ export const store = new Vuex.Store({
       commit('SET_CURRENCY', text);
       dispatch('updateAllLines');
     },
-    setAddOns: ({ commit }, lineIndex) => {
+    setAddOns: ({ commit, dispatch }, lineIndex) => {
       commit('SET_ADD_ONS', lineIndex);
+      dispatch('updateAllItems', lineIndex);
+      dispatch('setLineTotal', lineIndex);
     },
     updateAllLines: ({ state, dispatch }) => {
       const orderLines = state.order.orderLines;
@@ -99,9 +101,20 @@ export const store = new Vuex.Store({
         }
       }
     },
+    updateAllItems: ({ state, commit, dispatch }, lineIndex) => {
+      const orderLine = state.order.orderLines[lineIndex];
+      for (let [itemIndex, item] of orderLine.items.entries()) {
+        if (!item.cancelled) {
+          commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
+          commit('SET_FINAL_UNIT_PRICE', { lineIndex, itemIndex });
+        }
+      }
+      commit('SET_LINE_TOTAL', lineIndex);
+      commit('SET_ORDER_TOTALS');
+      dispatch('saveOrder');
+    },
     getItemUnitPrice: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
-      commit('ADD_ONS', { lineIndex, itemIndex });
       dispatch('setFinalUnitPrice', { lineIndex, itemIndex });
     },
     setSelectedStyle: ({ commit }, { lineIndex, itemIndex }) => {
@@ -117,10 +130,10 @@ export const store = new Vuex.Store({
     },
     setFinalUnitPrice: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit('SET_FINAL_UNIT_PRICE', { lineIndex, itemIndex });
-      dispatch('setLineTotal', { lineIndex });
+      dispatch('setLineTotal', lineIndex);
     },
-    setLineTotal: ({ commit, dispatch }, { lineIndex }) => {
-      commit("SET_LINE_TOTAL", { lineIndex });
+    setLineTotal: ({ commit, dispatch }, lineIndex) => {
+      commit("SET_LINE_TOTAL", lineIndex);
       dispatch('setOrderTotal');
     }
   },
@@ -342,6 +355,7 @@ export const store = new Vuex.Store({
       state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
       state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
       state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
+      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].colourWashCharge;
     },
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
@@ -352,7 +366,7 @@ export const store = new Vuex.Store({
       }
       state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice) - qdDiscountAmount;
     },
-    SET_LINE_TOTAL: (state, { lineIndex }) => {
+    SET_LINE_TOTAL: (state, lineIndex) => {
       const orderLine = state.order.orderLines[lineIndex];
       const items = orderLine.items;
       const totalAddOns = orderLine.totalAddOns;

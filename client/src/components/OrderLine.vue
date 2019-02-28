@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-secondary mb-2" v-if="!orderLine.cancelled">
+  <div class="card border-secondary mb-3" v-if="!orderLine.cancelled">
     <div class="card-header bg-secondary text-light p-1 justify-items-center">
       <span>Line: {{orderLine.lineNumber}}</span>
       <div
@@ -52,13 +52,19 @@
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.scaledArtCharge)}}</span>
           </div>
+          <div v-if="orderLine.colourWashCharge" class="col-sm-12">
+            Colour Wash Charge:
+            <span
+              class="float-right badge badge-dark text-light"
+            >${{formatPrice(orderLine.colourWashCharge)}}</span>
+          </div>
         </div>
       </div>
       <div class="text-center mt-2">
         <button
           type="button"
           class="btn btn-sm btn-success"
-          @click.prevent="goToEdit()"
+          @click.prevent="goToEdit"
         >Edit Line Details</button>
       </div>
       <div class="items mt-2" v-if="orderLine.items.length">
@@ -83,8 +89,12 @@
       >Cancel Full Line</button>
       <div class="float-right">
         <div
+          class="text-center p-1"
+          v-if="orderLine.totalAddOns > 0"
+        >Sub Total: ${{formatPrice(totalBeforeAddOns)}}</div>
+        <div
           class="rounded bg-dark text-center text-white p-1"
-          v-if="orderLine.totalAddOns >0"
+          v-if="orderLine.totalAddOns > 0"
         >Total Add-Ons: ${{formatPrice(orderLine.totalAddOns)}}</div>
         <div
           class="rounded bg-secondary text-center text-light p-2"
@@ -107,6 +117,13 @@ export default {
   computed: {
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
+    },
+    totalBeforeAddOns() {
+      let totalBeforeAddOns = 0;
+      for (let item of this.orderLine.items) {
+        totalBeforeAddOns += item.itemTotalPrice;
+      }
+      return totalBeforeAddOns;
     }
   },
   data() {
