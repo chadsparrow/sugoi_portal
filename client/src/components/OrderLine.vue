@@ -63,7 +63,7 @@
       <div class="text-center mt-2">
         <button
           type="button"
-          class="btn btn-sm btn-success"
+          class="btn btn-sm btn-success d-print-none"
           @click.prevent="goToEdit"
         >Edit Line Details</button>
       </div>

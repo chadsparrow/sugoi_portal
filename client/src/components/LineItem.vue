@@ -1,6 +1,6 @@
 <template>
   <div class="item card border-dark mb-2" v-if="!item.cancelled">
-    <div class="card-header bg-secondary mb-0 p-1">
+    <div class="card-header bg-info mb-0 p-1">
       <div class="row text-light align-items-center">
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
         <div class="col sm-3">Description: {{item.extendedDescription}}</div>
