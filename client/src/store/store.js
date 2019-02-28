@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import { getField, updateField } from 'vuex-map-fields';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -21,8 +20,8 @@ export const store = new Vuex.Store({
       axios
         .put(`https://localhost:5000/api/orders/${state.order.orderNum}`, state.order)
         .then(r => r.data)
-        .then(order => {
-          commit("SAVE_ORDER_DATA", order);
+        .then((order) => {
+          commit("SAVE_ORDER_DATA");
         });
     },
     getOrderData: ({ commit }, orderNum) => {
@@ -126,12 +125,11 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    updateField,
     SET_ORDER_DATA: (state, order) => {
       state.order = order;
     },
-    SAVE_ORDER_DATA: (state, order) => {
-      state.order = order;
+    SAVE_ORDER_DATA: (state) => {
+      // just to show mutation in vuex window
     },
     SET_REPS: (state, reps) => {
       state.reps = reps;
@@ -374,7 +372,6 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
-    getField,
     getColourWays: (state) => (index) => {
       return state.graphicCodes[index].colourWays;
     }
