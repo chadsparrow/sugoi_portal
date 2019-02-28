@@ -77,11 +77,7 @@
       </div>
     </div>
     <div class="card-footer p-1">
-      <button
-        type="button"
-        class="btn btn-sm btn-secondary mr-1 d-print-none"
-        @click.prevent
-      >Add Item</button>
+      <button type="button" class="btn btn-sm btn-info mr-1 d-print-none" @click.prevent>Add Item</button>
       <button
         type="button"
         class="btn btn-sm btn-danger mr-1 d-print-none"

@@ -83,6 +83,7 @@
               id="client"
               v-model.trim="order.client"
               readonly
+              ref="client"
             >
           </div>
           <div class="form-group mb-1 col-sm-6">
@@ -92,6 +93,7 @@
               class="form-control form-control-sm"
               id="contactName"
               v-model.trim="order.contactName"
+              ref="contactName"
             >
           </div>
           <div class="form-group mb-1 col-sm-6">
@@ -101,6 +103,7 @@
               class="form-control form-control-sm"
               id="shipToName"
               v-model.trim="order.shipToName"
+              ref="shipToName"
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
@@ -110,6 +113,7 @@
               class="form-control form-control-sm"
               id="shipToAddress"
               v-model.trim="order.shipToAddress"
+              ref="shipToAddress"
             >
           </div>
           <div class="form-group mb-1 col-sm-6">
@@ -119,6 +123,7 @@
               class="form-control form-control-sm"
               id="shipToCity"
               v-model.trim="order.shipToCity"
+              ref="shipToCity"
             >
           </div>
           <div
@@ -179,6 +184,7 @@
               id="shipToCountry"
               v-model.trim.lazy="order.shipToCountry"
               @change="setCountryUpper"
+              ref="shipToCountry"
             >
           </div>
 
@@ -189,6 +195,7 @@
               class="form-control form-control-sm"
               id="shipToPostalZip"
               v-model.trim="order.shipToPostalZip"
+              ref="shipToPostalZip"
             >
           </div>
           <div class="form-group mb-1 col-sm-6">
@@ -198,6 +205,7 @@
               class="form-control form-control-sm"
               id="contactPhone"
               v-model.trim="order.contactPhone"
+              ref="contactPhone"
             >
           </div>
           <div class="form-group mb-1 col-sm-6">
@@ -362,6 +370,61 @@ export default {
       ) {
         this.$refs.provincestate.focus();
         alert("Province/State not entered");
+        return;
+      }
+
+      if (this.$refs.client != undefined && this.$refs.client.value === "") {
+        this.$refs.client.focus();
+        alert("Contact Name not entered");
+        return;
+      }
+      if (
+        this.$refs.shipToName != undefined &&
+        this.$refs.shipToName.value === ""
+      ) {
+        this.$refs.shipToName.focus();
+        alert("Ship To Name not entered");
+        return;
+      }
+      if (
+        this.$refs.shipToAddress != undefined &&
+        this.$refs.shipToAddress.value === ""
+      ) {
+        this.$refs.shipToAddress.focus();
+        alert("Address not entered");
+        return;
+      }
+      if (
+        this.$refs.shipToCity != undefined &&
+        this.$refs.shipToCity.value === ""
+      ) {
+        this.$refs.shipToCity.focus();
+        alert("City not entered");
+        return;
+      }
+      if (
+        this.$refs.shipToCountry != undefined &&
+        this.$refs.shipToCountry.value === ""
+      ) {
+        this.$refs.shipToCountry.focus();
+        alert("Country not entered");
+        return;
+      }
+
+      if (
+        this.$refs.shipToPostalZip != undefined &&
+        this.$refs.shipToPostalZip.value === ""
+      ) {
+        this.$refs.shipToPostalZip.focus();
+        alert("Postal/Zip not entered");
+        return;
+      }
+      if (
+        this.$refs.contactPhone != undefined &&
+        this.$refs.contactPhone.value === ""
+      ) {
+        this.$refs.contactPhone.focus();
+        alert("Phone # not entered");
         return;
       }
 
