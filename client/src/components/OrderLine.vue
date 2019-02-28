@@ -88,6 +88,7 @@
         >Total Add-Ons: ${{formatPrice(orderLine.totalAddOns)}}</div>
         <div
           class="rounded bg-secondary text-center text-light p-2"
+          style="font-size: 16px; font-weight: bold;"
         >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
       </div>
     </div>

@@ -98,7 +98,10 @@
           <button class="btn btn-sm btn-danger">Cancel Item</button>
         </div>
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
-          <div class="col bg-secondary rounded text-white align-middle p-1 mr-1">SubTotal:
+          <div
+            v-if="qdDiscount > 0"
+            class="col bg-secondary rounded text-white align-middle p-1 mr-1"
+          >SubTotal:
             <br>
             ${{formatPrice(subTotal)}}
           </div>
