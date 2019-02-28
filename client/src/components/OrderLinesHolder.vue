@@ -13,7 +13,11 @@
       </div>
     </div>
     <div class="card-footer bg-dark p-1">
-      <button type="button" class="btn btn-dark btn-block d-print-none">Add Line</button>
+      <button
+        type="button"
+        class="btn btn-dark btn-block d-print-none"
+        @click.prevent="addLine"
+      >Add Line</button>
     </div>
   </div>
 </template>
@@ -35,6 +39,11 @@ export default {
     return {
       title: "Lines"
     };
+  },
+  methods: {
+    addLine() {
+      this.$store.dispatch("addLine");
+    }
   }
 };
 </script>

@@ -31,6 +31,42 @@ router.get("/:orderNum", (req, res) => {
     });
 });
 
+// @DESC - ADDS LINE TO ORDER BASED ON ORDER NUMBER
+// SEC - MUST BE LOGGED IN
+router.put('/:orderNum/:lineNumber', (req, res) => {
+  Order.findOne({ orderNum: req.params.orderNum })
+    .then(foundOrder => {
+      foundOrder.orderLines.push({ lineNumber: req.params.lineNumber });
+      foundOrder.save((err, savedOrder) => {
+        if (err) {
+          logger.error(err);
+          return;
+        }
+        res.json(savedOrder);
+      })
+    }).catch(err => {
+      logger.error(err);
+    })
+});
+
+// @DESC - ADDS LINE TO ORDER BASED ON ORDER NUMBER
+// SEC - MUST BE LOGGED IN
+router.put('/:orderNum/:lineNumber/:itemNumber', (req, res) => {
+  Order.findOne({ orderNum: req.params.orderNum })
+    .then(foundOrder => {
+      foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: req.params.itemNumber });
+      foundOrder.save((err, savedOrder) => {
+        if (err) {
+          logger.error(err);
+          return;
+        }
+        res.json(savedOrder);
+      })
+    }).catch(err => {
+      logger.error(err);
+    })
+});
+
 router.put("/:orderNum", (req, res) => {
   const requestOrder = req.body;
   Order.findOneAndUpdate({ orderNum: req.params.orderNum }, requestOrder, { new: true, upsert: true })
@@ -40,10 +76,6 @@ router.put("/:orderNum", (req, res) => {
     .catch(err => {
       logger.error(err);
     })
-});
-
-router.put("/:orderNum", (req, res) => {
-  console.log(req.body);
 });
 
 module.exports = router;

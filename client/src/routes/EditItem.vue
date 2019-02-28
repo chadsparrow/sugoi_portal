@@ -29,6 +29,7 @@
             id="selectedConfig"
             v-model="item.selectedConfig"
             @change="selectConfig"
+            ref="configInput"
           >
             <option
               v-for="(config, index) in item.configs"
@@ -56,6 +57,7 @@
             class="form-control form-control-sm"
             id="childReference"
             v-model.trim="item.childReference"
+            ref="childReference"
           >
         </div>
         <div class="col">
@@ -358,6 +360,17 @@ export default {
       });
     },
     commitItem() {
+      if (this.$refs.styleInput.value === "") {
+        this.$refs.styleInput.focus();
+        alert("Style not selected!");
+        return;
+      }
+      if (this.$refs.configInput.value === "") {
+        this.$refs.configInput.focus();
+        alert("Configuration not selected!");
+        return;
+      }
+
       if (this.$refs.threadInput.value === "") {
         this.$refs.threadInput.focus();
         alert("Thread not selected!");

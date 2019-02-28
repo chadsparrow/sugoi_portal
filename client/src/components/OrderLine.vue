@@ -77,11 +77,15 @@
       </div>
     </div>
     <div class="card-footer p-1">
-      <button type="button" class="btn btn-sm btn-info mr-1 d-print-none" @click.prevent>Add Item</button>
+      <button
+        type="button"
+        class="btn btn-sm btn-info mr-1 d-print-none"
+        @click.prevent="addItem"
+      >Add Item</button>
       <button
         type="button"
         class="btn btn-sm btn-danger mr-1 d-print-none"
-        @click.prevent
+        @click.prevent="cancelLine"
       >Cancel Full Line</button>
       <div class="float-right">
         <div
@@ -115,11 +119,7 @@ export default {
       return this.$store.state.order.orderLines[this.index];
     },
     totalBeforeAddOns() {
-      let totalBeforeAddOns = 0;
-      for (let item of this.orderLine.items) {
-        totalBeforeAddOns += item.itemTotalPrice;
-      }
-      return totalBeforeAddOns;
+      return this.$store.getters.totalBeforeAddOns(this.index);
     }
   },
   data() {
@@ -134,6 +134,15 @@ export default {
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    cancelLine() {
+      let checkdelete = confirm("Are you sure?");
+      if (checkdelete) {
+        this.$store.dispatch("cancelLine", this.index);
+      }
+    },
+    addItem() {
+      this.$store.dispatch("addItem", this.index);
     }
   }
 };

@@ -364,7 +364,7 @@ const OrderSchema = new Schema({
       },
       graphicCode: {
         type: String,
-        default: null,
+        default: "CUSTM",
         uppercase: true
       },
       graphicColours: {

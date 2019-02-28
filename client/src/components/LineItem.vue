@@ -21,8 +21,6 @@
         <div v-if="item.personalization" class="col" style="font-size: 16px;">
           <span class="badge badge-dark">PRS - $10</span>
         </div>
-
-        <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
       </div>
       <div class="row align-items-center text-center m-0 rounded bg-light">
         <div class="col-sm-12 p-1">Quantities:</div>
@@ -95,7 +93,7 @@
       <div class="card-footer d-print-none p-1">
         <div class="float-left m-0">
           <button class="btn btn-sm btn-success mr-1" @click.prevent="goToEdit">Edit Item</button>
-          <button class="btn btn-sm btn-danger">Cancel Item</button>
+          <button class="btn btn-sm btn-danger" @click.prevent="cancelItem">Cancel Item</button>
         </div>
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
           <div
@@ -171,6 +169,15 @@ export default {
     },
     goToEdit() {
       this.$router.push({ path: `edititem/${this.lineIndex}/${this.index}` });
+    },
+    cancelItem() {
+      let checkdelete = confirm("Are you sure?");
+      if (checkdelete) {
+        this.$store.dispatch("cancelItem", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.index
+        });
+      }
     }
   }
 };

@@ -12,6 +12,7 @@
               class="form-control form-control-sm"
               id="jobType"
               v-model="orderLine.lineJobType"
+              ref="lineJobType"
             >
               <option>NEW</option>
               <option>NWR</option>
@@ -26,6 +27,7 @@
               class="form-control form-control-sm"
               id="accountNum"
               v-model.trim="orderLine.swoReference"
+              ref="swoReference"
             >
           </div>
           <div class="form-group mb-1">
@@ -69,6 +71,7 @@
                 class="form-control form-control-sm"
                 id="colourWayCode"
                 v-model="orderLine.colourWayCode"
+                ref="colourWayCode"
               >
                 <option value="MSS">Moss</option>
                 <option value="RSK">Risk</option>
@@ -87,6 +90,7 @@
                 class="form-control form-control-sm"
                 id="colour1"
                 v-model.trim="orderLine.colour1"
+                ref="colour1"
               >
             </div>
             <div
@@ -99,6 +103,7 @@
                 class="form-control form-control-sm"
                 id="colour2"
                 v-model.trim="orderLine.colour2"
+                ref="colour2"
               >
             </div>
             <div
@@ -111,6 +116,7 @@
                 class="form-control form-control-sm"
                 id="colour3"
                 v-model.trim="orderLine.colour3"
+                ref="colour3"
               >
             </div>
           </div>
@@ -203,6 +209,46 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     commitLine() {
+      if (
+        this.$refs.lineJobType.value != "NEW" &&
+        this.$refs.swoReference.value === null
+      ) {
+        this.$refs.swoReference.focus();
+        alert("Enter SO# Reference");
+        return;
+      } else if (
+        this.$refs.lineJobType.value != "NEW" &&
+        this.$refs.swoReference.value === ""
+      ) {
+        this.$refs.swoReference.focus();
+        alert("Enter SO# Reference");
+        return;
+      }
+
+      if (
+        this.$refs.colourWayCode != undefined &&
+        this.$refs.colourWayCode.value === ""
+      ) {
+        this.$refs.colourWayCode.focus();
+        alert("ColourWay not selected!");
+        return;
+      }
+      if (this.$refs.colour1 != undefined && this.$refs.colour1.value === "") {
+        this.$refs.colour1.focus();
+        alert("Fill in Colour 1");
+        return;
+      }
+      if (this.$refs.colour2 != undefined && this.$refs.colour2.value === "") {
+        this.$refs.colour2.focus();
+        alert("Fill in Colour 2");
+        return;
+      }
+      if (this.$refs.colour3 != undefined && this.$refs.colour3.value === "") {
+        this.$refs.colour3.focus();
+        alert("Fill in Colour 3");
+        return;
+      }
+
       this.$store.dispatch("setAddOns", this.lineIndex);
       this.$router.push({ path: `/${this.order.orderNum}` });
     },

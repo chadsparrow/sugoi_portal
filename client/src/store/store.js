@@ -135,7 +135,46 @@ export const store = new Vuex.Store({
     setLineTotal: ({ commit, dispatch }, lineIndex) => {
       commit("SET_LINE_TOTAL", lineIndex);
       dispatch('setOrderTotal');
-    }
+    },
+    addLine: ({ commit, state }) => {
+      const lineLength = state.order.orderLines.length;
+      let nextLineNumber = parseInt(lineLength + 1);
+      if (nextLineNumber < 10) {
+        nextLineNumber = "0" + nextLineNumber;
+      } else {
+        nextLineNumber = nextLineNumber.toString();
+      }
+
+      axios.put(`https://localhost:5000/api/orders/${state.order.orderNum}/${nextLineNumber}`)
+        .then(r => r.data)
+        .then(order => {
+          commit("SET_ORDER_DATA", order);
+        })
+    },
+    cancelLine: ({ commit, dispatch }, lineIndex) => {
+      commit("CANCEL_LINE", lineIndex);
+      dispatch('updateAllLines');
+    },
+    addItem: ({ commit, state }, lineIndex) => {
+      const itemLength = state.order.orderLines[lineIndex].items.length;
+      let nextItemNumber = parseInt(itemLength + 1);
+      if (nextItemNumber < 10) {
+        nextItemNumber = "0" + nextItemNumber;
+      } else {
+        nextItemNumber = nextItemNumber.toString();
+      }
+
+      axios.put(`https://localhost:5000/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
+        .then(r => r.data)
+        .then(order => {
+          commit("SET_ORDER_DATA", order);
+        })
+    },
+    cancelItem: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
+      commit("CANCEL_ITEM", { lineIndex, itemIndex });
+      dispatch('setAddOns', lineIndex);
+      dispatch('updateAllLines');
+    },
   },
   mutations: {
     SET_ORDER_DATA: (state, order) => {
@@ -383,11 +422,33 @@ export const store = new Vuex.Store({
       }
 
       state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
+    },
+    CANCEL_LINE: (state, lineIndex) => {
+
+      const orderLine = state.order.orderLines[lineIndex];
+
+      for (let item of orderLine.items) {
+        item.cancelled = true;
+      }
+      orderLine.cancelled = true;
+    },
+    CANCEL_ITEM: (state, { lineIndex, itemIndex }) => {
+      state.order.orderLines[lineIndex].items[itemIndex].cancelled = true;
     }
   },
   getters: {
     getColourWays: (state) => (index) => {
       return state.graphicCodes[index].colourWays;
+    },
+    totalBeforeAddOns: (state) => (lineIndex) => {
+      const orderLine = state.order.orderLines[lineIndex];
+      let totalBeforeAddOns = 0;
+      for (let item of orderLine.items) {
+        if (!item.cancelled) {
+          totalBeforeAddOns += item.itemTotalPrice;
+        }
+      }
+      return totalBeforeAddOns;
     }
   }
 });
