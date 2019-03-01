@@ -224,8 +224,38 @@ export const store = new Vuex.Store({
       state.order.taxes = null;
     },
     SET_ITEM_TOTAL_UNITS: (state, { lineIndex, itemIndex }) => {
-      const { one, xxs, xs, s, m, l, xl, xxl, xxxl } = state.order.orderLines[lineIndex].items[itemIndex];
-      state.order.orderLines[lineIndex].items[itemIndex].totalUnits = one + xxs + xs + s + m + l + xl + xxl + xxxl;
+      let { one, xxs, xs, s, m, l, xl, xxl, xxxl } = state.order.orderLines[lineIndex].items[itemIndex];
+      if (one == null || one == "") {
+        one = 0;
+      }
+      if (xxs == null || xxs == "") {
+        xxs = 0;
+      }
+      if (xs == null || xs == "") {
+        xs = 0;
+      }
+      if (s == null || s == "") {
+        s = 0;
+      }
+      if (m == null || m == "") {
+        m = 0;
+      }
+      if (l == null || l == "") {
+        l = 0;
+      }
+      if (xl == null || xl == "") {
+        xl = 0;
+      }
+      if (xxl == null || xxl == "") {
+        xxl = 0;
+      }
+      if (xxxl == null || xxxl == "") {
+        xxxl = 0;
+      }
+      let totalsArray = [one, xxs, xs, s, m, l, xl, xxl, xxxl];
+      state.order.orderLines[lineIndex].items[itemIndex].totalUnits = totalsArray.reduce((previous, current) => {
+        return previous + current;
+      })
     },
     ADD_ONS: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];

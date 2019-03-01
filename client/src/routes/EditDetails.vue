@@ -79,7 +79,7 @@
             <label for="client" class="small my-0">Client</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm capitalized"
               id="client"
               v-model.trim="order.client"
               readonly
@@ -90,7 +90,7 @@
             <label for="contactName" class="small my-0">Contact Name</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm capitalized"
               id="contactName"
               v-model.trim="order.contactName"
               ref="contactName"
@@ -100,7 +100,7 @@
             <label for="shipToName" class="small my-0">Ship To Name</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm capitalized"
               id="shipToName"
               v-model.trim="order.shipToName"
               ref="shipToName"
@@ -110,7 +110,7 @@
             <label for="shipToAddress" class="small my-0">Ship To Address</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm capitalized"
               id="shipToAddress"
               v-model.trim="order.shipToAddress"
               ref="shipToAddress"
@@ -120,7 +120,7 @@
             <label for="shipToCity" class="small my-0">City</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm capitalized"
               id="shipToCity"
               v-model.trim="order.shipToCity"
               ref="shipToCity"
@@ -168,7 +168,7 @@
             <label for="shipToProvState" class="small my-0">State/Prov</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm capitalized"
               id="shipToProvState"
               v-model.trim="order.shipToProvState"
               @change="setTaxOther(0)"
@@ -434,3 +434,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.capitalized {
+  text-transform: capitalize;
+}
+</style>
+

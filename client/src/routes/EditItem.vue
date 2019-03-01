@@ -143,6 +143,7 @@
             id="one"
             v-model.number="item.one"
             @change="setTotalUnits"
+            ref="one"
           >
         </div>
       </div>
@@ -160,6 +161,7 @@
             id="xxs"
             v-model.number="item.xxs"
             @change="setTotalUnits"
+            ref="xxs"
           >
         </div>
         <div class="form-group col">
@@ -172,6 +174,7 @@
             id="xs"
             v-model.number="item.xs"
             @change="setTotalUnits"
+            ref="xs"
           >
         </div>
         <div class="form-group col">
@@ -184,6 +187,7 @@
             id="s"
             v-model.number="item.s"
             @change="setTotalUnits"
+            ref="s"
           >
         </div>
         <div class="form-group col">
@@ -196,6 +200,7 @@
             id="m"
             v-model.number="item.m"
             @change="setTotalUnits"
+            ref="m"
           >
         </div>
         <div class="form-group col">
@@ -208,6 +213,7 @@
             id="l"
             v-model.number="item.l"
             @change="setTotalUnits"
+            ref="l"
           >
         </div>
         <div class="form-group col">
@@ -220,6 +226,7 @@
             id="xl"
             v-model.number="item.xl"
             @change="setTotalUnits"
+            ref="xl"
           >
         </div>
         <div
@@ -235,6 +242,7 @@
             id="xxl"
             v-model.number="item.xxl"
             @change="setTotalUnits"
+            ref="xxl"
           >
         </div>
         <div class="form-group col" v-if="item.sizeRange.includes('3XL')">
@@ -246,6 +254,7 @@
             id="xxxl"
             v-model.number="item.xxxl"
             @change="setTotalUnits"
+            ref="xxxl"
           >
         </div>
       </div>
@@ -456,6 +465,70 @@ export default {
         this.$refs.colour3.focus();
         alert("Fill in Colours for QD");
         return;
+      }
+
+      if (this.$refs.one != undefined && this.$refs.one.value == "") {
+        this.item.one = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.xxs != undefined && this.$refs.xxs.value == "") {
+        this.item.xxs = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.xs != undefined && this.$refs.xs.value == "") {
+        this.item.xs = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.s != undefined && this.$refs.s.value == "") {
+        this.item.s = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.m != undefined && this.$refs.m.value == "") {
+        this.item.m = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.l != undefined && this.$refs.l.value == "") {
+        this.item.l = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.xl != undefined && this.$refs.xl.value == "") {
+        this.item.xl = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.xxl != undefined && this.$refs.xxl.value == "") {
+        this.item.xxl = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
+      }
+      if (this.$refs.xxxl != undefined && this.$refs.xxxl.value == "") {
+        this.item.xxxl = 0;
+        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        });
       }
 
       this.$store.dispatch("setAddOns", this.lineIndex);

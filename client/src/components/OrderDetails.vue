@@ -6,17 +6,26 @@
     <div class="row card-body p-2">
       <div class="col-sm-3">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Order: {{order.orderNum}}</li>
-          <li class="list-group-item">Custom Rep: {{order.isr}}</li>
-          <li class="list-group-item">Order Date: {{formatDate(order.enteredDate)}}</li>
-          <li
-            class="list-group-item"
-            v-if="order.eventDate"
-          >Event Date: {{formatDate(order.eventDate)}}</li>
-          <li
-            class="list-group-item"
-            v-if="order.eventDate"
-          >In-Hand Date: {{formatDate(order.latestInHand)}}</li>
+          <li class="list-group-item">
+            Order:
+            <span>{{order.orderNum}}</span>
+          </li>
+          <li class="list-group-item">
+            Custom Rep:
+            <span>{{order.isr}}</span>
+          </li>
+          <li class="list-group-item">
+            Order Date:
+            <span>{{formatDate(order.enteredDate)}}</span>
+          </li>
+          <li class="list-group-item" v-if="order.eventDate">
+            Event Date:
+            <span>{{formatDate(order.eventDate)}}</span>
+          </li>
+          <li class="list-group-item" v-if="order.eventDate">
+            In-Hand Date:
+            <span>{{formatDate(order.latestInHand)}}</span>
+          </li>
         </ul>
         <div class="d-print-none text-center">
           <label for="orderNotes" class="mb-0 mt-2">Notes:</label>
@@ -32,32 +41,68 @@
       <div class="col-sm-6 border-left">
         <div class="row m-0">
           <ul class="list-group list-group-flush col-sm-6">
-            <li class="list-group-item">Account #: {{order.accountNum}}</li>
-            <li class="list-group-item">Contact: {{order.contactName}}</li>
+            <li class="list-group-item">
+              Account #:
+              <span>{{order.accountNum}}</span>
+            </li>
+            <li class="list-group-item">
+              Contact:
+              <span>{{order.contactName}}</span>
+            </li>
           </ul>
           <ul class="list-group list-group-flush col-sm-6">
-            <li class="list-group-item">Client: {{order.client}}</li>
-            <li class="list-group-item">Ship To Name: {{order.shipToName}}</li>
+            <li class="list-group-item">
+              Client:
+              <span>{{order.client}}</span>
+            </li>
+            <li class="list-group-item">
+              Ship To Name:
+              <span>{{order.shipToName}}</span>
+            </li>
           </ul>
           <ul class="list-group list-group-flush col-sm-12">
             <li class="list-group-item">Ship To Address:
               <br>
-              {{order.shipToAddress}}
+              <span>{{order.shipToAddress}}</span>
             </li>
           </ul>
           <ul class="list-group list-group-flush col-sm-6">
-            <li class="list-group-item">City: {{order.shipToCity}}</li>
-            <li class="list-group-item">Country: {{order.shipToCountry}}</li>
-            <li class="list-group-item">Phone: {{order.contactPhone}}</li>
+            <li class="list-group-item">
+              City:
+              <span>{{order.shipToCity}}</span>
+            </li>
+            <li class="list-group-item">
+              Country:
+              <span>{{order.shipToCountry}}</span>
+            </li>
+            <li class="list-group-item">
+              Phone:
+              <span>{{order.contactPhone}}</span>
+            </li>
           </ul>
           <ul class="list-group list-group-flush col-sm-6">
-            <li class="list-group-item">State/Prov: {{order.shipToProvState}}</li>
-            <li class="list-group-item">Zip/Postal: {{order.shipToPostalZip}}</li>
-            <li class="list-group-item">Email: {{order.contactEmail}}</li>
+            <li class="list-group-item">
+              State/Prov:
+              <span>{{order.shipToProvState}}</span>
+            </li>
+            <li class="list-group-item">
+              Zip/Postal:
+              <span>{{order.shipToPostalZip}}</span>
+            </li>
+            <li class="list-group-item">
+              Email:
+              <span style="text-transform: none;">{{order.contactEmail}}</span>
+            </li>
           </ul>
           <ul class="list-group list-group-flush col-sm-12">
-            <li class="list-group-item">Terms: {{order.approvedTerms}}</li>
-            <li class="list-group-item">Signed Off Date: {{formatDate(order.signedOffDate)}}</li>
+            <li class="list-group-item">
+              Terms:
+              <span>{{order.approvedTerms}}</span>
+            </li>
+            <li class="list-group-item">
+              Signed Off Date:
+              <span>{{formatDate(order.signedOffDate)}}</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -149,6 +194,7 @@ export default {
 span {
   font-weight: bold;
   font-size: 14px;
+  text-transform: capitalize;
 }
 
 .card {

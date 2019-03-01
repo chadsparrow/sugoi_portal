@@ -13,11 +13,26 @@
         <!-- LEFT SECTION -->
         <div class="col-sm-9 border-right">
           <div class="row p-2">
-            <div class="col">Job Type: {{orderLine.lineJobType}}</div>
-            <div class="col" v-if="orderLine.swoReference">SO.Ref#: {{orderLine.swoReference}}</div>
-            <div class="col">Price Break: {{orderLine.priceBreak}} units</div>
-            <div class="col">Graphic: {{orderLine.graphicCode}}</div>
-            <div class="col" v-if="orderLine.colourWayCode">ColourWay: {{orderLine.colourWayCode}}</div>
+            <div class="col">
+              Job Type:
+              <span>{{orderLine.lineJobType}}</span>
+            </div>
+            <div class="col" v-if="orderLine.swoReference">
+              SO.Ref#:
+              <span>{{orderLine.swoReference}}</span>
+            </div>
+            <div class="col">
+              Price Break:
+              <span>{{orderLine.priceBreak}} units</span>
+            </div>
+            <div class="col">
+              Graphic:
+              <span>{{orderLine.graphicCode}}</span>
+            </div>
+            <div class="col" v-if="orderLine.colourWayCode">
+              ColourWay:
+              <span>{{orderLine.colourWayCode}}</span>
+            </div>
           </div>
         </div>
         <!-- RIGHT SECTION -->
@@ -137,3 +152,9 @@ export default {
 };
 </script>
 
+<style scoped>
+span {
+  font-weight: bold;
+  font-size: 14px;
+}
+</style>
