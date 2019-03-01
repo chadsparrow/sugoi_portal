@@ -229,6 +229,8 @@ app.use("/api/states", stateRoutes);
 app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
 
+app.get("/oc/*", (req, res) => res.sendFile(path.join(__dirname, "public/index.html")));
+
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {
   const error = new Error("Resource Not Found");
