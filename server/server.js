@@ -47,7 +47,6 @@ app.enable('trust proxy');
 const userRoutes = require("./routes/users");
 const styleRoutes = require("./routes/styles");
 const orderRoutes = require("./routes/orders");
-const indexRoutes = require("./routes/index");
 const prodRoutes = require("./routes/prod");
 const proofRoutes = require("./routes/proofs");
 const paymentRoutes = require("./routes/payments");
@@ -214,7 +213,6 @@ var cronJob = cron.job("0 * * * *", function () {
 cronJob.start();
 
 // Use Routes from above
-app.use("/", indexRoutes);
 app.use("/users", userRoutes);
 app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
@@ -222,18 +220,14 @@ app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/reports", reportRoutes);
-app.use("/oc/api/orders", orderAPIRoutes);
-app.use("/oc/api/reps", orderRepRoutes);
-app.use("/oc/api/provTax", provTaxRoutes);
-app.use("/oc/api/states", stateRoutes);
-app.use("/oc/api/styles", apiStyleRoutes);
-app.use("/oc/api/graphicCodes", apiGraphicRoutes);
+app.use("/api/orders", orderAPIRoutes);
+app.use("/api/reps", orderRepRoutes);
+app.use("/api/provTax", provTaxRoutes);
+app.use("/api/states", stateRoutes);
+app.use("/api/styles", apiStyleRoutes);
+app.use("/api/graphicCodes", apiGraphicRoutes);
 
-app.get("/oc/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"))
-});
-
-app.get('/oc/*'), (req, res) => res.sendFile(path.join(__dirname, 'public/index.html'))
+app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {
