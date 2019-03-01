@@ -382,7 +382,6 @@ export const store = new Vuex.Store({
       if (currency === "CAD" && selectedConfig > -1) {
         if (priceBreak === 1) {
           unitPrice = currentConfig.cad1;
-
         } else if (priceBreak === 6) {
           unitPrice = currentConfig.cad6;
         } else if (priceBreak === 12) {
@@ -417,8 +416,8 @@ export const store = new Vuex.Store({
           unitPrice = currentConfig.usd500;
         }
       }
-      state.order.orderLines[lineIndex].items[itemIndex].unitPrice = unitPrice;
-      state.order.orderLines[lineIndex].items[itemIndex].unitCost = unitCost;
+      state.order.orderLines[lineIndex].items[itemIndex].unitPrice = unitPrice.toFixed(2);
+      state.order.orderLines[lineIndex].items[itemIndex].unitCost = unitCost.toFixed(2);
     },
     SET_ORDER_TOTALS: (state) => {
       state.order.beforeTaxes = 0;
@@ -433,8 +432,15 @@ export const store = new Vuex.Store({
       state.order.beforeTaxes += state.order.multiShips * 15;
       state.order.beforeTaxes += state.order.prePacks * 5;
       state.order.taxAmount = state.order.beforeTaxes * (state.order.taxes / 100);
-      state.order.netValue = state.order.beforeTaxes + state.order.taxAmount;
-      state.order.balanceOutstanding = state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded
+      state.order.netValue = (state.order.beforeTaxes + state.order.taxAmount).toFixed(2);
+      state.order.balanceOutstanding = (state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded).toFixed(2);
+      if (state.order.balanceOutstanding > 0) {
+        state.order.paymentStatus = "Balance Outstanding";
+      } else if (state.order.balanceOutstanding < 0) {
+        state.order.paymentStatus = "Refund Customer";
+      } else if (state.order.balanceOutstanding == 0) {
+        state.order.paymentStatus = "Complete";
+      }
     },
     SET_ADD_ONS: (state, lineIndex) => {
       state.order.orderLines[lineIndex].totalAddOns = 0;
@@ -476,7 +482,7 @@ export const store = new Vuex.Store({
         itemsTotal += totalAddOns;
       }
       state.order.orderLines[lineIndex].lineItemsQty = itemsQty;
-      state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
+      state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal.toFixed(2);
     },
     CANCEL_LINE: (state, lineIndex) => {
 
@@ -503,7 +509,7 @@ export const store = new Vuex.Store({
           totalBeforeAddOns += item.itemTotalPrice;
         }
       }
-      return totalBeforeAddOns;
+      return totalBeforeAddOns.toFixed(2);
     }
   }
 });

@@ -160,7 +160,7 @@ export default {
         this.orderLine.graphicCode === "CUSTM" ||
         this.orderLine.graphicCode === null
       ) {
-        return 0;
+        return (0).toFixed(2);
       } else {
         return this.subTotal * 0.1;
       }

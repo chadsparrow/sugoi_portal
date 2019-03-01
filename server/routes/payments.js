@@ -55,6 +55,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         let balanceOutstanding =
           foundOrder.netValue -
           onTermPayment -
+          foundOrder.deposit -
           kitOrderPayment -
           isrCollectedOrig +
           isrRefunded;
