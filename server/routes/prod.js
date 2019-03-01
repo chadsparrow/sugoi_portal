@@ -65,12 +65,12 @@ router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
 });
 
 router.get("/pending", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  let pageTitle = "Pending Delivery";
+  let pageTitle = "Shipped Orders";
   Order.find({
     $and: [
       { currentStatus: "V. Sent to Vendor" },
       { vendorConfirmShip: { $ne: null } },
-      { confirmDeliveryStatus: { $ne: "Delivered" } }
+      { shipStatus: "Shipped" }
     ]
   }).then(orders => {
     res.render("orders/prod", { orders, pageTitle });
