@@ -16,7 +16,7 @@
                   <div class="row">
                     <div class="input-field col s12 m6">
                       <input type="text" name="orderNum" id="orderNum" pattern="[0-9]{7}" maxlength="7"
-                        value="{{orderNum}}" placeholder="enter 7 digit number" class="validate" required autofocus>
+                        value="{{orderNum}}" placeholder="enter 7 digit number" class="validate" required>
                       <label for="orderNum">* Contract #:</label>
                     </div>
                     <div class="input-field col s12 m6">
@@ -28,16 +28,6 @@
                         {{/select}}
                       </select>
                       <label for="priority">Priority:</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                      <i class="small material-icons prefix">today</i>
-                      <input type="text" class="input-date" name="eventDate" id="eventDate">
-                      <label for="eventDate">Event Date:</label>
-                    </div>
-                    <div class="input-field col s12 m6">
-                      <i class="small material-icons prefix">today</i>
-                      <input type="text" class="input-date" name="latestInHand" id="latestInHand">
-                      <label for="latestInHand">Latest In-Hand Date:</label>
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="isr" id="isr">
@@ -61,7 +51,8 @@
                     </div>
 
                     <div class="input-field col s12">
-                      <input type="text" name="client" id="client" class="validate" value="{{client}}" required>
+                      <input type="text" name="client" id="client" class="validate" value="{{client}}" required
+                        autofocus>
                       <label for="client">* Client:</label>
                     </div>
                     <div class="input-field col s12">

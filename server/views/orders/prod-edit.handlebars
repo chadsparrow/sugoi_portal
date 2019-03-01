@@ -41,23 +41,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="input-field col s6 l4">
-                  <input type="number" name="qty" id="qty" value="{{order.qty}}">
-                  <label for="qty">Qty:</label>
+                <div class="col s6 l4">
+                  <span class="grey-text">Qty: </span>{{order.qty}}
                 </div>
-                <div class="input-field col s6 l4">
-                  <i class="small material-icons prefix">attach_money</i>
-                  <input type="number" class="input-numeral" min="0.00" step="0.01" name="netValue" id="netValue"
-                    value="{{order.netValue}}">
-                  <label for="netValue">Total Value:</label>
+                <div class="col s6 l4">
+                  <span class="grey-text">Total Value: </span>{{order.netValue}}
                 </div>
-                <div class="input-field col s12 l4">
-                  <select name="currency" id="currency">
-                    {{#select order.currency}} <option value="CAD">CAD</option>
-                    <option value="USD">USD</option>
-                    {{/select}}
-                  </select>
-                  <label for="currency">Currency:</label>
+                <div class="col s12 l4">
+                  <span class="grey-text">Currency: </span>{{order.currency}}
                 </div>
                 <div class="input-field col s12 l6">
                   <i class="small material-icons prefix">today</i>
@@ -72,15 +63,15 @@
                   <label for="vendorConfirmShip">Confirmed Ship Date:</label>
                 </div>
 
-                <div class="input-field col s12 l6">
+                <div class="input-field col s12 l4">
                   <input type="text" name="jbaPONum" id="jbaPONum" value="{{order.jbaPONum}}">
                   <label for="jbaPONum">JBA PO #:</label>
                 </div>
-                <div class="input-field col s12 l6">
+                <div class="input-field col s12 l4">
                   <input type="text" name="jbaGNRNum" id="jbaGNRNum" value="{{order.jbaGNRNum}}">
                   <label for="jbaGNRNum">JBA GNR #:</label>
                 </div>
-                <div class="input-field col s12 l6">
+                <div class="input-field col s12 l4">
                   <input type="text" name="jbaInvoiceNum" id="jbaInvoiceNum" value="{{order.jbaInvoiceNum}}">
                   <label for="jbaInvoiceNum">JBA Invoice #:</label>
                 </div>

@@ -31,7 +31,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     onTermPayment,
     kitOrderPayment,
     isrCollectedOrig,
-    isrCollectedCAD,
     isrPaymentDate,
     isrPaymentType,
     paymentNotes,
@@ -39,7 +38,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     invoiceSent
   } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
+  Order.findOne({ _id: id }, function (err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
@@ -48,7 +47,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.onTermPayment = onTermPayment;
       foundOrder.kitOrderPayment = kitOrderPayment;
       foundOrder.isrCollectedOrig = isrCollectedOrig;
-      foundOrder.isrCollectedCAD = isrCollectedCAD;
       foundOrder.isrPaymentDate = isrPaymentDate;
       foundOrder.isrPaymentType = isrPaymentType;
       foundOrder.paymentNotes = paymentNotes;
@@ -72,7 +70,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
       }
 
-      foundOrder.save(function(err, updatedOrder) {
+      foundOrder.save(function (err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;

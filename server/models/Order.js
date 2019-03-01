@@ -412,6 +412,10 @@ const OrderSchema = new Schema({
         type: Number,
         default: null
       },
+      lineItemsQty: {
+        type: Number,
+        default: null
+      },
       items: [
         {
           itemNumber: {
@@ -523,6 +527,10 @@ const OrderSchema = new Schema({
             default: 0
           },
           unitPrice: {
+            type: Number,
+            default: 0
+          },
+          unitCost: {
             type: Number,
             default: 0
           },

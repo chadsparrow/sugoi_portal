@@ -102,29 +102,27 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  CustomRep.find().then(customReps => {
-    const orderNum = "";
-    const accountNum = "";
-    const priority = "";
-    const currentStatus = "";
-    const eventDate = null;
-    const latestInHand = null;
-    const isr = "";
-    const instruction = "";
-    const vendor = "";
-    res.render("orders/add", {
-      orderNum,
-      accountNum,
-      priority,
-      currentStatus,
-      eventDate,
-      latestInHand,
-      isr,
-      instruction,
-      vendor,
-      customReps
+  Order.findOne({})
+    .sort('-orderNum')
+    .exec((err, order) => {
+      CustomRep.find().then(customReps => {
+        const orderNum = (parseInt(order.orderNum) + 1).toString();
+        const priority = "";
+        const currentStatus = "";
+        const isr = "";
+        const instruction = "";
+        const vendor = "";
+        res.render("orders/add", {
+          orderNum,
+          priority,
+          currentStatus,
+          isr,
+          instruction,
+          vendor,
+          customReps
+        });
+      }).catch(err => logger.error(err));
     });
-  }).catch(err => logger.error(err));
 });
 
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE FIELDS
@@ -132,12 +130,8 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let {
     orderNum,
-    accountNum,
     priority,
-    eventDate,
-    latestInHand,
     isr,
-    client,
     instruction,
     vendor
   } = req.body;
@@ -163,12 +157,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       const newOrder = new Order({
         orderNum,
-        accountNum,
         priority,
-        eventDate,
-        latestInHand,
         isr,
-        client,
         instructions,
         vendor,
         proofRequestDate
@@ -227,18 +217,10 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let id = req.params.id;
   let {
-    client,
     priority,
     currentArtist,
     currentStatus,
-    eventDate,
-    latestInHand,
     vendor,
-    qty,
-    netValue,
-    currency,
-    latestShipDate,
-    accountNum
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -246,8 +228,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       return logger.error(err);
     } else {
       foundOrder.currentArtist = currentArtist;
-      foundOrder.client = client;
-      foundOrder.accountNum = accountNum
       foundOrder.priority = priority;
 
       foundOrder.currentStatus = currentStatus;
@@ -482,26 +462,17 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
       }
 
-      foundOrder.eventDate = eventDate;
-      foundOrder.latestInHand = latestInHand;
       foundOrder.vendor = vendor;
-      foundOrder.qty = qty;
-      foundOrder.netValue = netValue;
-      if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
-        if (foundOrder.netValue > 0) {
-          foundOrder.balanceOutstanding = netValue;
+
+      if (foundOrder.balanceOutstanding != null && foundOrder.balanceOutstanding != undefined) {
+        if (foundOrder.balanceOutstanding > 0) {
           foundOrder.paymentStatus = "Balance Outstanding";
-        } else if (foundOrder.netValue < 0) {
-          foundOrder.balanceOutstanding = netValue;
+        } else if (foundOrder.balanceOutstanding < 0) {
           foundOrder.paymentStatus = "Refund Customer";
-        } else if (foundOrder.netValue == 0) {
-          foundOrder.balanceOutstanding = netValue;
+        } else if (foundOrder.balanceOutstanding == 0) {
           foundOrder.paymentStatus = "Complete";
         }
       }
-
-      foundOrder.currency = currency;
-      foundOrder.latestShipDate = latestShipDate;
 
       foundOrder.save(function (err, updatedOrder) {
         if (err) {

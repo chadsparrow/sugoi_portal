@@ -105,9 +105,6 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
   const id = req.params.id;
   const {
-    qty,
-    netValue,
-    currency,
     latestShipDate,
     vendorConfirmShip,
     jbaPONum,
@@ -123,19 +120,13 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       logger.error(err);
       return;
     } else {
-      foundOrder.qty = qty;
-      foundOrder.netValue = netValue;
-      if (foundOrder.netValue > 0) {
-        foundOrder.balanceOutstanding = netValue;
+      if (foundOrder.balanceOutstanding > 0) {
         foundOrder.paymentStatus = "Balance Outstanding";
-      } else if (foundOrder.netValue < 0) {
-        foundOrder.balanceOutstanding = netValue;
+      } else if (foundOrder.balanceOutstanding < 0) {
         foundOrder.paymentStatus = "Refund Customer";
-      } else if (foundOrder.netValue == 0) {
-        foundOrder.balanceOutstanding = netValue;
+      } else if (foundOrder.balanceOutstanding == 0) {
         foundOrder.paymentStatus = "Complete";
       }
-      foundOrder.currency = currency;
       if (latestShipDate) {
         foundOrder.latestShipDate = latestShipDate;
       }

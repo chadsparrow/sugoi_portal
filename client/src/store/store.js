@@ -359,10 +359,30 @@ export const store = new Vuex.Store({
       const priceBreak = state.order.orderLines[lineIndex].priceBreak;
       const currentConfig = state.styles[selectedStyle].configurations[selectedConfig];
       let unitPrice = state.order.orderLines[lineIndex].items[itemIndex].unitPrice;
+      let unitCost = state.order.orderLines[lineIndex].items[itemIndex].unitCost;
+      const totalUnits = state.order.orderLines[lineIndex].items[itemIndex].totalUnits;
+      const vendor = state.order.vendor;
+
+      if (vendor === "CCN") {
+        unitCost = currentConfig.costUSD[0];
+      } else if (vendor === "PNR") {
+        if (totalUnits >= 6 && totalUnits <= 11) {
+          unitCost = currentConfig.costUSD[0];
+        } else if (totalUnits >= 12 && totalUnits <= 23) {
+          unitCost = currentConfig.costUSD[1];
+        } else if (totalUnits >= 24 && totalUnits <= 49) {
+          unitCost = currentConfig.costUSD[2];
+        } else if (totalUnits >= 50 && totalUnits <= 99) {
+          unitCost = currentConfig.costUSD[3];
+        } else if (totalUnits >= 100 && totalUnits <= 300) {
+          unitCost = currentConfig.costUSD[4];
+        }
+      }
 
       if (currency === "CAD" && selectedConfig > -1) {
         if (priceBreak === 1) {
           unitPrice = currentConfig.cad1;
+
         } else if (priceBreak === 6) {
           unitPrice = currentConfig.cad6;
         } else if (priceBreak === 12) {
@@ -398,13 +418,16 @@ export const store = new Vuex.Store({
         }
       }
       state.order.orderLines[lineIndex].items[itemIndex].unitPrice = unitPrice;
+      state.order.orderLines[lineIndex].items[itemIndex].unitCost = unitCost;
     },
     SET_ORDER_TOTALS: (state) => {
       state.order.beforeTaxes = 0;
+      state.order.qty = 0;
       const orderLines = state.order.orderLines;
       for (let orderLine of orderLines) {
         if (!orderLine.cancelled) {
           state.order.beforeTaxes += orderLine.itemsSubTotal;
+          state.order.qty += orderLine.lineItemsQty;
         }
       }
       state.order.beforeTaxes += state.order.multiShips * 15;
@@ -441,16 +464,18 @@ export const store = new Vuex.Store({
       const totalAddOns = orderLine.totalAddOns;
 
       let itemsTotal = 0;
+      let itemsQty = 0;
       for (let item of items) {
         if (!item.cancelled) {
           itemsTotal += item.itemTotalPrice;
+          itemsQty += item.totalUnits;
         }
       }
 
       if (totalAddOns > 0) {
         itemsTotal += totalAddOns;
       }
-
+      state.order.orderLines[lineIndex].lineItemsQty = itemsQty;
       state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
     },
     CANCEL_LINE: (state, lineIndex) => {

@@ -55,20 +55,21 @@
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class='center-align'>
           <span>
+            <a class="blue-text" href="http://localhost:8080/{{orderNum}}" target="_blank">
+              <i class="material-icons">description</i>
+            </a>
+          </span>
+          <span>
             <a class="black-text" href="/orders/view/{{_id}}">
-              <i class="tiny material-icons">remove_red_eye</i>
+              <i class="material-icons">remove_red_eye</i>
             </a>
           </span>
           <span>
             <a class="green-text" href="/orders/edit/{{_id}}">
-              <i class="tiny material-icons">edit</i>
+              <i class="material-icons">edit</i>
             </a>
           </span>
-          <span>
-            <a class="blue-text" href="http://localhost:8080/{{orderNum}}" target="_blank">
-              <i class="tiny material-icons">description</i>
-            </a>
-          </span>
+
         </td>
       </tr>
       {{/each}}

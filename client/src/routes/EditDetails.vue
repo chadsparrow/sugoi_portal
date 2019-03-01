@@ -82,7 +82,6 @@
               class="form-control form-control-sm capitalized"
               id="client"
               v-model.trim="order.client"
-              readonly
               ref="client"
             >
           </div>
@@ -124,6 +123,17 @@
               id="shipToCity"
               v-model.trim="order.shipToCity"
               ref="shipToCity"
+            >
+          </div>
+          <div class="form-group mb-1 col-sm-6">
+            <label for="shipToCountry" class="small my-0">Country</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="shipToCountry"
+              v-model.trim.lazy="order.shipToCountry"
+              @change="setCountryUpper"
+              ref="shipToCountry"
             >
           </div>
           <div
@@ -173,18 +183,6 @@
               v-model.trim="order.shipToProvState"
               @change="setTaxOther(0)"
               ref="provincestate"
-            >
-          </div>
-
-          <div class="form-group mb-1 col-sm-6">
-            <label for="shipToCountry" class="small my-0">Country</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="shipToCountry"
-              v-model.trim.lazy="order.shipToCountry"
-              @change="setCountryUpper"
-              ref="shipToCountry"
             >
           </div>
 
