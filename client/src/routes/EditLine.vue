@@ -147,9 +147,6 @@ export default {
       selectedOption: ""
     };
   },
-  created() {
-    this.$store.dispatch("getGraphicCodes");
-  },
   computed: {
     order() {
       return this.$store.state.order;

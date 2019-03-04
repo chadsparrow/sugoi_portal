@@ -307,11 +307,6 @@ export default {
   components: {
     DatePicker
   },
-  created() {
-    this.$store.dispatch("getReps");
-    this.$store.dispatch("getProvincialTaxes");
-    this.$store.dispatch("getUSAStates");
-  },
   computed: {
     order() {
       return this.$store.state.order;
