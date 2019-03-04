@@ -14,6 +14,7 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
+const { ensureAuthenticated } = require("./helpers/auth");
 
 const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 //const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
@@ -22,13 +23,13 @@ let credentials = { key: privateKey, cert: certificate };
 
 
 const express = require("express");
-//const history = require('connect-history-api-fallback');
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
 const DateDiff = require("date-diff");
 
 // initializes the app using express
 const app = express();
+
 //initialize helmet security
 app.use(helmet());
 
@@ -114,6 +115,7 @@ app.engine(
     defaultLayout: "main"
   })
 );
+
 //sets the handlebars engine
 app.set("view engine", "handlebars");
 
@@ -221,7 +223,9 @@ app.use("/api/provTax", provTaxRoutes);
 app.use("/api/states", stateRoutes);
 app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
-app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+
+//Vue.js front-end router
+app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
 
 // if the req doesnt match any route above, set an error
