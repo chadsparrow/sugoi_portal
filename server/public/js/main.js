@@ -222,7 +222,7 @@ $(document).ready(function () {
     ],
     scrollX: true,
     scrollCollapse: true,
-    pageLength: 15,
+    pageLength: -1,
     order: [[0, "asc"]],
     oLanguage: {
       sSearch: "Search",
@@ -279,7 +279,7 @@ $(document).ready(function () {
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "Pending Delivery",
+        text: "Shipped",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/pending");
         },
