@@ -173,8 +173,8 @@ export const store = new Vuex.Store({
       dispatch('setAddOns', lineIndex);
       dispatch('updateAllLines');
     },
-    setHeaderTitle: ({ commit, dispatch }, quoteToggle) => {
-      commit("SET_HEADER_TITLE", quoteToggle);
+    setHeaderTitle: ({ commit, dispatch }) => {
+      commit("SET_HEADER_TITLE");
       dispatch('saveOrder');
     }
   },
@@ -504,7 +504,7 @@ export const store = new Vuex.Store({
       state.order.orderLines[lineIndex].items[itemIndex].cancelled = true;
     },
     SET_HEADER_TITLE: (state, quoteToggle) => {
-      state.order.quoteToggle = quoteToggle;
+      state.order.quoteToggle = !state.order.quoteToggle;
     }
   },
   getters: {
