@@ -190,7 +190,7 @@
             <label for="shipToPostalZip" class="small my-0">Zip/Postal</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-control form-control-sm uppercase"
               id="shipToPostalZip"
               v-model.trim="order.shipToPostalZip"
               ref="shipToPostalZip"
@@ -431,6 +431,10 @@ export default {
 <style scoped>
 .capitalized {
   text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 </style>
 

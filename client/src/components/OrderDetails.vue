@@ -87,7 +87,7 @@
             </li>
             <li class="list-group-item">
               Zip/Postal:
-              <span>{{order.shipToPostalZip}}</span>
+              <span class="postal">{{order.shipToPostalZip}}</span>
             </li>
             <li class="list-group-item">
               Email:
@@ -126,7 +126,7 @@
             <span>${{formatPrice(order.beforeTaxes)}}</span>
           </li>
           <li v-if="order.taxes" class="list-group-item" style="border-bottom:none;">
-            Taxes: {{order.taxes}}% -
+            Taxes: {{order.taxes}}% /
             <span>${{formatPrice(order.taxAmount)}}</span>
           </li>
         </ul>
@@ -195,6 +195,10 @@ span {
   font-weight: bold;
   font-size: 14px;
   text-transform: capitalize;
+}
+
+span.postal {
+  text-transform: uppercase;
 }
 
 .card {

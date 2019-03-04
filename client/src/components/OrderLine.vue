@@ -10,53 +10,49 @@
     </div>
     <div class="card-body m-0 p-1">
       <div class="row">
-        <!-- LEFT SECTION -->
-        <div class="col-sm-9 border-right">
-          <div class="row p-2">
-            <div class="col">
-              Job Type:
-              <span>{{orderLine.lineJobType}}</span>
-            </div>
-            <div class="col" v-if="orderLine.swoReference">
-              SO.Ref#:
-              <span>{{orderLine.swoReference}}</span>
-            </div>
-            <div class="col">
-              Price Break:
-              <span>{{orderLine.priceBreak}} units</span>
-            </div>
-            <div class="col">
-              Graphic:
-              <span>{{orderLine.graphicCode}}</span>
-            </div>
-            <div class="col" v-if="orderLine.colourWayCode">
-              ColourWay:
-              <span>{{orderLine.colourWayCode}}</span>
-            </div>
+        <div class="row p-2">
+          <div class="col">
+            Job Type:
+            <span>{{orderLine.lineJobType}}</span>
+          </div>
+          <div class="col" v-if="orderLine.swoReference">
+            SO.Ref#:
+            <span>{{orderLine.swoReference}}</span>
+          </div>
+          <div class="col">
+            Price Break:
+            <span>{{orderLine.priceBreak}} units</span>
+          </div>
+          <div class="col">
+            Graphic:
+            <span>{{orderLine.graphicCode}}</span>
+          </div>
+          <div class="col" v-if="orderLine.colourWayCode">
+            ColourWay:
+            <span>{{orderLine.colourWayCode}}</span>
           </div>
         </div>
-        <!-- RIGHT SECTION -->
-        <div class="col-sm-3 border-left m-0">
+        <div class="col-sm-12 border-left m-0">
           <div class="mb-2 col-sm-12 bg-dark text-white text-center rounded">Line Add-Ons</div>
-          <div v-if="orderLine.tracingCharge" class="mb-2 col-sm-12">
+          <div v-if="orderLine.tracingCharge" class="mb-2 col-sm-3">
             Tracing:
             <span
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.tracingCharge)}}</span>
           </div>
-          <div v-if="orderLine.creativeCharge" class="mb-2 col-sm-12">
+          <div v-if="orderLine.creativeCharge" class="mb-2 col-sm-3">
             Creative:
             <span
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.creativeCharge)}}</span>
           </div>
-          <div v-if="orderLine.scaledArtCharge" class="mb-2 col-sm-12">
+          <div v-if="orderLine.scaledArtCharge" class="mb-2 col-sm-3">
             Scaled Art:
             <span
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.scaledArtCharge)}}</span>
           </div>
-          <div v-if="orderLine.colourWashCharge" class="mb-2 col-sm-12">
+          <div v-if="orderLine.colourWashCharge" class="mb-2 col-sm-3">
             Colour Wash Charge:
             <span
               class="float-right badge badge-dark text-light"
