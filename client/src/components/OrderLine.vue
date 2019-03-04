@@ -9,7 +9,7 @@
       <span class="float-right">Details</span>
     </div>
     <div class="card-body m-0 p-1">
-      <div class="row">
+      <div class="row m-0">
         <div class="col">
           Job Type:
           <span>{{orderLine.lineJobType}}</span>
