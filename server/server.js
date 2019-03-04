@@ -23,7 +23,7 @@ let credentials = { key: privateKey, cert: certificate };
 
 
 const express = require("express");
-const history = require('connect-history-api-fallback');
+//const history = require('connect-history-api-fallback');
 const logger = require("./helpers/logs");
 const moment = require("moment-timezone");
 const DateDiff = require("date-diff");
@@ -222,13 +222,6 @@ app.use("/api/provTax", provTaxRoutes);
 app.use("/api/states", stateRoutes);
 app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
-app.use(history());
-// Set static folder
-app.use(
-  express.static(path.join(__dirname, "public"), {
-    maxage: "2m"
-  })
-);
 app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
 
