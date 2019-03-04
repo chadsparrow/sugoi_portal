@@ -15,42 +15,10 @@ const OrderSchema = new Schema({
   },
   currentStatus: {
     type: String,
-    enum: [
-      "1. Initial",
-      "A. Waiting for Proof",
-      "B. Proof Started",
-      "C. Proof - Waiting on Someone else",
-      "D. Proof Ready for QC",
-      "D-1. Proof QC in Progress",
-      "E. Proof QC Complete",
-      "F. Proof Complete",
-      "G. Waiting for Revision",
-      "H. Revision - Waiting on Someone else",
-      "I. Revision Started",
-      "J. Revision Ready for QC",
-      "J-1. Revision QC in Progress",
-      "K. Revision QC Complete",
-      "L. Revision Complete",
-      "M. Waiting for Output",
-      "N. Output - Waiting on Someone else",
-      "O. Output Started",
-      "P. Output Ready for QC",
-      "P-1. Output QC in Progress",
-      "Q. Output QC Complete",
-      "R. Waiting for PNT",
-      "S. PNT Ready for QC",
-      "S-1. PNT QC in Progress",
-      "T. PNT QC Complete",
-      "U. Uploaded",
-      "V. Sent to Vendor",
-      "W. CANCELLED",
-      "X. Archived"
-    ],
     default: "1. Initial"
   },
   priority: {
     type: String,
-    enum: ["", "VIP", "RUSH"],
     uppercase: true
   },
   enteredDate: {
@@ -108,7 +76,6 @@ const OrderSchema = new Schema({
   vendor: {
     type: String,
     uppercase: true,
-    enum: ["CCN", "PNR", "MEX", ""]
   },
   sentVendor: {
     type: Date,
@@ -120,11 +87,12 @@ const OrderSchema = new Schema({
   },
   netValue: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   currency: {
     type: String,
-    enum: ["", "CAD", "USD"],
     uppercase: true
   },
   latestShipDate: {
@@ -205,23 +173,33 @@ const OrderSchema = new Schema({
   },
   onTermPayment: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   kitOrderPayment: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   isrCollectedOrig: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   isrCollectedCAD: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   isrRefunded: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   isrPaymentDate: {
     type: Date,
@@ -237,7 +215,9 @@ const OrderSchema = new Schema({
   },
   balanceOutstanding: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   paymentStatus: {
     type: String,
@@ -325,15 +305,21 @@ const OrderSchema = new Schema({
   },
   deposit: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   beforeTaxes: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   taxAmount: {
     type: Number,
-    default: null
+    default: null,
+    get: v => v.toFixed(2),
+    set: v => v.toFixed(2)
   },
   taxes: {
     type: Number,
@@ -378,23 +364,33 @@ const OrderSchema = new Schema({
       },
       tracingCharge: {
         type: Number,
-        default: null
+        default: null,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
       },
       colourWashCharge: {
         type: Number,
-        default: null
+        default: null,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
       },
       creativeCharge: {
         type: Number,
-        default: null
+        default: null,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
       },
       scaledArtCharge: {
         type: Number,
-        default: null
+        default: null,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
       },
       itemsSubTotal: {
         type: Number,
-        default: null
+        default: null,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
       },
       cancelled: {
         type: Boolean,
@@ -410,7 +406,9 @@ const OrderSchema = new Schema({
       },
       totalAddOns: {
         type: Number,
-        default: null
+        default: null,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
       },
       lineItemsQty: {
         type: Number,
@@ -528,15 +526,21 @@ const OrderSchema = new Schema({
           },
           unitPrice: {
             type: Number,
-            default: 0
+            default: 0,
+            get: v => v.toFixed(2),
+            set: v => v.toFixed(2)
           },
           unitCost: {
             type: Number,
-            default: 0
+            default: 0,
+            get: v => v.toFixed(2),
+            set: v => v.toFixed(2)
           },
           addOns: {
             type: Number,
-            default: 0
+            default: 0,
+            get: v => v.toFixed(2),
+            set: v => v.toFixed(2)
           },
           itemDiscount: {
             type: Number,
@@ -544,11 +548,15 @@ const OrderSchema = new Schema({
           },
           finalUnitPrice: {
             type: Number,
-            default: 0
+            default: 0,
+            get: v => v.toFixed(2),
+            set: v => v.toFixed(2)
           },
           itemTotalPrice: {
             type: Number,
-            default: 0
+            default: 0,
+            get: v => v.toFixed(2),
+            set: v => v.toFixed(2)
           },
           cancelled: {
             type: Boolean,

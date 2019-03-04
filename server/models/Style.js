@@ -38,22 +38,86 @@ const StyleSchema = new Schema({
         type: String,
         uppercase: true
       },
-      usd1: Number,
-      usd6: Number,
-      usd12: Number,
-      usd24: Number,
-      usd50: Number,
-      usd100: Number,
-      usd200: Number,
-      usd500: Number,
-      cad1: Number,
-      cad6: Number,
-      cad12: Number,
-      cad24: Number,
-      cad50: Number,
-      cad100: Number,
-      cad200: Number,
-      cad500: Number,
+      usd1: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd6: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd12: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd24: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd50: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd100: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd200: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      usd500: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad1: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad6: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad12: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad24: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad50: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad100: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad200: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
+      cad500: {
+        type: Number,
+        get: v => v.toFixed(2),
+        set: v => v.toFixed(2)
+      },
       minUnits: Number,
       usdTariff: String,
       cadTariff: String,
