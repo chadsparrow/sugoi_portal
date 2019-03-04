@@ -40,6 +40,7 @@ app.use(cors());
 app.enable('trust proxy');
 
 // Load Routes
+const indexRoutes = require("./routes/index");
 const userRoutes = require("./routes/users");
 const styleRoutes = require("./routes/styles");
 const orderRoutes = require("./routes/orders");
@@ -210,6 +211,7 @@ var cronJob = cron.job("0 * * * *", function () {
 cronJob.start();
 
 // Use Routes from above
+app.use("/", indexRoutes);
 app.use("/users", userRoutes);
 app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
@@ -225,7 +227,7 @@ app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
 
 //Vue.js front-end router
-app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+app.get(/.*\S.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
 
 // if the req doesnt match any route above, set an error
