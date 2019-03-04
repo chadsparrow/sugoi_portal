@@ -14,9 +14,7 @@ const ProvTaxSchema = new Schema({
     },
     tax: {
         type: Number,
-        required: true,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        required: true
     }
 });
 

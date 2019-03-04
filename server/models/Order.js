@@ -55,7 +55,6 @@ const OrderSchema = new Schema({
       },
       instructionType: {
         type: String,
-        enum: ["Initial", "Revision", "Note", "System"],
       },
       user: {
         type: String,
@@ -87,9 +86,7 @@ const OrderSchema = new Schema({
   },
   netValue: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   currency: {
     type: String,
@@ -173,33 +170,23 @@ const OrderSchema = new Schema({
   },
   onTermPayment: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   kitOrderPayment: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   isrCollectedOrig: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   isrCollectedCAD: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   isrRefunded: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   isrPaymentDate: {
     type: Date,
@@ -215,9 +202,7 @@ const OrderSchema = new Schema({
   },
   balanceOutstanding: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   paymentStatus: {
     type: String,
@@ -305,21 +290,15 @@ const OrderSchema = new Schema({
   },
   deposit: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   beforeTaxes: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   taxAmount: {
     type: Number,
-    default: null,
-    get: v => v.toFixed(2),
-    set: v => v.toFixed(2)
+    default: null
   },
   taxes: {
     type: Number,
@@ -364,33 +343,23 @@ const OrderSchema = new Schema({
       },
       tracingCharge: {
         type: Number,
-        default: null,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        default: null
       },
       colourWashCharge: {
         type: Number,
-        default: null,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        default: null
       },
       creativeCharge: {
         type: Number,
-        default: null,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        default: null
       },
       scaledArtCharge: {
         type: Number,
-        default: null,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        default: null
       },
       itemsSubTotal: {
         type: Number,
-        default: null,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        default: null
       },
       cancelled: {
         type: Boolean,
@@ -406,9 +375,7 @@ const OrderSchema = new Schema({
       },
       totalAddOns: {
         type: Number,
-        default: null,
-        get: v => v.toFixed(2),
-        set: v => v.toFixed(2)
+        default: null
       },
       lineItemsQty: {
         type: Number,
@@ -526,21 +493,15 @@ const OrderSchema = new Schema({
           },
           unitPrice: {
             type: Number,
-            default: 0,
-            get: v => v.toFixed(2),
-            set: v => v.toFixed(2)
+            default: 0
           },
           unitCost: {
             type: Number,
-            default: 0,
-            get: v => v.toFixed(2),
-            set: v => v.toFixed(2)
+            default: 0
           },
           addOns: {
             type: Number,
-            default: 0,
-            get: v => v.toFixed(2),
-            set: v => v.toFixed(2)
+            default: 0
           },
           itemDiscount: {
             type: Number,
@@ -548,15 +509,11 @@ const OrderSchema = new Schema({
           },
           finalUnitPrice: {
             type: Number,
-            default: 0,
-            get: v => v.toFixed(2),
-            set: v => v.toFixed(2)
+            default: 0
           },
           itemTotalPrice: {
             type: Number,
-            default: 0,
-            get: v => v.toFixed(2),
-            set: v => v.toFixed(2)
+            default: 0
           },
           cancelled: {
             type: Boolean,
