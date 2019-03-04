@@ -160,7 +160,7 @@ export default {
         this.orderLine.graphicCode === "CUSTM" ||
         this.orderLine.graphicCode === null
       ) {
-        return (0).toFixed(2);
+        return 0;
       } else {
         return this.subTotal * 0.1;
       }
@@ -175,7 +175,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     goToEdit() {
-      this.$router.push({ path: `edititem/${this.lineIndex}/${this.index}` });
+      this.$router.push({ path: `/edititem/${this.lineIndex}/${this.index}` });
     },
     cancelItem() {
       let checkdelete = confirm("Are you sure?");

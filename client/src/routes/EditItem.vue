@@ -368,7 +368,7 @@ export default {
     unitPrice() {
       return this.$store.state.order.orderLines[this.lineIndex].items[
         this.itemIndex
-      ].unitPrice.toFixed(2);
+      ].unitPrice;
     },
     discountAmount() {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
