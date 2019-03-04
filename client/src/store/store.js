@@ -34,7 +34,7 @@ export const store = new Vuex.Store({
     },
     getReps: ({ commit }) => {
       axios
-        .get(`/api/reps`)
+        .get(`/api/reps/`)
         .then(r => r.data)
         .then(reps => {
           commit("SET_REPS", reps);
@@ -42,7 +42,7 @@ export const store = new Vuex.Store({
     },
     getProvincialTaxes: ({ commit }) => {
       axios
-        .get(`/api/provTax`)
+        .get(`/api/provTax/`)
         .then(r => r.data)
         .then(provTax => {
           commit("SET_PROVINCIAL_TAXES", provTax);
@@ -50,7 +50,7 @@ export const store = new Vuex.Store({
     },
     getUSAStates: ({ commit }) => {
       axios
-        .get(`/api/states`)
+        .get(`/api/states/`)
         .then(r => r.data)
         .then(states => {
           commit("SET_USA_STATES", states);
@@ -66,7 +66,7 @@ export const store = new Vuex.Store({
     },
     getGraphicCodes: ({ commit }) => {
       axios
-        .get(`/api/graphicCodes`)
+        .get(`/api/graphicCodes/`)
         .then(r => r.data)
         .then(graphicCodes => {
           commit("SET_GRAPHIC_CODES", graphicCodes);
