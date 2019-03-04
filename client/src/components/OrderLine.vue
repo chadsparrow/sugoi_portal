@@ -9,7 +9,7 @@
       <span class="float-right">Details</span>
     </div>
     <div class="card-body m-0 p-1">
-      <div class="row m-0">
+      <div class="row m-0 mb-3">
         <div class="col">
           Job Type:
           <span>{{orderLine.lineJobType}}</span>
@@ -56,7 +56,7 @@
           >${{formatPrice(orderLine.colourWashCharge)}}</span>
         </div>
       </div>
-      <div class="text-center">
+      <div class="text-center mt-2">
         <button
           type="button"
           class="btn btn-sm btn-success d-print-none"
