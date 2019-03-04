@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="custom-control custom-switch d-print-none">
-      <input type="checkbox" class="custom-control-input" id="customSwitches" v-model="quoteToggle">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="customSwitches"
+        v-model="quoteToggle"
+        @change="setHeaderTitle"
+      >
       <label class="custom-control-label" for="customSwitches">Quote</label>
     </div>
     <img class="float-right" src="../../public/images/sugoi_sombrio-customlogo_black.png">
@@ -12,14 +18,17 @@
 <script>
 export default {
   name: "Header",
-  data() {
-    return {
-      quoteToggle: true
-    };
-  },
   computed: {
     headerTitle() {
       return this.quoteToggle ? "Initial Quote" : "Order Confirmation";
+    },
+    quoteToggle() {
+      return this.$store.orders.quoteToggle;
+    }
+  },
+  methods: {
+    setHeaderTitle() {
+      this.$store.dispatch("setHeaderTitle", this.quoteToggle);
     }
   }
 };

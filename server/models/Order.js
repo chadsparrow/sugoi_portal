@@ -13,6 +13,10 @@ const OrderSchema = new Schema({
     default: null,
     uppercase: true
   },
+  quoteToggle: {
+    type: Boolean,
+    default: true
+  },
   currentStatus: {
     type: String,
     default: "1. Initial"
