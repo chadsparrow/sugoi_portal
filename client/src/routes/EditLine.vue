@@ -121,7 +121,6 @@
               id="colourWashCharge"
               v-model.number="orderLine.colourWashCharge"
               min="0"
-              step="10"
             >
           </div>
         </div>

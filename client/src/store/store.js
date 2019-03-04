@@ -427,9 +427,9 @@ export const store = new Vuex.Store({
           state.order.qty += orderLine.lineItemsQty;
         }
       }
-      state.order.beforeTaxes += state.order.multiShips * 15;
-      state.order.beforeTaxes += state.order.prePacks * 5;
-      state.order.taxAmount = state.order.beforeTaxes * (state.order.taxes / 100);
+      state.order.beforeTaxes += (state.order.multiShips * 15);
+      state.order.beforeTaxes += (state.order.prePacks * 5);
+      state.order.taxAmount = (state.order.beforeTaxes * (state.order.taxes / 100));
       state.order.netValue = (state.order.beforeTaxes + state.order.taxAmount);
       state.order.balanceOutstanding = (state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded);
       if (state.order.balanceOutstanding > 0) {
@@ -441,17 +441,22 @@ export const store = new Vuex.Store({
       }
     },
     SET_ADD_ONS: (state, lineIndex) => {
-      state.order.orderLines[lineIndex].totalAddOns = 0;
-      const items = state.order.orderLines[lineIndex].items;
-      for (let item of items) {
-        if (!item.cancelled) {
-          state.order.orderLines[lineIndex].totalAddOns += parseInt(item.addOns * item.totalUnits);
+      if (!state.order.orderLines[lineIndex].cancelled) {
+        let totalAddOns = 0
+        const items = state.order.orderLines[lineIndex].items;
+        for (let item of items) {
+          if (!item.cancelled) {
+            totalAddOns += (item.addOns * item.totalUnits);
+          }
         }
+        totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
+        totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
+        totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
+        totalAddOns += state.order.orderLines[lineIndex].colourWashCharge;
+
+        state.order.orderLines[lineIndex].totalAddOns = totalAddOns;
       }
-      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
-      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
-      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
-      state.order.orderLines[lineIndex].totalAddOns += state.order.orderLines[lineIndex].colourWashCharge;
+
     },
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
