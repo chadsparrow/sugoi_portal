@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const { ensureAuthenticated } = require("../helpers/auth");
 
 // User Login Form
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   res.render("users/login");
 });
 
