@@ -9,7 +9,7 @@ const Order = require("../../models/Order");
 
 // @DESC - GETS JSON DATA OF ALL ORDERS
 // SEC - MUST BE LOGGED IN
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   Order.find({}, { checkpoints: 0, instructions: 0 })
     .then(orders => {
       res.json(orders);
@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
 
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.get("/:orderNum", (req, res) => {
+router.get("/:orderNum", ensureAuthenticated, (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum }, { checkpoints: 0, instructions: 0 })
     .then(order => {
       res.json(order);
@@ -33,7 +33,7 @@ router.get("/:orderNum", (req, res) => {
 
 // @DESC - ADDS LINE TO ORDER BASED ON ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.put('/:orderNum/:lineNumber', (req, res) => {
+router.put('/:orderNum/:lineNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
       foundOrder.orderLines.push({ lineNumber: req.params.lineNumber });
@@ -51,7 +51,7 @@ router.put('/:orderNum/:lineNumber', (req, res) => {
 
 // @DESC - ADDS LINE TO ORDER BASED ON ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.put('/:orderNum/:lineNumber/:itemNumber', (req, res) => {
+router.put('/:orderNum/:lineNumber/:itemNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
       foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: req.params.itemNumber });
@@ -67,7 +67,7 @@ router.put('/:orderNum/:lineNumber/:itemNumber', (req, res) => {
     })
 });
 
-router.put("/:orderNum", (req, res) => {
+router.put("/:orderNum", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   const requestOrder = req.body;
   Order.findOneAndUpdate({ orderNum: req.params.orderNum }, requestOrder, { new: true, upsert: true })
     .then(order => {

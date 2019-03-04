@@ -7,7 +7,7 @@ const State = require("../../models/State");
 
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
     State.find()
         .sort({ state: 1 })
         .then(states => {

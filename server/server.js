@@ -14,7 +14,6 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-const { ensureAuthenticated, ensureEditOrders } = require("./helpers/auth");
 
 const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 //const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
@@ -122,7 +121,7 @@ app.set("view engine", "handlebars");
 require("./config/passport")(passport);
 
 //Body Parser middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Method Override
@@ -222,7 +221,7 @@ app.use("/api/provTax", provTaxRoutes);
 app.use("/api/states", stateRoutes);
 app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
-app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
 
 // if the req doesnt match any route above, set an error

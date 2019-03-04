@@ -7,7 +7,7 @@ const CustomRep = require("../../models/CustomRep");
 
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
     CustomRep.find()
         .then(reps => {
             res.json(reps);
