@@ -50,13 +50,13 @@
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.creativeCharge)}}</span>
           </div>
-          <div v-if="orderLine.scaledArtCharge" class="col-sm-12">
+          <div v-if="orderLine.scaledArtCharge" class="mb-2 col-sm-12">
             Scaled Art:
             <span
               class="float-right badge badge-dark text-light"
             >${{formatPrice(orderLine.scaledArtCharge)}}</span>
           </div>
-          <div v-if="orderLine.colourWashCharge" class="col-sm-12">
+          <div v-if="orderLine.colourWashCharge" class="mb-2 col-sm-12">
             Colour Wash Charge:
             <span
               class="float-right badge badge-dark text-light"
@@ -64,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div class="text-center mt-2">
+      <div class="text-center">
         <button
           type="button"
           class="btn btn-sm btn-success d-print-none"
