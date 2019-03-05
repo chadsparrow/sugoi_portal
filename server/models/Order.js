@@ -19,7 +19,11 @@ const OrderSchema = new Schema({
   },
   currentStatus: {
     type: String,
+<<<<<<< HEAD
     default: "1. Initial"
+=======
+    default: "A. Waiting for Proof"
+>>>>>>> master
   },
   priority: {
     type: String,
@@ -27,7 +31,7 @@ const OrderSchema = new Schema({
   },
   enteredDate: {
     type: Date,
-    default: moment().format()
+    default: moment(Date.now()).format()
   },
   eventDate: {
     type: Date,
@@ -50,7 +54,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: moment().format()
+        default: moment(Date.now()).format()
       },
       instruction: {
         type: String,
