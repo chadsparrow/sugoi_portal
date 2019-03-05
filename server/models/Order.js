@@ -19,11 +19,7 @@ const OrderSchema = new Schema({
   },
   currentStatus: {
     type: String,
-<<<<<<< HEAD
     default: "1. Initial"
-=======
-    default: "A. Waiting for Proof"
->>>>>>> master
   },
   priority: {
     type: String,
