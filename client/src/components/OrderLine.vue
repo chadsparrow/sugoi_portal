@@ -32,28 +32,24 @@
         </div>
         <div class="my-2 col-sm-12 bg-dark text-white text-center rounded">Line Add-Ons</div>
         <div v-if="orderLine.tracingCharge" class="col-sm-3 text-center">
-          Tracing:
           <span
             class="badge badge-dark text-light"
-          >${{formatPrice(orderLine.tracingCharge)}}</span>
+          >Tracing: ${{formatPrice(orderLine.tracingCharge)}}</span>
         </div>
         <div v-if="orderLine.creativeCharge" class="col-sm-3 text-center">
-          Creative:
           <span
             class="badge badge-dark text-light"
-          >${{formatPrice(orderLine.creativeCharge)}}</span>
+          >Creative: ${{formatPrice(orderLine.creativeCharge)}}</span>
         </div>
         <div v-if="orderLine.scaledArtCharge" class="col-sm-3 text-center">
-          Scaled Art:
           <span
             class="badge badge-dark text-light"
-          >${{formatPrice(orderLine.scaledArtCharge)}}</span>
+          >Scaled Art: ${{formatPrice(orderLine.scaledArtCharge)}}</span>
         </div>
         <div v-if="orderLine.colourWashCharge" class="col-sm-3 text-center">
-          Colour Wash Charge:
           <span
             class="badge badge-dark text-light"
-          >${{formatPrice(orderLine.colourWashCharge)}}</span>
+          >Colour Wash: ${{formatPrice(orderLine.colourWashCharge)}}</span>
         </div>
       </div>
       <div class="text-center mt-2">
