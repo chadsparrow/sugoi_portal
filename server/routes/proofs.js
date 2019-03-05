@@ -228,7 +228,7 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: moment().format(),
+      noteDate: moment(Date.now()).format(),
       noteUser: noteUser,
       note: note
     };

@@ -15,47 +15,15 @@ const OrderSchema = new Schema({
   },
   currentStatus: {
     type: String,
-    enum: [
-      "1. Initial",
-      "A. Waiting for Proof",
-      "B. Proof Started",
-      "C. Proof - Waiting on Someone else",
-      "D. Proof Ready for QC",
-      "D-1. Proof QC in Progress",
-      "E. Proof QC Complete",
-      "F. Proof Complete",
-      "G. Waiting for Revision",
-      "H. Revision - Waiting on Someone else",
-      "I. Revision Started",
-      "J. Revision Ready for QC",
-      "J-1. Revision QC in Progress",
-      "K. Revision QC Complete",
-      "L. Revision Complete",
-      "M. Waiting for Output",
-      "N. Output - Waiting on Someone else",
-      "O. Output Started",
-      "P. Output Ready for QC",
-      "P-1. Output QC in Progress",
-      "Q. Output QC Complete",
-      "R. Waiting for PNT",
-      "S. PNT Ready for QC",
-      "S-1. PNT QC in Progress",
-      "T. PNT QC Complete",
-      "U. Uploaded",
-      "V. Sent to Vendor",
-      "W. CANCELLED",
-      "X. Archived"
-    ],
     default: "A. Waiting for Proof"
   },
   priority: {
     type: String,
-    enum: ["", "VIP", "RUSH"],
     uppercase: true
   },
   enteredDate: {
     type: Date,
-    default: moment().format()
+    default: moment(Date.now).format()
   },
   eventDate: {
     type: Date,
@@ -78,7 +46,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: moment().format()
+        default: moment(Date.now).format()
       },
       instruction: {
         type: String,
@@ -87,7 +55,6 @@ const OrderSchema = new Schema({
       },
       instructionType: {
         type: String,
-        enum: ["Initial", "Revision", "Note", "System"],
       },
       user: {
         type: String,
@@ -108,7 +75,6 @@ const OrderSchema = new Schema({
   vendor: {
     type: String,
     uppercase: true,
-    enum: ["CCN", "PNR", "MEX", ""]
   },
   sentVendor: {
     type: Date,
@@ -124,7 +90,6 @@ const OrderSchema = new Schema({
   },
   currency: {
     type: String,
-    enum: ["", "CAD", "USD"],
     uppercase: true
   },
   latestShipDate: {

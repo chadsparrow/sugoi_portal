@@ -6,7 +6,7 @@ const moment = require("moment-timezone");
 const Report = require("../models/Report");
 
 router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  const currentWeekNum = moment().format("W");
+  const currentWeekNum = moment(Date.now()).format("W");
   Report.find({})
     .sort({ reportWeekNumber: -1 })
     .then(reports => {
