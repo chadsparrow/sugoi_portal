@@ -27,6 +27,9 @@
     Dev - https://localhost:5000
 ---
 ## MVC - request routes:
+
+### *`/*` - secured - must be authenticated*
+* this route fowards all incoming requests not found in routes below to `Vue.js` frontend order confirmation
 ### *`/orders` - All routes secured - must be authenticated*
 * `GET /`  - fetches all from `orders` collection and displays in `index.handlebars` table.
 * `GET /initial` - fetches all from `orders` collection in `Initial` status and displays in `orders/index.handlebars` table.
