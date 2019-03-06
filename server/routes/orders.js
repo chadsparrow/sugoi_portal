@@ -26,6 +26,29 @@ router.get("/all", ensureAuthenticated, (req, res) => {
   });
 });
 
+router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
+  let pageTitle = `${req.params.orderNum} PO`;
+  let poDate = moment(Date.now()).format('MM/DD/YYYY');
+  let items = [];
+  Order.findOne({ orderNum: req.params.orderNum }).then(order => {
+    for (let orderLine of order.orderLines) {
+      if (!orderLine.cancelled) {
+        for (let item of orderLine.items) {
+          if (!item.cancelled) {
+            items.push(item);
+          }
+        }
+      }
+    }
+    res.render("orders/po", {
+      order,
+      pageTitle,
+      poDate,
+      items
+    });
+  });
+});
+
 // @DESC - GETS ALL IN PROGRESS ORDERS
 // SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {

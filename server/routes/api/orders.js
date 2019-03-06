@@ -49,12 +49,13 @@ router.put('/:orderNum/:lineNumber', [ensureAuthenticated, ensureEditOrders], (r
     })
 });
 
-// @DESC - ADDS LINE TO ORDER BASED ON ORDER NUMBER
+// @DESC - ADDS ITEM TO LINE BASED ON LINE NUMBER
 // SEC - MUST BE LOGGED IN
 router.put('/:orderNum/:lineNumber/:itemNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
-      foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: req.params.itemNumber });
+      let newItemNumber = `${foundOrder.orderNum}-${foundOrder.orderLines[req.params.lineNumber].lineNumber}-${req.params.itemNumber}`
+      foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: newItemNumber });
       foundOrder.save((err, savedOrder) => {
         if (err) {
           logger.error(err);

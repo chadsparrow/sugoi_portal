@@ -16,8 +16,8 @@ const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 const { ensureAuthenticated } = require("./helpers/auth");
 
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-//const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 let credentials = { key: privateKey, cert: certificate };
 
@@ -69,7 +69,8 @@ const {
   setPaymentStatus,
   setConfirmDeliveryStatus,
   setShipStatus,
-  checkForSignOff
+  checkForSignOff,
+  netAmount
 } = require("./helpers/hbs");
 
 // MongoDB Connection using .env in docker for credentials
@@ -111,7 +112,8 @@ app.engine(
       setPaymentStatus,
       setConfirmDeliveryStatus,
       setShipStatus,
-      checkForSignOff
+      checkForSignOff,
+      netAmount
     },
     defaultLayout: "main"
   })

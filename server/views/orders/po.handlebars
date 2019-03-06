@@ -1,0 +1,106 @@
+<div>
+    <h5 class='center-align'>{{pageTitle}}</h5>
+    <div style="margin: 20px 80px; overflow-x: auto; font-size: 12px;">
+        <table class='responsive-table'>
+            <tbody>
+                <tr>
+                    <td style="font-weight:bold;">SalesOrderNo</td>
+                    <td style="font-weight:bold;">PONumber</td>
+                    <td style="font-weight:bold;">PODate</td>
+                    <td style="font-weight:bold;">ReqDeliveryDate</td>
+                    <td style="font-weight:bold;">EventDate</td>
+                    <td style="font-weight:bold;">MustShipByDate</td>
+                    <td style="font-weight:bold;">JBA PO#</td>
+                </tr>
+                <tr>
+                    <td>{{order.orderNum}}</td>
+                    <td>{{order.orderNum}}</td>
+                    <td>{{poDate}}</td>
+                    <td>{{latestInHand}}</td>
+                    <td>{{eventDate}}</td>
+                    <td>{{latestShipDate}}</td>
+                    <td>{{jbaPONum}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">SoldToNumber</td>
+                    <td style="font-weight:bold;">ShipToNumber</td>
+                    <td style="font-weight:bold;">ShipToName</td>
+                    <td style="font-weight:bold;">contactPhone</td>
+                    <td style="font-weight:bold;">ShipToAddress</td>
+                    <td style="font-weight:bold;">ShipToCity</td>
+                    <td style="font-weight:bold;">ShipToState</td>
+                    <td style="font-weight:bold;">ShipToCountry</td>
+                    <td style="font-weight:bold;">ShipToZipCode</td>
+                </tr>
+                <tr>
+                    <td>{{order.accountNum}}</td>
+                    <td>{{order.orderNum}}-{{order.accountNum}}</td>
+                    <td>{{order.shipToName}}</td>
+                    <td>{{order.contactPhone}}</td>
+                    <td>{{order.shipToAddress}}</td>
+                    <td>{{order.shipToCity}}</td>
+                    <td>{{order.shipToProvState}}</td>
+                    <td>{{order.shipToCountry}}</td>
+                    <td>{{order.shipToPostalZip}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Proof Link</td>
+                    <td>http://proofs.sugoi.com/pdfs/{{order.orderNum}}.pdf</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">LineNo</td>
+                    <td style="font-weight:bold;">ConfiguredStyle</td>
+                    <td style="font-weight:bold;">USTariff</td>
+                    <td style="font-weight:bold;">CATariff</td>
+                    <td style="font-weight:bold;">Brand</td>
+                    <td style="font-weight:bold;">Zipper</td>
+                    <td style="font-weight:bold;">Thread</td>
+                    <td style="font-weight:bold;">Contrast</td>
+                    <td style="font-weight:bold;">Ink</td>
+                    <td style="font-weight:bold;">Personalization</td>
+                    <td style="font-weight:bold;">XXS</td>
+                    <td style="font-weight:bold;">XS</td>
+                    <td style="font-weight:bold;">S</td>
+                    <td style="font-weight:bold;">M</td>
+                    <td style="font-weight:bold;">L</td>
+                    <td style="font-weight:bold;">XL</td>
+                    <td style="font-weight:bold;">XXL</td>
+                    <td style="font-weight:bold;">XXXL</td>
+                    <td style="font-weight:bold;">OneSize</td>
+                    <td style="font-weight:bold;">Total</td>
+                    <td style="font-weight:bold;">NetPrice</td>
+                    <td style="font-weight:bold;">NetAmount</td>
+                    <td style="font-weight:bold;">Template</td>
+                </tr>
+                {{#each items}}
+                <tr>
+                    <td>{{itemNumber}}</td>
+                    <td>{{styleCode}}</td>
+                    <td>{{usdTariff}}</td>
+                    <td>{{cadTariff}}</td>
+                    <td>{{brand}}</td>
+                    <td>{{zipper}}</td>
+                    <td>{{thread}}</td>
+                    <td>{{contrast}}</td>
+                    <td>{{inkType}}</td>
+                    <td>{{#if personalization}}Y{{else}}N{{/if}}</td>
+                    <td>{{xxs}}</td>
+                    <td>{{xs}}</td>
+                    <td>{{s}}</td>
+                    <td>{{m}}</td>
+                    <td>{{l}}</td>
+                    <td>{{xl}}</td>
+                    <td>{{xxl}}</td>
+                    <td>{{xxxl}}</td>
+                    <td>{{one}}</td>
+                    <td>{{totalUnits}}</td>
+                    <td>{{unitCost}}</td>
+                    <td>{{netAmount totalUnits unitCost}}</td>
+                    <td>{{autobahnCode}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</div>

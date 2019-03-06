@@ -23,6 +23,11 @@ module.exports = {
       return null;
     }
   },
+  netAmount: function (units, price) {
+    if (units && price) {
+      return '$' + (units * price).toFixed(2);
+    }
+  },
   setStatusDiv: function (status) {
     switch (status) {
       case "1. Initial":

@@ -365,6 +365,10 @@ export const store = new Vuex.Store({
       const totalUnits = state.order.orderLines[lineIndex].items[itemIndex].totalUnits;
       const vendor = state.order.vendor;
 
+      state.order.orderLines[lineIndex].items[itemIndex].usdTariff = currentConfig.usdTariff;
+      state.order.orderLines[lineIndex].items[itemIndex].cadTariff = currentConfig.cadTariff;
+      state.order.orderLines[lineIndex].items[itemIndex].brand = currentConfig.brand;
+
       if (vendor === "CCN") {
         unitCost = currentConfig.costUSD[0];
       } else if (vendor === "PNR") {

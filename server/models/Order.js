@@ -391,6 +391,10 @@ const OrderSchema = new Schema({
             type: String,
             default: null
           },
+          brand: {
+            type: String,
+            default: null
+          },
           childReference: {
             type: String,
             default: null
@@ -502,6 +506,14 @@ const OrderSchema = new Schema({
           unitCost: {
             type: Number,
             default: 0
+          },
+          usdTariff: {
+            type: String,
+            default: null
+          },
+          cadTariff: {
+            type: String,
+            default: null
           },
           addOns: {
             type: Number,
