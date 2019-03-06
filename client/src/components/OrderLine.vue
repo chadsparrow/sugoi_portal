@@ -32,7 +32,10 @@
             ColourWay:
             <span>{{orderLine.colourWayCode}}</span>
           </div>
-          <div class="my-2 col-sm-12 bg-dark text-white text-center rounded">Line Add-Ons</div>
+          <div
+            v-if="orderLine.tracingCharge && orderLine.creativeCharge && orderLine.scaledArtCharge && orderLine.colourWashCharge"
+            class="my-2 col-sm-12 bg-dark text-white text-center rounded"
+          >Line Add-Ons</div>
           <div v-if="orderLine.tracingCharge" class="col-sm-3 text-center">
             <span
               class="badge badge-dark text-light"
