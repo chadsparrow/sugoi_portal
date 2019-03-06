@@ -1,5 +1,5 @@
 <template>
-  <div class="item card border-dark mb-2" v-if="cancelled === false">
+  <div class="item card border-dark mb-2" v-if="item.cancelled === false">
     <div class="card-header bg-info mb-0 p-1">
       <div class="row text-light align-items-center">
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
@@ -167,9 +167,6 @@ export default {
     },
     subTotal() {
       return this.item.totalUnits * this.item.finalUnitPrice;
-    },
-    cancelled() {
-      return this.$store.getters.itemCancelled(this.lineIndex, this.itemIndex);
     }
   },
   methods: {
