@@ -1,49 +1,102 @@
-# Sugoi Custom Portal
+# Sugoi Portal
+Sugoi Custom order entry and order tracking web application
 
-Full Stack Node.js / MongoDB application to keep track of custom orders and act as front-end portal for customer to view custom orders.
+---
+## What's used:
+* Node.JS / Express backend
+* MVC Views (Handlebars) & API
+* Mongo DB Database / Mongoose
+* Vuex-Vue.js frontend (order confirmation)
+* Docker containers for backend / frontend
+* Passport / cookie-session authentication
+* SSL certificates
+* Datatables plugin
+* SheetJS - Excel creation plugin
+* Filesaver.js to save files directly on client
+* Materialize CSS (MVC)
+* Bootstrap CSS (Vuex frontend)
+* WebGL - 3D OBJ Viewer on HTML5 Canvas
+* CORS
+* Helmet
+* FedEx API
+* Cron - to update FedEx info every few hours
 
-change directory to /server and npm install to get node_modules
+## URLs
+    Production - https://portal.sugoi.com
+    Staging - https://portal.stage.sugoi.com
+    Dev - https://localhost:5000
+---
+## MVC - request routes:
+*/orders - All routes secured - must be authenticated*
+* `GET /`  - fetches all from `orders` collection and displays in `index.handlebars` table.
+* `GET /initial` - fetches all from `orders` collection in `Initial` status and displays in `orders/index.handlebars` table.
+* `GET /completed` - fetches all from `orders` collection in `Sent to Vendor` status and displays in `orders/index.handlebars` table.
+* `GET /cancelled` - fetches all from `orders` collection in `Cancelled` status and displays in `orders/index.handlebars` table.
+* `GET /archived` - fetches all from `orders` collection in `Archived` status and displays in `orders/index.handlebars` table.
+* `GET /po/:#######` - fetches order from `orders` collection based on order number and displays a table that can be downloaded to Excel. Used to create PO for vendor.
+* `GET /xml/:#######` - fetches order from `orders` collection based on order number and responds with `raw xml data` converted from json.
+* `GET /add` - displays form for user to input new order into the system.
+* `POST /add` - takes form request data and is saved to `orders` collection in database. Redirects to `orders/initial`
+* `GET /view/:##` - fetches order from `orders` collection based on `_id` from order and displays in `orders/view.handlebars`
+* `GET /edit/:##` - fetches order from `orders` collection based on `_id` from order and displays in form `orders/edit.handlebars` waiting for user input.
+* `PUT /edit/:##` - takes data from `orders/edit.handlebars` form and validates entry. Based on status of order, calculations are done and order is updated and saved to `orders` collection in database.  Redirects to `/orders`.
+* `GET /node-edit/:##` - fetches `instruction` item from `instructions Array` inside the `orders` collection and displays data in form `node-edit.handlebars`
+* `PUT /node-edit/:##` - fetches `instruction` item from `instructions Array` inside the `orders` collection and updates the data based on form data.
+* `PUT /revision/:##` - fetches `instruction` item from `instructions Array` inside the `orders` collection and updates the data based on form data.
+* `PUT /notes/:##` - takes data from notes.handlebars and validates entry. Order is updated and saved to `instructions Array` inside `orders` collection.
 
+*/payments - All routes secured - must be authenticated and edit orders*
+* `GET /`  - fetches all from `orders` collection and displays in `payments/index.handlebars` table.
+* `GET /edit/:##`  - fetches order from `orders` collection based on `_id` from order and displays form in `payments/edit.handlebars`
+* `GET /edit/:##`  - takes request data from form `payments/edit.handlebars`, updates and saves data to `orders` collection.
 
-![Portal Tech](./imgs/portal_tech.png)
+*/prod - All routes secured - must be authenticated and edit prod*
+* `GET /ccn`  - fetches all from `orders` collection in `Sent to Vendor` status and displays in `orders/ccnview.handlebars` table.
+* `GET /open`  - fetches all from `orders` collection in `Sent to Vendor` status and `not shipped` and displays in `orders/prod.handlebars` table.
+* `GET /pending`  - fetches all from `orders` collection in `Sent to Vendor` status and `shipped` and displays in `orders/prod.handlebars` table.
+* `GET /cancelled`  - fetches all from `orders` collection in `CANCELLED` status and displays in `orders/prod.handlebars` table.
+* `GET /edit/:##`  - fetches order from `orders` collection and displays in a form in `orders/prod-edit.handlebars`
+* `PUT /edit/:##`  - takes request data from form `orders/prod-edit.handlebars`, updates and saves data to `orders` collection.
 
-## Description
+*/proofs - All routes secured - must be authenticated*
+* `GET /uploadform`  - *currently unavailable - coming in future build*.
+* `POST /uploadform`  - *currently unavailable - coming in future build*.
+* `GET /:##`  - fetches single proof from `proofs` collection and then displays in `proofs/view.handlebars`
+* `GET /qc/:#######`  - fetches single proof from `proofs` collection and then displays in `proofs/qc.handlebars`
+* `GET /qc/edit/:##`  - fetches single proof from `proofs` collection and then displays form in `proofs/qc-edit.handlebars`
+* `PUT /qc/edit/:##`  - takes request data from form `proofs/qc-edit.handlebars`, updates and saves data to `proofs` collection.
+* `GET /qc/archive/:##`  - fetches single proof from `proofs` collection and sets qc notes to `Archived` status, redirects to `/proofs/qc/:#######`
+* `GET /qc/archive/view/:##`  - fetches single proof from `proofs` collection and sets qc notes to `Archived` status, redirects to `/proofs/qc-archive`
 
-The Sugoi portal is a fully secured application that allows the Sugoi custom team to enter, edit and keep track of custom orders. The Art department will also use it to keep track of incoming orders to be worked on. Full visibility of orders and allowing customers to view their proofs in 3D are the main focus.
+*/reports - All routes secured - must be authenticated and admin*
+* `GET /`  - fetches all reports `reports` collection using current week and displays in `reports/index.handlebars`.
+* `GET /week/:weekNum` - fetches report from `reports` collection based on the week number desired and displays data in `reports/index.handlebars`
 
-The login screen which uses passport and express to authenticate users stored in the database, once authenticated, a session is created for the user and is logged into the main dashboard.
+*/styles - currently unavailable, moved to API routes*
 
-![Login](./imgs/portal_login.png)
+*/users - All routes secured - must be authenticated and admin*
+* `GET /`  - fetches all reports `reports` collection using current week and displays in `reports/index.handlebars`.
+---
+## API - request routes (Vuex Order Confirmation routes):
 
-Shows all orders in progress
+*/api/graphicCodes - Open route*
+* `GET /`  - fetches all from `graphicCodes` collection and responds with an array of json formatted data and puts into Vuex state.
 
-![Order View](./imgs/portal_progress.png)
+*/api/provTax - Open route*
+* `GET /`  - fetches all from `provs` collection and responds with an array of json formatted data and puts into Vuex state.
 
-Shows all orders that are completed
+*/api/reps - Open route*
+* `GET /`  - fetches all from `reps` collection and responds with an array of json formatted data and puts into Vuex state.
 
-![Completed Orders](./imgs/portal_completed.png)
+*/api/states - Open route*
+* `GET /`  - fetches all from `states` collection and responds with an array of json formatted data and puts into Vuex state.
 
-Can go into any order to view the result of the art teams work on the order if available
+*/api/styles - Open route*
+* `GET /`  - fetches all from `styles2019` collection and responds with an array of json formatted data and puts into Vuex state.
 
-![Single Order View](./imgs/portal_order_view.png)
-
-3D of the garment
-
-![3D view 1](./imgs/portal_order_3D_view.png)
-
-Another view of the garment
-
-![3D view 2](./imgs/portal_order_3D_view2.png)
-
-Once order is completed all production information can be seen here, shipping, delivery date etc...
-
-![Production Tab](./imgs/portal_production.png)
-
-This is where sales team enters any payments they have taken (soon to be connectd to Stripe API)
-
-![Payment View](./imgs/portal_payments.png)
-
-Admin section to govern users
-
-![Admin](./imgs/portal_user_management.png)
-
+*/api/orders - All routes secured - must be authenticated*
+* `GET /`  - fetches all orders from `orders` collection and responds with an array of json formatted data and puts into Vuex state.
+* `GET /:#######`  - fetches single order from `orders` collection based on order number passed in url paramaters and responds with json formatted data and puts into Vuex state.
+* `PUT /:#######/:##` - fetches single order from `orders` collection based on order number passed in url paramaters and pushes line into `orderLines Array`, responds with json formatted data.
+* `PUT /:#######/:##/:##` - fetches single order from `orders` collection based on order number passed in url paramaters and pushes item into `items Array` responds with json formatted data.
+* `PUT /:#######` - fetches single order from `orders` collection based on order number passed in url paramaters and updates entire order based on Vuex state, responds with json formatted data and updates Vuex state.
