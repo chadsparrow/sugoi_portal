@@ -126,7 +126,7 @@
             <span>${{formatPrice(order.beforeTaxes)}}</span>
           </li>
           <li v-if="order.taxes" class="list-group-item" style="border-bottom:none;">
-            Taxes: {{order.taxes}}% /
+            Taxes: {{order.taxes}}% |
             <span>${{formatPrice(order.taxAmount)}}</span>
           </li>
         </ul>

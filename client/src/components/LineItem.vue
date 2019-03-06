@@ -16,10 +16,10 @@
         <div v-if="item.zipper" class="col">Zipper: {{item.zipper}}</div>
         <div v-if="item.contrast" class="col">Contrast: {{item.contrast}}</div>
         <div v-if="item.zap" class="col" style="font-size: 16px;">
-          <span class="badge badge-dark">ZAP - $5</span>
+          <span class="badge badge-dark">ZAP - $5/unit | {{formatprice(5*item.totalUnits)}}</span>
         </div>
         <div v-if="item.personalization" class="col" style="font-size: 16px;">
-          <span class="badge badge-dark">PRS - $10</span>
+          <span class="badge badge-dark">PRS - $10/unit | {{formatPrice(10*item.totalUnits)}}</span>
         </div>
       </div>
       <div class="row align-items-center text-center m-0 rounded bg-light">
