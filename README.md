@@ -80,6 +80,7 @@
 
 ### *`/users`- All routes secured - must be authenticated and admin*
 * `GET /login`  - displays a form in `users/login.handlebars`
+* `POST /login`  - takes request data from `users/login.handlebars` form and authenticates user using Passport.js. If authenticated a cookie-session is created through https and a secret key which expires after 8 hours.
 * `GET /login/:userName/:key`  - displays a form in `users/login.handlebars` using pre-existing login information passed in url paramaters.
 * `GET /admin` - displays `users/admin.handlebars` dashboard page.
 * `GET /edit/:##` - displays form in`users/edit.handlebars`
