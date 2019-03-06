@@ -8,7 +8,7 @@
 * Mongo DB Database / Mongoose
 * Vuex-Vue.js frontend (order confirmation)
 * Docker containers for backend / frontend deployment on LG servers
-* Passport / cookie-session authentication
+* Passport.js / cookie-session authentication
 * SSL certificates
 * Datatables plugin
 * SheetJS - Excel creation plugin
