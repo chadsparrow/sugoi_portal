@@ -1,5 +1,5 @@
 <template>
-  <div class="item card border-dark mb-2" v-if="!cancelled">
+  <div class="item card border-dark mb-2" v-if="cancelled === false">
     <div class="card-header bg-info mb-0 p-1">
       <div class="row text-light align-items-center">
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>

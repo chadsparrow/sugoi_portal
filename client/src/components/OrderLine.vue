@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!cancelled">
+  <div v-if="cancelled === false">
     <hr>
     <div class="card border-secondary mb-3">
       <div class="card-header bg-secondary text-light p-1 justify-items-center">

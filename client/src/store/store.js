@@ -88,10 +88,10 @@ export const store = new Vuex.Store({
     updateAllLines: ({ state, dispatch }) => {
       const orderLines = state.order.orderLines;
       for (let [lineIndex, orderLine] of orderLines.entries()) {
-        if (!orderLine.cancelled) {
+        if (orderLine.cancelled === false) {
           const items = orderLine.items;
           for (let [itemIndex, item] of items.entries()) {
-            if (!item.cancelled) {
+            if (item.cancelled === false) {
               dispatch('getItemUnitPrice', { lineIndex, itemIndex })
 
             }
@@ -102,7 +102,7 @@ export const store = new Vuex.Store({
     updateAllItems: ({ state, commit, dispatch }, lineIndex) => {
       const orderLine = state.order.orderLines[lineIndex];
       for (let [itemIndex, item] of orderLine.items.entries()) {
-        if (!item.cancelled) {
+        if (item.cancelled === false) {
           commit('GET_ITEM_UNIT_PRICE', { lineIndex, itemIndex });
           commit('SET_FINAL_UNIT_PRICE', { lineIndex, itemIndex });
         }
@@ -151,6 +151,7 @@ export const store = new Vuex.Store({
     },
     cancelLine: ({ commit, dispatch }, lineIndex) => {
       commit("CANCEL_LINE", lineIndex);
+      dispatch('saveOrder');
       dispatch('updateAllLines');
     },
     addItem: ({ commit, state }, lineIndex) => {
@@ -171,6 +172,7 @@ export const store = new Vuex.Store({
     cancelItem: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit("CANCEL_ITEM", { lineIndex, itemIndex });
       dispatch('setAddOns', lineIndex);
+      dispatch('saveOrder');
       dispatch('updateAllLines');
     },
     setHeaderTitle: ({ commit, dispatch }) => {
@@ -430,7 +432,7 @@ export const store = new Vuex.Store({
       state.order.qty = 0;
       const orderLines = state.order.orderLines;
       for (let orderLine of orderLines) {
-        if (!orderLine.cancelled) {
+        if (orderLine.cancelled === false) {
           state.order.beforeTaxes += orderLine.itemsSubTotal;
           state.order.qty += orderLine.lineItemsQty;
         }
@@ -449,11 +451,11 @@ export const store = new Vuex.Store({
       }
     },
     SET_ADD_ONS: (state, lineIndex) => {
-      if (!state.order.orderLines[lineIndex].cancelled) {
+      if (state.order.orderLines[lineIndex].cancelled === false) {
         let totalAddOns = 0
         const items = state.order.orderLines[lineIndex].items;
         for (let item of items) {
-          if (!item.cancelled) {
+          if (item.cancelled === false) {
             totalAddOns += (item.addOns * item.totalUnits);
           }
         }
@@ -483,7 +485,7 @@ export const store = new Vuex.Store({
       let itemsTotal = 0;
       let itemsQty = 0;
       for (let item of items) {
-        if (!item.cancelled) {
+        if (item.cancelled === false) {
           itemsTotal += item.itemTotalPrice;
           itemsQty += item.totalUnits;
         }
@@ -516,7 +518,7 @@ export const store = new Vuex.Store({
       const orderLine = state.order.orderLines[lineIndex];
       let totalBeforeAddOns = 0;
       for (let item of orderLine.items) {
-        if (!item.cancelled) {
+        if (item.cancelled === false) {
           totalBeforeAddOns += item.itemTotalPrice;
         }
       }

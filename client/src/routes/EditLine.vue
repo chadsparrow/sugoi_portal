@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-secondary" v-if="orderLine.cancelled == false">
+  <div class="card border-secondary" v-if="orderLine.cancelled === false">
     <div class="card-header bg-dark text-light p-2">
       <span>Line: {{orderLine.lineNumber}}</span>
     </div>
