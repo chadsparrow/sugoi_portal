@@ -11,19 +11,21 @@
                     <td style="font-weight:bold;">EventDate</td>
                     <td style="font-weight:bold;">MustShipByDate</td>
                     <td style="font-weight:bold;">JBA PO#</td>
-                    <td style="font-weight:bold;">MultiShips</td>
-                    <td style="font-weight:bold;">PrePacks</td>
+                    {{#if order.multiShips}}<td style="font-weight:bold;" class='center-align'>MultiShips</td>{{/if}}
+                    {{#if order.prePacks}}<td style="font-weight:bold;" class='center-align'>PrePacks</td>{{/if}}
                 </tr>
                 <tr>
                     <td id="orderNumberCell">{{order.orderNum}}</td>
                     <td>{{order.orderNum}}</td>
-                    <td>{{formatDate poDate 'MM/DD/YYYY'}}</td>
-                    <td>{{formatDate latestInHand 'MM/DD/YYYY'}}</td>
-                    <td>{{formatDate eventDate 'MM/DD/YYYY'}}</td>
-                    <td>{{formatDate latestShipDate 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate order.poDate 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate order.latestInHand 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate order.eventDate 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate order.latestShipDate 'MM/DD/YYYY'}}</td>
                     <td>{{jbaPONum}}</td>
-                    <td>{{multiShips}}</td>
-                    <td>{{prePacks}}</td>
+                    {{#if order.multiShips}}<td style="background-color: red; color: white;" class='center-align'>
+                        {{order.multiShips}}</td>{{/if}}
+                    {{#if order.prePacks}}<td style="background-color: red; color: white;" class='center-align'>
+                        {{order.prePacks}}</td>{{/if}}
                 </tr>
                 <tr>
                     <td style="font-weight:bold;">SoldToNumber</td>

@@ -192,7 +192,11 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         .then(order => {
           logger.info(`${order.orderNum} added to database by ${req.user.username}`);
           req.flash("success_msg", "Order Saved");
-          res.redirect("/orders");
+          if (order.currentStatus === "1. Initial") {
+            res.redirect("/orders/initial");
+          } else {
+            res.redirect("/orders");
+          }
         })
         .catch(err => {
           logger.error(err);
