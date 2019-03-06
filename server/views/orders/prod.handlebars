@@ -31,6 +31,8 @@
         <th>Latest In-Hand</th>
         <th>Latest Ship Date</th>
         <th>Added Services</th>
+        <th>MultiShips</th>
+        <th>PrePacks</th>
         <th>Conf. Ship Date</th>
         <th>Status</th>
         <th>Tracking #</th>
@@ -66,6 +68,8 @@
         <td style="font-size: 12px;" class="center-align">{{#if latestShipDate}}{{formatDate latestShipDate
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{multishipPrePack}}</td>
+        <td style="font-size: 12px;" class="center-align">{{multiShips}}</td>
+        <td style="font-size: 12px;" class="center-align">{{prePacks}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if vendorConfirmShip}}{{formatDate vendorConfirmShip
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align {{setShipStatus shipStatus}}">{{shipStatus}}</td>

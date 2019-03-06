@@ -3,7 +3,7 @@ const router = express.Router();
 const DateDiff = require("date-diff");
 const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
-const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
+const { ensureAuthenticated, ensureEditOrders, ensureAdmin } = require("../helpers/auth");
 
 // includes model for mongodb
 const Order = require("../models/Order");
@@ -26,7 +26,7 @@ router.get("/all", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
+router.get("/po/:orderNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = `${req.params.orderNum} PO`;
   let poDate = moment(Date.now()).format('MM/DD/YYYY');
   let items = [];

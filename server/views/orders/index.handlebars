@@ -29,6 +29,7 @@
         <th data-priority="7" class="center-align">Artist</th>
         <th class="center-align">Vendor</th>
         <th class="center-align">Upload Date</th>
+        <th class="center-align">P.O.</th>
         <th class="center-align">Sent to Vendor</th>
         <th data-priority="2" class="center-align"></th>
       </tr>
@@ -51,6 +52,8 @@
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
           "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align"><a href="/orders/po/{{orderNum}}">View
+            PO</a></td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class='center-align'>
