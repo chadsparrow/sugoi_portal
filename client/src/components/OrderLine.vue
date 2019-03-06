@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!orderLine.cancelled">
+  <div v-if="!cancelled">
     <hr>
     <div class="card border-secondary mb-3">
       <div class="card-header bg-secondary text-light p-1 justify-items-center">
@@ -118,6 +118,9 @@ export default {
     },
     totalBeforeAddOns() {
       return this.$store.getters.totalBeforeAddOns(this.index);
+    },
+    cancelled() {
+      return this.$store.getters.lineCancelled(this.index);
     }
   },
   data() {

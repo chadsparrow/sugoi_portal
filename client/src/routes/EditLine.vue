@@ -64,7 +64,7 @@
             </div>
             <div
               class="form-group mb-1 col-sm-6"
-              v-if="orderLine.graphicCode && colourWays.length || orderLine.colourWayCode"
+              v-if="orderLine.graphicCode && colourWays.length || orderLine.colourWayCode || orderLine.colourWayCode != 'SUB'"
             >
               <label for="colourWayCode" class="small my-0">Colour Way:</label>
               <select

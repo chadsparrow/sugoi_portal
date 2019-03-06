@@ -496,13 +496,10 @@ export const store = new Vuex.Store({
       state.order.orderLines[lineIndex].itemsSubTotal = itemsTotal;
     },
     CANCEL_LINE: (state, lineIndex) => {
-
-      const orderLine = state.order.orderLines[lineIndex];
-
-      for (let item of orderLine.items) {
-        item.cancelled = true;
+      for (let [itemIndex, item] of state.order.orderLines[lineIndex].items.entries()) {
+        state.order.orderLines[lineIndex].items[itemIndex].cancelled = true;
       }
-      orderLine.cancelled = true;
+      state.order.orderLines[lineIndex].cancelled = true;
     },
     CANCEL_ITEM: (state, { lineIndex, itemIndex }) => {
       state.order.orderLines[lineIndex].items[itemIndex].cancelled = true;
@@ -524,6 +521,14 @@ export const store = new Vuex.Store({
         }
       }
       return totalBeforeAddOns;
+    },
+    lineCancelled: (state) => (lineIndex) => {
+      const orderLine = state.order.orderLines[lineIndex];
+      return orderLine.cancelled;
+    },
+    itemCancelled: (state) => (lineIndex, itemIndex) => {
+      const item = state.order.orderLines[lineIndex].items[itemIndex];
+      return item.cancelled;
     }
   }
 });
