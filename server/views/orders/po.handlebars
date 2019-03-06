@@ -1,7 +1,7 @@
 <div>
     <h5 class='center-align'>{{pageTitle}}</h5>
     <div style="margin: 20px 80px; overflow-x: auto; font-size: 12px;">
-        <table>
+        <table id="{{order.orderNum}}" class="poTable">
             <tbody>
                 <tr>
                     <td style="font-weight:bold;">SalesOrderNo</td>
@@ -13,12 +13,12 @@
                     <td style="font-weight:bold;">JBA PO#</td>
                 </tr>
                 <tr>
+                    <td id="orderNumberCell">{{order.orderNum}}</td>
                     <td>{{order.orderNum}}</td>
-                    <td>{{order.orderNum}}</td>
-                    <td>{{poDate}}</td>
-                    <td>{{latestInHand}}</td>
-                    <td>{{eventDate}}</td>
-                    <td>{{latestShipDate}}</td>
+                    <td>{{formatDate poDate 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate latestInHand 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate eventDate 'MM/DD/YYYY'}}</td>
+                    <td>{{formatDate latestShipDate 'MM/DD/YYYY'}}</td>
                     <td>{{jbaPONum}}</td>
                 </tr>
                 <tr>

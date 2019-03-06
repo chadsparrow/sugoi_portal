@@ -66,6 +66,16 @@ $(document).ready(function () {
     }
   }
 
+  var tableExporter = $('.poTable').tableExport({
+    formats: ["xlsx"],
+    fileName: 'id',
+    bootstrap: false,
+    position: "bottom",
+    trimWhitespace: true
+  });
+
+  tableExporter.types.date.assert = function (v) { return false; };
+
   // event date selector
   $("#eventDate").datepicker({
     minDate: new Date(),
