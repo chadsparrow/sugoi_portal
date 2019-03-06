@@ -342,7 +342,7 @@ const OrderSchema = new Schema({
       },
       colourWayCode: {
         type: String,
-        default: null,
+        default: 'SUB',
         uppercase: true
       },
       tracingCharge: {

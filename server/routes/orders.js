@@ -3,6 +3,7 @@ const router = express.Router();
 const DateDiff = require("date-diff");
 const moment = require("moment-timezone");
 const logger = require("../helpers/logs");
+const jsonxml = require('jsontoxml');
 const { ensureAuthenticated, ensureEditOrders, ensureAdmin } = require("../helpers/auth");
 
 // includes model for mongodb
@@ -47,6 +48,118 @@ router.get("/po/:orderNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
       items
     });
   });
+});
+
+router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
+  let items = [];
+  Order.findOne({ orderNum: req.params.orderNum })
+    .then(order => {
+      const newOrderObject = {};
+      newOrderObject.SAP = [];
+
+      let client = order.client;
+      client.replace(/&/g, '&amp;');
+      client.replace(/</g, '&lt;');
+      client.replace(/>/g, '&gt;');
+      client.replace(/"/g, '&quot;');
+      client.replace(/'/g, '&apos;');
+
+      for (let orderLine of order.orderLines) {
+        if (!orderLine.cancelled) {
+          for (let item of orderLine.items) {
+            if (!item.cancelled) {
+              let prs = '';
+              if (item.personalization) {
+                prs = 'Y';
+              } else {
+                prs = 'N';
+              }
+              let scaled = '';
+              if (orderLine.scaledArtCharge > 0) {
+                scaled = 'Y';
+              } else {
+                scaled = 'N';
+              }
+
+              let extendedDescription = item.extendedDescription;
+              extendedDescription.replace(/&/g, '&amp;');
+              extendedDescription.replace(/</g, '&lt;');
+              extendedDescription.replace(/>/g, '&gt;');
+              extendedDescription.replace(/"/g, '&quot;');
+              extendedDescription.replace(/'/g, '&apos;');
+
+              let customerPO = order.orderNotes;
+              if (order.orderNotes) {
+                customerPO.replace(/&/g, '&amp;');
+                customerPO.replace(/</g, '&lt;');
+                customerPO.replace(/>/g, '&gt;');
+                customerPO.replace(/"/g, '&quot;');
+                customerPO.replace(/'/g, '&apos;');
+              } else {
+                customerPO = '.'
+              }
+
+              newOrderObject.SAP.push({
+                'item': {
+                  'SALESORDER': order.orderNum,
+                  'CLIENT': client,
+                  'CHILDWORKORDER': item.itemNumber,
+                  'STYLENUM': item.autobahnCode,
+                  'STYLENAME': extendedDescription,
+                  'PARENTWORKORDER': orderLine.lineNumber,
+                  'XXS': item.xxs,
+                  'XS': item.xs,
+                  'S': item.s,
+                  'M': item.m,
+                  'L': item.l,
+                  'XL': item.xl,
+                  'XXL': item.xxl,
+                  'XXXL': item.xxxl,
+                  'ONE': item.one,
+                  'PROOFARTIST': order.currentArtist,
+                  'OUTPUTARTIST': ".",
+                  'SHIPTO': order.accountNum,
+                  'TAKENBY': order.isr,
+                  'JOBTYPE': orderLine.lineJobType,
+                  'REFERENCEORDER': orderLine.swoReference,
+                  'CHILDREFERENCEORDER': item.childReference,
+                  'COLORS1': item.colour1,
+                  'COLORS2': item.colour2,
+                  'COLORS3': item.colour3,
+                  'COLORS4': '.',
+                  'COLORS5': '.',
+                  'COLORS6': '.',
+                  'ZIPPERCOLOR': item.zipper,
+                  'CONTRASTCOLOR': item.contrast,
+                  'THREADCOLOR': item.thread,
+                  'GRAPHIC': orderLine.graphicCode,
+                  'COLOURWAY': orderLine.colourWayCode,
+                  'CUSTOMERPO': customerPO,
+                  'REVISION': '.',
+                  'BRAND': item.brand,
+                  'FACTORY': order.vendor,
+                  'SCALED_ART': scaled,
+                  'PERSONALIZATION': prs,
+                  'INK': item.inkType,
+                  'SCALEDSIZES': '.',
+                }
+              });
+            }
+          }
+        }
+      }
+      const xml = jsonxml(newOrderObject);
+      res.type('application/xml');
+      res.send(xml);
+
+      // res.render("orders/po", {
+      //   order,
+      //   items
+      // });
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 // @DESC - GETS ALL IN PROGRESS ORDERS

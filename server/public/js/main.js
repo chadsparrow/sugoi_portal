@@ -132,7 +132,7 @@ $(document).ready(function () {
     initComplete: function (settings, json) {
       $(".main-loader").hide();
     },
-    responsive: true,
+    responsive: false,
     select: true,
     pageLength: -1,
     order: [[1, "asc"], [3, "asc"]],
