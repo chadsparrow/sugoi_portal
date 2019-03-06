@@ -20,6 +20,7 @@
 * Helmet
 * FedEx API
 * Cron - to update FedEx info every few hours
+* bcryptjs - hashing stored passwords in db
 
 ## URLs
     Production - https://portal.sugoi.com
@@ -78,7 +79,17 @@
 ### *`/styles` - currently unavailable, moved to API routes*
 
 ### *`/users`- All routes secured - must be authenticated and admin*
-* `GET /`  - fetches all reports `reports` collection using current week and displays in `reports/index.handlebars`.
+* `GET /login`  - displays a form in `users/login.handlebars`
+* `GET /login/:userName/:key`  - displays a form in `users/login.handlebars` using pre-existing login information passed in url paramaters.
+* `GET /admin` - displays `users/admin.handlebars` dashboard page.
+* `GET /edit/:##` - displays form in`users/edit.handlebars`
+* `PUT /edit/:##` - takes request data from `users/edit.handlebars` form and updates user information
+* `GET /delete/:##` - deletes user from `users` collection in the database
+* `GET /register` - displays form in `users/register.handlebars` to register a new user
+* `POST /register` - takes request data from `users/register.handlebars` form and adds new user to `users` collection in database, hashing password using bcrypt for safety
+* `GET /password` - displays form in `users/password.handlebars` form.
+* `PUT /password` - takes request data from `users/password.handlebars` form and updates user password with hashed requested password.
+
 ---
 ## API - request routes (Vuex Order Confirmation routes):
 
