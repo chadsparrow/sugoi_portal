@@ -64,7 +64,7 @@
             </div>
             <div
               class="form-group mb-1 col-sm-6"
-              v-if="orderLine.graphicCode && colourWays.length || orderLine.colourWayCode || orderLine.colourWayCode != 'SUB'"
+              v-if="orderLine.graphicCode && colourWays.length || orderLine.colourWayCode"
             >
               <label for="colourWayCode" class="small my-0">Colour Way:</label>
               <select
@@ -73,6 +73,7 @@
                 v-model="orderLine.colourWayCode"
                 ref="colourWayCode"
               >
+                <option value="SUB">No ColourWay</option>
                 <option value="MSS">Moss</option>
                 <option value="RSK">Risk</option>
                 <option value="DEJ">Deep Jade</option>

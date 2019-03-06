@@ -28,7 +28,7 @@
           </li>
         </ul>
         <div class="d-print-none text-center">
-          <label for="orderNotes" class="mb-0 mt-2">Notes:</label>
+          <label for="orderNotes" class="mb-0 mt-2">Notes/Customer PO:</label>
           <textarea
             v-model="order.orderNotes"
             class="form-control"
