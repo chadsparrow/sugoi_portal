@@ -1,5 +1,5 @@
 # Sugoi Portal
-Sugoi Custom order entry and order tracking web application
+### *Sugoi Custom order entry and order tracking web application*
 
 ---
 ## What's used:
@@ -7,7 +7,7 @@ Sugoi Custom order entry and order tracking web application
 * MVC Views (Handlebars) & API
 * Mongo DB Database / Mongoose
 * Vuex-Vue.js frontend (order confirmation)
-* Docker containers for backend / frontend
+* Docker containers for backend / frontend deployment on LG servers
 * Passport / cookie-session authentication
 * SSL certificates
 * Datatables plugin
@@ -27,7 +27,7 @@ Sugoi Custom order entry and order tracking web application
     Dev - https://localhost:5000
 ---
 ## MVC - request routes:
-*/orders - All routes secured - must be authenticated*
+### *`/orders` - All routes secured - must be authenticated*
 * `GET /`  - fetches all from `orders` collection and displays in `index.handlebars` table.
 * `GET /initial` - fetches all from `orders` collection in `Initial` status and displays in `orders/index.handlebars` table.
 * `GET /completed` - fetches all from `orders` collection in `Sent to Vendor` status and displays in `orders/index.handlebars` table.
@@ -45,12 +45,12 @@ Sugoi Custom order entry and order tracking web application
 * `PUT /revision/:##` - fetches `instruction` item from `instructions Array` inside the `orders` collection and updates the data based on form data.
 * `PUT /notes/:##` - takes data from notes.handlebars and validates entry. Order is updated and saved to `instructions Array` inside `orders` collection.
 
-*/payments - All routes secured - must be authenticated and edit orders*
+### *`/payments` - All routes secured - must be authenticated and edit orders*
 * `GET /`  - fetches all from `orders` collection and displays in `payments/index.handlebars` table.
 * `GET /edit/:##`  - fetches order from `orders` collection based on `_id` from order and displays form in `payments/edit.handlebars`
 * `GET /edit/:##`  - takes request data from form `payments/edit.handlebars`, updates and saves data to `orders` collection.
 
-*/prod - All routes secured - must be authenticated and edit prod*
+### *`/prod` - All routes secured - must be authenticated and edit prod*
 * `GET /ccn`  - fetches all from `orders` collection in `Sent to Vendor` status and displays in `orders/ccnview.handlebars` table.
 * `GET /open`  - fetches all from `orders` collection in `Sent to Vendor` status and `not shipped` and displays in `orders/prod.handlebars` table.
 * `GET /pending`  - fetches all from `orders` collection in `Sent to Vendor` status and `shipped` and displays in `orders/prod.handlebars` table.
@@ -58,7 +58,7 @@ Sugoi Custom order entry and order tracking web application
 * `GET /edit/:##`  - fetches order from `orders` collection and displays in a form in `orders/prod-edit.handlebars`
 * `PUT /edit/:##`  - takes request data from form `orders/prod-edit.handlebars`, updates and saves data to `orders` collection.
 
-*/proofs - All routes secured - must be authenticated*
+### *`/proofs` - All routes secured - must be authenticated*
 * `GET /uploadform`  - *currently unavailable - coming in future build*.
 * `POST /uploadform`  - *currently unavailable - coming in future build*.
 * `GET /:##`  - fetches single proof from `proofs` collection and then displays in `proofs/view.handlebars`
@@ -68,33 +68,33 @@ Sugoi Custom order entry and order tracking web application
 * `GET /qc/archive/:##`  - fetches single proof from `proofs` collection and sets qc notes to `Archived` status, redirects to `/proofs/qc/:#######`
 * `GET /qc/archive/view/:##`  - fetches single proof from `proofs` collection and sets qc notes to `Archived` status, redirects to `/proofs/qc-archive`
 
-*/reports - All routes secured - must be authenticated and admin*
+### *`/reports` - All routes secured - must be authenticated and admin*
 * `GET /`  - fetches all reports `reports` collection using current week and displays in `reports/index.handlebars`.
 * `GET /week/:weekNum` - fetches report from `reports` collection based on the week number desired and displays data in `reports/index.handlebars`
 
-*/styles - currently unavailable, moved to API routes*
+### *`/styles` - currently unavailable, moved to API routes*
 
-*/users - All routes secured - must be authenticated and admin*
+### *`/users`- All routes secured - must be authenticated and admin*
 * `GET /`  - fetches all reports `reports` collection using current week and displays in `reports/index.handlebars`.
 ---
 ## API - request routes (Vuex Order Confirmation routes):
 
-*/api/graphicCodes - Open route*
+### *`/api/graphicCodes` - Open route*
 * `GET /`  - fetches all from `graphicCodes` collection and responds with an array of json formatted data and puts into Vuex state.
 
-*/api/provTax - Open route*
+### *`/api/provTax` - Open route*
 * `GET /`  - fetches all from `provs` collection and responds with an array of json formatted data and puts into Vuex state.
 
-*/api/reps - Open route*
+### *`/api/reps` - Open route*
 * `GET /`  - fetches all from `reps` collection and responds with an array of json formatted data and puts into Vuex state.
 
-*/api/states - Open route*
+### *`/api/states` - Open route*
 * `GET /`  - fetches all from `states` collection and responds with an array of json formatted data and puts into Vuex state.
 
-*/api/styles - Open route*
+### *`/api/styles` - Open route*
 * `GET /`  - fetches all from `styles2019` collection and responds with an array of json formatted data and puts into Vuex state.
 
-*/api/orders - All routes secured - must be authenticated*
+### *`/api/orders` - All routes secured - must be authenticated*
 * `GET /`  - fetches all orders from `orders` collection and responds with an array of json formatted data and puts into Vuex state.
 * `GET /:#######`  - fetches single order from `orders` collection based on order number passed in url paramaters and responds with json formatted data and puts into Vuex state.
 * `PUT /:#######/:##` - fetches single order from `orders` collection based on order number passed in url paramaters and pushes line into `orderLines Array`, responds with json formatted data.
