@@ -197,10 +197,15 @@ export default {
     },
     loadColourWays(e) {
       let index = e.target.selectedIndex;
+      let orderLine = this.orderLine;
       this.colourWays = this.$store.getters.getColourWays(index);
-      this.orderLine.colourWayCode = "";
-      this.orderLine.graphicColours = this.graphicCodes[index].colours;
-      for (let item of this.orderLine.items) {
+      if (orderLine.graphicCode === "CUSTM") {
+        orderLine.colourWayCode = "SUB";
+      } else {
+        orderLine.colourWayCode = "";
+      }
+      orderLine.graphicColours = this.graphicCodes[index].colours;
+      for (let item of orderLine.items) {
         item.colour1 = "";
         item.colour2 = "";
         item.colour3 = "";
