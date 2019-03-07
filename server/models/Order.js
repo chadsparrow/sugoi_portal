@@ -23,7 +23,7 @@ const OrderSchema = new Schema({
   },
   enteredDate: {
     type: Date,
-    default: moment(Date.now()).format()
+    default: Date.now()
   },
   eventDate: {
     type: Date,
@@ -46,7 +46,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: moment(Date.now()).format()
+        default: Date.now()
       },
       instruction: {
         type: String,

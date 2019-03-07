@@ -106,7 +106,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-  const proofRequestDate = moment(d).format();
+  const proofRequestDate = d;
 
   let instructions = [];
 
@@ -217,7 +217,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus == "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
-          foundOrder.proofRequestDate = moment(d).format();
+          foundOrder.proofRequestDate = d;
         }
         foundOrder.currentArtist = "";
       }
@@ -235,7 +235,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.uploadDate === null) {
-          foundOrder.uploadDate = moment(d).format();
+          foundOrder.uploadDate = d;
           foundOrder.sentVendor = null;
           let date1 = moment(Date.parse(foundOrder.uploadDate));
           let date2 = moment(Date.parse(foundOrder.signedOffDate));
@@ -295,11 +295,11 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.sentVendor === null) {
-          foundOrder.sentVendor = moment(d).format();
+          foundOrder.sentVendor = d;
         }
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
         if (foundOrder.signedOffDate === null) {
-          foundOrder.signedOffDate = moment(d).format();
+          foundOrder.signedOffDate = d;
           let reportWeek = moment(d).format("W");
           let reportYear = moment(d).format("YYYY");
           let reportMonth = moment(d).format("M");
@@ -331,7 +331,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.proofCompletionDate === null) {
-          foundOrder.proofCompletionDate = moment(d).format();
+          foundOrder.proofCompletionDate = d;
           let date1 = moment(Date.parse(foundOrder.proofCompletionDate));
           let date2 = moment(Date.parse(foundOrder.proofRequestDate));
           let diff = new DateDiff(date1, date2);
@@ -390,7 +390,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.revisionCompletionDate === null) {
-          foundOrder.revisionCompletionDate = moment(d).format();
+          foundOrder.revisionCompletionDate = d;
 
           let date1 = moment(Date.parse(foundOrder.revisionCompletionDate));
           let date2 = moment(Date.parse(foundOrder.revisionRequestDate));
@@ -546,7 +546,7 @@ router.put(
     let instructionType = "Revision";
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
-    let revisionRequestDate = moment(d).format();
+    let revisionRequestDate = d;
 
     Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
