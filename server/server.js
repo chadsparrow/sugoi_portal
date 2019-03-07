@@ -253,7 +253,7 @@ const port = process.env.PORT || 5000;
 //sets https server with certificates and keys
 const httpsServer = https.createServer(credentials, app);
 
-// start the secure server and listen for requests
+// // start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening...`);
 });
