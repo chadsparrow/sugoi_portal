@@ -15,8 +15,9 @@ const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 
-//const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/louisgarneau.com.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
@@ -230,7 +231,7 @@ const port = process.env.PORT || 5000;
 //sets https server with certificates and keys
 const httpsServer = https.createServer(credentials, app);
 
-// start the secure server and listen for requests
+// // start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening...`);
 });
