@@ -73,7 +73,7 @@
                 v-model="orderLine.colourWayCode"
                 ref="colourWayCode"
               >
-                <option value="SUB">No ColourWay</option>
+                <option value="SUB">Full Custom</option>
                 <option value="MSS">Moss</option>
                 <option value="RSK">Risk</option>
                 <option value="DEJ">Deep Jade</option>
@@ -199,11 +199,7 @@ export default {
       let index = e.target.selectedIndex;
       let orderLine = this.orderLine;
       this.colourWays = this.$store.getters.getColourWays(index);
-      if (orderLine.graphicCode === "CUSTM") {
-        orderLine.colourWayCode = "SUB";
-      } else {
-        orderLine.colourWayCode = "";
-      }
+      orderLine.colourWayCode = "SUB";
       orderLine.graphicColours = this.graphicCodes[index].colours;
       for (let item of orderLine.items) {
         item.colour1 = "";

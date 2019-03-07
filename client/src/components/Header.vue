@@ -10,7 +10,7 @@
       >
       <label class="custom-control-label" for="customSwitches">Quote</label>
     </div>
-    <img class="float-right" src="../../public/images/sugoi_sombrio-customlogo_black.png">
+    <img class="float-right" src="../../public/img/sugoi_sombrio-customlogo_black.png">
     <h1 class="card-title display-4">{{headerTitle}}</h1>
   </div>
 </template>
