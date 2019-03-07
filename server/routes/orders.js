@@ -57,12 +57,14 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
       const newOrderObject = {};
       newOrderObject.SAP = [];
 
-      let client = order.client;
-      client.replace(/&/g, '&amp;');
-      client.replace(/</g, '&lt;');
-      client.replace(/>/g, '&gt;');
-      client.replace(/"/g, '&quot;');
-      client.replace(/'/g, '&apos;');
+      if (order.client) {
+        let client = order.client;
+        client.replace(/&/g, '&amp;');
+        client.replace(/</g, '&lt;');
+        client.replace(/>/g, '&gt;');
+        client.replace(/"/g, '&quot;');
+        client.replace(/'/g, '&apos;');
+      }
 
       for (let orderLine of order.orderLines) {
         if (!orderLine.cancelled) {

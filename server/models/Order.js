@@ -94,7 +94,8 @@ const OrderSchema = new Schema({
   },
   currency: {
     type: String,
-    uppercase: true
+    uppercase: true,
+    default: "USD"
   },
   latestShipDate: {
     type: Date,

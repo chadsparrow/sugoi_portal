@@ -215,9 +215,9 @@ export const store = new Vuex.Store({
       } else if (text === 'US' || text === 'USA' || text === 'UNITED STATES' || text === "UNITED STATES OF AMERICA") {
         state.order.currency = "USD"
       } else if (text === '') {
-        state.order.currency = null;
+        state.order.currency = "USD";
       } else if (text === null) {
-        state.order.currency = null;
+        state.order.currency = "USD";
       }
     },
     SET_COUNTRY_UPPER: (state, text) => {
