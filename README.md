@@ -26,8 +26,9 @@
     Production - https://portal.sugoi.com
     Staging - https://portal.stage.sugoi.com
     Dev - https://localhost:5000
----
-## MVC - request routes:
+
+# Backend Routes
+## Node.js / Express - MVC
 
 ### *`/*` - secured - must be authenticated*
 * this route fowards all incoming requests not found in routes below to `Vue.js` frontend order confirmation
@@ -115,3 +116,27 @@
 * `PUT /:#######/:##` - fetches single order from `orders` collection based on order number passed in url paramaters and pushes line into `orderLines Array`, responds with json formatted data.
 * `PUT /:#######/:##/:##` - fetches single order from `orders` collection based on order number passed in url paramaters and pushes item into `items Array` responds with json formatted data.
 * `PUT /:#######` - fetches single order from `orders` collection based on order number passed in url paramaters and updates entire order based on Vuex state, responds with json formatted data and updates Vuex state.
+
+# Front-End Routes
+## Vue.js / Vuex / Vue-Router
+
+* *`/Home` - secured - must be authenticated*
+    * displays the `header` component
+    * displays the `orderDetails` component
+    * displays the `orderLines` component
+        * displays the `orderLines/items` component
+
+* *`/EditDetails` - secured - must be authenticated*
+    * allows user to edit all the details of the order
+    * automatically updates and saves to state and updates the database once commited
+
+* *`/EditLine` - secured - must be authenticated*
+    * allows user to edit each line level details of the order individually
+    * automatically updates and saves to state and updates the database once commited
+
+* *`/EditItem` - secured - must be authenticated*
+    * allows user to edit each item level details of the order individually
+    * automatically updates and saves to state and updates the database once commited
+
+*All changes made on order confirmation update the PO, XML file and order routes on the Backend.*
+
