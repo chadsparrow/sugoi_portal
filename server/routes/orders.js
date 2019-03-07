@@ -57,8 +57,8 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
       const newOrderObject = {};
       newOrderObject.SAP = [];
 
-      if (order.client) {
-        let client = order.client;
+      let client = order.client;
+      if (client) {
         client.replace(/&/g, '&amp;');
         client.replace(/</g, '&lt;');
         client.replace(/>/g, '&gt;');
@@ -153,11 +153,6 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
       const xml = jsonxml(newOrderObject);
       res.type('application/xml');
       res.send(xml);
-
-      // res.render("orders/po", {
-      //   order,
-      //   items
-      // });
     })
     .catch(err => {
       console.log(err);
