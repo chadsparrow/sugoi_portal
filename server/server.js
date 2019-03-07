@@ -17,7 +17,6 @@ const cron = require("cron");
 
 const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 //const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-//const privateKey = fs.readFileSync("./certs/louisgarneau.com.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
