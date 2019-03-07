@@ -212,11 +212,7 @@ export const store = new Vuex.Store({
     SET_CURRENCY: (state, text) => {
       if (text === 'CA' || text === 'CAN' || text === 'CANADA') {
         state.order.currency = "CAD"
-      } else if (text === 'US' || text === 'USA' || text === 'UNITED STATES' || text === "UNITED STATES OF AMERICA") {
-        state.order.currency = "USD"
-      } else if (text === '') {
-        state.order.currency = "USD";
-      } else if (text === null) {
+      } else {
         state.order.currency = "USD";
       }
     },
