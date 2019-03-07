@@ -29,7 +29,6 @@
         <th data-priority="7" class="center-align">Artist</th>
         <th class="center-align">Vendor</th>
         <th class="center-align">Upload Date</th>
-        <th class="center-align">P.O.</th>
         <th class="center-align">Sent to Vendor</th>
         <th data-priority="2" class="center-align"></th>
       </tr>
@@ -52,16 +51,10 @@
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
           "D-MMM-YY"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align"><a href="/orders/po/{{orderNum}}">View
-            PO</a></td>
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class='center-align'>
-          <span>
-            <a class="red-text" href="/orders/xml/{{orderNum}}">
-              <i class="material-icons">file_copy</i>
-            </a>
-          </span>
+
           <span>
             <a class="blue-text" href="/{{orderNum}}" target="_blank">
               <i class="material-icons">description</i>
@@ -70,6 +63,16 @@
           <span>
             <a class="black-text" href="/orders/view/{{_id}}">
               <i class="material-icons">remove_red_eye</i>
+            </a>
+          </span>
+          <span>
+            <a class="orange-text" href="/orders/po/{{orderNum}}">
+              <i class="material-icons">list</i>
+            </a>
+          </span>
+          <span>
+            <a class="red-text" href="/orders/xml/{{orderNum}}">
+              <i class="material-icons">code</i>
             </a>
           </span>
           <span>

@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
   actions: {
     saveOrder: ({ commit, state }) => {
       axios
-        .put(`api/orders/${state.order.orderNum}`, state.order)
+        .put(`/api/orders/${state.order.orderNum}`, state.order)
         .then(r => r.data)
         .then(() => {
           commit("SAVE_ORDER_DATA");
@@ -24,7 +24,7 @@ export const store = new Vuex.Store({
     },
     getOrderData: ({ commit }, orderNum) => {
       axios
-        .get(`api/orders/${orderNum}`)
+        .get(`/api/orders/${orderNum}`)
         .then(r => r.data)
         .then(order => {
           commit("SET_ORDER_DATA", order);
@@ -32,7 +32,7 @@ export const store = new Vuex.Store({
     },
     getReps: ({ commit }) => {
       axios
-        .get(`api/reps`)
+        .get(`/api/reps`)
         .then(r => r.data)
         .then(reps => {
           commit("SET_REPS", reps);
@@ -40,7 +40,7 @@ export const store = new Vuex.Store({
     },
     getProvincialTaxes: ({ commit }) => {
       axios
-        .get(`api/provTax`)
+        .get(`/api/provTax`)
         .then(r => r.data)
         .then(provTax => {
           commit("SET_PROVINCIAL_TAXES", provTax);
@@ -48,7 +48,7 @@ export const store = new Vuex.Store({
     },
     getUSAStates: ({ commit }) => {
       axios
-        .get(`api/states`)
+        .get(`/api/states`)
         .then(r => r.data)
         .then(states => {
           commit("SET_USA_STATES", states);
@@ -56,7 +56,7 @@ export const store = new Vuex.Store({
     },
     getStyles: ({ commit }) => {
       axios
-        .get(`api/styles`)
+        .get(`/api/styles`)
         .then(r => r.data)
         .then(styles => {
           commit("SET_STYLES", styles);
@@ -64,7 +64,7 @@ export const store = new Vuex.Store({
     },
     getGraphicCodes: ({ commit }) => {
       axios
-        .get(`api/graphicCodes`)
+        .get(`/api/graphicCodes`)
         .then(r => r.data)
         .then(graphicCodes => {
           commit("SET_GRAPHIC_CODES", graphicCodes);
@@ -143,7 +143,7 @@ export const store = new Vuex.Store({
         nextLineNumber = nextLineNumber.toString();
       }
 
-      axios.put(`api/orders/${state.order.orderNum}/${nextLineNumber}`)
+      axios.put(`/api/orders/${state.order.orderNum}/${nextLineNumber}`)
         .then(r => r.data)
         .then(order => {
           commit("SET_ORDER_DATA", order);
@@ -163,7 +163,7 @@ export const store = new Vuex.Store({
         nextItemNumber = nextItemNumber.toString();
       }
 
-      axios.put(`api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
+      axios.put(`/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
         .then(r => r.data)
         .then(order => {
           commit("SET_ORDER_DATA", order);

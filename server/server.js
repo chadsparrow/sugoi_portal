@@ -16,10 +16,7 @@ const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 const { ensureAuthenticated } = require("./helpers/auth");
 
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
-//const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
-const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
-let credentials = { key: privateKey, cert: certificate };
+
 
 
 const express = require("express");
@@ -29,6 +26,16 @@ const DateDiff = require("date-diff");
 
 // initializes the app using express
 const app = express();
+
+let privateKey = '';
+
+if (app.get('env') === "development") {
+  privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+} else if (app.get('env' === 'production')) {
+  privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+}
+const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
+let credentials = { key: privateKey, cert: certificate };
 
 //initialize helmet security
 app.use(helmet());
@@ -157,13 +164,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Set static folder
-app.use(
-  express.static(path.join(__dirname, "public"), {
-    maxage: "2m"
-  })
-);
-
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job("0 * * * *", function () {
   Order.find({
@@ -212,6 +212,13 @@ var cronJob = cron.job("0 * * * *", function () {
 });
 cronJob.start();
 
+// Set static folder
+app.use(
+  express.static(path.join(__dirname, "public"), {
+    maxage: "2m"
+  })
+);
+
 // Use Routes from above
 app.use("/", indexRoutes);
 app.use("/users", userRoutes);
@@ -229,7 +236,7 @@ app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
 
 //Vue.js front-end router
-app.get(/.*\S.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 
 
 // if the req doesnt match any route above, set an error
