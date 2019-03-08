@@ -25,7 +25,7 @@ const DateDiff = require("date-diff");
 // initializes the app using express
 const app = express();
 
-// use this privateKey for production
+// use this privateKey for production/development
 //const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 //use this privateKey for staging
 const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
