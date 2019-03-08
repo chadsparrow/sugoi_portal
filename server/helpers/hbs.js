@@ -1,4 +1,4 @@
-const moment = require("moment-timezone");
+const dayjs = require('dayjs');
 
 module.exports = {
   getHandle: function (username) {
@@ -16,9 +16,7 @@ module.exports = {
   },
   formatDate: function (date, format) {
     if (date) {
-      let d = new Date(date);
-      d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-      return moment(d).format(format);
+      return dayjs(date).format(format);
     } else {
       return null;
     }

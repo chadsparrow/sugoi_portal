@@ -15,13 +15,13 @@ const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 
-const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
-//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 const express = require("express");
 const logger = require("./helpers/logs");
-const moment = require("moment-timezone");
+const dayjs = require('dayjs');
 const DateDiff = require("date-diff");
 
 // initializes the app using express
@@ -171,8 +171,8 @@ var cronJob = cron.job("0 * * * *", function () {
             foundOrder.checkpoints = result.checkpoints;
             if (foundOrder.confirmDeliveryStatus === "Delivered") {
               foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
-              let date1 = moment(Date.parse(foundOrder.confirmDeliveryDate));
-              let date2 = moment(Date.parse(foundOrder.vendorConfirmShip));
+              let date1 = dayjs(foundOrder.confirmDeliveryDate);
+              let date2 = dayjs(foundOrder.vendorConfirmShip);
               let diff = new DateDiff(date1, date2);
               const shippingLeadTime = diff.days();
               foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
