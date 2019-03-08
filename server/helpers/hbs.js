@@ -1,5 +1,6 @@
 //const moment = require("moment-timezone");
-let dayjs = require('dayjs');
+const dayjs = require('dayjs');
+const AdvancedFormat = require('dayjs/plugin/advancedFormat')
 dayjs.extend(AdvancedFormat);
 
 module.exports = {
