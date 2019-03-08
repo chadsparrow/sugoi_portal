@@ -1,7 +1,5 @@
-//const moment = require("moment-timezone");
 const dayjs = require('dayjs');
-const AdvancedFormat = require('dayjs/plugin/advancedFormat')
-dayjs.extend(AdvancedFormat);
+
 
 module.exports = {
   getHandle: function (username) {
@@ -19,9 +17,7 @@ module.exports = {
   },
   formatDate: function (date, format) {
     if (date) {
-      let d = dayjs(date);
-      //d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-      return dayjs(d).format(format);
+      return dayjs(date).format(format);
     } else {
       return null;
     }

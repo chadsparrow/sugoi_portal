@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const DateDiff = require("date-diff");
-//const moment = require("moment-timezone");
+const moment = require("moment-timezone");
 const dayjs = require('dayjs');
-const AdvancedFormat = require('dayjs/plugin/advancedFormat')
-dayjs.extend(AdvancedFormat);
 const logger = require("../helpers/logs");
 const jsonxml = require('jsontoxml');
 const { ensureAuthenticated, ensureEditOrders, ensureAdmin } = require("../helpers/auth");
@@ -403,9 +401,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = parseInt(diff.days() + 1);
           foundOrder.outputTurnaround = outputTurnaround;
-          let reportWeek = dayjs().week();
+          let reportWeek = moment(dayjs()).format("W");
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().month();
+          let reportMonth = moment(dayjs()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let outputAvg = 0;
@@ -461,9 +459,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
         if (foundOrder.signedOffDate === null) {
           foundOrder.signedOffDate = dayjs();
-          let reportWeek = dayjs().week();
+          let reportWeek = moment(dayjs()).format("W");
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().month();
+          let reportMonth = moment(dayjs()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -499,9 +497,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           const proofTurnaround = parseInt(diff.days() + 1);
           foundOrder.proofTurnaround = proofTurnaround;
 
-          let reportWeek = dayjs().week();
+          let reportWeek = moment(dayjs()).format("M");
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().month();
+          let reportMonth = moment(dayjs()).format('W');
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -558,9 +556,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let diff = new DateDiff(date1, date2);
           const revisionTurnaround = parseInt(diff.days() + 1);
 
-          let reportWeek = dayjs().week();
+          let reportWeek = moment(dayjs()).format("W");
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().month();
+          let reportMonth = moment(dayjs()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let revisionsAvg = 0;
