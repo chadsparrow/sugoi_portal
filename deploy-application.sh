@@ -83,7 +83,7 @@ printf "\nSTART DEPLOYMENT >>>\n"
             read -n 1 dodeploy
 
             if [[ $dodeploy != "y" ]]; then
-               pritnf "\nAborting Deployment."
+               printf "\nAborting Deployment."
                exit 0
             fi
             printf "\n"
