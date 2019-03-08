@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 //const moment = require("moment-timezone");
-let dayjs = require('dayjs');
+const dayjs = require('dayjs');
+const AdvancedFormat = require('dayjs/plugin/advancedFormat')
 dayjs.extend(AdvancedFormat);
 
 const Report = require("../models/Report");
