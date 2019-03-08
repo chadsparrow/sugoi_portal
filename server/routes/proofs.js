@@ -6,7 +6,8 @@ const router = express.Router();
 //const StreamZip = require("node-stream-zip");
 const logger = require("../helpers/logs");
 //const moment = require("moment-timezone");
-const dayjs = require('dayjs');
+let dayjs = require('dayjs');
+dayjs.extend(AdvancedFormat);
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 

@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const DateDiff = require("date-diff");
 //const moment = require("moment-timezone");
-const dayjs = require('dayjs');
+let dayjs = require('dayjs');
+dayjs.extend(AdvancedFormat);
 const logger = require("../helpers/logs");
 
 const {
