@@ -405,7 +405,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.outputTurnaround = outputTurnaround;
           let reportWeek = dayjs().week();
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().format("M");
+          let reportMonth = dayjs().month();
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let outputAvg = 0;
@@ -463,7 +463,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.signedOffDate = dayjs();
           let reportWeek = dayjs().week();
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().format("M");
+          let reportMonth = dayjs().month();
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -501,7 +501,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeek = dayjs().week();
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().format("M");
+          let reportMonth = dayjs().month();
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -560,7 +560,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
           let reportWeek = dayjs().week();
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = dayjs().format("M");
+          let reportMonth = dayjs().month();
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let revisionsAvg = 0;
