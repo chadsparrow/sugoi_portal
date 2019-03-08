@@ -5,7 +5,8 @@ const router = express.Router();
 //const path = require("path");
 //const StreamZip = require("node-stream-zip");
 const logger = require("../helpers/logs");
-const moment = require("moment-timezone");
+//const moment = require("moment-timezone");
+const dayjs = require('dayjs');
 
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
@@ -228,7 +229,7 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: moment(Date.now()).format(),
+      noteDate: dayjs(),
       noteUser: noteUser,
       note: note
     };

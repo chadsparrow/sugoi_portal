@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
-const moment = require("moment-timezone");
+//const moment = require("moment-timezone");
+const dayjs = require('dayjs');
 
 const Report = require("../models/Report");
 
 router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  const currentWeekNum = moment(Date.now()).format("W");
+  const currentWeekNum = dayjs().week();
   Report.find({})
     .sort({ reportWeekNumber: -1 })
     .then(reports => {
