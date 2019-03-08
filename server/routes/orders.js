@@ -358,8 +358,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     currentStatus,
     vendor,
     jbaPONum,
-    latestShipDate,
-    jbaPONum
+    latestShipDate
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -368,7 +367,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       foundOrder.currentArtist = currentArtist;
       foundOrder.priority = priority;
-      foundOrder.jbaPONum = jbaPONum;
 
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
