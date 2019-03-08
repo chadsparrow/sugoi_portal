@@ -361,6 +361,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     currentArtist,
     currentStatus,
     vendor,
+    latestShipDate,
+    jbaPONum
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -603,6 +605,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       }
 
       foundOrder.vendor = vendor;
+      foundOrder.jbaPONum = jbaPONum;
+      foundOrder.latestShipDate = latestShipDate;
 
       if (foundOrder.balanceOutstanding != null && foundOrder.balanceOutstanding != undefined) {
         if (foundOrder.balanceOutstanding > 0) {
