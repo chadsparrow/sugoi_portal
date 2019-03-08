@@ -14,10 +14,6 @@ const Proof = require("../models/Proof");
 const CustomArtist = require('../models/CustomArtist');
 const CustomRep = require('../models/CustomRep');
 
-let d = Date.now();
-
-
-
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
 router.get("/all", ensureAuthenticated, (req, res) => {
@@ -361,6 +357,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     currentArtist,
     currentStatus,
     vendor,
+    jbaPONum,
     latestShipDate,
     jbaPONum
   } = req.body;
@@ -371,6 +368,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       foundOrder.currentArtist = currentArtist;
       foundOrder.priority = priority;
+      foundOrder.jbaPONum = jbaPONum;
 
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
@@ -406,7 +404,6 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           let reportWeek = moment(dayjs()).format("W");
           let reportYear = dayjs().format("YYYY");
           let reportMonth = moment(dayjs()).format("M");
-
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let outputAvg = 0;
 
@@ -499,9 +496,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           const proofTurnaround = parseInt(diff.days() + 1);
           foundOrder.proofTurnaround = proofTurnaround;
 
-          let reportWeek = moment(dayjs()).format("M");
+          let reportWeek = moment(dayjs()).format("W");
           let reportYear = dayjs().format("YYYY");
-          let reportMonth = moment(dayjs()).format('W');
+          let reportMonth = moment(dayjs()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 

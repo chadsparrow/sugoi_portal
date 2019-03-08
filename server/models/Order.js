@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-//const moment = require("moment-timezone");
-let dayjs = require('dayjs');
+const dayjs = require('dayjs');
 
 // Create Order Schema
 const OrderSchema = new Schema({

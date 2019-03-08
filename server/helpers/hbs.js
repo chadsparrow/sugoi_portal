@@ -1,6 +1,5 @@
 const dayjs = require('dayjs');
 
-
 module.exports = {
   getHandle: function (username) {
     //let userArray = username.split("@");

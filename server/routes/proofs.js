@@ -7,7 +7,6 @@ const router = express.Router();
 const logger = require("../helpers/logs");
 const dayjs = require('dayjs');
 
-
 const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 
 const Proof = require("../models/Proof");
@@ -30,7 +29,7 @@ const Order = require("../models/Order");
 //       null,
 //       path.basename(file.originalname, path.extname(file.originalname)) +
 //         "_" +
-//         moment().format() +
+//         dayjs() +
 //         path.extname(file.originalname)
 //     );
 //   }

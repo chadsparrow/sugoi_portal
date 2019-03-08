@@ -6,7 +6,7 @@ const logger = require("../helpers/logs");
 // Load user Model
 const User = mongoose.model("users");
 
-module.exports = function(passport) {
+module.exports = function (passport) {
   passport.use(
     new LocalStrategy(
       { usernameField: "username" },

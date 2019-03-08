@@ -19,10 +19,7 @@ const { ensureAuthenticated } = require("./helpers/auth");
 
 const express = require("express");
 const logger = require("./helpers/logs");
-//const moment = require("moment-timezone");
 const dayjs = require('dayjs');
-const AdvancedFormat = require('dayjs/plugin/advancedFormat')
-dayjs.extend(AdvancedFormat);
 const DateDiff = require("date-diff");
 
 // initializes the app using express
