@@ -20,7 +20,7 @@ module.exports = {
   formatDate: function (date, format) {
     if (date) {
       let d = dayjs(date);
-      d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+      //d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
       return dayjs(d).format(format);
     } else {
       return null;
