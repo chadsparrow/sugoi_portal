@@ -126,13 +126,15 @@
                       </select>
                       <label for="currency">Currency:</label>
                     </div>
-                    <div class="input-field col s12">
-
-
+                    <div class="input-field col s6">
                       <i class="small material-icons prefix">today</i>
                       <input type="text" class="input-date" name="latestShipDate" id="latestShipDate" value="{{formatDate order.latestShipDate
                       "MM/DD/YYYY"}}">
                       <label for="latestShipDate">Latest Ship Date:</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input type="text" name="jbaPONum" id="jbaPONum" value="{{jbaPONum}}">
+                      <label for="jbaPONum">JBA PO#:</label>
                     </div>
                     <div class="input-field col s12">
                       <input type="text" name="multishipPrePack" id="multishipPrePack"

@@ -13,8 +13,6 @@ const Proof = require("../models/Proof");
 const CustomArtist = require('../models/CustomArtist');
 const CustomRep = require('../models/CustomRep');
 
-let d = Date.now();
-
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
 router.get("/", ensureAuthenticated, (req, res) => {
@@ -201,6 +199,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     qty,
     netValue,
     currency,
+    jbaPONum,
     latestShipDate,
     multishipPrePack,
     accountNum
@@ -214,6 +213,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.client = client;
       foundOrder.accountNum = accountNum
       foundOrder.priority = priority;
+      foundOrder.jbaPONum = jbaPONum;
 
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus == "A. Waiting for Proof") {
