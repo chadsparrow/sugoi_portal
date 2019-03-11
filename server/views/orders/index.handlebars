@@ -22,6 +22,7 @@
         <th data-priority="3" class="center-align">Status</th>
         <th data-priority="4" class="center-align">Priority</th>
         <th class="center-align">Entered</th>
+        <th class="center-align">Modified</th>
         <th class="center-align">Event Date</th>
         <th class="center-align">Latest In-Hand Date</th>
         <th data-priority="6" class="center-align">ISR</th>
@@ -41,6 +42,7 @@
         </td>
         <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
         <td style="font-size: 12px;" class="center-align">{{formatDate enteredDate "D-MMM-YY"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate updatedAt "D-MMM-YY"}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
         </td>
         <td style="font-size: 12px;" class="center-align">{{#if latestInHand}}{{formatDate latestInHand
