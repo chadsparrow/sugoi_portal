@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const dayjs = require('dayjs');
+const d = new Date().toISOString();
 
 // Create Order Schema
 const OrderSchema = new Schema({
@@ -27,7 +28,7 @@ const OrderSchema = new Schema({
   },
   enteredDate: {
     type: Date,
-    default: dayjs()
+    default: dayjs(d).format()
   },
   eventDate: {
     type: Date,
@@ -50,7 +51,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: dayjs()
+        default: dayjs(d).format()
       },
       instruction: {
         type: String,

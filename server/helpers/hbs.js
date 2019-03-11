@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const d = new Date().toISOString();
 
 module.exports = {
   getHandle: function (username) {
