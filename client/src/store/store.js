@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
     provs: [],
     states: [],
     styles: [],
-    graphicCodes: []
+    graphicCodes: [],
+    swatches: []
   },
   actions: {
     saveOrder: ({ commit, state }) => {
@@ -68,6 +69,14 @@ export const store = new Vuex.Store({
         .then(r => r.data)
         .then(graphicCodes => {
           commit("SET_GRAPHIC_CODES", graphicCodes);
+        });
+    },
+    getSwatches: ({ commit }) => {
+      axios
+        .get(`/api/swatches`)
+        .then(r => r.data)
+        .then(swatches => {
+          commit("SET_SWATCHES", swatches);
         });
     },
     setProvTax: ({ commit }, tax) => {
@@ -201,6 +210,9 @@ export const store = new Vuex.Store({
     },
     SET_GRAPHIC_CODES: (state, graphicCodes) => {
       state.graphicCodes = graphicCodes;
+    },
+    SET_SWATCHES: (state, swatches) => {
+      state.swatches = swatches;
     },
     SET_PROV_TAX: (state, tax) => {
       if (tax > 0) {

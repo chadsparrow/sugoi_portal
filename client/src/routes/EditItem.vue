@@ -264,39 +264,42 @@
           <div class="row">
             <div class="form-group mb-1 col-sm-12">
               <label for="colour1" class="small my-0">Colour 1:</label>
-              <input
-                type="text"
+              <select
                 class="form-control form-control-sm"
                 id="colour1"
-                v-model.trim="item.colour1"
+                v-model="item.colour1"
                 ref="colour1"
               >
+                <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
+              </select>
             </div>
             <div
               class="form-group mb-1 col-sm-12"
               v-if="orderLine.graphicColours >= 2 || orderLine.colour2"
             >
               <label for="colour2" class="small my-0">Colour 2:</label>
-              <input
-                type="text"
+              <select
                 class="form-control form-control-sm"
                 id="colour2"
-                v-model.trim="item.colour2"
+                v-model="item.colour2"
                 ref="colour2"
               >
+                <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
+              </select>
             </div>
             <div
               class="form-group mb-1 col-sm-12"
               v-if="orderLine.graphicColours == 3 || orderLine.colour"
             >
               <label for="colour3" class="small my-0">Colour 3:</label>
-              <input
-                type="text"
+              <select
                 class="form-control form-control-sm"
                 id="colour3"
-                v-model.trim="item.colour3"
+                v-model="item.colour3"
                 ref="colour3"
               >
+                <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -361,6 +364,9 @@ export default {
     },
     styles() {
       return this.$store.state.styles;
+    },
+    swatches() {
+      return this.$store.state.swatches;
     },
     priceBreak() {
       return this.$store.state.order.orderLines[this.lineIndex].priceBreak;

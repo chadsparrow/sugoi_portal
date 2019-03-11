@@ -56,6 +56,7 @@ const provTaxRoutes = require("./routes/api/provTax");
 const stateRoutes = require("./routes/api/states");
 const apiStyleRoutes = require("./routes/api/styles");
 const apiGraphicRoutes = require("./routes/api/graphicCodes");
+const apiSwatchRoutes = require("./routes/api/swatches");
 
 // Handlebars Helpers
 const {
@@ -229,6 +230,7 @@ app.use("/api/provTax", provTaxRoutes);
 app.use("/api/states", stateRoutes);
 app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
+app.use("/api/swatches", apiSwatchRoutes);
 
 //Vue.js front-end router
 app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
