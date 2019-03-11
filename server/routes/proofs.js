@@ -238,6 +238,7 @@ router.put(
     Proof.findOneAndUpdate(
       { _id: id },
       { hasQCNote: hasQCNote, qcnote: qcnote },
+      { new: true, upsert: true },
       function (err, updatedProof) {
         if (err) {
           logger.error(err);
