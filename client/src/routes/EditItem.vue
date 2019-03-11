@@ -269,6 +269,7 @@
                 id="colour1"
                 v-model="item.colour1"
                 ref="colour1"
+                @change="setFlo"
               >
                 <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
               </select>
@@ -283,6 +284,7 @@
                 id="colour2"
                 v-model="item.colour2"
                 ref="colour2"
+                @change="setFlo"
               >
                 <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
               </select>
@@ -297,6 +299,7 @@
                 id="colour3"
                 v-model="item.colour3"
                 ref="colour3"
+                @change="setFlo"
               >
                 <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
               </select>
@@ -415,6 +418,24 @@ export default {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex
       });
+    },
+    setFlo(e) {
+      if (
+        e.target.value === "ELECTRIC SALMON" ||
+        e.target.value.includes("Flo ")
+      ) {
+        this.$store.commit("SET_FLO", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex,
+          inkType: "F"
+        });
+      } else {
+        this.$store.commit("SET_FLO", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex,
+          inkType: "D"
+        });
+      }
     },
     finalUnitPrice() {
       this.$store.dispatch("setFinalUnitPrice", {

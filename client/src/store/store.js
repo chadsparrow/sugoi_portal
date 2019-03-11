@@ -214,6 +214,9 @@ export const store = new Vuex.Store({
     SET_SWATCHES: (state, swatches) => {
       state.swatches = swatches;
     },
+    SET_FLO: (state, { lineIndex, itemIndex, inkType }) => {
+      state.order.orderLines[lineIndex].items[itemIndex].inkType = inkType;
+    },
     SET_PROV_TAX: (state, tax) => {
       if (tax > 0) {
         state.order.taxes = tax;
