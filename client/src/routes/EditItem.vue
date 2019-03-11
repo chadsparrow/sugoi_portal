@@ -50,7 +50,7 @@
         <div class="col">
           <label for="inkType" class="small my-0">Ink:</label>
           <select class="form-control form-control-sm" id="inkType" v-model="item.inkType">
-            <option value="D" selected>Standard</option>
+            <option value="D">Standard</option>
             <option value="F">Fluorescent</option>
           </select>
         </div>
@@ -420,6 +420,7 @@ export default {
       });
     },
     setFlo(e) {
+      console.log(e.target.value);
       if (
         e.target.value === "ELECTRIC SALMON" ||
         e.target.value.includes("Flo ")
