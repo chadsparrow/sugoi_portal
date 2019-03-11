@@ -88,8 +88,7 @@ const ProofSchema = new Schema({
   colors: [
     {
       colorname: {
-        type: String,
-        uppercase: true
+        type: String
       },
       colorr: {
         type: String
