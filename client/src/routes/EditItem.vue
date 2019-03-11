@@ -420,7 +420,6 @@ export default {
       });
     },
     setFlo(e) {
-      console.log(e.target.value);
       if (
         e.target.value === "ELECTRIC SALMON" ||
         e.target.value.includes("Flo ")
