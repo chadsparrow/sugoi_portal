@@ -546,18 +546,15 @@ const OrderSchema = new Schema({
           zipperOptions: [],
           colour1: {
             type: String,
-            default: "",
-            uppercase: true
+            default: ""
           },
           colour2: {
             type: String,
-            default: "",
-            uppercase: true
+            default: ""
           },
           colour3: {
             type: String,
-            default: "",
-            uppercase: true
+            default: ""
           },
         }
       ]
