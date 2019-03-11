@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const dayjs = require('dayjs');
 const d = new Date().toISOString();
+const timestamps = require('mongoose-timestamp');
 
 // Create Order Schema
 const OrderSchema = new Schema({
@@ -499,5 +500,7 @@ const OrderSchema = new Schema({
     }
   ]
 });
+
+OrderSchema.plugin(timestamps);
 
 module.exports = mongoose.model("orders", OrderSchema);
