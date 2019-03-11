@@ -30,7 +30,7 @@ router.get("/all", ensureAuthenticated, (req, res) => {
 
 router.get("/po/:orderNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = `${req.params.orderNum} PO`;
-  let poDate = dayjs().format('MM/DD/YYYY');
+  let poDate = dayjs(d).format('MM/DD/YYYY');
   let items = [];
   Order.findOne({ orderNum: req.params.orderNum }).then(order => {
     for (let orderLine of order.orderLines) {
