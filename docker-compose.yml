@@ -14,6 +14,8 @@ services:
       - "27017:27017"
     volumes:
       - /data/storage/sugoi-custom-proofs.mongodb:/data/db
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
@@ -33,6 +35,8 @@ services:
       # use this volume for production
       # - /data/certs/sugoi:/usr/src/app/server/certs
       - /data/logs/sugoi-custom-proofs/npm:/root/.npm/
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
     depends_on:
       - mongo
     env_file:
