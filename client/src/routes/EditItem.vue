@@ -269,6 +269,7 @@
                 id="colour1"
                 v-model="item.colour1"
                 ref="colour1"
+                @change="setFlo"
               >
                 <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
               </select>
@@ -283,6 +284,7 @@
                 id="colour2"
                 v-model="item.colour2"
                 ref="colour2"
+                @change="setFlo"
               >
                 <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
               </select>
@@ -297,6 +299,7 @@
                 id="colour3"
                 v-model="item.colour3"
                 ref="colour3"
+                @change="setFlo"
               >
                 <option v-for="(swatch, index) in swatches" :key="index">{{swatch.swatchName}}</option>
               </select>
@@ -416,6 +419,28 @@ export default {
         itemIndex: this.itemIndex
       });
     },
+    setFlo() {
+      if (
+        this.$refs.colour1.value === "ELECTRIC SALMON" ||
+        this.$refs.colour1.value.includes("Flo ") ||
+        this.$refs.colour2.value === "ELECTRIC SALMON" ||
+        this.$refs.colour2.value.includes("Flo ") ||
+        this.$refs.colour3.value === "ELECTRIC SALMON" ||
+        this.$refs.colour3.value.includes("Flo ")
+      ) {
+        this.$store.commit("SET_FLO", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex,
+          inkType: "F"
+        });
+      } else {
+        this.$store.commit("SET_FLO", {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex,
+          inkType: "D"
+        });
+      }
+    },
     finalUnitPrice() {
       this.$store.dispatch("setFinalUnitPrice", {
         lineIndex: this.lineIndex,
@@ -471,27 +496,6 @@ export default {
         this.$refs.colour3.focus();
         alert("Fill in Colours for QD");
         return;
-      }
-
-      if (
-        this.$refs.colour1.value === "ELECTRIC SALMON" ||
-        this.$refs.colour1.value.includes("Flo ") ||
-        this.$refs.colour2.value === "ELECTRIC SALMON" ||
-        this.$refs.colour2.value.includes("Flo ") ||
-        this.$refs.colour3.value === "ELECTRIC SALMON" ||
-        this.$refs.colour3.value.includes("Flo ")
-      ) {
-        this.$store.commit("SET_FLO", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex,
-          inkType: "F"
-        });
-      } else {
-        this.$store.commit("SET_FLO", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex,
-          inkType: "D"
-        });
       }
 
       if (this.$refs.one != undefined && this.$refs.one.value == "") {
