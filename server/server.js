@@ -43,6 +43,7 @@ app.enable('trust proxy');
 
 // Load Routes
 const indexRoutes = require("./routes/index");
+const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/users");
 const styleRoutes = require("./routes/styles");
 const orderRoutes = require("./routes/orders");
@@ -217,6 +218,7 @@ app.use(
 
 // Use Routes from above
 app.use("/", indexRoutes);
+app.use("/admin", adminRoutes);
 app.use("/users", userRoutes);
 app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
