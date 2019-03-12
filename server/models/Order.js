@@ -27,10 +27,6 @@ const OrderSchema = new Schema({
     type: String,
     uppercase: true
   },
-  enteredDate: {
-    type: Date,
-    default: dayjs(d).format()
-  },
   eventDate: {
     type: Date,
     default: null
