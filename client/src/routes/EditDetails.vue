@@ -12,7 +12,7 @@
         <div class="form-group">
           <label for="requestDate" class="small my-0">Order Date</label>
           <DatePicker
-            v-model="order.enteredDate"
+            v-model="order.createdAt"
             id="requestDate"
             :disabled="true"
             :bootstrapStyling="true"
