@@ -15,6 +15,12 @@ const OrderSchema = new Schema({
     default: null,
     uppercase: true
   },
+  createdAt: {
+    type: Date
+  },
+  updatedAt: {
+    type: Date
+  },
   quoteToggle: {
     type: Boolean,
     default: true
