@@ -50,6 +50,12 @@ router.get("/admin", [ensureAuthenticated, ensureAdmin], (req, res) => {
     });
 });
 
+//Admin Page
+router.get("/admin/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  res.render("users/admin-dash");
+});
+
+
 router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   User.findOne({
     _id: req.params.id
