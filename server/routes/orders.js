@@ -271,7 +271,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-  const proofRequestDate = dayjs(d).format();
+
+  //const proofRequestDate = dayjs(d).format();
 
   let instructions = [];
 
@@ -294,8 +295,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         priority,
         isr,
         instructions,
-        vendor,
-        proofRequestDate
+        vendor
+        //proofRequestDate
       });
 
       newOrder
