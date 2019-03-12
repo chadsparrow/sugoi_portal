@@ -31,20 +31,20 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
       fullPage: true
     };
   },
   computed: {
     orderLines() {
       return this.$store.state.order.orderLines;
+    },
+    isLoading() {
+      return this.$store.getters.isLoading;
     }
   },
   methods: {
     addLine() {
-      this.isLoading = true;
       this.$store.dispatch("addLine");
-      this.isLoading = false;
     }
   }
 };

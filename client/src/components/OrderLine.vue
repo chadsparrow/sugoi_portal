@@ -114,7 +114,6 @@ export default {
   props: ["index"],
   data() {
     return {
-      isLoading: false,
       fullPage: true
     };
   },
@@ -131,6 +130,9 @@ export default {
     },
     cancelled() {
       return this.$store.getters.lineCancelled(this.index);
+    },
+    isLoading() {
+      return this.$store.getters.isLoading;
     }
   },
   data() {
@@ -149,15 +151,11 @@ export default {
     cancelLine() {
       let checkdelete = confirm("Are you sure?");
       if (checkdelete) {
-        this.isLoading = true;
         this.$store.dispatch("cancelLine", this.index);
-        this.isLoading = false;
       }
     },
     addItem() {
-      this.isLoading = true;
       this.$store.dispatch("addItem", this.index);
-      this.isLoading = false;
     }
   }
 };

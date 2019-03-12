@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
     states: [],
     styles: [],
     graphicCodes: [],
-    swatches: []
+    swatches: [],
+    isLoading: false
   },
   actions: {
     saveOrder: ({ commit, state }) => {
@@ -151,11 +152,12 @@ export const store = new Vuex.Store({
       } else {
         nextLineNumber = nextLineNumber.toString();
       }
-
+      state.isLoading = true;
       axios.put(`/api/orders/${state.order.orderNum}/${nextLineNumber}`)
         .then(r => r.data)
         .then(order => {
           commit("SET_ORDER_DATA", order);
+          state.isLoading = false;
         })
     },
     cancelLine: ({ commit, dispatch }, lineIndex) => {
@@ -171,11 +173,12 @@ export const store = new Vuex.Store({
       } else {
         nextItemNumber = nextItemNumber.toString();
       }
-
+      state.isLoading = true;
       axios.put(`/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
         .then(r => r.data)
         .then(order => {
           commit("SET_ORDER_DATA", order);
+          state.isLoading = false;
         })
     },
     cancelItem: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
@@ -381,6 +384,9 @@ export const store = new Vuex.Store({
       state.order.orderLines[lineIndex].items[itemIndex].usdTariff = currentConfig.usdTariff;
       state.order.orderLines[lineIndex].items[itemIndex].cadTariff = currentConfig.cadTariff;
       state.order.orderLines[lineIndex].items[itemIndex].brand = currentConfig.brand;
+      state.order.orderLines[lineIndex].items[itemIndex].gender = currentConfig.gender;
+      state.order.orderLines[lineIndex].items[itemIndex].fabric = currentConfig.fabric;
+
 
       if (vendor === "CCN") {
         unitCost = currentConfig.costUSD[0];
@@ -542,6 +548,9 @@ export const store = new Vuex.Store({
     itemCancelled: (state) => (lineIndex, itemIndex) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       return item.cancelled;
+    },
+    isLoading: (state) => {
+      return state.isLoading;
     }
   }
 });

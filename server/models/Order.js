@@ -553,6 +553,12 @@ const OrderSchema = new Schema({
             type: String,
             default: ""
           },
+          gender: {
+            type: String
+          },
+          fabric: {
+            type: String
+          }
         }
       ]
     }
