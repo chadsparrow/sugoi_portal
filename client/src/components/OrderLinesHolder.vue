@@ -1,5 +1,6 @@
 <template>
   <div class="mt-2 mb-4">
+    <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <small v-if="orderLines == undefined">Undefined!</small>
     <div v-else-if="orderLines.length == 0">
       <small>There are no lines as of yet!</small>
@@ -19,11 +20,20 @@
 
 <script>
 import OrderLine from "./OrderLine.vue";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "OrderLinesHolder",
   components: {
-    OrderLine
+    OrderLine,
+    Loading
+  },
+  data() {
+    return {
+      isLoading: false,
+      fullPage: true
+    };
   },
   computed: {
     orderLines() {
@@ -32,7 +42,9 @@ export default {
   },
   methods: {
     addLine() {
+      this.isLoading = true;
       this.$store.dispatch("addLine");
+      this.isLoading = false;
     }
   }
 };

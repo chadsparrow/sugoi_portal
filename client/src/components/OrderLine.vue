@@ -1,5 +1,6 @@
 <template>
   <div v-if="cancelled === false">
+    <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <hr>
     <div class="card border-secondary mb-3">
       <div class="card-header bg-secondary text-light p-1 justify-items-center">
@@ -105,12 +106,21 @@
 
 <script>
 import LineItem from "./LineItem.vue";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "OrderLine",
   props: ["index"],
+  data() {
+    return {
+      isLoading: false,
+      fullPage: true
+    };
+  },
   components: {
-    LineItem
+    LineItem,
+    Loading
   },
   computed: {
     orderLine() {
@@ -139,11 +149,15 @@ export default {
     cancelLine() {
       let checkdelete = confirm("Are you sure?");
       if (checkdelete) {
+        this.isLoading = true;
         this.$store.dispatch("cancelLine", this.index);
+        this.isLoading = false;
       }
     },
     addItem() {
+      this.isLoading = true;
       this.$store.dispatch("addItem", this.index);
+      this.isLoading = false;
     }
   }
 };
