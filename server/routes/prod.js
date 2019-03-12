@@ -42,20 +42,10 @@ router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
       { currentStatus: "V. Sent to Vendor" },
       {
         $or: [
-          { vendorConfirmShip: null },
-          { tracking: null },
-          { tracking: "" },
-          { jbaPONum: null },
-          { jbaPONum: "" },
-          { jbaGNRNum: null },
-          { jbaGNRNum: "" },
-          { jbaInvoiceNum: null },
-          { jbaInvoiceNum: "" }
+          { shipStatus: "" },
+          { shipStatus: null }
         ]
       },
-      {
-        $ne: { shipStatus: "Shipped" }
-      }
     ]
   }).then(orders => {
     res.render("orders/prod", {
