@@ -43,8 +43,6 @@ router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
       {
         $or: [
           { vendorConfirmShip: null },
-          { shipStatus: "" },
-          { shipStatus: null },
           { tracking: null },
           { tracking: "" },
           { jbaPONum: null },
@@ -54,6 +52,9 @@ router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
           { jbaInvoiceNum: null },
           { jbaInvoiceNum: "" }
         ]
+      },
+      {
+        $ne: { shipStatus: "Shipped" }
       }
     ]
   }).then(orders => {
