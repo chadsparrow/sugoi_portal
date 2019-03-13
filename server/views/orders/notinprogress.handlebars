@@ -27,9 +27,9 @@
         <th class="center-align">Latest In-Hand Date</th>
         <th data-priority="6" class="center-align">ISR</th>
         <th data-priority="5" class="center-align">Client</th>
-        <th data-priority="7" class="center-align">Artist</th>
         <th class="center-align">Vendor</th>
         <th class="center-align">Upload Date</th>
+        <th class="center-align">Sent to Vendor</th>
         <th data-priority="2" class="center-align">View/Edit</th>
       </tr>
     </thead>
@@ -48,9 +48,10 @@
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
-        <td style="font-size: 12px;" class="center-align">{{currentArtist}}</td>
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
+          "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;">
           <span class="right">

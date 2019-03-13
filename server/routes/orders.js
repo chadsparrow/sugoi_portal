@@ -34,7 +34,7 @@ router.get("/completed", ensureAuthenticated, (req, res) => {
   Order.find({
     currentStatus: "V. Sent to Vendor"
   }).then(orders => {
-    res.render("orders/index", {
+    res.render("orders/notinprogress", {
       orders,
       pageTitle
     });
@@ -46,7 +46,7 @@ router.get("/cancelled", ensureAuthenticated, (req, res) => {
   Order.find({
     currentStatus: "W. CANCELLED"
   }).then(orders => {
-    res.render("orders/index", {
+    res.render("orders/notinprogress", {
       orders,
       pageTitle
     });
