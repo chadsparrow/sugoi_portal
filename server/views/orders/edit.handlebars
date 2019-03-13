@@ -101,6 +101,15 @@
                       <label for="multishipPrePack">Added Services:</label>
                     </div>
                   </div>
+                  <div id="proofDiv">
+                    <div class="col s12 m6">
+                      <div class="input-field col s12">
+                        <textarea name="instruction" id="instruction"
+                          class="materialize-textarea">{{#each instruction}}{{@last}}:{{this}}{{/each}}</textarea>
+                        <label for="instruction">Initial Instructions:</label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 {{#if order.uploadDate}}
                 <div class="col s6">

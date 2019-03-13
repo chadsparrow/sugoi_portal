@@ -361,7 +361,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     currentStatus,
     vendor,
     jbaPONum,
-    latestShipDate
+    latestShipDate,
+    instruction
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -375,6 +376,13 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
           foundOrder.proofRequestDate = dayjs(d).format();
+        }
+        if (instruction != null || instruction != "") {
+          foundOrder.instructions.push({
+            instruction: instruction,
+            instructionType: "Art Direction",
+            user: isr
+          });
         }
         foundOrder.currentArtist = "";
       }
