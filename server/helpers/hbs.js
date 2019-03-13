@@ -174,6 +174,9 @@ module.exports = {
       case "System":
         return "grey lighten-1";
         break;
+      case "Art Direction":
+        return "amber lighten-1";
+        break;
     }
   },
   setPaymentStatus: function (paymentStatus) {
