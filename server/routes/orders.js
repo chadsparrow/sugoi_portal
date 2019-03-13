@@ -381,7 +381,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.instructions.push({
             instruction: instruction,
             instructionType: "Art Direction",
-            user: isr
+            user: foundOrder.isr
           });
         }
         foundOrder.currentArtist = "";
