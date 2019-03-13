@@ -12,6 +12,15 @@ $(document).ready(function () {
       $("#productionDiv").hide();
     }
   });
+  $("#proofDiv").hide();
+
+  $("#currentStatus").change(function () {
+    if ($("#currentStatus").val() == "A. Waiting for Proof") {
+      $("#proofDiv").show();
+    } else {
+      $("#proofDiv").hide();
+    }
+  });
 
   $("#admin").click(function () {
     if ($("#admin").is(":checked")) {
