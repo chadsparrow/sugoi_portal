@@ -702,6 +702,7 @@ router.put(
     if (instruction === "" || instruction === null) {
       req.flash("error_msg", "Blank Request Ignored");
       res.redirect("/orders/view/" + id);
+      return;
     }
     let instructionType = "Revision";
     let revUser = req.body.isr;
