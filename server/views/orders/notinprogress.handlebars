@@ -54,14 +54,32 @@
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;">
-          <span class="right">
-            <a class="black-text btn-flat btn-small" href="/orders/view/{{_id}}">
+          <span>
+            <a class="blue-text" href="/{{orderNum}}" target="_blank">
+              <i class="material-icons">description</i>
+            </a>
+          </span>
+          <span>
+            <a class="black-text" href="/orders/view/{{_id}}">
               <i class="material-icons">remove_red_eye</i>
             </a>
-            <a class="green-text btn-flat btn-small" href="/orders/edit/{{_id}}">
+          </span>
+          <span>
+            <a class="orange-text" href="/orders/po/{{orderNum}}">
+              <i class="material-icons">list</i>
+            </a>
+          </span>
+          <span>
+            <a class="red-text" href="/orders/xml/{{orderNum}}">
+              <i class="material-icons">code</i>
+            </a>
+          </span>
+          <span>
+            <a class="green-text" href="/orders/edit/{{_id}}">
               <i class="material-icons">edit</i>
             </a>
           </span>
+
         </td>
       </tr>
       {{/each}}
