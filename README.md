@@ -35,9 +35,9 @@
 ### *`/orders` - All routes secured - must be authenticated*
 * `GET /`  - fetches all from `orders` collection and displays in `index.handlebars` table.
 * `GET /initial` - fetches all from `orders` collection in `Initial` status and displays in `orders/index.handlebars` table.
-* `GET /completed` - fetches all from `orders` collection in `Sent to Vendor` status and displays in `orders/index.handlebars` table.
-* `GET /cancelled` - fetches all from `orders` collection in `Cancelled` status and displays in `orders/index.handlebars` table.
-* `GET /archived` - fetches all from `orders` collection in `Archived` status and displays in `orders/index.handlebars` table.
+* `GET /completed` - fetches all from `orders` collection in `Sent to Vendor` status and displays in `orders/notinprogress.handlebars` table.
+* `GET /cancelled` - fetches all from `orders` collection in `Cancelled` status and displays in `orders/notinprogress.handlebars` table.
+* `GET /archived` - fetches all from `orders` collection in `Archived` status and displays in `orders/notinprogress.handlebars` table.
 * `GET /po/:#######` - fetches order from `orders` collection based on order number and displays a table that can be downloaded to Excel. Used to create PO for vendor.
 * `GET /xml/:#######` - fetches order from `orders` collection based on order number and responds with `raw xml data` converted from json.
 * `GET /add` - displays form for user to input new order into the system.
