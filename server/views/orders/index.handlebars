@@ -53,8 +53,13 @@
         <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;">
-          <span class="right">
-            <a class="black-text btn-flat btn-small" href="/orders/view/{{_id}}">
+          <span>
+            <a class="blue-text" href="/{{orderNum}}" target="_blank">
+              <i class="material-icons">description</i>
+            </a>
+          </span>
+          <span>
+            <a class="black-text" href="/orders/view/{{_id}}">
               <i class="material-icons">remove_red_eye</i>
             </a>
           </span>
@@ -73,6 +78,7 @@
               <i class="material-icons">edit</i>
             </a>
           </span>
+
         </td>
       </tr>
       {{/each}}
