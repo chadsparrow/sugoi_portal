@@ -420,25 +420,48 @@ export default {
       });
     },
     setFlo() {
-      if (
-        this.$refs.colour1.value === "ELECTRIC SALMON" ||
-        this.$refs.colour1.value.includes("Flo ") ||
-        this.$refs.colour2.value === "ELECTRIC SALMON" ||
-        this.$refs.colour2.value.includes("Flo ") ||
-        this.$refs.colour3.value === "ELECTRIC SALMON" ||
-        this.$refs.colour3.value.includes("Flo ")
-      ) {
-        this.$store.commit("SET_FLO", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex,
-          inkType: "F"
-        });
-      } else {
-        this.$store.commit("SET_FLO", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex,
-          inkType: "D"
-        });
+      this.$store.commit("SET_FLO", {
+        lineIndex: this.lineIndex,
+        itemIndex: this.itemIndex,
+        inkType: "D"
+      });
+
+      if (this.$refs.colour1 != undefined) {
+        if (
+          this.$refs.colour1.value === "ELECTRIC SALMON" ||
+          this.$refs.colour1.value.includes("Flo ")
+        ) {
+          this.$store.commit("SET_FLO", {
+            lineIndex: this.lineIndex,
+            itemIndex: this.itemIndex,
+            inkType: "F"
+          });
+        }
+      }
+      if (this.$refs.colour2 != undefined) {
+        if (
+          this.$refs.colour2.value === "ELECTRIC SALMON" ||
+          this.$refs.colour2.value.includes("Flo ")
+        ) {
+          this.$store.commit("SET_FLO", {
+            lineIndex: this.lineIndex,
+            itemIndex: this.itemIndex,
+            inkType: "F"
+          });
+        }
+      }
+
+      if (this.$refs.colour3 != undefined) {
+        if (
+          this.$refs.colour3.value === "ELECTRIC SALMON" ||
+          this.$refs.colour3.value.includes("Flo ")
+        ) {
+          this.$store.commit("SET_FLO", {
+            lineIndex: this.lineIndex,
+            itemIndex: this.itemIndex,
+            inkType: "F"
+          });
+        }
       }
     },
     finalUnitPrice() {

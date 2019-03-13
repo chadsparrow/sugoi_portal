@@ -328,7 +328,7 @@ export default {
     },
     setProvTax(e) {
       let index = e.target.selectedIndex;
-      if (index > 0) {
+      if (index >= 0) {
         let tax = this.provs[index].tax;
         this.$store.dispatch("setProvTax", tax);
       }
