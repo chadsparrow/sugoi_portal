@@ -16,7 +16,9 @@ module.exports = {
       );
   },
   formatDate: function (date, format) {
-    if (date) {
+    if (date === 'today') {
+      date = dayjs().format(format);
+    } else if (date && date != 'today') {
       return dayjs(date).format(format);
     } else {
       return null;
