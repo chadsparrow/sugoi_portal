@@ -12,8 +12,6 @@ const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
 const Proof = require("../models/Proof");
 const Order = require("../models/Order");
 
-const d = new Date().toISOString();
-
 // router.get(
 //   "/uploadform",
 //   [ensureAuthenticated, ensureEditProofs],
@@ -31,7 +29,7 @@ const d = new Date().toISOString();
 //       null,
 //       path.basename(file.originalname, path.extname(file.originalname)) +
 //         "_" +
-//         dayjs(d) +
+//         dayjs() +
 //         path.extname(file.originalname)
 //     );
 //   }
@@ -230,7 +228,7 @@ router.put(
     const { note, noteUser } = req.body;
     const hasQCNote = true;
     const qcnote = {
-      noteDate: dayjs(d).format(),
+      noteDate: dayjs().format(),
       noteUser: noteUser,
       note: note
     };
