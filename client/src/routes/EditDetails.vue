@@ -307,6 +307,19 @@ export default {
   components: {
     DatePicker
   },
+  data() {
+    return {
+      isCommitted: false
+    };
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.isCommitted) {
+      next();
+    } else {
+      alert("You must click commit to leave this page!");
+      next(false);
+    }
+  },
   computed: {
     order() {
       return this.$store.state.order;
@@ -420,6 +433,8 @@ export default {
         alert("Phone # not entered");
         return;
       }
+
+      this.isCommitted = true;
 
       this.$store.dispatch("setOrderTotal");
       this.$router.push({ path: `/${this.order.orderNum}` });
