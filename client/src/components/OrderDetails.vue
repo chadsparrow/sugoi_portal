@@ -120,10 +120,8 @@
             Currency:
             <span>{{order.currency}}</span>
           </li>
-          <li
-            v-if="order.multiShips > 0 || order.prePacks>0"
-            class="list-group-item"
-          >Before Multi/Prepacks:
+          <li v-if="order.multiShips > 0 || order.prePacks>0" class="list-group-item">
+            Before Multi/Prepacks:
             <span>${{formatPrice(beforeAddOns)}}</span>
           </li>
           <li v-if="order.multiShips >0" class="list-group-item">
@@ -181,8 +179,9 @@ export default {
       return this.$store.state.order;
     },
     beforeAddOns() {
+      const orderLines = this.order.orderLines;
       const subTotalBeforeAddOns = 0;
-      for (orderLine of this.order.orderLines) {
+      for (orderLine of orderLines) {
         subTotalBeforeAddOns += orderLine.itemsSubTotal;
       }
       return subTotalBeforeAddOns;
