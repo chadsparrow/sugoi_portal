@@ -14,7 +14,6 @@ const Proof = require("../models/Proof");
 const CustomArtist = require('../models/CustomArtist');
 const CustomRep = require('../models/CustomRep');
 
-//const d = new Date().toISOString();
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
@@ -271,8 +270,6 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-
-  //const proofRequestDate = dayjs(d).format();
 
   let instructions = [];
 

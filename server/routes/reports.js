@@ -6,8 +6,6 @@ const dayjs = require('dayjs');
 
 const Report = require("../models/Report");
 
-
-
 router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment(dayjs().format()).format("W");
   Report.find({})

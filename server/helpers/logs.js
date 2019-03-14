@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const logDir = "logs";
 const moment = require("moment-timezone");
-
+const dayjs = require('dayjs');
 
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
@@ -11,7 +11,7 @@ if (!fs.existsSync(logDir)) {
 
 const appendTimestamp = winston.format((info, opts) => {
   if (opts.tz) {
-    info.timestamp = moment()
+    info.timestamp = moment(dayjs().format())
       .tz(opts.tz)
       .format();
     return info;
