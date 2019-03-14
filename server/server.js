@@ -14,7 +14,7 @@ const fs = require("fs");
 const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
-const { ensureAuthenticated } = require("./helpers/auth");
+const { ensureAuthenticated, ensureEditOrders } = require("./helpers/auth");
 
 
 const express = require("express");
@@ -235,7 +235,15 @@ app.use("/api/graphicCodes", apiGraphicRoutes);
 app.use("/api/swatches", apiSwatchRoutes);
 
 //Vue.js front-end router
-app.get(/.*/, ensureAuthenticated, (req, res) => res.sendFile(__dirname + "/public/index.html"));
+app.get(/.*/, [ensureAuthenticated, ensureEditOrders], (req, res) => {
+  try {
+    console.log(req.user);
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 
 // if the req doesnt match any route above, set an error
