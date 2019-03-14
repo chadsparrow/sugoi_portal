@@ -492,7 +492,9 @@ export const store = new Vuex.Store({
       state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100));
       let qdDiscountAmount = 0;
       if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM' && state.order.orderLines[lineIndex].graphicCode != null) {
-        qdDiscountAmount = (item.totalUnits * item.finalUnitPrice) * .1;
+        if (state.order.orderLines[lineIndex].priceBreak === 6 || state.order.orderLines[lineIndex].priceBreak === 12) {
+          qdDiscountAmount = (item.totalUnits * item.finalUnitPrice) * .1;
+        }
       }
       state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice) - qdDiscountAmount;
     },

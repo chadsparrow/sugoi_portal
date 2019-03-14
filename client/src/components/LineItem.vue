@@ -170,7 +170,9 @@ export default {
       ) {
         return 0;
       } else {
-        return this.subTotal * 0.1;
+        if (orderLine.priceBreak === 6 || orderLine.priceBreak === 12) {
+          return this.subTotal * 0.1;
+        }
       }
     },
     subTotal() {
