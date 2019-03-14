@@ -66,6 +66,16 @@
           <input type="checkbox" class="form-check-input" id="need3d" v-model="order.need3d">
           <label class="form-check-label" for="need3d">Require 3D</label>
         </div>
+        <div class="form-group form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="needSketch"
+            v-model="order.needSketch"
+            @change="toggleSketches"
+          >
+          <label class="form-check-label" for="needSketch">Require Sketch</label>
+        </div>
       </div>
       <div class="col-sm-7 border-left border-right mb-0">
         <div class="row">
@@ -356,6 +366,11 @@ export default {
       let text = e.target.value;
       text = text.toUpperCase();
       this.$store.dispatch("setCountryUpper", text);
+    },
+    toggleSketches() {
+      if (this.order.needSketch === false) {
+        this.$store.commit("TOGGLE_SKETCHES");
+      }
     },
     commitChanges() {
       if (

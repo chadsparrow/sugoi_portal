@@ -314,6 +314,10 @@ const OrderSchema = new Schema({
     type: Boolean,
     default: false
   },
+  needSketch: {
+    type: Boolean,
+    default: false
+  },
   orderLines: [
     {
       lineNumber: {

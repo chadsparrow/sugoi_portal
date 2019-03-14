@@ -6,6 +6,10 @@
         class="badge badge-info text-white text-center ml-3 d-print-none"
         v-if="order.need3d"
       >Requires 3D</div>
+      <div
+        class="badge badge-danger text-white text-center ml-3 d-print-none"
+        v-if="order.needSketch"
+      >Requires Sketch</div>
     </div>
     <div class="row card-body p-2">
       <div class="col-sm-3">

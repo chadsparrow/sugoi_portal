@@ -3,10 +3,10 @@
     <div class="card-header bg-dark text-light p-2">
       <div>Item#: {{item.itemNumber}}</div>
       <div
-        class="badge badge-warning text-center"
+        class="badge badge-warning text-center ml-3"
         v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
       >Quick Design - 10% OFF</div>
-      <div class="form-group form-check float-right">
+      <div class="form-group form-check ml-3" v-if="order.needSketch">
         <input type="checkbox" class="form-check-input" id="sketchOnly" v-model="item.sketchOnly">
         <label class="form-check-label" for="sketchOnly">Need Sketch</label>
       </div>
