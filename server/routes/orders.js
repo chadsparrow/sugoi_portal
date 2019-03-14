@@ -13,7 +13,6 @@ const Proof = require("../models/Proof");
 const CustomArtist = require('../models/CustomArtist');
 const CustomRep = require('../models/CustomRep');
 
-const d = new Date().toISOString();
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
@@ -107,7 +106,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
-  const proofRequestDate = dayjs(d).format();
+  const proofRequestDate = dayjs().format();
 
   let instructions = [];
 
@@ -220,7 +219,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus == "A. Waiting for Proof") {
         if (foundOrder.proofRequestDate === null) {
-          foundOrder.proofRequestDate = dayjs(d).format();
+          foundOrder.proofRequestDate = dayjs().format();
         }
         foundOrder.currentArtist = "";
       }
@@ -238,16 +237,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.uploadDate === null) {
-          foundOrder.uploadDate = dayjs(d).format();
+          foundOrder.uploadDate = dayjs().format();
           foundOrder.sentVendor = null;
           let date1 = dayjs(foundOrder.uploadDate);
           let date2 = dayjs(foundOrder.signedOffDate);
           let diff = new DateDiff(date1, date2);
           const outputTurnaround = parseInt(diff.days() + 1);
           foundOrder.outputTurnaround = outputTurnaround;
-          let reportWeek = moment(dayjs(d).format()).format("W");
-          let reportYear = dayjs(d).format("YYYY");
-          let reportMonth = moment(dayjs(d).format()).format("M");
+          let reportWeek = moment(dayjs().format()).format("W");
+          let reportYear = dayjs().format("YYYY");
+          let reportMonth = moment(dayjs().format()).format("M");
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let outputAvg = 0;
 
@@ -297,14 +296,14 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.sentVendor === null) {
-          foundOrder.sentVendor = dayjs(d).format();
+          foundOrder.sentVendor = dayjs().format();
         }
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
         if (foundOrder.signedOffDate === null) {
-          foundOrder.signedOffDate = dayjs(d).format();
-          let reportWeek = moment(dayjs(d).format()).format("W");
-          let reportYear = dayjs(d).format("YYYY");
-          let reportMonth = moment(dayjs(d).format()).format("M");
+          foundOrder.signedOffDate = dayjs().format();
+          let reportWeek = moment(dayjs().format()).format("W");
+          let reportYear = dayjs().format("YYYY");
+          let reportMonth = moment(dayjs().format()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -333,16 +332,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.proofCompletionDate === null) {
-          foundOrder.proofCompletionDate = dayjs(d).format();
+          foundOrder.proofCompletionDate = dayjs().format();
           let date1 = dayjs(foundOrder.proofCompletionDate);
           let date2 = dayjs(foundOrder.proofRequestDate);
           let diff = new DateDiff(date1, date2);
           const proofTurnaround = parseInt(diff.days() + 1);
           foundOrder.proofTurnaround = proofTurnaround;
 
-          let reportWeek = moment(dayjs(d).format()).format("W");
-          let reportYear = dayjs(d).format("YYYY");
-          let reportMonth = moment(dayjs(d).format()).format("M");
+          let reportWeek = moment(dayjs().format()).format("W");
+          let reportYear = dayjs().format("YYYY");
+          let reportMonth = moment(dayjs().format()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
@@ -392,16 +391,16 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           return;
         }
         if (foundOrder.revisionCompletionDate === null) {
-          foundOrder.revisionCompletionDate = dayjs(d).format();
+          foundOrder.revisionCompletionDate = dayjs().format();
 
           let date1 = dayjs(foundOrder.revisionCompletionDate);
           let date2 = dayjs(foundOrder.revisionRequestDate);
           let diff = new DateDiff(date1, date2);
           const revisionTurnaround = parseInt(diff.days() + 1);
 
-          let reportWeek = moment(dayjs(d).format()).format("W");
-          let reportYear = dayjs(d).format("YYYY");
-          let reportMonth = moment(dayjs(d).format()).format("M");
+          let reportWeek = moment(dayjs().format()).format("W");
+          let reportYear = dayjs().format("YYYY");
+          let reportMonth = moment(dayjs().format()).format("M");
 
           let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
           let revisionsAvg = 0;
@@ -549,7 +548,7 @@ router.put(
     let instructionType = "Revision";
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
-    let revisionRequestDate = dayjs(d).format();
+    let revisionRequestDate = dayjs().format();
 
     Order.findOne({ _id: id }, function (err, foundOrder) {
       if (err) {
