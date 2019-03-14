@@ -310,6 +310,10 @@ const OrderSchema = new Schema({
     type: Number,
     default: null
   },
+  need3d: {
+    type: Boolean,
+    default: false
+  },
   orderLines: [
     {
       lineNumber: {
@@ -364,14 +368,6 @@ const OrderSchema = new Schema({
         default: null
       },
       cancelled: {
-        type: Boolean,
-        default: false
-      },
-      need3d: {
-        type: Boolean,
-        default: false
-      },
-      sketchOnly: {
         type: Boolean,
         default: false
       },
@@ -557,6 +553,10 @@ const OrderSchema = new Schema({
           },
           fabric: {
             type: String
+          },
+          sketchOnly: {
+            type: Boolean,
+            default: false
           }
         }
       ]

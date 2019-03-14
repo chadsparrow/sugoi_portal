@@ -338,8 +338,15 @@
         </div>
       </div>
     </div>
-    <div class="card-footer bg-dark text-light text-right p-2">
-      <button class="btn btn-sm btn-success mr-1" @click.prevent="commitItem">Commit Item</button>
+    <div class="card-footer bg-dark text-light p-2">
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="sketchOnly" v-model="item.sketchOnly">
+        <label class="form-check-label" for="sketchOnly">Need Sketch</label>
+      </div>
+      <button
+        class="btn btn-sm btn-success mr-1 float-right"
+        @click.prevent="commitItem"
+      >Commit Item</button>
     </div>
   </div>
 </template>
