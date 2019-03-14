@@ -12,14 +12,6 @@ const router = new VueRouter({
   mode: 'history'
 });
 
-router.beforeEach((to, from, next) => {
-  if (store.getters.checkSignOff != null) {
-    next();
-  } else {
-    next(false);
-  }
-});
-
 new Vue({
   router,
   store,
