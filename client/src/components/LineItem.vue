@@ -1,9 +1,9 @@
 <template>
   <div class="item card border-dark mb-2" v-if="item.cancelled === false">
     <div class="card-header bg-info mb-0 p-1">
-      <div class="row text-light align-items-center">
+      <div class="row text-light align-items-center m-0">
         <div
-          class="badge badge-danger text-white text-center col"
+          class="badge badge-danger text-white text-center col-sm-1 d-print-none"
           v-if="item.sketchOnly"
         >Requires Sketch</div>
         <div class="col">Item: {{item.itemNumber}}</div>

@@ -6,6 +6,10 @@
         class="badge badge-warning text-center"
         v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
       >Quick Design - 10% OFF</div>
+      <div class="form-group form-check float-right">
+        <input type="checkbox" class="form-check-input" id="sketchOnly" v-model="item.sketchOnly">
+        <label class="form-check-label" for="sketchOnly">Need Sketch</label>
+      </div>
     </div>
     <div class="card-body p-3">
       <div class="row align-items-center mb-2">
@@ -338,15 +342,9 @@
         </div>
       </div>
     </div>
-    <div class="card-footer bg-dark text-light p-2">
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="sketchOnly" v-model="item.sketchOnly">
-        <label class="form-check-label" for="sketchOnly">Need Sketch</label>
-      </div>
-      <button
-        class="btn btn-sm btn-success mr-1 float-right"
-        @click.prevent="commitItem"
-      >Commit Item</button>
+
+    <div class="card-footer bg-dark text-light text-right p-2">
+      <button class="btn btn-sm btn-success mr-1" @click.prevent="commitItem">Commit Item</button>
     </div>
   </div>
 </template>
