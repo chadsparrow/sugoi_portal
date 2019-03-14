@@ -4,7 +4,7 @@
       <div class="row text-light align-items-center m-0">
         <div
           class="badge badge-danger text-white text-center col-sm-1 d-print-none"
-          v-if="item.sketchOnly"
+          v-if="item.sketchOnly && order.needSketch"
         >Requires Sketch</div>
         <div class="col">Item: {{item.itemNumber}}</div>
         <div class="col">Description: {{item.extendedDescription}}</div>

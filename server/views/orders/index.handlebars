@@ -36,8 +36,9 @@
     <tbody id="myTable">
       {{#each orders}}
       <tr>
-        <td style="font-size: 14px;" class='center-align'>{{orderNum}} {{#if need3D}}<span
-            class='badge blue lighten-3'>3D</span>{{/if}}</td>
+        <td style="font-size: 14px;" class='center-align'>{{orderNum}} {{#if need3D}}<span class='badge blue lighten-3'
+            style="color:white;">3D</span>{{/if}}{{#if needSketch}}<span class='badge red'
+            style="color: white;">S</span>{{/if}}</td>
         <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
         </td>
         <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
