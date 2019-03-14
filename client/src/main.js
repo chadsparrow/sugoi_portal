@@ -12,15 +12,6 @@ const router = new VueRouter({
   mode: 'history'
 });
 
-router.beforeEach((to, from, next) => {
-  if (store.state.order.signedOffDate != null) {
-    next();
-  } else {
-    alert("Order is signed off!")
-    next(false);
-  }
-})
-
 new Vue({
   router,
   store,
