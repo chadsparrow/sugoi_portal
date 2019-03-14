@@ -146,10 +146,11 @@
           </h6>
         </div>
         <div class="border-top pt-2">
-          <button
+          <router-link
+            tag="button"
+            :to="`/${this.order.orderNum}/editdetails`"
             class="btn btn-success btn-block d-print-none"
-            @click.prevent="goToEdit"
-          >Edit Details</button>
+          >Edit Details</router-link>
         </div>
       </div>
     </div>
@@ -171,9 +172,9 @@ export default {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    goToEdit() {
-      this.$router.push({ path: `/${this.order.orderNum}/editdetails` });
-    },
+    // goToEdit() {
+    //   this.$router.push({ path: `/${this.order.orderNum}/editdetails` });
+    // },
     formatDate(date) {
       if (date) {
         return moment(date)
