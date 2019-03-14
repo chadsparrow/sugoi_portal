@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: "Cancelled",
   computed: {
     cancelledItems() {
       return this.$store.getters.cancelledItems;
