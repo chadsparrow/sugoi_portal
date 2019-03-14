@@ -350,8 +350,17 @@ export default {
   data() {
     return {
       itemIndex: this.$route.params.itemIndex,
-      lineIndex: this.$route.params.lineIndex
+      lineIndex: this.$route.params.lineIndex,
+      isCommitted: false
     };
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.isCommitted) {
+      next();
+    } else {
+      alert("You must click commit to leave this page!");
+      next(false);
+    }
   },
   computed: {
     order() {
@@ -584,6 +593,8 @@ export default {
           itemIndex: this.itemIndex
         });
       }
+
+      this.isCommitted = true;
 
       this.$store.dispatch("setAddOns", this.lineIndex);
       this.$store.dispatch("setFinalUnitPrice", {

@@ -144,8 +144,17 @@ export default {
     return {
       lineIndex: this.$route.params.lineIndex,
       colourWays: [],
-      selectedOption: ""
+      selectedOption: "",
+      isCommitted: false
     };
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.isCommitted) {
+      next();
+    } else {
+      alert("You must click commit to leave this page!");
+      next(false);
+    }
   },
   computed: {
     order() {
@@ -191,6 +200,8 @@ export default {
         alert("ColourWay not selected!");
         return;
       }
+
+      this.isCommitted = true;
 
       this.$store.dispatch("setAddOns", this.lineIndex);
       this.$router.push({ path: `/${this.order.orderNum}` });
