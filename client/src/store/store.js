@@ -555,18 +555,6 @@ export const store = new Vuex.Store({
     },
     isLoading: (state) => {
       return state.isLoading;
-    },
-    cancelledItems: (state) => {
-      let cancelledItems = [];
-      const orderLines = state.order.orderLines;
-      for (let orderLine of orderLines) {
-        for (let item of orderLine.items) {
-          if (item.cancelled) {
-            cancelledItems.push(item);
-          }
-        }
-      }
-      return cancelledItems;
     }
   }
 });

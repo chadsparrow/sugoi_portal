@@ -18,7 +18,18 @@ export default {
   name: "Cancelled",
   computed: {
     cancelledItems() {
-      return this.$store.getters.cancelledItems;
+      let cancelled = [];
+      const orderLines = this.$store.state.order.orderLines;
+      for (let line of orderLines) {
+        const items = line.items;
+        for (let item of items) {
+          if (item.cancelled === true) {
+            cancelled.push(item);
+          }
+        }
+      }
+      console.log(cancelled.length);
+      return cancelled;
     }
   }
 };
