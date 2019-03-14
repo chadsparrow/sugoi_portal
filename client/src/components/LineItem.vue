@@ -170,7 +170,10 @@ export default {
       ) {
         return 0;
       } else {
-        if (orderLine.priceBreak === 6 || orderLine.priceBreak === 12) {
+        if (
+          this.orderLine.priceBreak === 6 ||
+          this.orderLine.priceBreak === 12
+        ) {
           return this.subTotal * 0.1;
         }
       }
@@ -183,9 +186,6 @@ export default {
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-    goToEdit() {
-      this.$router.push({ path: `/edititem/${this.lineIndex}/${this.index}` });
     },
     cancelItem() {
       let checkdelete = confirm("Are you sure?");
