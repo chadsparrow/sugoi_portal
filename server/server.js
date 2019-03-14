@@ -236,12 +236,6 @@ app.use("/api/swatches", apiSwatchRoutes);
 
 //Vue.js front-end router
 app.get(/.*/, [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  try {
-    console.log(req.user);
-  } catch (err) {
-    console.log(err);
-  }
-
   res.sendFile(__dirname + "/public/index.html");
 });
 
