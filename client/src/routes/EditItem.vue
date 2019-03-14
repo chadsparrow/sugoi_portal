@@ -6,12 +6,12 @@
         class="badge badge-warning text-center ml-3"
         v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
       >Quick Design - 10% OFF</div>
-      <div class="form-group form-check ml-3" v-if="order.needSketch">
+    </div>
+    <div class="card-body p-3">
+      <div class="form-group form-check ml-3">
         <input type="checkbox" class="form-check-input" id="sketchOnly" v-model="item.sketchOnly">
         <label class="form-check-label" for="sketchOnly">Need Sketch</label>
       </div>
-    </div>
-    <div class="card-body p-3">
       <div class="row align-items-center mb-2">
         <div class="col-sm-3">
           <label for="selectedStyle" class="small my-0">Style:</label>

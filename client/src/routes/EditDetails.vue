@@ -72,7 +72,6 @@
             class="form-check-input"
             id="needSketch"
             v-model="order.needSketch"
-            @change="toggleSketches"
           >
           <label class="form-check-label" for="needSketch">Require Sketch</label>
         </div>
@@ -366,11 +365,6 @@ export default {
       let text = e.target.value;
       text = text.toUpperCase();
       this.$store.dispatch("setCountryUpper", text);
-    },
-    toggleSketches() {
-      if (this.order.needSketch === false) {
-        this.$store.commit("TOGGLE_SKETCHES");
-      }
     },
     commitChanges() {
       if (

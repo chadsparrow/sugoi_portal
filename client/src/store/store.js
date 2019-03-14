@@ -527,13 +527,6 @@ export const store = new Vuex.Store({
     },
     SET_HEADER_TITLE: (state, quoteToggle) => {
       state.order.quoteToggle = !state.order.quoteToggle;
-    },
-    TOGGLE_SKETCHES: (state) => {
-      for ([lineIndex, orderLine] of state.order.orderLines.entries()) {
-        for ([itemIndex, item] of orderLine.items.entries()) {
-          state.order.orderLines[lineIndex].items[itemIndex].sketchOnly = false
-        }
-      }
     }
   },
   getters: {
