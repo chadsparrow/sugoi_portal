@@ -90,17 +90,6 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
               extendedDescription.replace(/"/g, '&quot;');
               extendedDescription.replace(/'/g, '&apos;');
 
-              let customerPO = order.orderNotes;
-              if (order.orderNotes) {
-                customerPO.replace(/&/g, '&amp;');
-                customerPO.replace(/</g, '&lt;');
-                customerPO.replace(/>/g, '&gt;');
-                customerPO.replace(/"/g, '&quot;');
-                customerPO.replace(/'/g, '&apos;');
-              } else {
-                customerPO = '.'
-              }
-
               newOrderObject.SAP.push({
                 'item': {
                   'SALESORDER': order.orderNum,
@@ -136,7 +125,7 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
                   'THREADCOLOR': item.thread,
                   'GRAPHIC': orderLine.graphicCode,
                   'COLOURWAY': orderLine.colourWayCode,
-                  'CUSTOMERPO': customerPO,
+                  'CUSTOMERPO': '.',
                   'REVISION': '.',
                   'BRAND': item.brand,
                   'FACTORY': order.vendor,
