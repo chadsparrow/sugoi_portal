@@ -59,11 +59,11 @@
           </div>
         </div>
         <div class="text-center mt-2">
-          <button
-            type="button"
+          <router-link
+            tag="button"
             class="btn btn-sm btn-success d-print-none"
-            @click.prevent="goToEdit"
-          >Edit Line Details</button>
+            :to="`/editline/${this.index}`"
+          >Edit Line Details</router-link>
         </div>
         <div class="items mt-2" v-if="orderLine.items.length">
           <LineItem
@@ -141,9 +141,6 @@ export default {
     };
   },
   methods: {
-    goToEdit() {
-      this.$router.push({ path: `editline/${this.index}` });
-    },
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

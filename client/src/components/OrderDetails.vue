@@ -172,9 +172,6 @@ export default {
       let val = (value / 1).toFixed(2);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    // goToEdit() {
-    //   this.$router.push({ path: `/${this.order.orderNum}/editdetails` });
-    // },
     formatDate(date) {
       if (date) {
         return moment(date)
