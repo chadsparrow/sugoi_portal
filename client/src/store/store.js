@@ -556,8 +556,17 @@ export const store = new Vuex.Store({
     isLoading: (state) => {
       return state.isLoading;
     },
-    checkSignOff: (state) => {
-      return state.order.signedOffDate;
+    cancelledItems: (state) => {
+      let cancelledItems = [];
+      const orderLines = state.order.orderLines;
+      for (let orderLine of OrderLines) {
+        for (let item of orderLine.items) {
+          if (item.cancelled) {
+            items.push(item);
+          }
+        }
+      }
+      return cancelledItems;
     }
   }
 });
