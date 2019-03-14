@@ -562,7 +562,7 @@ export const store = new Vuex.Store({
       for (let orderLine of orderLines) {
         for (let item of orderLine.items) {
           if (item.cancelled) {
-            items.push(item);
+            cancelledItems.push(item);
           }
         }
       }
