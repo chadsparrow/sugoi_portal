@@ -9,3 +9,4 @@ export default [
     { path: '/editline/:lineIndex', component: EditLine },
     { path: '/edititem/:lineIndex/:itemIndex', component: EditItem }
 ]
+

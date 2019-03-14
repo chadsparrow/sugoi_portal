@@ -12,8 +12,16 @@ const router = new VueRouter({
   mode: 'history'
 });
 
+router.beforeEach((to, from, next) => {
+  if (store.getters.checkSignOff != null) {
+    next();
+  } else {
+    next(false);
+  }
+});
+
 new Vue({
-  router: router,
-  store: store,
+  router,
+  store,
   render: h => h(App)
 }).$mount("#app");

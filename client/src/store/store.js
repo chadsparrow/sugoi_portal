@@ -555,6 +555,9 @@ export const store = new Vuex.Store({
     },
     isLoading: (state) => {
       return state.isLoading;
+    },
+    checkSignOff: (state) => {
+      return state.order.signedOffDate;
     }
   }
 });
