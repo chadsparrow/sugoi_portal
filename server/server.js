@@ -234,10 +234,10 @@ app.use("/api/styles", apiStyleRoutes);
 app.use("/api/graphicCodes", apiGraphicRoutes);
 app.use("/api/swatches", apiSwatchRoutes);
 
-//Vue.js front-end router
-app.get(/.*/, [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
-});
+//Vue.js front-end router - uncomment when going to production
+// app.get(/.*/, [ensureAuthenticated, ensureEditOrders], (req, res) => {
+//   res.sendFile(__dirname + "/public/index.html");
+// });
 
 
 // if the req doesnt match any route above, set an error
