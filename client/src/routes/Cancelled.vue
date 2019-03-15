@@ -20,15 +20,14 @@ export default {
     cancelledItems() {
       let cancelled = [];
       const orderLines = this.$store.state.order.orderLines;
-      for (let line of orderLines) {
-        const items = line.items;
+      for (let orderLine of orderLines) {
+        const items = orderLine.items;
         for (let item of items) {
           if (item.cancelled === true) {
-            cancelled.push(item);
+            console.log(item.itemNumber);
           }
         }
       }
-      console.log(cancelled.length);
       return cancelled;
     }
   }
