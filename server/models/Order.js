@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const dayjs = require('dayjs');
 const timestamps = require('mongoose-timestamp');
 
 // Create Order Schema
@@ -21,6 +20,10 @@ const OrderSchema = new Schema({
   currentStatus: {
     type: String,
     default: "1. Initial"
+  },
+  enteredDate: {
+    type: Date,
+    default: () => { return new Date() }
   },
   priority: {
     type: String,
@@ -47,7 +50,7 @@ const OrderSchema = new Schema({
     {
       date: {
         type: Date,
-        default: dayjs().format()
+        default: () => { return new Date() }
       },
       instruction: {
         type: String,

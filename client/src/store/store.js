@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
     saveOrder: ({ commit, state }) => {
       let order = state.order;
       delete order.createdAt;
+      delete order.updatedAt;
       axios
         .put(`/api/orders/${state.order.orderNum}`, order)
         .then(r => r.data)
