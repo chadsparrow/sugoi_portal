@@ -24,7 +24,7 @@
           </li>
           <li class="list-group-item">
             Order Date:
-            <span>{{formatDate(order.entereDate)}}</span>
+            <span>{{formatDate(order.enteredDate)}}</span>
           </li>
           <li class="list-group-item" v-if="order.eventDate">
             Event Date:
