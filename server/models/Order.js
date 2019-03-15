@@ -293,6 +293,10 @@ const OrderSchema = new Schema({
     type: Number,
     default: null
   },
+  revisionCharge: {
+    type: Number,
+    default: null
+  },
   deposit: {
     type: Number,
     default: null

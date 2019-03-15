@@ -269,6 +269,17 @@
             v-model.number="order.prePacks"
           >
         </div>
+        <div class="form-group mb-1">
+          <label for="revisionCharge" class="small my-0">Extra Revisions</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            id="revisionCharge"
+            min="0"
+            step="25"
+            v-model.number="order.revisionCharge"
+          >
+        </div>
 
         <div class="form-group mb-2 mt-3">
           <label for="currency" class="small my-0">Currency</label>

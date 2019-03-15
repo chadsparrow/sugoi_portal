@@ -132,6 +132,10 @@
             PrePacks:
             <span>{{order.prePacks}} @ $5 = ${{formatPrice(order.prePacks * 5)}}</span>
           </li>
+          <li v-if="order.revisionCharge >0" class="list-group-item">
+            Extra Revisions:
+            <span>${{formatPrice(order.revisionCharge)}}</span>
+          </li>
 
           <li v-if="order.taxes" class="list-group-item">
             Sub Total:
