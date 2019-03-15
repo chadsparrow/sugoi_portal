@@ -459,7 +459,9 @@ export const store = new Vuex.Store({
       }
       state.order.beforeTaxes += (state.order.multiShips * 15);
       state.order.beforeTaxes += (state.order.prePacks * 5);
-      state.order.beforeTaxes += state.order.revisionCharge;
+      if (state.order.revisionCharge) {
+        state.order.beforeTaxes += state.order.revisionCharge;
+      }
       state.order.taxAmount = (state.order.beforeTaxes * (state.order.taxes / 100));
       state.order.netValue = (state.order.beforeTaxes + state.order.taxAmount);
       state.order.balanceOutstanding = (state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded);
