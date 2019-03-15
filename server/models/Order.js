@@ -21,13 +21,13 @@ const OrderSchema = new Schema({
     type: String,
     default: "1. Initial"
   },
-  enteredDate: {
-    type: Date,
-    default: () => { return new Date() }
-  },
   priority: {
     type: String,
     uppercase: true
+  },
+  enteredDate: {
+    type: Date,
+    default: () => { return new Date() }
   },
   eventDate: {
     type: Date,
