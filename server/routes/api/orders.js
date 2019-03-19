@@ -24,7 +24,8 @@ router.get("/", ensureAuthenticated, (req, res) => {
 router.get("/:orderNum", ensureAuthenticated, (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum }, { checkpoints: 0, instructions: 0 })
     .then(order => {
-      if (order.signedOffDate) {
+      let { signedOffDate } = order;
+      if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
         res.json(order);
       } else {
         res.status(403).send('Order is signed off - access Forbidden')
@@ -40,7 +41,8 @@ router.get("/:orderNum", ensureAuthenticated, (req, res) => {
 router.put('/:orderNum/:lineNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
-      if (foundOrder.signedOffDate) {
+      let { signedOffDate } = foundOrder;
+      if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
         foundOrder.orderLines.push({ lineNumber: req.params.lineNumber });
         foundOrder.save((err, savedOrder) => {
           if (err) {
@@ -62,7 +64,8 @@ router.put('/:orderNum/:lineNumber', [ensureAuthenticated, ensureEditOrders], (r
 router.put('/:orderNum/:lineNumber/:itemNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
-      if (foundOrder.signedOffDate) {
+      let { signedOffDate } = foundOrder;
+      if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
         let newItemNumber = `${foundOrder.orderNum}-${foundOrder.orderLines[req.params.lineNumber].lineNumber}-${req.params.itemNumber}`
         foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: newItemNumber });
         foundOrder.save((err, savedOrder) => {

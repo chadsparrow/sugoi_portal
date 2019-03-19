@@ -141,10 +141,7 @@ module.exports = {
     }
   },
   checkForSignOff: function (signedOffDate) {
-    if (signedOffDate) {
-      return false;
-    }
-    return true;
+
   },
   catNotes: function (type) {
     switch (type) {
