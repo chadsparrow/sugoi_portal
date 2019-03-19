@@ -6,8 +6,8 @@
           class="badge badge-danger text-white text-center col-sm-1 d-print-none"
           v-if="item.sketchOnly && order.needSketch"
         >Requires Sketch</div>
-        <div class="col">Item: {{item.itemNumber}}</div>
-        <div class="col">Description: {{item.extendedDescription}}</div>
+        <div class="col-sm-2">Item: {{item.itemNumber}}</div>
+        <div class="col-sm-4">Description: {{item.extendedDescription}}</div>
         <div class="col">StyleCode: {{item.styleCode}}</div>
         <div class="col">JBA: {{item.jbaCode}}</div>
       </div>
@@ -164,19 +164,21 @@ export default {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
     },
     qdDiscount() {
+      let qdDiscountAmount = 0;
       if (
         this.orderLine.graphicCode === "CUSTM" ||
         this.orderLine.graphicCode === null
       ) {
-        return 0;
+        qdDiscountAmount = 0;
       } else {
         if (
           this.orderLine.priceBreak === 6 ||
           this.orderLine.priceBreak === 12
         ) {
-          return this.subTotal * 0.1;
+          qdDiscountAmount = this.subTotal * 0.1;
         }
       }
+      return qdDiscountAmount;
     },
     subTotal() {
       return this.item.totalUnits * this.item.finalUnitPrice;

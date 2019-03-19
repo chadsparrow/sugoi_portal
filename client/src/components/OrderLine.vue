@@ -9,7 +9,6 @@
           class="badge badge-warning text-center ml-3"
           v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak === 6 || orderLine.priceBreak === 12)"
         >Quick Design - 10% OFF</div>
-        <span class="float-right">Details</span>
       </div>
       <div class="card-body m-0 p-1">
         <div class="row m-0 mb-3">
@@ -65,13 +64,16 @@
             :to="`/editline/${this.index}`"
           >Edit Line Details</router-link>
         </div>
-        <div class="items mt-2" v-if="orderLine.items.length">
-          <LineItem
-            v-for="(lineitem, childIndex) in orderLine.items"
-            :key="childIndex"
-            :index="childIndex"
-            :lineIndex="index"
-          ></LineItem>
+        <div class="items mt-2 row" v-if="orderLine.items.length">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-11">
+            <LineItem
+              v-for="(lineitem, childIndex) in orderLine.items"
+              :key="childIndex"
+              :index="childIndex"
+              :lineIndex="index"
+            ></LineItem>
+          </div>
         </div>
       </div>
       <div class="card-footer p-1">
@@ -114,7 +116,8 @@ export default {
   props: ["index"],
   data() {
     return {
-      fullPage: true
+      fullPage: true,
+      title: "Lines"
     };
   },
   components: {
@@ -134,11 +137,6 @@ export default {
     isLoading() {
       return this.$store.getters.isLoading;
     }
-  },
-  data() {
-    return {
-      title: "Lines"
-    };
   },
   methods: {
     formatPrice(value) {
