@@ -25,16 +25,16 @@ const Order = require("../../models/Order");
 router.get("/:orderNum", ensureAuthenticated, (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum }, { checkpoints: 0, instructions: 0 })
     .then(order => {
-      let { signedOffDate, enteredDate } = order;
-      if (dayjs(enteredDate).isBefore(dayjs(new Date(2019, 3, 18)))) {
-        res.status(403).send('Order was entered prior to switchover');
+      let { signedOffDate } = order;
+      //if (dayjs(enteredDate).isBefore(dayjs(new Date(2019, 3, 18)))) {
+      //res.status(403).send('Order was entered prior to switchover');
+      //} else {
+      if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
+        res.json(order);
       } else {
-        if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
-          res.json(order);
-        } else {
-          res.status(403).send('Order is signed off - access Forbidden');
-        }
+        res.status(403).send('Order is signed off - access Forbidden');
       }
+      //}
     })
     .catch(err => {
       logger.error(err);
