@@ -141,13 +141,10 @@ module.exports = {
     }
   },
   checkForSignOff: function (signedOffDate) {
-    if (
-      signedOffDate !== null || signedOffDate !== '' || signedOffDate !== undefined
-    ) {
-      return true;
-    } else {
+    if (signedOffDate) {
       return false;
     }
+    return true;
   },
   catNotes: function (type) {
     switch (type) {
