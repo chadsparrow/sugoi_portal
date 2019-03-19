@@ -24,7 +24,11 @@ router.get("/", ensureAuthenticated, (req, res) => {
 router.get("/:orderNum", ensureAuthenticated, (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum }, { checkpoints: 0, instructions: 0 })
     .then(order => {
-      res.json(order);
+      if (order.signedOffDate) {
+        res.json(order);
+      } else {
+        res.status(403).send('Order is signed off - access Forbidden')
+      }
     })
     .catch(err => {
       logger.error(err);
@@ -36,14 +40,18 @@ router.get("/:orderNum", ensureAuthenticated, (req, res) => {
 router.put('/:orderNum/:lineNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
-      foundOrder.orderLines.push({ lineNumber: req.params.lineNumber });
-      foundOrder.save((err, savedOrder) => {
-        if (err) {
-          logger.error(err);
-          return;
-        }
-        res.json(savedOrder);
-      })
+      if (foundOrder.signedOffDate) {
+        foundOrder.orderLines.push({ lineNumber: req.params.lineNumber });
+        foundOrder.save((err, savedOrder) => {
+          if (err) {
+            logger.error(err);
+            return;
+          }
+          res.json(savedOrder);
+        })
+      } else {
+        res.status(403).send('Order is signed off - access Forbidden');
+      }
     }).catch(err => {
       logger.error(err);
     })
@@ -54,15 +62,19 @@ router.put('/:orderNum/:lineNumber', [ensureAuthenticated, ensureEditOrders], (r
 router.put('/:orderNum/:lineNumber/:itemNumber', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum })
     .then(foundOrder => {
-      let newItemNumber = `${foundOrder.orderNum}-${foundOrder.orderLines[req.params.lineNumber].lineNumber}-${req.params.itemNumber}`
-      foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: newItemNumber });
-      foundOrder.save((err, savedOrder) => {
-        if (err) {
-          logger.error(err);
-          return;
-        }
-        res.json(savedOrder);
-      })
+      if (foundOrder.signedOffDate) {
+        let newItemNumber = `${foundOrder.orderNum}-${foundOrder.orderLines[req.params.lineNumber].lineNumber}-${req.params.itemNumber}`
+        foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: newItemNumber });
+        foundOrder.save((err, savedOrder) => {
+          if (err) {
+            logger.error(err);
+            return;
+          }
+          res.json(savedOrder);
+        })
+      } else {
+        res.status(403).send('Order is signed off - access Forbidden');
+      }
     }).catch(err => {
       logger.error(err);
     })
