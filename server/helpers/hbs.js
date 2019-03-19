@@ -145,6 +145,8 @@ module.exports = {
       signedOffDate !== null || signedOffDate !== '' || signedOffDate !== undefined
     ) {
       return true;
+    } else {
+      return false;
     }
   },
   catNotes: function (type) {
