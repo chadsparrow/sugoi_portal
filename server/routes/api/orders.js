@@ -1,34 +1,39 @@
 const express = require("express");
 const router = express.Router();
 const logger = require("../../helpers/logs");
+const dayjs = require('dayjs');
 
 const { ensureAuthenticated, ensureEditOrders } = require("../../helpers/auth");
 
 // includes model for mongodb
 const Order = require("../../models/Order");
 
-// @DESC - GETS JSON DATA OF ALL ORDERS
-// SEC - MUST BE LOGGED IN
-router.get("/", ensureAuthenticated, (req, res) => {
-  Order.find({}, { checkpoints: 0, instructions: 0 })
-    .then(orders => {
-      res.json(orders);
-    })
-    .catch(err => {
-      logger.error(err);
-    });
-});
+// // @DESC - GETS JSON DATA OF ALL ORDERS
+// // SEC - MUST BE LOGGED IN
+// router.get("/", ensureAuthenticated, (req, res) => {
+//   Order.find({}, { checkpoints: 0, instructions: 0 })
+//     .then(orders => {
+//       res.json(orders);
+//     })
+//     .catch(err => {
+//       logger.error(err);
+//     });
+// });
 
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
 router.get("/:orderNum", ensureAuthenticated, (req, res) => {
   Order.findOne({ orderNum: req.params.orderNum }, { checkpoints: 0, instructions: 0 })
     .then(order => {
-      let { signedOffDate } = order;
-      if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
-        res.json(order);
+      let { signedOffDate, enteredDate } = order;
+      if (dayjs(enteredDate).isBefore(dayjs(new Date(2019, 3, 18)))) {
+        res.status(403).send('Order was entered prior to switchover');
       } else {
-        res.status(403).send('Order is signed off - access Forbidden')
+        if (signedOffDate === null || signedOffDate === '' || signedOffDate === undefined) {
+          res.json(order);
+        } else {
+          res.status(403).send('Order is signed off - access Forbidden');
+        }
       }
     })
     .catch(err => {
