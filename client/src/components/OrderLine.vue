@@ -1,7 +1,7 @@
 <template>
   <div v-if="cancelled === false">
     <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
-    <hr>
+    <hr style="height:1px;border:none;color:#333;background-color:#333;">
     <div class="card border-secondary mb-3">
       <div class="card-header bg-secondary text-light p-1 justify-items-center">
         <span>Line: {{orderLine.lineNumber}}</span>
