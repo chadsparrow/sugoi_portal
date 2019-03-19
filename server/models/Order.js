@@ -540,10 +540,6 @@ const OrderSchema = new Schema({
             type: Boolean,
             default: false
           },
-          sketch: {
-            type: Boolean,
-            default: false
-          },
           configs: [],
           contrastOptions: [],
           zipperOptions: [],
