@@ -5,7 +5,7 @@
         <div
           class="badge badge-danger text-white text-center col-sm-1 d-print-none"
           v-if="item.sketchOnly && order.needSketch"
-        >Requires Sketch</div>
+        >Flat Sketch</div>
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
         <div class="col-sm-4">Description: {{item.extendedDescription}}</div>
         <div class="col">StyleCode: {{item.styleCode}}</div>

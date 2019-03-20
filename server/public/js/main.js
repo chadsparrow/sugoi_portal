@@ -518,6 +518,12 @@ $(document).ready(function () {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
+    "footerCallBack": function (row, data, start, end, display) {
+      var api = this.api();
+      $(api.table().footer()).html(
+        api.column(3, { page: 'current' }).data().sum()
+      );
+    },
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,

@@ -10,7 +10,7 @@
     <div class="card-body p-3">
       <div class="form-group form-check ml-3">
         <input type="checkbox" class="form-check-input" id="sketchOnly" v-model="item.sketchOnly">
-        <label class="form-check-label" for="sketchOnly">Need Sketch</label>
+        <label class="form-check-label" for="sketchOnly">Need Flat Sketch</label>
       </div>
       <div class="row align-items-center mb-2">
         <div class="col-sm-3">

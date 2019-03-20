@@ -15,7 +15,7 @@
 </div>
 <div style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>{{pageTitle}}</h5>
-  <table class="display nowrap compact" id="reportTable">
+  <table class="display compact nowrap" id="reportTable">
     <thead>
       <tr>
         <th>Contract #</th>
@@ -52,5 +52,13 @@
       </tr>
       {{/each}}
     </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="3" style="text-align:right">Total:</th>
+        <th></th>
+        <th></th>
+        <th colspan="4"></th>
+      </tr>
+    </tfoot>
   </table>
 </div>
