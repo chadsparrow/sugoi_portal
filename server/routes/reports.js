@@ -5,6 +5,7 @@ const moment = require("moment");
 const dayjs = require('dayjs');
 
 const Report = require("../models/Report");
+const Order = require("../models/Order");
 
 router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment(dayjs().format()).format("W");
@@ -36,7 +37,7 @@ router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 router.get("/cad", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = "Reports CAD - In Progress";
-  Order.find({ signedOffDate: null, currency: "CAD" }).then(orders => {
+  Order.find({ signedOffDate: { $type: 10 }, currency: "CAD" }).then(orders => {
     res.render("reports/inprogress", {
       orders,
       pageTitle
@@ -46,7 +47,7 @@ router.get("/cad", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 router.get("/usd", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = "Reports USD - In Progress";
-  Order.find({ signedOffDate: null, currency: "USD" }).then(orders => {
+  Order.find({ signedOffDate: { $type: 10 }, currency: "USD" }).then(orders => {
     res.render("reports/inprogress", {
       orders,
       pageTitle
