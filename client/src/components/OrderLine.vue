@@ -161,4 +161,13 @@ span {
   font-weight: bold;
   font-size: 14px;
 }
+
+hr {
+  border: 0;
+  clear: both;
+  display: block;
+  height: 2px;
+  color: #333;
+  background-color: #333;
+}
 </style>
