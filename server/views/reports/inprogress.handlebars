@@ -1,0 +1,56 @@
+<div class="main-loader">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top: 20px; margin-bottom: 50px;">
+  <h5 class='center-align'>{{pageTitle}}</h5>
+  <table class="display nowrap compact" id="reportTable">
+    <thead>
+      <tr>
+        <th>Contract #</th>
+        <th>Client</th>
+        <th>Account #</th>
+        <th>Qty</th>
+        <th>Total Value</th>
+        <th>Currency</th>
+        <th>Vendor</th>
+        <th>ISR</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders}}
+      <tr>
+        <td style="font-size: 12px;" class="center-align">{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{client}}</td>
+        <td style="font-size: 12px;" class="center-align">{{accountNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{qty}}</td>
+        <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
+        <td style="font-size: 12px;" class="center-align">{{currency}}</td>
+        <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
+        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
+        <td style="font-size: 12px;" class="center-align valign-wrapper">
+          <span>
+            {{#if ../user.editProd}}
+            <a class="green-text" href="/prod/edit/{{_id}}">
+              <i class="tiny material-icons">edit</i>
+            </a>
+            {{/if}}
+          </span>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

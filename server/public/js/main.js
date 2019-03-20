@@ -503,6 +503,83 @@ $(document).ready(function () {
     dom: "lrftip"
   });
 
+  $("#reportTable").dataTable({
+    initComplete: function (settings, json) {
+      $(".main-loader").hide();
+    },
+    fixedColumns: {
+      leftColumns: 1,
+      rightColumns: 1
+    },
+    columnDefs: [
+      {
+        targets: 4,
+        data: "netValue",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      }
+    ],
+    drawCallback: function () {
+      var api = this.api();
+      $(api.table().footer()).html(
+        api.column(3, { page: 'current' }).data().sum()
+      );
+      $(api.table().footer()).html(
+        api.column(4, { page: 'current' }).data().sum()
+      );
+    },
+    scrollX: true,
+    scrollCollapse: true,
+    pageLength: -1,
+    order: [[0, "asc"]],
+    oLanguage: {
+      sSearch: "Search",
+      sSearchPlaceholder: "Enter search text",
+      sInfo: "_START_ -_END_ of _TOTAL_",
+      sLengthMenu:
+        '<span>Rows per page:</span><select class="browser-default">' +
+        '<option value="15">15</option>' +
+        '<option value="30">30</option>' +
+        '<option value="40">40</option>' +
+        '<option value="50">50</option>' +
+        '<option value="-1">All</option>' +
+        "</select></div>"
+    },
+    bAutoWidth: false,
+    dom: "lBrftip",
+    buttons: [
+      {
+        text: "CAD",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/reports/cad");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "USD",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/reports/usd");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        extend: "excelHtml5",
+        className: "waves-effect waves-light btn-small",
+        text: "Export Excel",
+        title: "",
+        filename: function () {
+          var d = new Date();
+          var n = d.getTime();
+          return "Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
+      }
+    ]
+  });
 
   // ONLY ALLOWS DIGITS AND 7 CHARACTERS in SO NUMBER
   $("#orderNum").keydown(function (e) {
