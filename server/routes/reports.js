@@ -36,8 +36,8 @@ router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
 });
 
 router.get("/cad", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let pageTitle = "Reports CAD - In Progress";
-  Order.find({ signedOffDate: { $type: 10 }, currency: "CAD" }).then(orders => {
+  let pageTitle = "In Progress - CAD";
+  Order.find({ signedOffDate: null, currency: 'CAD', currentStatus: { $nin: ["W. CANCELLED", "X. Archived"] } }).then(orders => {
     res.render("reports/inprogress", {
       orders,
       pageTitle
@@ -46,8 +46,8 @@ router.get("/cad", [ensureAuthenticated, ensureAdmin], (req, res) => {
 });
 
 router.get("/usd", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let pageTitle = "Reports USD - In Progress";
-  Order.find({ signedOffDate: { $type: 10 }, currency: "USD" }).then(orders => {
+  let pageTitle = "In Progress - USD";
+  Order.find({ signedOffDate: null, currency: 'USD', currentStatus: { $nin: ["W. CANCELLED", "X. Archived"] } }).then(orders => {
     res.render("reports/inprogress", {
       orders,
       pageTitle

@@ -518,15 +518,6 @@ $(document).ready(function () {
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
-    drawCallback: function () {
-      var api = this.api();
-      $(api.table().footer()).html(
-        api.column(3, { page: 'current' }).data().sum()
-      );
-      $(api.table().footer()).html(
-        api.column(4, { page: 'current' }).data().sum()
-      );
-    },
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
