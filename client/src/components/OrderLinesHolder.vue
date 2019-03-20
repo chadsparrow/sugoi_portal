@@ -59,8 +59,7 @@ hr {
   border: 0;
   clear: both;
   display: block;
-  width: 96%;
-  height: 1px;
+  height: 2px;
   color: #333;
   background-color: #333;
 }
