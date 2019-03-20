@@ -8,6 +8,24 @@ const logger = require("../helpers/logs");
 // Load User Model
 require("../models/User");
 const User = mongoose.model("users");
+const Style = require("../models/Style");
+
+//Admin Page
+router.get("/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
+    res.render("admin/dash");
+});
+
+//Styles Page
+router.get('/styles', [ensureAuthenticated, ensureAdmin], (req, res) => {
+    Style.find().then(styles => {
+        res.render('admin/styles', styles);
+    }).catch(err => {
+        logger.error(err);
+        req.flash("error_msg", err);
+        res.redirect("/admin/dash");
+    });
+
+});
 
 //User Admin Page
 router.get("/users", [ensureAuthenticated, ensureAdmin], (req, res) => {
@@ -25,9 +43,6 @@ router.get("/users", [ensureAuthenticated, ensureAdmin], (req, res) => {
         });
 });
 
-//Admin Page
-router.get("/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
-    res.render("admin/dash");
-});
+
 
 module.exports = router;
