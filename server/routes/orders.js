@@ -171,7 +171,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
 // @DESC - GETS ALL IN INITIAL ORDERS - BEFORE IN PROGRESS
 // SEC - MUST BE LOGGED IN
 router.get("/initial", ensureAuthenticated, (req, res) => {
-  let pageTitle = "Initial Orders";
+  let pageTitle = "Initial";
   Order.find({
     currentStatus: "1. Initial"
   }).then(orders => {
