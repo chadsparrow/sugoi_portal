@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+  //  THIS SECTION SHOWS AND HIDES EXTRA PRODUCTION FIELDS IF IT'S READY TO GO TO PRODUCTION
   $.fn.dataTable.moment('D-MMM-YY');
   $("#productionDiv").hide();
 
@@ -14,6 +16,8 @@ $(document).ready(function () {
   });
   $("#proofDiv").hide();
 
+
+  // THIS SECTION SHOWS ART DIRECTION FIELD IF IT IS WAITING FOR PROOF
   $("#currentStatus").change(function () {
     if ($("#currentStatus").val() == "A. Waiting for Proof") {
       $("#proofDiv").show();
@@ -30,6 +34,7 @@ $(document).ready(function () {
     }
   });
 
+  //  FORMATS PRICING WITH , AFTER 3 DIGITS
   $("input.number").keyup(function (event) {
     // skip for arrow keys
     if (event.which >= 37 && event.which <= 40) return;
@@ -260,23 +265,6 @@ $(document).ready(function () {
     dom: "lBrftip",
     buttons: [
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
-          var d = new Date();
-          var n = d.getTime();
-          return "Production-Report " + n;
-        },
-        exportOptions: {
-          modifier: {
-            page: "current"
-          },
-          columns: ":not(:last-child)"
-        }
-      },
-      {
         text: "Vendor Copy",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/prod/ccn");
@@ -359,6 +347,13 @@ $(document).ready(function () {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
+      {
+        text: "All Orders",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/prod/");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
       {
         extend: "excelHtml5",
         className: "waves-effect waves-light btn-small",
@@ -508,6 +503,8 @@ $(document).ready(function () {
     dom: "lrftip"
   });
 
+
+  // ONLY ALLOWS DIGITS AND 7 CHARACTERS in SO NUMBER
   $("#orderNum").keydown(function (e) {
     // Allow: backspace, delete, tab, escape, enter and .
     if (
