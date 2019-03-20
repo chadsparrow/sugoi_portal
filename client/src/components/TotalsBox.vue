@@ -1,8 +1,8 @@
 <template>
-  <div class="card border-dark">
-    <div class="row card-body p-2">
-      <div class="col-sm-3 offset-sm-9 border text-center">
-        <ul class="list-group list-group-flush">
+  <div class="row mb-5">
+    <div class="card border-dark col-sm-3 offset-sm-9">
+      <div class="row card-body p-2 text-center">
+        <ul class="list-group list-group-flush col-sm-12">
           <li class="list-group-item">
             Currency:
             <span>{{order.currency}}</span>
@@ -28,16 +28,16 @@
             <span>${{formatPrice(order.taxAmount)}}</span>
           </li>
         </ul>
-        <div class="col-sm-12 mb-2 p-1 text-center border border-3 rounded">
+        <div class="col-sm-12 mb-2 p-1 border border-3 rounded">
           <span style="font-size: 18px; font-weight: bold;">Total:
             <br>
             ${{formatPrice(order.netValue)}}
           </span>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush col-sm-12">
           <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
         </ul>
-        <div class="mb-2 p-1 text-center border rounded">
+        <div class="mb-2 p-1 border rounded col-sm-12">
           <h6>Balance Due:
             <br>
             ${{formatPrice(order.balanceOutstanding)}}
