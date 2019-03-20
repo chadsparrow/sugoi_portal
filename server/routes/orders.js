@@ -71,71 +71,73 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
           if (orderLine.items.length > 0) {
             for (let item of orderLine.items) {
               if (!item.cancelled) {
-                let prs = '';
-                if (item.personalization) {
-                  prs = 'Y';
-                } else {
-                  prs = 'N';
-                }
-                let scaled = '';
-                if (orderLine.scaledArtCharge > 0) {
-                  scaled = 'Y';
-                } else {
-                  scaled = 'N';
-                }
-
-                let extendedDescription = item.extendedDescription;
-                extendedDescription.replace(/&/g, '&amp;');
-                extendedDescription.replace(/</g, '&lt;');
-                extendedDescription.replace(/>/g, '&gt;');
-                extendedDescription.replace(/"/g, '&quot;');
-                extendedDescription.replace(/'/g, '&apos;');
-
-                newOrderObject.SAP.push({
-                  'item': {
-                    'SALESORDER': order.orderNum,
-                    'CLIENT': client,
-                    'CHILDWORKORDER': item.itemNumber,
-                    'STYLENUM': item.autobahnCode,
-                    'STYLENAME': extendedDescription,
-                    'PARENTWORKORDER': orderLine.lineNumber,
-                    'XXS': item.xxs,
-                    'XS': item.xs,
-                    'S': item.s,
-                    'M': item.m,
-                    'L': item.l,
-                    'XL': item.xl,
-                    'XXL': item.xxl,
-                    'XXXL': item.xxxl,
-                    'ONE': item.one,
-                    'PROOFARTIST': order.currentArtist,
-                    'OUTPUTARTIST': ".",
-                    'SHIPTO': order.accountNum,
-                    'TAKENBY': order.isr,
-                    'JOBTYPE': orderLine.lineJobType,
-                    'REFERENCEORDER': orderLine.swoReference,
-                    'CHILDREFERENCEORDER': item.childReference,
-                    'COLORS1': item.colour1,
-                    'COLORS2': item.colour2,
-                    'COLORS3': item.colour3,
-                    'COLORS4': '.',
-                    'COLORS5': '.',
-                    'COLORS6': '.',
-                    'ZIPPERCOLOR': item.zipper,
-                    'CONTRASTCOLOR': item.contrast,
-                    'THREADCOLOR': item.thread,
-                    'GRAPHIC': orderLine.graphicCode,
-                    'COLOURWAY': orderLine.colourWayCode,
-                    'CUSTOMERPO': '.',
-                    'REVISION': '.',
-                    'BRAND': item.brand,
-                    'FACTORY': order.vendor,
-                    'SCALED_ART': scaled,
-                    'PERSONALIZATION': prs,
-                    'INK': item.inkType,
-                    'SCALEDSIZES': '.',
+                if (order.needSketch === false || (order.needSketch === true && item.sketchOnly === true)) {
+                  let prs = '';
+                  if (item.personalization) {
+                    prs = 'Y';
+                  } else {
+                    prs = 'N';
                   }
-                });
+                  let scaled = '';
+                  if (orderLine.scaledArtCharge > 0) {
+                    scaled = 'Y';
+                  } else {
+                    scaled = 'N';
+                  }
+
+                  let extendedDescription = item.extendedDescription;
+                  extendedDescription.replace(/&/g, '&amp;');
+                  extendedDescription.replace(/</g, '&lt;');
+                  extendedDescription.replace(/>/g, '&gt;');
+                  extendedDescription.replace(/"/g, '&quot;');
+                  extendedDescription.replace(/'/g, '&apos;');
+
+                  newOrderObject.SAP.push({
+                    'item': {
+                      'SALESORDER': order.orderNum,
+                      'CLIENT': client,
+                      'CHILDWORKORDER': item.itemNumber,
+                      'STYLENUM': item.autobahnCode,
+                      'STYLENAME': extendedDescription,
+                      'PARENTWORKORDER': orderLine.lineNumber,
+                      'XXS': item.xxs,
+                      'XS': item.xs,
+                      'S': item.s,
+                      'M': item.m,
+                      'L': item.l,
+                      'XL': item.xl,
+                      'XXL': item.xxl,
+                      'XXXL': item.xxxl,
+                      'ONE': item.one,
+                      'PROOFARTIST': order.currentArtist,
+                      'OUTPUTARTIST': ".",
+                      'SHIPTO': order.accountNum,
+                      'TAKENBY': order.isr,
+                      'JOBTYPE': orderLine.lineJobType,
+                      'REFERENCEORDER': orderLine.swoReference,
+                      'CHILDREFERENCEORDER': item.childReference,
+                      'COLORS1': item.colour1,
+                      'COLORS2': item.colour2,
+                      'COLORS3': item.colour3,
+                      'COLORS4': '.',
+                      'COLORS5': '.',
+                      'COLORS6': '.',
+                      'ZIPPERCOLOR': item.zipper,
+                      'CONTRASTCOLOR': item.contrast,
+                      'THREADCOLOR': item.thread,
+                      'GRAPHIC': orderLine.graphicCode,
+                      'COLOURWAY': orderLine.colourWayCode,
+                      'CUSTOMERPO': '.',
+                      'REVISION': '.',
+                      'BRAND': item.brand,
+                      'FACTORY': order.vendor,
+                      'SCALED_ART': scaled,
+                      'PERSONALIZATION': prs,
+                      'INK': item.inkType,
+                      'SCALEDSIZES': '.',
+                    }
+                  });
+                }
               }
             }
           }
