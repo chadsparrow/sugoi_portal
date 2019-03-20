@@ -30,7 +30,7 @@
         <th class="center-align">Vendor</th>
         <th class="center-align">Upload Date</th>
         <th class="center-align">Sent to Vendor</th>
-        <th data-priority="2" class="center-align">View/Edit</th>
+        <th data-priority="2" class="center-align">Actions</th>
       </tr>
     </thead>
     <tbody id="myTable">
@@ -54,13 +54,11 @@
         <td style="font-size: 12px;" class="center-align">{{#if sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">
-          {{#if user.admin}}
-          <span>
+          {{!-- <span>
             <a class="blue-text" href="/{{orderNum}}" target="_blank">
               <i class="material-icons">description</i>
             </a>
-          </span>
-          {{/if}}
+          </span> --}}
           <span>
             <a class="black-text" href="/orders/view/{{_id}}">
               <i class="material-icons">remove_red_eye</i>
