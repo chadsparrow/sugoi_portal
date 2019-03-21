@@ -1,5 +1,5 @@
 <template>
-  <div class="item card border-dark mb-2" v-if="item.cancelled === false">
+  <div class="item card border-dark mb-2" style="page-break-inside: avoid;" v-if="item.cancelled === false">
     <div class="card-header bg-info mb-0 p-1">
       <div class="row text-light align-items-center m-0">
         <div

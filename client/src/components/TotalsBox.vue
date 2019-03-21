@@ -29,7 +29,8 @@
           </li>
         </ul>
         <div class="col-sm-12 mb-2 p-1 border border-3 rounded">
-          <span style="font-size: 18px; font-weight: bold;">Total:
+          <span style="font-size: 18px; font-weight: bold;">
+            Total:
             <br>
             ${{formatPrice(order.netValue)}}
           </span>
@@ -38,7 +39,8 @@
           <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
         </ul>
         <div class="mb-2 p-1 border rounded col-sm-12">
-          <h6>Balance Due:
+          <h6>
+            Balance Due:
             <br>
             ${{formatPrice(order.balanceOutstanding)}}
           </h6>
@@ -76,6 +78,7 @@ span {
 
 .card {
   font-size: 0.75em;
+  page-break-inside: avoid;
 }
 
 .list-group-flush li:first-child {
