@@ -42,13 +42,16 @@
                   </div>
                 </div>
                 <div class="col s6 l4">
-                  <span class="grey-text">Qty: </span>{{order.qty}}
+                  <input type="number" name="qty" id="qty" value="{{order.qty}}">
+                  <label for="qty">Qty:</label>
                 </div>
                 <div class="col s6 l4">
-                  <span class="grey-text">Total Value: </span>{{order.netValue}}
+                  <input type="number" name="netValue" id="netValue" value="{{order.netValue}}">
+                  <label for="netValue">Total Value:</label>
                 </div>
                 <div class="col s12 l4">
-                  <span class="grey-text">Currency: </span>{{order.currency}}
+                  <input type="number" name="currency" id="currency" value="{{order.currency}}">
+                  <label for="currency">Currency:</label>
                 </div>
                 <div class="input-field col s12 l6">
                   <i class="small material-icons prefix">today</i>
