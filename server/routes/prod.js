@@ -103,7 +103,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     jbaInvoiceNum,
     shipStatus,
     tracking,
-    shippingNotes
+    shippingNotes,
+    netValue,
+    currency,
+    qty
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -158,6 +161,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.jbaInvoiceNum = jbaInvoiceNum;
       foundOrder.shipStatus = shipStatus;
       foundOrder.shippingNotes = shippingNotes;
+      foundOrder.netValue = netValue;
+      foundOrder.qty = qty;
+      foundOrder.currency = currency;
 
       if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
         foundOrder.totalLeadTime =
