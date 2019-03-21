@@ -92,6 +92,10 @@ const OrderSchema = new Schema({
     type: Number,
     default: null
   },
+  estValue: {
+    type: Number,
+    default: null
+  },
   currency: {
     type: String,
     uppercase: true,

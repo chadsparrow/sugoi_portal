@@ -35,22 +35,39 @@ router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
     });
 });
 
-router.get("/cad", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let pageTitle = "In Progress - CAD";
-  Order.find({ signedOffDate: null, currency: 'CAD', currentStatus: { $nin: ["W. CANCELLED", "X. Archived"] } }).then(orders => {
-    res.render("reports/inprogress", {
-      orders,
-      pageTitle
-    });
-  });
-});
+router.get("/preprod", ensureAuthenticated, (req, res) => {
+  let pageTitle = "Pre-Production Report";
+  Order.find({
+    currentStatus: {
+      $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "X. Archived"] }
+    }
+  }).then(orders => {
+    let cadTotal = 0;
+    let usdTotal = 0;
 
-router.get("/usd", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let pageTitle = "In Progress - USD";
-  Order.find({ signedOffDate: null, currency: 'USD', currentStatus: { $nin: ["W. CANCELLED", "X. Archived"] } }).then(orders => {
+    for (let x = 0; x < orders.length; x++) {
+      if (orders[x].netValue === null || orders[x].netValue === 0) {
+        if (orders[x].currency === "CAD") {
+          cadTotal += orders[x].estValue;
+        } else if (orders[x].currency === "USD") {
+          usdTotal += orders[x].estValue;
+        }
+      } else {
+        if (orders[x].currency === "CAD") {
+          cadTotal += orders[x].netValue;
+        } else if (orders[x].currency === "USD") {
+          usdTotal += orders[x].netValue;
+        }
+      }
+    }
+    cadTotal = cadTotal.toFixed(2);
+    usdTotal = usdTotal.toFixed(2);
+
     res.render("reports/inprogress", {
       orders,
-      pageTitle
+      pageTitle,
+      cadTotal,
+      usdTotal
     });
   });
 });

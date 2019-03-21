@@ -15,50 +15,54 @@
 </div>
 <div style="margin-top: 20px; margin-bottom: 50px;">
   <h5 class='center-align'>{{pageTitle}}</h5>
-  <table class="display compact nowrap" id="reportTable">
+  <div class="row center-align container">
+    <div class="col s6 red white-text p-2">
+      <h4>CAD TOTAL: $ {{cadTotal}}</h4>
+    </div>
+    <div class="col s6 blue white-text p-2">
+      <h4>USD TOTAL: $ {{usdTotal}}</h4>
+    </div>
+  </div>
+  <table class="display nowrap compact" id="reportTable">
     <thead>
       <tr>
-        <th>Contract #</th>
-        <th>Client</th>
-        <th>Account #</th>
-        <th>Qty</th>
-        <th>Total Value</th>
-        <th>Currency</th>
-        <th>Vendor</th>
-        <th>ISR</th>
-        <th>Actions</th>
+        <th class="center-align">Contract #</th>
+        <th class="center-align">Status</th>
+
+        <th class="center-align">Entered</th>
+        <th class="center-align">Modified</th>
+        <th class="center-align">Event Date</th>
+        <th class="center-align">Latest In-Hand</th>
+        <th class="center-align">ISR</th>
+        <th class="center-align">Client</th>
+        <th class="center-align">Qty</th>
+        <th class="center-align">Total Value</th>
+        <th class="center-align">Est. Value</th>
+        <th class="center-align">Currency</th>
+        <th class="center-align">Vendor</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px;" class="center-align">{{orderNum}}</td>
+        <td style="font-size: 14px;" class='center-align'>{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
+        </td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate enteredDate "D-MMM-YY"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate updatedAt "D-MMM-YY"}}</td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
+        </td>
+        <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate latestInHand "D-MMM-YY"}}{{/if}}
+        </td>
+        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
-        <td style="font-size: 12px;" class="center-align">{{accountNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{qty}}</td>
         <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
+        <td style="font-size: 12px;" class="center-align">{{estValue}}</td>
         <td style="font-size: 12px;" class="center-align">{{currency}}</td>
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
-        <td style="font-size: 12px;" class="center-align">{{isr}}</td>
-        <td style="font-size: 12px;" class="center-align valign-wrapper">
-          <span>
-            {{#if ../user.editProd}}
-            <a class="green-text" href="/prod/edit/{{_id}}">
-              <i class="tiny material-icons">edit</i>
-            </a>
-            {{/if}}
-          </span>
-        </td>
       </tr>
       {{/each}}
     </tbody>
-    <tfoot>
-      <tr>
-        <th colspan="3" style="text-align:right">Total:</th>
-        <th></th>
-        <th></th>
-        <th colspan="4"></th>
-      </tr>
-    </tfoot>
   </table>
 </div>

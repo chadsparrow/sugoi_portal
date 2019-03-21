@@ -25,7 +25,6 @@
                     <label for="priority">Priority:</label>
                   </div>
                   <div class="input-field col s12 m6">
-
                     <select name="vendor" id="vendor">
                       {{#select order.vendor}}
                       <option value="CCN">CCN</option>
@@ -34,7 +33,22 @@
                       {{/select}}
                     </select>
                     <label for="vendor">Vendor:</label>
-
+                  </div>
+                  <div class="input-field col s12">
+                    <i class="small material-icons prefix">today</i>
+                    <input type="text" class="input-date" name="eventDate" id="eventDate"
+                      value="{{formatDate order.eventDate "MM/DD/YYYY"}}">
+                    <label for="eventDate">Event Date:</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <i class="small material-icons prefix">today</i>
+                    <input type="text" class="input-date3" name="latestInHand" id="latestInHand"
+                      value="{{formatDate order.latestInHand "MM/DD/YYYY"}}">
+                    <label for="latestInHand">Latest In-Hand Date:</label>
+                  </div>
+                  <div class="input-field col s12 m6">
+                    <input type="number" id="estValue" step=".01" name="estValue" value="{{order.estValue}}">
+                    <label for="estValue">Estimated Value:</label>
                   </div>
                 </div>
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">

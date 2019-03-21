@@ -238,6 +238,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         const isr = "";
         const instruction = "";
         const vendor = "";
+        const estValue = "";
         res.render("orders/add", {
           orderNum,
           priority,
@@ -245,7 +246,8 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           isr,
           instruction,
           vendor,
-          customReps
+          customReps,
+          estValue
         });
       }).catch(err => logger.error(err));
     });
@@ -259,7 +261,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     priority,
     isr,
     instruction,
-    vendor
+    vendor,
+    estValue
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
@@ -285,7 +288,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         priority,
         isr,
         instructions,
-        vendor
+        vendor,
+        estValue
         //proofRequestDate
       });
 
@@ -352,7 +356,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     vendor,
     jbaPONum,
     latestShipDate,
-    instruction
+    instruction,
+    estValue,
+    latestInHand,
+    eventDate
   } = req.body;
 
   Order.findOne({ _id: id }, function (err, foundOrder) {
@@ -361,6 +368,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     } else {
       foundOrder.currentArtist = currentArtist;
       foundOrder.priority = priority;
+      foundOrder.estValue = estValue;
 
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
@@ -603,6 +611,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.vendor = vendor;
       foundOrder.jbaPONum = jbaPONum;
       foundOrder.latestShipDate = latestShipDate;
+      foundOrder.latestInHand = latestInHand;
+      foundOrder.eventDate = eventDate;
 
       if (foundOrder.balanceOutstanding != null && foundOrder.balanceOutstanding != undefined) {
         if (foundOrder.balanceOutstanding > 0) {

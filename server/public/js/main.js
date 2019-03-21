@@ -513,17 +513,16 @@ $(document).ready(function () {
     },
     columnDefs: [
       {
-        targets: 4,
+        targets: 9,
         data: "netValue",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 10,
+        data: "estValue",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
-    "footerCallBack": function (row, data, start, end, display) {
-      var api = this.api();
-      $(api.table().footer()).html(
-        api.column(3, { page: 'current' }).data().sum()
-      );
-    },
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
@@ -544,20 +543,6 @@ $(document).ready(function () {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
-      {
-        text: "CAD",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/reports/cad");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
-      {
-        text: "USD",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/reports/usd");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
       {
         extend: "excelHtml5",
         className: "waves-effect waves-light btn-small",
