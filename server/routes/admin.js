@@ -18,7 +18,7 @@ router.get("/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
 //Styles Page
 router.get('/styles', [ensureAuthenticated, ensureAdmin], (req, res) => {
     Style.find().then(styles => {
-        res.render('admin/styles', styles);
+        res.render("admin/styles", { styles });
     }).catch(err => {
         logger.error(err);
         req.flash("error_msg", err);

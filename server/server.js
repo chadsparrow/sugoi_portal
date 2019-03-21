@@ -26,9 +26,9 @@ const DateDiff = require("date-diff");
 const app = express();
 
 // use this privateKey for production/development
-//const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 //use this privateKey for staging
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 let credentials = { key: privateKey, cert: certificate };
 
@@ -45,7 +45,6 @@ app.enable('trust proxy');
 const indexRoutes = require("./routes/index");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/users");
-const styleRoutes = require("./routes/styles");
 const orderRoutes = require("./routes/orders");
 const prodRoutes = require("./routes/prod");
 const proofRoutes = require("./routes/proofs");
@@ -220,7 +219,6 @@ app.use(
 app.use("/", indexRoutes);
 app.use("/admin", adminRoutes);
 app.use("/users", userRoutes);
-app.use("/styles", styleRoutes);
 app.use("/orders", orderRoutes);
 app.use("/prod", prodRoutes);
 app.use("/proofs", proofRoutes);

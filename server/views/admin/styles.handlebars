@@ -13,29 +13,29 @@
     </div>
   </div>
 </div>
-<h5 class='center-align'>Styles</h5>
+<h5 class='center-align'>Current Styles</h5>
 <div class="container" style="margin-top: 20px; margin-bottom: 50px;">
   <table class="display" id="styleTable">
     <thead>
       <tr>
         <th>Style #</th>
-        <th>Gender</th>
         <th>Style Name</th>
-        <th>Brand</th>
-        <th>Sizes</th>
-        <th>Fit</th>
+        <th>Gender</th>
+        <th>Factory</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {{#each styles}}
+      {{#each configurations}}
       <tr>
-        <td style="font-size: 12px;">{{styleNum}}</td>
+        <td style="font-size: 12px;">{{styleCode}}</td>
+        <td style="font-size: 12px;">{{extendedDescription}}</td>
         <td style="font-size: 12px;">{{gender}}</td>
-        <td style="font-size: 12px;">{{styleName}}</td>
-        <td style="font-size: 12px;">{{brand}}</td>
-        <td style="font-size: 12px;"><span class="new badge" data-badge-caption=""><span>{{sizing}}</span></span></td>
-        <td style="font-size: 12px;">{{fit}}</td>
+        <td style="font-size: 12px;">{{../factory}}</td>
+        <td style="font-size: 12px;">Buttons</td>
       </tr>
+      {{/each}}
       {{/each}}
     </tbody>
   </table>
