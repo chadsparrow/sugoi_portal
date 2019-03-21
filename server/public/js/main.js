@@ -526,7 +526,7 @@ $(document).ready(function () {
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[0, "asc"]],
+    order: [[1, "asc"]],
     oLanguage: {
       sSearch: "Search",
       sSearchPlaceholder: "Enter search text",
