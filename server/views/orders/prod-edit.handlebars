@@ -50,7 +50,12 @@
                   <label for="netValue">Total Value:</label>
                 </div>
                 <div class="col s12 l4">
-                  <input type="number" name="currency" id="currency" value="{{order.currency}}">
+                  <select name="currency" id="currency">
+                    {{#select order.currency}}
+                    <option value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                    {{/select}}
+                  </select>
                   <label for="currency">Currency:</label>
                 </div>
                 <div class="input-field col s12 l6">
