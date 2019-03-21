@@ -23,6 +23,10 @@ module.exports = {
       return null;
     }
   },
+  formatPrice: function (value) {
+    let val = (value / 1).toFixed(2);
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  },
   netAmount: function (units, price) {
     if (units && price) {
       return '$' + (units * price).toFixed(2);
