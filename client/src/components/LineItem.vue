@@ -1,5 +1,5 @@
 <template>
-  <div class="item card border-dark mb-2" style="page-break-inside: avoid;" v-if="item.cancelled === false">
+  <div class="item card border-dark mb-2 nobreak" v-if="item.cancelled === false">
     <div class="card-header bg-info mb-0 p-1">
       <div class="row text-light align-items-center m-0">
         <div
@@ -78,7 +78,8 @@
             <div v-if="item.colour3" class="col-sm-12">Colour 3: {{item.colour3}}</div>
           </div>
         </div>
-        <div class="col text-center">Total Units
+        <div class="col text-center">
+          Total Units
           <br>
           <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
         </div>
@@ -89,14 +90,16 @@
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(unitPrice)}}</span>
         </div>
 
-        <div v-if="item.itemDiscount > 0" class="col text-center">Discount
+        <div v-if="item.itemDiscount > 0" class="col text-center">
+          Discount
           <br>
           <span
             style="font-weight: bold; font-size: 14px;"
           >{{item.itemDiscount}}% - ${{formatPrice(discountAmount)}}</span>
         </div>
 
-        <div class="col text-center">Final Unit Price
+        <div class="col text-center">
+          Final Unit Price
           <br>
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
@@ -114,11 +117,13 @@
           <div
             v-if="qdDiscount > 0"
             class="col bg-secondary rounded text-white align-middle p-1 mr-1"
-          >SubTotal:
+          >
+            SubTotal:
             <br>
             ${{formatPrice(subTotal)}}
           </div>
-          <div v-if="qdDiscount > 0" class="col bg-warning rounded p-1">QD Discount:
+          <div v-if="qdDiscount > 0" class="col bg-warning rounded p-1">
+            QD Discount:
             <br>
             - ${{formatPrice(qdDiscount)}}
           </div>
@@ -126,7 +131,8 @@
             class="col"
             style="font-size: 16px;"
           >Item Total: ${{formatPrice(item.itemTotalPrice)}}</div>
-          <div v-if="item.addOns >0" class="col bg-dark rounded text-light p-1 ml-1">Add-Ons:
+          <div v-if="item.addOns >0" class="col bg-dark rounded text-light p-1 ml-1">
+            Add-Ons:
             <br>
             ${{formatPrice(item.addOns * item.totalUnits)}}
           </div>
@@ -209,5 +215,11 @@ export default {
 span {
   font-size: 15px;
   font-weight: bold;
+}
+
+@media print {
+  .nobreak {
+    page-break-inside: avoid;
+  }
 }
 </style>

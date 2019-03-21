@@ -1,5 +1,5 @@
 <template>
-  <div class="row mb-5">
+  <div class="row mb-5 nobreak">
     <div class="card border-dark col-sm-3 offset-sm-9">
       <div class="row card-body p-2 text-center">
         <ul class="list-group list-group-flush col-sm-12">
@@ -78,11 +78,16 @@ span {
 
 .card {
   font-size: 0.75em;
-  page-break-inside: avoid;
 }
 
 .list-group-flush li:first-child {
   border-top: none;
+}
+
+@media print {
+  .nobreak {
+    page-break-inside: avoid;
+  }
 }
 </style>
 
