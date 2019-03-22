@@ -35,6 +35,7 @@ router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
     });
 });
 
+// PRE-PRODUCTION REPORT
 router.get("/preprod", ensureAuthenticated, (req, res) => {
   let pageTitle = "Pre-Production Report";
   Order.find({
@@ -70,6 +71,42 @@ router.get("/preprod", ensureAuthenticated, (req, res) => {
       usdTotal
     });
   });
+});
+
+// PRODUCTION REPORT
+router.get("/production", ensureAuthenticated, (req, res) => {
+  let pageTitle = "Production Report";
+  Order.find({ currentStatus: "V. Sent to Vendor" })
+    .then(orders => {
+
+      let cadTotal = 0;
+      let usdTotal = 0;
+
+      for (let x = 0; x < orders.length; x++) {
+        if (orders[x].netValue === null || orders[x].netValue === 0) {
+          if (orders[x].currency === "CAD") {
+            cadTotal += orders[x].estValue;
+          } else if (orders[x].currency === "USD") {
+            usdTotal += orders[x].estValue;
+          }
+        } else {
+          if (orders[x].currency === "CAD") {
+            cadTotal += orders[x].netValue;
+          } else if (orders[x].currency === "USD") {
+            usdTotal += orders[x].netValue;
+          }
+        }
+      }
+      cadTotal = cadTotal.toFixed(2);
+      usdTotal = usdTotal.toFixed(2);
+
+      res.render("reports/production", {
+        orders,
+        pageTitle,
+        cadTotal,
+        usdTotal
+      });
+    });
 });
 
 module.exports = router;
