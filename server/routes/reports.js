@@ -36,7 +36,7 @@ router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
 });
 
 // PRE-PRODUCTION REPORT
-router.get("/preprod", ensureAuthenticated, (req, res) => {
+router.get("/preprod", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = "Pre-Production Report";
   Order.find({
     currentStatus: {
@@ -74,7 +74,7 @@ router.get("/preprod", ensureAuthenticated, (req, res) => {
 });
 
 // PRODUCTION REPORT
-router.get("/production", ensureAuthenticated, (req, res) => {
+router.get("/production", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = "Production Report";
   Order.find({ jbaInvoiceNum: { $in: ["", null] }, currentStatus: "V. Sent to Vendor" })
     .then(orders => {
