@@ -83,20 +83,13 @@ router.get("/production", ensureAuthenticated, (req, res) => {
       let usdTotal = 0;
 
       for (let x = 0; x < orders.length; x++) {
-        if (orders[x].netValue === null || orders[x].netValue === 0) {
-          if (orders[x].currency === "CAD") {
-            cadTotal += orders[x].estValue;
-          } else if (orders[x].currency === "USD") {
-            usdTotal += orders[x].estValue;
-          }
-        } else {
-          if (orders[x].currency === "CAD") {
-            cadTotal += orders[x].netValue;
-          } else if (orders[x].currency === "USD") {
-            usdTotal += orders[x].netValue;
-          }
+        if (orders[x].currency === "CAD") {
+          cadTotal += orders[x].netValue;
+        } else if (orders[x].currency === "USD") {
+          usdTotal += orders[x].netValue;
         }
       }
+
       cadTotal = cadTotal.toFixed(2);
       usdTotal = usdTotal.toFixed(2);
 
