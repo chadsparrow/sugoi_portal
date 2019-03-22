@@ -76,7 +76,7 @@ router.get("/preprod", ensureAuthenticated, (req, res) => {
 // PRODUCTION REPORT
 router.get("/production", ensureAuthenticated, (req, res) => {
   let pageTitle = "Production Report";
-  Order.find({ currentStatus: "V. Sent to Vendor" })
+  Order.find({ currentStatus: "V. Sent to Vendor", jbaInvoiceNum: null })
     .then(orders => {
 
       let cadTotal = 0;
