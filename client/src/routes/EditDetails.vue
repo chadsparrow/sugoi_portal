@@ -53,6 +53,15 @@
             id="estShipDate"
           ></DatePicker>
         </div>
+        <div class="form-group mb-1">
+          <label for="customerPO">Customer PO:</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="customerPO"
+            v-model.trim="order.customerPO"
+          >
+        </div>
         <div class="form-group">
           <label for="orderNotes" class="small my-0">Notes/Customer PO</label>
           <textarea

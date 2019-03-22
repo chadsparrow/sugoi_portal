@@ -31,11 +31,21 @@
             In-Hand Date:
             <span>{{formatDate(order.latestInHand)}}</span>
           </li>
+          <li class="list-group-item">
+            <label for="customerPO">Customer PO:</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="customerPO"
+              v-model.trim.lazy="order.customerPO"
+              @change="saveNotes"
+            >
+          </li>
         </ul>
         <div class="d-print-none text-center">
-          <label for="orderNotes" class="mb-0 mt-2">Notes/Customer PO:</label>
+          <label for="orderNotes" class="mb-0 mt-2">Notes:</label>
           <textarea
-            v-model="order.orderNotes"
+            v-model.lazy="order.orderNotes"
             class="form-control"
             style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
             id="orderNotes"
@@ -66,7 +76,8 @@
             </li>
           </ul>
           <ul class="list-group list-group-flush col-sm-12">
-            <li class="list-group-item">Ship To Address:
+            <li class="list-group-item">
+              Ship To Address:
               <br>
               <span>{{order.shipToAddress}}</span>
             </li>
@@ -144,7 +155,8 @@
           </li>
         </ul>
         <div class="col-sm-12 mb-2 p-1 text-center border border-3 rounded">
-          <span style="font-size: 18px; font-weight: bold;">Total:
+          <span style="font-size: 18px; font-weight: bold;">
+            Total:
             <br>
             ${{formatPrice(order.netValue)}}
           </span>
@@ -153,7 +165,8 @@
           <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
         </ul>
         <div class="mb-2 p-1 text-center border rounded">
-          <h6>Balance Due:
+          <h6>
+            Balance Due:
             <br>
             ${{formatPrice(order.balanceOutstanding)}}
           </h6>

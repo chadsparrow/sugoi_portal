@@ -248,6 +248,10 @@ const OrderSchema = new Schema({
     type: String,
     default: null
   },
+  customerPO: {
+    type: String,
+    default: null
+  },
   contactName: {
     type: String,
     default: null
