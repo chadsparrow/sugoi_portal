@@ -27,7 +27,7 @@ router.get("/all", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/po/:orderNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
+router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
   let pageTitle = `${req.params.orderNum} PO`;
   let poDate = dayjs().format('MM/DD/YYYY');
   let items = [];
