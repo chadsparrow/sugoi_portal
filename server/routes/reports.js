@@ -76,23 +76,16 @@ router.get("/preprod", ensureAuthenticated, (req, res) => {
 // PRODUCTION REPORT
 router.get("/production", ensureAuthenticated, (req, res) => {
   let pageTitle = "Production Report";
-  Order.find({ jbaInvoiceNum: null })
+  Order.find({ jbaInvoiceNum: { $in: ["", null] }, currentStatus: "V. Sent to Vendor" })
     .then(orders => {
-      let productionOrders = [];
       let cadTotal = 0;
       let usdTotal = 0;
 
       for (let x = 0; x < orders.length; x++) {
-        if (orders[x].currentStatus === "V. Sent to Vendor") {
-          productionOrders.push(orders[x]);
-        }
-      }
-
-      for (let y = 0; y < productionOrders.length; y++) {
-        if (productionOrders[y].currency === "CAD") {
-          cadTotal += productionOrders[y].netValue;
-        } else if (productionOrders[y].currency === "USD") {
-          usdTotal += productionOrders[y].netValue;
+        if (orders[x].currency === "CAD") {
+          cadTotal += orders[x].netValue;
+        } else if (orders[x].currency === "USD") {
+          usdTotal += orders[x].netValue;
         }
       }
 
@@ -100,7 +93,7 @@ router.get("/production", ensureAuthenticated, (req, res) => {
       usdTotal = usdTotal.toFixed(2);
 
       res.render("reports/production", {
-        productionOrders,
+        orders,
         pageTitle,
         cadTotal,
         usdTotal
