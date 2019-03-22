@@ -50,6 +50,15 @@
                     <input type="number" id="estValue" step=".01" name="estValue" value="{{order.estValue}}">
                     <label for="estValue">Estimated Value:</label>
                   </div>
+                  <div class="input-field col s12 m6">
+                    <select name="currency" id="currency">
+                      {{#select currency}}
+                      <option value="CAD">CAD</option>
+                      <option value="USD">USD</option>
+                      {{/select}}
+                    </select>
+                    <label for="currency">Currency:</label>
+                  </div>
                 </div>
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">
                   <h6>Art / Production Entry Fields:</h6>

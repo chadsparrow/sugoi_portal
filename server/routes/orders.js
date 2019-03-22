@@ -262,7 +262,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     isr,
     instruction,
     vendor,
-    estValue
+    estValue,
+    currency
   } = req.body;
   orderNum = orderNum.toString();
   isr = isr.toUpperCase();
@@ -289,7 +290,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         isr,
         instructions,
         vendor,
-        estValue
+        estValue,
+        currency
         //proofRequestDate
       });
 
@@ -358,6 +360,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     latestShipDate,
     instruction,
     estValue,
+    currency,
     latestInHand,
     eventDate
   } = req.body;
@@ -369,6 +372,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.currentArtist = currentArtist;
       foundOrder.priority = priority;
       foundOrder.estValue = estValue;
+      foundOrder.currency = currency;
 
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {

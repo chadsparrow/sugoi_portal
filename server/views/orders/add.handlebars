@@ -53,6 +53,15 @@
                       <input type="number" step=".01" name="estValue" id="estValue" value="{{estValue}}">
                       <label for="estValue">Estimated Value:</label>
                     </div>
+                    <div class="input-field col s12 m6">
+                      <select name="currency" id="currency">
+                        {{#select vendor}}
+                        <option value="CAD">CAD</option>
+                        <option value="USD">USD</option>
+                        {{/select}}
+                      </select>
+                      <label for="currency">Currency:</label>
+                    </div>
                   </div>
                 </div>
                 <div class="col s12 m6">
