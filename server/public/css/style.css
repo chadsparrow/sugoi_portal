@@ -194,6 +194,11 @@ ul.collapsible > li {
   margin: 0 auto;
 }
 
+#reportTable2_wrapper.dataTables_wrapper {
+  width: 95vw;
+  margin: 0 auto;
+}
+
 #paymentTable_wrapper.dataTables_wrapper {
   width: 95vw;
   margin: 0 auto;
