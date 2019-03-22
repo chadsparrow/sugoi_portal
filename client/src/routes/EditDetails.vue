@@ -63,7 +63,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="orderNotes" class="small my-0">Notes/Customer PO</label>
+          <label for="orderNotes" class="small my-0">Notes:</label>
           <textarea
             class="form-control form-control-sm"
             rows="3"
