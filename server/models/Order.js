@@ -145,13 +145,11 @@ const OrderSchema = new Schema({
   },
   jbaGNRNum: {
     type: String,
-    default: null,
-    uppercase: true
+    default: null
   },
   jbaInvoiceNum: {
     type: String,
-    default: null,
-    uppercase: true
+    default: null
   },
   invoiceSent: {
     type: Date,
