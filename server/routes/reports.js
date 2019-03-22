@@ -83,16 +83,16 @@ router.get("/production", ensureAuthenticated, (req, res) => {
       let usdTotal = 0;
 
       for (let x = 0; x < orders.length; x++) {
-        if (orders.currentStatus === "V. Sent to Vendor") {
+        if (orders[x].currentStatus === "V. Sent to Vendor") {
           productionOrders.push(orders[x]);
         }
       }
 
-      for (let x = 0; x < productionOrders.length; x++) {
-        if (productionOrders[x].currency === "CAD") {
-          cadTotal += productionOrders[x].netValue;
-        } else if (productionOrders[x].currency === "USD") {
-          usdTotal += productionOrders[x].netValue;
+      for (let y = 0; y < productionOrders.length; y++) {
+        if (productionOrders[y].currency === "CAD") {
+          cadTotal += productionOrders[y].netValue;
+        } else if (productionOrders[y].currency === "USD") {
+          usdTotal += productionOrders[y].netValue;
         }
       }
 
