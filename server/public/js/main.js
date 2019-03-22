@@ -576,7 +576,7 @@ $(document).ready(function () {
         targets: 9,
         data: "netValue",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
-      },
+      }
     ],
     scrollX: true,
     scrollCollapse: true,
