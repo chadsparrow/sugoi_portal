@@ -76,7 +76,7 @@ router.get("/preprod", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 // PRODUCTION REPORT
 router.get("/production", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let pageTitle = "Production Report";
+  let pageTitle = "Production Report - Not Invoiced / Invoiced Today Only";
   Order.find({ $or: [{ jbaInvoiceNum: { $in: ["", null] }, currentStatus: "V. Sent to Vendor" }, { jbaInvoiceNum: { $nin: ["", null] }, currentStatus: "V. Sent to Vendor", jbaInvoiceDate: { $gte: dayjs().startOf('day'), $lte: dayjs().endOf('day') } }] })
     .then(orders => {
       let cadTotal = 0;
