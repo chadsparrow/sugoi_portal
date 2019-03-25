@@ -148,20 +148,25 @@ export const store = new Vuex.Store({
       dispatch('setOrderTotal');
     },
     addLine: ({ commit, state }) => {
-      const lineLength = state.order.orderLines.length;
-      let nextLineNumber = parseInt(lineLength + 1);
-      if (nextLineNumber < 10) {
-        nextLineNumber = "0" + nextLineNumber;
-      } else {
-        nextLineNumber = nextLineNumber.toString();
-      }
-      state.isLoading = true;
-      axios.put(`/api/orders/${state.order.orderNum}/${nextLineNumber}`)
-        .then(r => r.data)
-        .then(order => {
-          commit("SET_ORDER_DATA", order);
-          state.isLoading = false;
-        })
+      return new Promise((resolve, reject) => {
+        const lineLength = state.order.orderLines.length;
+        let nextLineNumber = parseInt(lineLength + 1);
+        if (nextLineNumber < 10) {
+          nextLineNumber = "0" + nextLineNumber;
+        } else {
+          nextLineNumber = nextLineNumber.toString();
+        }
+        state.isLoading = true;
+        axios.put(`/api/orders/${state.order.orderNum}/${nextLineNumber}`)
+          .then(r => r.data)
+          .then(order => {
+            commit("SET_ORDER_DATA", order);
+            state.isLoading = false;
+            resolve(nextLineNumber);
+          }).catch((err) => {
+            reject(err);
+          });
+      });
     },
     cancelLine: ({ commit, dispatch }, lineIndex) => {
       commit("CANCEL_LINE", lineIndex);

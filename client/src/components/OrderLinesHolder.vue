@@ -47,7 +47,14 @@ export default {
   },
   methods: {
     addLine() {
-      this.$store.dispatch("addLine");
+      this.$store
+        .dispatch("addLine")
+        .then(nextLineNumber => {
+          this.$router.push({ path: `/editline/${nextLineNumber}` });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
