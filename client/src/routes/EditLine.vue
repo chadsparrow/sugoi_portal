@@ -74,6 +74,7 @@
                 ref="colourWayCode"
               >
                 <option value="SUB">Full Custom</option>
+                <option value="BLK">Black</option>
                 <option value="MSS">Moss</option>
                 <option value="RSK">Risk</option>
                 <option value="DEJ">Deep Jade</option>
