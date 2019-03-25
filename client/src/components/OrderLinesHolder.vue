@@ -49,7 +49,7 @@ export default {
     addLine() {
       this.$store
         .dispatch("addLine")
-        .then(nextLineNumber => {
+        .then(nextLineNumberRoute => {
           this.$router.push({ path: `/editline/${nextLineNumberRoute}` });
         })
         .catch(err => {
