@@ -560,6 +560,27 @@ export const store = new Vuex.Store({
     },
     isLoading: (state) => {
       return state.isLoading;
+    },
+    disableEdit: (state) => {
+      const currentStatus = state.order.currentStatus;
+      if (currentStatus === "M. Waiting for Output" ||
+        currentStatus === "N. Output - Waiting on Someone else" ||
+        currentStatus === "O. Output Started" ||
+        currentStatus === "P. Output Ready for QC" ||
+        currentStatus === "P-1. Output QC in Progress" ||
+        currentStatus === "Q. Output QC Complete" ||
+        currentStatus === "R. Waiting for PNT" ||
+        currentStatus === "S. PNT Ready for QC" ||
+        currentStatus === "S-1. PNT QC in Progress" ||
+        currentStatus === "T. PNT QC Complete" ||
+        currentStatus === "U. Uploaded" ||
+        currentStatus === "V. Sent to Vendor"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 });
+

@@ -62,6 +62,7 @@
             tag="button"
             class="btn btn-sm btn-success d-print-none"
             :to="`/editline/${this.index}`"
+            :disabled="disabledEdit"
           >Edit Line Details</router-link>
         </div>
         <div class="items mt-2 row" v-if="orderLine.items.length">
@@ -81,11 +82,13 @@
           type="button"
           class="btn btn-sm btn-info mr-1 d-print-none"
           @click.prevent="addItem"
+          @disabled="disabledEdit"
         >Add Item</button>
         <button
           type="button"
           class="btn btn-sm btn-danger mr-1 d-print-none"
           @click.prevent="cancelLine"
+          @disabled="disabledEdit"
         >Cancel Full Line</button>
         <div class="float-right">
           <div
@@ -136,6 +139,9 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isLoading;
+    },
+    disabledEdit() {
+      return this.$store.getters.disableEdit;
     }
   },
   methods: {

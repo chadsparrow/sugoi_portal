@@ -13,6 +13,7 @@
         type="button"
         class="btn btn-dark btn-block d-print-none"
         @click.prevent="addLine"
+        :disabled="disabledEdit"
       >Add Line</button>
     </div>
   </div>
@@ -40,6 +41,9 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isLoading;
+    },
+    disabledEdit() {
+      return this.$store.getters.disableEdit;
     }
   },
   methods: {

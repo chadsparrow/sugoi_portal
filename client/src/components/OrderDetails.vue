@@ -39,6 +39,7 @@
               id="customerPO"
               v-model.trim.lazy="order.customerPO"
               @change="saveNotes"
+              :readonly="disabledEdit"
             >
           </li>
         </ul>
@@ -50,6 +51,7 @@
             style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
             id="orderNotes"
             @change="saveNotes"
+            :readonly="disabledEdit"
           ></textarea>
         </div>
       </div>
@@ -128,10 +130,6 @@
             Currency:
             <span>{{order.currency}}</span>
           </li>
-          <!-- <li v-if="order.multiShips > 0 || order.prePacks>0" class="list-group-item">
-            Before Multi/Prepacks:
-            <span>${{formatPrice(beforeAddOns)}}</span>
-          </li>-->
           <li v-if="order.multiShips >0" class="list-group-item">
             MultiShips:
             <span>{{order.multiShips}} @ $15 = ${{formatPrice(order.multiShips * 15)}}</span>
@@ -176,6 +174,7 @@
             tag="button"
             :to="`/${this.order.orderNum}/editdetails`"
             class="btn btn-success btn-block d-print-none"
+            :disabled="disabledEdit"
           >Edit Details</router-link>
         </div>
       </div>
@@ -191,6 +190,9 @@ export default {
   computed: {
     order() {
       return this.$store.state.order;
+    },
+    disabledEdit() {
+      return this.$store.getters.disableEdit;
     }
   },
   methods: {

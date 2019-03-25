@@ -110,8 +110,13 @@
             tag="button"
             :to="`/edititem/${this.lineIndex}/${this.index}`"
             class="btn btn-sm btn-success mr-1"
+            :disabled="disabledEdit"
           >Edit Item</router-link>
-          <button class="btn btn-sm btn-danger" @click.prevent="cancelItem">Cancel Item</button>
+          <button
+            class="btn btn-sm btn-danger"
+            @click.prevent="cancelItem"
+            :disabled="disabledEdit"
+          >Cancel Item</button>
         </div>
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
           <div
@@ -188,6 +193,9 @@ export default {
     },
     subTotal() {
       return this.item.totalUnits * this.item.finalUnitPrice;
+    },
+    disabledEdit() {
+      return this.$store.getters.disableEdit;
     }
   },
   methods: {
