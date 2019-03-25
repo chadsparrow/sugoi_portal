@@ -155,7 +155,14 @@ export default {
       }
     },
     addItem() {
-      this.$store.dispatch("addItem", this.index);
+      this.$store
+        .dispatch("addItem", this.index)
+        .then(itemLength => {
+          this.$router.push({ path: `/edititem/${this.index}/${itemLength}` });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

@@ -174,20 +174,25 @@ export const store = new Vuex.Store({
       dispatch('updateAllLines');
     },
     addItem: ({ commit, state }, lineIndex) => {
-      const itemLength = state.order.orderLines[lineIndex].items.length;
-      let nextItemNumber = parseInt(itemLength + 1);
-      if (nextItemNumber < 10) {
-        nextItemNumber = "0" + nextItemNumber;
-      } else {
-        nextItemNumber = nextItemNumber.toString();
-      }
-      state.isLoading = true;
-      axios.put(`/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
-        .then(r => r.data)
-        .then(order => {
-          commit("SET_ORDER_DATA", order);
-          state.isLoading = false;
-        })
+      return new Promise((resolve, reject) => {
+        const itemLength = state.order.orderLines[lineIndex].items.length;
+        let nextItemNumber = parseInt(itemLength + 1);
+        if (nextItemNumber < 10) {
+          nextItemNumber = "0" + nextItemNumber;
+        } else {
+          nextItemNumber = nextItemNumber.toString();
+        }
+        state.isLoading = true;
+        axios.put(`/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
+          .then(r => r.data)
+          .then(order => {
+            commit("SET_ORDER_DATA", order);
+            state.isLoading = false;
+            resolve(itemLength);
+          }).catch((err) => {
+            reject(err);
+          })
+      });
     },
     cancelItem: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
       commit("CANCEL_ITEM", { lineIndex, itemIndex });
