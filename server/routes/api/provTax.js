@@ -5,8 +5,8 @@ const logger = require("../../helpers/logs");
 // includes model for mongodb
 const ProvTax = require("../../models/ProvTax");
 
-// @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
-// SEC - MUST BE LOGGED IN
+// @DESC - GETS ALL PROVINCES AND PROVINCIAL TAX AMOUNTS FROM SERVER
+// SEC - PUBLIC API
 router.get("/", (req, res) => {
     ProvTax.find()
         .sort({ province: 1 })

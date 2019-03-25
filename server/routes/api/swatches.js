@@ -5,8 +5,8 @@ const logger = require("../../helpers/logs");
 // includes model for mongodb
 const Swatch = require("../../models/Swatch");
 
-// @DESC - GETS JSON DATA OF ALL in 'swatches' collection
-// SEC - MUST BE LOGGED IN
+// @DESC - GETS ALL SWATCHES FROM SERVER
+// SEC - PUBLIC API
 router.get("/", (req, res) => {
     Swatch.find()
         .then(swatches => {

@@ -5,8 +5,8 @@ const logger = require("../../helpers/logs");
 // includes model for mongodb
 const GraphicCode = require("../../models/GraphicCode");
 
-// @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
-// SEC - MUST BE LOGGED IN
+// @DESC - GETS ALL QD GRAPHIC CODES FROM THE SERVER
+// SEC - PUBLIC API
 router.get("/", (req, res) => {
   GraphicCode.find()
     .then(graphicCodes => {

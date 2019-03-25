@@ -5,8 +5,8 @@ const logger = require("../../helpers/logs");
 // includes model for mongodb
 const CustomRep = require("../../models/CustomRep");
 
-// @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
-// SEC - MUST BE LOGGED IN
+// @DESC - GETS ALL THE REPS AT SUGOI
+// SEC - PUBLIC API
 router.get("/", (req, res) => {
     CustomRep.find()
         .then(reps => {

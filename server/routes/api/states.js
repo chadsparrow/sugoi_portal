@@ -5,8 +5,8 @@ const logger = require("../../helpers/logs");
 // includes model for mongodb
 const State = require("../../models/State");
 
-// @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
-// SEC - MUST BE LOGGED IN
+// @DESC - GETS ALL USA STATES AND TERRITORIES
+// SEC - PUBLIC API
 router.get("/", (req, res) => {
     State.find()
         .sort({ state: 1 })

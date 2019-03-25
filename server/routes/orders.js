@@ -27,6 +27,8 @@ router.get("/all", ensureAuthenticated, (req, res) => {
   });
 });
 
+// @DESC - LOADS PO PAGE WITH SINGLE ORDER DETAILS
+// SEC - MUST BE LOGGED IN
 router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
   let pageTitle = `${req.params.orderNum} PO`;
   let poDate = dayjs().format('MM/DD/YYYY');
@@ -50,6 +52,8 @@ router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
   });
 });
 
+// @DESC - GETS XML PAGE FOR A SINGLE ORDER
+// SEC - MUST BE LOGGED IN
 router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
   let items = [];
   Order.findOne({ orderNum: req.params.orderNum })
@@ -347,7 +351,7 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
-// @DESC - UPDATES ORDER IN ORDER COLLECTION BASED ON ID#
+// @DESC - UPDATES ORDER IN ORDER COLLECTION BASED ON ID# - USES CURRENTSTATUS TO DETERMINE WHAT TO DO
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let id = req.params.id;
@@ -785,6 +789,8 @@ router.put(
   }
 );
 
+// @DESC - GETS THE WEEK NUMBER OF CURRENT WEEK
+// SEC - PUBLIC FUNCTION
 Date.prototype.getWeek = function () {
   var date = new Date(this.getTime());
   date.setHours(0, 0, 0, 0);
@@ -804,6 +810,8 @@ Date.prototype.getWeek = function () {
   );
 };
 
+// @DESC - GETS DATE RANGE FOR CURRENT WEEK
+// SEC - PUBLIC FUNCTION
 function getDateRangeOfWeek(weekNo, y) {
   var d1, numOfdaysPastSinceLastMonday, rangeIsFrom, rangeIsTo;
   var months = [
