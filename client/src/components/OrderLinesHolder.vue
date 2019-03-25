@@ -49,8 +49,8 @@ export default {
     addLine() {
       this.$store
         .dispatch("addLine")
-        .then(nextLineNumberRoute => {
-          this.$router.push({ path: `/editline/${nextLineNumberRoute}` });
+        .then(lineLength => {
+          this.$router.push({ path: `/editline/${lineLength}` });
         })
         .catch(err => {
           console.log(err);
