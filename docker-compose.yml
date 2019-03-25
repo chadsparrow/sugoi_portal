@@ -31,9 +31,9 @@ services:
       - "5000:5000"
     volumes:
       # use this volume for staging
-      - /data/sites/ssl-certs/sugoi:/usr/src/app/server/certs
+      #- /data/sites/ssl-certs/sugoi:/usr/src/app/server/certs
       # use this volume for production
-      #- /data/certs/sugoi:/usr/src/app/server/certs
+      - /data/certs/sugoi:/usr/src/app/server/certs
       - /data/logs/sugoi-custom-proofs/npm:/root/.npm/
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
