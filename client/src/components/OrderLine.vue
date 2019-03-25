@@ -57,12 +57,11 @@
             >Colour Wash: ${{formatPrice(orderLine.colourWashCharge)}}</span>
           </div>
         </div>
-        <div class="text-center mt-2">
+        <div class="text-center mt-2" v-if="disabledEdit === false">
           <router-link
             tag="button"
             class="btn btn-sm btn-success d-print-none"
             :to="`/editline/${this.index}`"
-            :disabled="disabledEdit"
           >Edit Line Details</router-link>
         </div>
         <div class="items mt-2 row" v-if="orderLine.items.length">
@@ -82,13 +81,13 @@
           type="button"
           class="btn btn-sm btn-info mr-1 d-print-none"
           @click.prevent="addItem"
-          @disabled="disabledEdit"
+          v-if="disabledEdit === false"
         >Add Item</button>
         <button
           type="button"
           class="btn btn-sm btn-danger mr-1 d-print-none"
           @click.prevent="cancelLine"
-          @disabled="disabledEdit"
+          v-if="disabledEdit === false"
         >Cancel Full Line</button>
         <div class="float-right">
           <div

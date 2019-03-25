@@ -105,18 +105,13 @@
         </div>
       </div>
       <div class="card-footer p-1">
-        <div class="float-left m-0 d-print-none">
+        <div class="float-left m-0 d-print-none" v-if="disabledEdit === false">
           <router-link
             tag="button"
             :to="`/edititem/${this.lineIndex}/${this.index}`"
             class="btn btn-sm btn-success mr-1"
-            :disabled="disabledEdit"
           >Edit Item</router-link>
-          <button
-            class="btn btn-sm btn-danger"
-            @click.prevent="cancelItem"
-            :disabled="disabledEdit"
-          >Cancel Item</button>
+          <button class="btn btn-sm btn-danger" @click.prevent="cancelItem">Cancel Item</button>
         </div>
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
           <div

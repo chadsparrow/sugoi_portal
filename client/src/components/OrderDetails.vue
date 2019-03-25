@@ -169,12 +169,11 @@
             ${{formatPrice(order.balanceOutstanding)}}
           </h6>
         </div>
-        <div class="border-top pt-2">
+        <div class="border-top pt-2" v-if="disabledEdit === false">
           <router-link
             tag="button"
             :to="`/${this.order.orderNum}/editdetails`"
             class="btn btn-success btn-block d-print-none"
-            :disabled="disabledEdit"
           >Edit Details</router-link>
         </div>
       </div>

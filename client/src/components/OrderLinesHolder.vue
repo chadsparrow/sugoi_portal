@@ -8,12 +8,11 @@
     <div v-else>
       <OrderLine v-for="(line, index) in orderLines" :key="index" :index="index"></OrderLine>
     </div>
-    <div class="p-1">
+    <div class="p-1" v-if="disabledEdit === false">
       <button
         type="button"
         class="btn btn-dark btn-block d-print-none"
         @click.prevent="addLine"
-        :disabled="disabledEdit"
       >Add Line</button>
     </div>
   </div>
