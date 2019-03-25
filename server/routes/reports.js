@@ -4,6 +4,7 @@ const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
 const moment = require("moment");
 const dayjs = require('dayjs');
 
+
 const Report = require("../models/Report");
 const Order = require("../models/Order");
 
@@ -76,7 +77,7 @@ router.get("/preprod", [ensureAuthenticated, ensureAdmin], (req, res) => {
 // PRODUCTION REPORT
 router.get("/production", [ensureAuthenticated, ensureAdmin], (req, res) => {
   let pageTitle = "Production Report";
-  Order.find({ jbaInvoiceNum: { $in: ["", null] }, currentStatus: "V. Sent to Vendor" })
+  Order.find({ $or: [{ jbaInvoiceNum: { $in: ["", null] }, currentStatus: "V. Sent to Vendor" }, { jbaInvoiceNum: { $nin: ["", null] }, currentStatus: "V. Sent to Vendor", jbaInvoiceDate: { $gte: dayjs().startOf('day'), $lte: dayjs().endOf('day') } }] })
     .then(orders => {
       let cadTotal = 0;
       let usdTotal = 0;

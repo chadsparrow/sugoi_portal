@@ -159,6 +159,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.jbaPONum = jbaPONum;
       foundOrder.jbaGNRNum = jbaGNRNum;
       foundOrder.jbaInvoiceNum = jbaInvoiceNum;
+      if (foundOrder.jbaInvoiceNum != '' || foundOrder.jbaInvoiceNum != null) {
+        foundOrder.jbaInvoiceDate = dayjs().format();
+      }
       foundOrder.shipStatus = shipStatus;
       foundOrder.shippingNotes = shippingNotes;
       foundOrder.netValue = netValue;

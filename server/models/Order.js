@@ -151,6 +151,10 @@ const OrderSchema = new Schema({
     type: String,
     default: null
   },
+  jbaInvoiceDate: {
+    type: Date,
+    default: null
+  },
   invoiceSent: {
     type: Date,
     default: null
