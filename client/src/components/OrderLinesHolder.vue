@@ -50,7 +50,7 @@ export default {
       this.$store
         .dispatch("addLine")
         .then(nextLineNumber => {
-          this.$router.push({ path: `/editline/${nextLineNumber}` });
+          this.$router.push({ path: `/editline/${nextLineNumberRoute}` });
         })
         .catch(err => {
           console.log(err);

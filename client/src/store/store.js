@@ -151,6 +151,7 @@ export const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         const lineLength = state.order.orderLines.length;
         let nextLineNumber = parseInt(lineLength + 1);
+        let nextLineNumberRoute = nextLineNumber;
         if (nextLineNumber < 10) {
           nextLineNumber = "0" + nextLineNumber;
         } else {
@@ -162,7 +163,7 @@ export const store = new Vuex.Store({
           .then(order => {
             commit("SET_ORDER_DATA", order);
             state.isLoading = false;
-            resolve(nextLineNumber);
+            resolve(nextLineNumberRoute);
           }).catch((err) => {
             reject(err);
           });
