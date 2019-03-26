@@ -15,8 +15,6 @@ const tracker = require("delivery-tracker");
 const courier = tracker.courier(tracker.COURIER.FEDEX.CODE);
 const cron = require("cron");
 const { ensureAuthenticated, ensureEditOrders } = require("./helpers/auth");
-
-
 const express = require("express");
 const logger = require("./helpers/logs");
 const dayjs = require('dayjs');
@@ -35,13 +33,13 @@ let credentials = { key: privateKey, cert: certificate };
 //initialize helmet security
 app.use(helmet());
 
-//initialize CORS
+//initialize CORS for cross origin (API usage)
 app.use(cors());
 
-// Trust Proxies - Uncomment during deployment
+// Trust Proxies
 app.enable('trust proxy');
 
-// Load Routes
+// Load Route modules
 const indexRoutes = require("./routes/index");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/users");
@@ -254,6 +252,7 @@ app.use((error, req, res, next) => {
   res.render("error", { error });
 });
 
+// sets the port to environment variable PORT or 5000 if not available
 const port = process.env.PORT || 5000;
 
 //sets https server with certificates and keys
