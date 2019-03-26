@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
   actions: {
     saveOrder: ({ commit, state }) => {
       let order = state.order;
+
       delete order.createdAt;
       delete order.updatedAt;
       axios
