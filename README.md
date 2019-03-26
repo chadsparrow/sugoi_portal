@@ -21,6 +21,8 @@
 * FedEx API
 * Cron - to update FedEx info every few hours
 * bcryptjs - hashing stored passwords in db
+* moment - date/time manipulation package
+* dayjs - date/time manipulation package
 
 ## URLs
     Production - https://portal.sugoi.com
