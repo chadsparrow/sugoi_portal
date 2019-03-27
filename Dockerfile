@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:8
 
 ADD server /usr/src/app/server
 
