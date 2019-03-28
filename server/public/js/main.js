@@ -383,8 +383,13 @@ $(document).ready(function () {
     },
     columnDefs: [
       {
-        targets: 3,
+        targets: 2,
         data: "netValue",
+        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+      },
+      {
+        targets: 3,
+        data: "balanceOutstanding",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
       },
       {
@@ -406,17 +411,12 @@ $(document).ready(function () {
         targets: 15,
         data: "isrRefunded",
         render: $.fn.dataTable.render.number(",", ".", 2, "$")
-      },
-      {
-        targets: 19,
-        data: "balanceOutstanding",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
       }
     ],
     select: true,
     scrollX: true,
     scrollCollapse: true,
-    pageLength: 15,
+    pageLength: -1,
     order: [[0, "asc"]],
     oLanguage: {
       sSearch: "Search",
@@ -434,6 +434,27 @@ $(document).ready(function () {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
+      {
+        text: "All",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/payments/");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Signed Off",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/payments/signedoff");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Outstanding",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/payments/outstanding");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
       {
         extend: "excelHtml5",
         className: "waves-effect waves-light btn-small",

@@ -14,31 +14,32 @@
   </div>
 </div>
 <div style="margin-top: 20px; margin-bottom: 50px;">
-  <h5 class='center-align'>Payments</h5>
+  <div class="container center-align">
+    <h5>{{pageTitle}}</h5>
+    <small>Shift+scroll mouse wheel inside the table to scroll left and right</small>
+  </div>
   <table class="display nowrap compact" id="paymentTable">
     <thead>
       <tr>
-        <th>Contract #</th>
-        <th>Client</th>
-        <th>Qty</th>
-        <th>Total Value</th>
-        <th>Currency</th>
-        <th>Created By</th>
-        <th>Sent to Vendor</th>
-        <th>Status</th>
-        <th>Confirmed Ship Date</th>
-        <th>Approved Terms</th>
-        <th>On Term Payment<br><small>(Finance to Track)<br>(Original Currency)</small></th>
-        <th>KitOrder Payment Collected<br><small>(Original Currency)</small></th>
-        <th>ISR Payment Collected<br><small>(Original Currency)</small></th>
-        <th>ISR Payment Date</th>
-        <th>ISR Payment Type</th>
-        <th>ISR Refunded<br><small>(Original Currency)</small></th>
-        <th>Notes</th>
-        <th>JBA Invoice #</th>
-        <th>Invoice Sent Date</th>
-        <th>Balance Outstanding<br><small>(Original Currency)</small></th>
-        <th>Payment Status</th>
+        <th class="center-align">Contract #</th>
+        <th class="center-align">Client</th>
+        <th class="center-align">Total Value</th>
+        <th class="center-align">Balance Outstanding</th>
+        <th class="center-align">Payment Status</th>
+        <th class="center-align">Currency</th>
+        <th class="center-align">Created By</th>
+        <th class="center-align">Sent to Vendor</th>
+        <th class="center-align">Status</th>
+        <th class="center-align">Terms</th>
+        <th class="center-align">On Term Payment</th>
+        <th class="center-align">KitOrder Payment Collected</th>
+        <th class="center-align">ISR Payment Collected</th>
+        <th class="center-align">ISR Payment Date</th>
+        <th class="center-align">ISR Payment Type</th>
+        <th class="center-align">ISR Refunded<br></th>
+        <th class="center-align">Notes</th>
+        <th class="center-align">JBA Invoice #</th>
+        <th class="center-align">Invoice Sent Date</th>
         <th></th>
       </tr>
     </thead>
@@ -46,18 +47,16 @@
       {{#each orders}}
       <tr>
         <td style="font-size: 12px;" class="center-align">{{orderNum}}</td>
-        <td style="font-size: 12px;" class="center-align">{{client}}</td>
-        <td style="font-size: 12px;" class="center-align">{{qty}}</td>
+        <td style="font-size: 12px;">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{netValue}}</td>
+        <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{balanceOutstanding}}</td>
+        <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{paymentStatus}}</td>
         <td style="font-size: 12px;" class="center-align">{{currency}}</td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if
           sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if
-          vendorConfirmShip}}{{formatDate vendorConfirmShip
-          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{approvedTerms}}</td>
         <td style="font-size: 12px;" class="center-align">{{onTermPayment}}</td>
         <td style="font-size: 12px;" class="center-align">{{kitOrderPayment}}</td>
@@ -70,8 +69,6 @@
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if invoiceSent}}{{formatDate invoiceSent
           "D-MMM-YY"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{balanceOutstanding}}</td>
-        <td style="font-size: 12px;" class="center-align {{setPaymentStatus paymentStatus}}">{{paymentStatus}}</td>
         <td style="font-size: 12px;" class="center-align valign-wrapper">
           <span>
             {{#if ../user.editOrders}}
