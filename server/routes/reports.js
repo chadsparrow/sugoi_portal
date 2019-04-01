@@ -22,6 +22,15 @@ router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
     });
 });
 
+router.get("/linechart", [ensureAuthenticated, ensureAdmin], (req, res) => {
+  const currentWeekNum = moment(dayjs().format()).format("W");
+  Report.find({})
+    .sort({ reportWeekNumber: 1 })
+    .then(reports => {
+      res.render("reports/linechart", { reports });
+    });
+});
+
 router.get("/week/:weekNum", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const weekNum = req.params.weekNum;
   Report.find()
