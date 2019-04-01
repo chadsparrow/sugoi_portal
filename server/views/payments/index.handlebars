@@ -31,12 +31,13 @@
         <th class="center-align">Sent to Vendor</th>
         <th class="center-align">Status</th>
         <th class="center-align">Terms</th>
-        <th class="center-align">On Term Payment</th>
-        <th class="center-align">KitOrder Payment Collected</th>
-        <th class="center-align">ISR Payment Collected</th>
+        <th class="center-align">On Term $ Payment</th>
+        <th class="center-align">KitOrder $ Payment</th>
+        <th class="center-align">ISR $ Payment</th>
         <th class="center-align">ISR Payment Date</th>
         <th class="center-align">ISR Payment Type</th>
-        <th class="center-align">ISR Refunded<br></th>
+        <th class="center-align">Refunded / Credited</th>
+        <th class="center-align">Refunded / Credited Date</th>
         <th class="center-align">Notes</th>
         <th class="center-align">JBA Invoice #</th>
         <th class="center-align">Invoice Sent Date</th>
@@ -56,7 +57,8 @@
         <td style="font-size: 12px;" class="center-align">{{#if
           sentVendor}}{{formatDate sentVendor
           "D-MMM-YY"}}{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align">{{shipStatus}}</td>
+        <td style="font-size: 12px;" class="center-align">{{getStatusforPayments currentStatus shipStatus}}
+        </td>
         <td style="font-size: 12px;" class="center-align">{{approvedTerms}}</td>
         <td style="font-size: 12px;" class="center-align">{{onTermPayment}}</td>
         <td style="font-size: 12px;" class="center-align">{{kitOrderPayment}}</td>
@@ -65,6 +67,7 @@
           "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{isrPaymentType}}</td>
         <td style="font-size: 12px;" class="center-align">{{isrRefunded}}</td>
+        <td style="font-size: 12px;" class="center-align">{{isrRefundedDate}}</td>
         <td style="font-size: 12px;" class="center-align">{{paymentNotes}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if invoiceSent}}{{formatDate invoiceSent

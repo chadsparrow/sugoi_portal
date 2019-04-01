@@ -442,13 +442,6 @@ $(document).ready(function () {
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "Signed Off",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/payments/signedoff");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
-      {
         text: "Outstanding",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/payments/outstanding");

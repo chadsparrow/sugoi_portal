@@ -17,16 +17,16 @@ router.get("/", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
-router.get("/signedoff", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  let pageTitle = "Payments - Signed Off";
-  let signedOff = ["M. Waiting for Output", "N. Output - Waiting on Someone else", "O. Output Started", "P. Output Ready for QC", "P-1. Output QC in Progress", "Q. Output QC Complete", "R. Waiting for PNT", "S. PNT Ready for QC", "S-1. PNT QC in Progress", "T. PNT QC Complete", "U. Uploaded", "V. Sent to Vendor"];
-  Order.find({ currentStatus: { $in: signedOff }, paymentStatus: { $ne: 'Complete' } }).then(orders => {
-    res.render("payments/", {
-      orders,
-      pageTitle
-    });
-  });
-});
+// router.get("/signedoff", [ensureAuthenticated, ensureEditOrders], (req, res) => {
+//   let pageTitle = "Payments - Signed Off";
+//   let signedOff = ["M. Waiting for Output", "N. Output - Waiting on Someone else", "O. Output Started", "P. Output Ready for QC", "P-1. Output QC in Progress", "Q. Output QC Complete", "R. Waiting for PNT", "S. PNT Ready for QC", "S-1. PNT QC in Progress", "T. PNT QC Complete", "U. Uploaded", "V. Sent to Vendor"];
+//   Order.find({ currentStatus: { $in: signedOff }, paymentStatus: { $ne: 'Complete' } }).then(orders => {
+//     res.render("payments/", {
+//       orders,
+//       pageTitle
+//     });
+//   });
+// });
 
 router.get("/outstanding", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let pageTitle = "Payments - Balance Outstanding";
@@ -58,6 +58,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     isrPaymentType,
     paymentNotes,
     isrRefunded,
+    isrRefundedDate,
     invoiceSent
   } = req.body;
 
@@ -73,6 +74,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.isrPaymentDate = isrPaymentDate;
       foundOrder.isrPaymentType = isrPaymentType;
       foundOrder.paymentNotes = paymentNotes;
+      foundOrder.isrRefunded = isrRefunded;
+      foundOrder.isrRefundedDate = isrRefundedDate;
       foundOrder.invoiceSent = invoiceSent;
       if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
         let balanceOutstanding =

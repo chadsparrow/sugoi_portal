@@ -199,6 +199,10 @@ const OrderSchema = new Schema({
     type: Number,
     default: null
   },
+  isrRefundedDate: {
+    type: Date,
+    default: null
+  },
   isrPaymentDate: {
     type: Date,
     default: null

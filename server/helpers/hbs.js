@@ -213,5 +213,94 @@ module.exports = {
     } else {
       return "black-text";
     }
+  },
+  getStatusforPayments: function (status, shipStatus) {
+    if (shipStatus === 'Shipped') {
+      return "Shipped";
+    } else {
+      switch (status) {
+        case "1. Initial":
+          return "Pre-Production";
+          break;
+        case "A. Waiting for Proof":
+          return "Pre-Production";
+          break;
+        case "B. Proof Started":
+          return "Pre-Production";
+          break;
+        case "C. Proof - Waiting on Someone else":
+          return "Pre-Production";
+          break;
+        case "D. Proof Ready for QC":
+          return "Pre-Production";
+          break;
+        case "D-1. Proof QC in Progress":
+          return "Pre-Production";
+          break;
+        case "E. Proof QC Complete":
+          return "Pre-Production";
+          break;
+        case "F. Proof Complete":
+          return "Pre-Production";
+          break;
+        case "G. Waiting for Revision":
+          return "Pre-Production";
+          break;
+        case "H. Revision - Waiting on Someone else":
+          return "Pre-Production";
+          break;
+        case "I. Revision Started":
+          return "Pre-Production";
+          break;
+        case "J. Revision Ready for QC":
+          return "Pre-Production";
+          break;
+        case "J-1. Revision QC in Progress":
+          return "Pre-Production";
+          break;
+        case "K. Revision QC Complete":
+          return "Pre-Production";
+          break;
+        case "L. Revision Complete":
+          return "Pre-Production";
+          break;
+        case "M. Waiting for Output":
+          return "Signed Off";
+          break;
+        case "N. Output - Waiting on Someone else":
+          return "Signed Off";
+          break;
+        case "O. Output Started":
+          return "Signed Off";
+          break;
+        case "P. Output Ready for QC":
+          return "Signed Off";
+          break;
+        case "P-1. Output QC in Progress":
+          return "Signed Off";
+          break;
+        case "Q. Output QC Complete":
+          return "Signed Off";
+          break;
+        case "R. Waiting for PNT":
+          return "Signed Off";
+          break;
+        case "S. PNT Ready for QC":
+          return "Signed Off";
+          break;
+        case "S-1. PNT QC in Progress":
+          return "Signed Off";
+          break;
+        case "T. PNT QC Complete":
+          return "Signed Off";
+          break;
+        case "U. Uploaded":
+          return "Signed Off";
+          break;
+        case "V. Sent to Vendor":
+          return "In Production";
+          break;
+      }
+    }
   }
 };
