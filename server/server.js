@@ -23,17 +23,19 @@ const DateDiff = require("date-diff");
 // initializes the app using express
 const app = express();
 
-// use this privateKey for production/development
+// use this privateKey for production/development - uncomment line below if in production/development
 //const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
-//use this privateKey for staging
+
+// use this privateKey for staging - uncomment line below if in staging
 const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 let credentials = { key: privateKey, cert: certificate };
 
-//initialize helmet security
+// initialize helmet security
 app.use(helmet());
 
-//initialize CORS for cross origin (API usage)
+// initialize CORS for cross origin (API usage)
 app.use(cors());
 
 // Trust Proxies
@@ -130,7 +132,7 @@ app.set("view engine", "handlebars");
 // Passport config
 require("./config/passport")(passport);
 
-//Body Parser middleware
+// Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -247,7 +249,7 @@ app.use((req, res, next) => {
   next(error);
 });
 
-//if there is an error it will render the error page
+// if there is an error it will render the error page
 app.use((error, req, res, next) => {
   logger.error(error);
   res.status(error.status || 500);
@@ -257,13 +259,10 @@ app.use((error, req, res, next) => {
 // sets the port to environment variable PORT or 5000 if not available
 const port = process.env.PORT || 5000;
 
-//sets https server with certificates and keys
+// sets https server with certificates and keys
 const httpsServer = https.createServer(credentials, app);
 
-// // start the secure server and listen for requests
+// start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
   logger.info(`App listening on port ${port}...`);
 });
-
-//app.listen(port, () => logger.info(`App listening on port ${port}`))
-
