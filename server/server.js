@@ -24,10 +24,10 @@ const DateDiff = require("date-diff");
 const app = express();
 
 // use this privateKey for production/development - uncomment line below if in production/development
-//const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
 
 // use this privateKey for staging - uncomment line below if in staging
-const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
+//const privateKey = fs.readFileSync("./certs/louisgarneau.key", "utf8");
 
 const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 let credentials = { key: privateKey, cert: certificate };
