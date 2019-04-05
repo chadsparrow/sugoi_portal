@@ -71,19 +71,6 @@
             v-model.trim="order.orderNotes"
           ></textarea>
         </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="need3d" v-model="order.need3d">
-          <label class="form-check-label" for="need3d">Require 3D</label>
-        </div>
-        <div class="form-group form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="needSketch"
-            v-model="order.needSketch"
-          >
-          <label class="form-check-label" for="needSketch">Require Sketch</label>
-        </div>
       </div>
       <div class="col-sm-7 border-left border-right mb-0">
         <div class="row">

@@ -38,9 +38,8 @@
       <tr>
         <td style="font-size: 14px;" class='center-align'>{{orderNum}} {{#if need3d}}<span class='badge blue lighten-3'
             style="color: black; font-size: 10px; max-width: 10px;">3D</span>{{/if}}{{#if needSketch}}<span
-            class='badge red' style="color: white; font-size: 10px; max-width: 10px;">S</span>{{/if}}</td>
-        <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}
-        </td>
+            class='badge red' style="color: white; font-size: 10px; max-width: 10px;">M</span>{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align {{setStatusDiv currentStatus}}">{{currentStatus}}</td>
         <td style="font-size: 12px;" class="center-align{{#if priority}} pink white-text{{/if}}">{{priority}}</td>
         <td style="font-size: 12px;" class="center-align">{{formatDate enteredDate "D-MMM-YY"}}</td>
         <td style="font-size: 12px;" class="center-align">{{formatDate updatedAt "D-MMM-YY"}}</td>

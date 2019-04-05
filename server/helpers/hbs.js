@@ -265,37 +265,37 @@ module.exports = {
           return "Pre-Production";
           break;
         case "M. Waiting for Output":
-          return "Signed Off";
+          return "In Production";
           break;
         case "N. Output - Waiting on Someone else":
-          return "Signed Off";
+          return "In Production";
           break;
         case "O. Output Started":
-          return "Signed Off";
+          return "In Production";
           break;
         case "P. Output Ready for QC":
-          return "Signed Off";
+          return "In Production";
           break;
         case "P-1. Output QC in Progress":
-          return "Signed Off";
+          return "In Production";
           break;
         case "Q. Output QC Complete":
-          return "Signed Off";
+          return "In Production";
           break;
         case "R. Waiting for PNT":
-          return "Signed Off";
+          return "In Production";
           break;
         case "S. PNT Ready for QC":
-          return "Signed Off";
+          return "In Production";
           break;
         case "S-1. PNT QC in Progress":
-          return "Signed Off";
+          return "In Production";
           break;
         case "T. PNT QC Complete":
-          return "Signed Off";
+          return "In Production";
           break;
         case "U. Uploaded":
-          return "Signed Off";
+          return "In Production";
           break;
         case "V. Sent to Vendor":
           return "In Production";

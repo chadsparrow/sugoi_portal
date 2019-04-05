@@ -442,9 +442,30 @@ $(document).ready(function () {
         className: "waves-effect waves-light btn-small"
       },
       {
-        text: "Outstanding",
+        text: "Outstanding All",
         action: function (e, dt, node, config) {
           $(location).attr("href", "/payments/outstanding");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Outstanding Pre-Prod",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/payments/outstanding/preprod");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Outstanding Prod",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/payments/outstanding/prod");
+        },
+        className: "waves-effect waves-light btn-small"
+      },
+      {
+        text: "Outstanding Shipped",
+        action: function (e, dt, node, config) {
+          $(location).attr("href", "/payments/outstanding/shipped");
         },
         className: "waves-effect waves-light btn-small"
       },

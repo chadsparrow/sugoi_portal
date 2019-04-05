@@ -1,12 +1,35 @@
 <template>
   <div class="card border-dark">
     <div class="card-header bg-dark text-light p-2">
-      <span>Order Details</span>
-      <div class="badge badge-info text-white text-center ml-3 d-print-none" v-if="order.need3d">3D</div>
-      <div
-        class="badge badge-danger text-white text-center ml-3 d-print-none"
-        v-if="order.needSketch"
-      >Flat Sketch</div>
+      <div class="row align-items-center m-0">
+        <div class="col-sm-2">
+          <span>Order Details</span>
+        </div>
+        <div class="col-sm-2 d-print-none align-items-center">
+          <!-- <div class="form-group form-check"> -->
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="need3d"
+            v-model="order.need3d"
+            @change="saveNotes"
+          >
+          <label class="form-check-label" for="need3d">Require 3D</label>
+          <!-- </div> -->
+        </div>
+        <div class="col-sm-2 d-print-none align-items-center">
+          <!-- <div class="form-group form-check"> -->
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="needSketch"
+            v-model="order.needSketch"
+            @change="saveNotes"
+          >
+          <label class="form-check-label" for="needSketch">Require Mock-Up</label>
+          <!-- </div> -->
+        </div>
+      </div>
     </div>
     <div class="row card-body p-2">
       <div class="col-sm-3">
