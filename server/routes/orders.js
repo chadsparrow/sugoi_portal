@@ -620,9 +620,17 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.vendor = vendor;
       foundOrder.jbaPONum = jbaPONum;
-      foundOrder.latestShipDate = dayjs(latestShipDate).format();
-      foundOrder.latestInHand = dayjs(latestInHand).format();
-      foundOrder.eventDate = dayjs(eventDate).format();
+      if (latestShipDate) {
+        foundOrder.latestShipDate = dayjs(latestShipDate).set('hour', 7).format("YYYY-MM-DD HH:mm:ss");
+      }
+
+      if (latestInHand) {
+        foundOrder.latestInHand = dayjs(latestInHand).set('hour', 7).format("YYYY-MM-DD HH:mm:ss");
+      }
+
+      if (eventDate) {
+        foundOrder.eventDate = dayjs(eventDate).set('hour', 7).format("YYYY-MM-DD HH:mm:ss");
+      }
 
       if (foundOrder.balanceOutstanding != null && foundOrder.balanceOutstanding != undefined) {
         if (foundOrder.balanceOutstanding > 0) {
