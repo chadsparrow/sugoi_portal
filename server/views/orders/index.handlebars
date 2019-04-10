@@ -29,7 +29,6 @@
         <th data-priority="5" class="center-align">Client</th>
         <th data-priority="7" class="center-align">Artist</th>
         <th class="center-align">Vendor</th>
-        <th class="center-align">Upload Date</th>
         <th data-priority="2" class="center-align">Actions</th>
       </tr>
     </thead>
@@ -51,8 +50,6 @@
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{currentArtist}}</td>
         <td style="font-size: 12px;" class="center-align">{{vendor}}</td>
-        <td style="font-size: 12px;" class="center-align">{{#if uploadDate}}{{formatDate uploadDate
-          "D-MMM-YY"}}{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">
           <span>
             <a class="blue-text" href="/{{orderNum}}" target="_blank">
