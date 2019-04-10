@@ -362,6 +362,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     vendor,
     jbaPONum,
     latestShipDate,
+    accountNum,
     instruction,
     estValue,
     currency,
@@ -377,6 +378,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.priority = priority;
       foundOrder.estValue = estValue;
       foundOrder.currency = currency;
+      foundOrder.accountNum = accountNum;
 
       foundOrder.currentStatus = currentStatus;
       if (foundOrder.currentStatus === "A. Waiting for Proof") {
@@ -618,9 +620,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       foundOrder.vendor = vendor;
       foundOrder.jbaPONum = jbaPONum;
-      foundOrder.latestShipDate = latestShipDate;
-      foundOrder.latestInHand = latestInHand;
-      foundOrder.eventDate = eventDate;
+      foundOrder.latestShipDate = dayjs(latestShipDate).format();
+      foundOrder.latestInHand = dayjs(latestInHand).format();
+      foundOrder.eventDate = dayjs(eventDate).format();
 
       if (foundOrder.balanceOutstanding != null && foundOrder.balanceOutstanding != undefined) {
         if (foundOrder.balanceOutstanding > 0) {
