@@ -160,7 +160,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.jbaGNRNum = jbaGNRNum;
       foundOrder.jbaInvoiceNum = jbaInvoiceNum;
       if ((foundOrder.jbaInvoiceNum != '' || foundOrder.jbaInvoiceNum != null) && foundOrder.jbaInvoiceDate === null) {
-        foundOrder.jbaInvoiceDate = dayjs().startOf('day').format();
+        foundOrder.jbaInvoiceDate = dayjs().set('hour', 7).format();
       }
       foundOrder.shipStatus = shipStatus;
       foundOrder.shippingNotes = shippingNotes;
