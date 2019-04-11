@@ -38,11 +38,18 @@ router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
       if (!orderLine.cancelled) {
         for (let item of orderLine.items) {
           if (!item.cancelled) {
+            if (order.multiShips > 0) {
+              item.unitCost += 1.00;
+            }
+            if (item.personalization === true) {
+              item.unitCost += 5.00;
+            }
             items.push(item);
           }
         }
       }
     }
+
     res.render("orders/po", {
       order,
       pageTitle,
