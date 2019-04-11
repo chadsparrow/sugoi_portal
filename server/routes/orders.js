@@ -39,7 +39,7 @@ router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
         for (let item of orderLine.items) {
           if (!item.cancelled) {
             if (order.multiShips > 0) {
-              item.unitCost += 1.00;
+              item.unitCost += order.multiShips;
             }
             if (item.personalization === true) {
               item.unitCost += 5.00;
