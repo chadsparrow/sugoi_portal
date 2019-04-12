@@ -182,9 +182,6 @@
             ${{formatPrice(order.netValue)}}
           </span>
         </div>
-        <ul class="list-group list-group-flush">
-          <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
-        </ul>
         <div class="mb-2 p-1 text-center border rounded">
           <h6>
             Balance Due:

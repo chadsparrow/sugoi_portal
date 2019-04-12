@@ -300,16 +300,6 @@
             v-model.number="order.taxes"
           >
         </div>
-        <div class="mb-1">
-          <label for="deposit" class="small my-0">Deposit $</label>
-          <input
-            type="number"
-            class="form-control form-control-sm"
-            id="deposit"
-            min="0"
-            v-model.number="order.deposit"
-          >
-        </div>
       </div>
     </div>
     <div class="card-footer bg-dark text-right">

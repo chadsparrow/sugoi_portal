@@ -11,7 +11,7 @@ const Order = require("../models/Order");
 router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment(dayjs().format()).format("W");
   Report.find({})
-    .sort({ reportWeekNumber: -1 })
+    .sort({ reportYear: -1, reportWeekNumber: -1 })
     .then(reports => {
       Report.findOne({ reportWeekNumber: currentWeekNum }).then(report => {
         res.render("reports/index", {
@@ -22,12 +22,29 @@ router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
     });
 });
 
-router.get("/linechart", [ensureAuthenticated, ensureAdmin], (req, res) => {
+router.get("/linechart/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment(dayjs().format()).format("W");
-  Report.find({})
+  Report.find({ reportYear: 2019 })
     .sort({ reportWeekNumber: 1 })
     .then(reports => {
-      res.render("reports/linechart", { reports });
+      let proofsCompleted = [];
+      let revisionsCompleted = [];
+      let outputCompleted = [];
+      let weekNumbers = [];
+      let avgProofs = [];
+      let avgRevisions = [];
+      let avgOutput = [];
+
+      for (report of reports){
+        proofsCompleted.push(report.proofsCompleted);
+        revisionsCompleted.push(report.revisionsCompleted);
+        outputCompleted.push(report.outputCompleted);
+        weekNumbers.push (report.reportWeekNumber);
+        avgProofs.push (report.avgProofs);
+        avgRevisions.push (report.avgRevisions);
+        avgOutput.push (report.avgOutput);
+      }
+      res.render("reports/linechart", { proofsCompleted, revisionsCompleted, outputCompleted, weekNumbers, avgProofs, avgRevisions, avgOutput });
     });
 });
 
