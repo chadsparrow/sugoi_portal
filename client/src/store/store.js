@@ -470,9 +470,11 @@ export const store = new Vuex.Store({
       }
       state.order.beforeTaxes += (state.order.multiShips * 15);
       state.order.beforeTaxes += (state.order.prePacks * 5);
+
       if (state.order.revisionCharge) {
         state.order.beforeTaxes += state.order.revisionCharge;
       }
+
       state.order.taxAmount = (state.order.beforeTaxes * (state.order.taxes / 100));
       state.order.netValue = (state.order.beforeTaxes + state.order.taxAmount);
       state.order.balanceOutstanding = (state.order.netValue - state.order.deposit - state.order.isrCollectedOrig - state.order.isrCollectedCAD - state.order.kitOrderPayment + state.order.isrRefunded);
@@ -485,21 +487,35 @@ export const store = new Vuex.Store({
       }
     },
     SET_ADD_ONS: (state, lineIndex) => {
-      if (state.order.orderLines[lineIndex].cancelled === false) {
-        let totalAddOns = 0
-        const items = state.order.orderLines[lineIndex].items;
-        for (let item of items) {
-          if (item.cancelled === false) {
-            totalAddOns += (item.addOns * item.totalUnits);
-          }
-        }
-        totalAddOns += state.order.orderLines[lineIndex].tracingCharge;
-        totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
-        totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
-        totalAddOns += state.order.orderLines[lineIndex].colourWashCharge;
+      let totalAddOns = 0
+      const tracingCharge = state.order.orderLines[lineIndex].tracingCharge;
+      const creativeCharge = state.order.orderLines[lineIndex].creativeCharge;
+      const scaledArtCharge = state.order.orderLines[lineIndex].scaledArtCharge;
+      const colourWashCharge = state.order.orderLines[lineIndex].colourWashCharge;
 
-        state.order.orderLines[lineIndex].totalAddOns = totalAddOns;
+      const items = state.order.orderLines[lineIndex].items;
+      for (let item of items) {
+        if (item.cancelled === false) {
+          totalAddOns += (item.addOns * item.totalUnits);
+        }
       }
+
+      if (tracingCharge) {
+        totalAddOns += tracingCharge;
+      }
+
+      if (creativeCharge) {
+        totalAddOns += creativeCharge;
+      }
+
+      if (scaledArtCharge) {
+        totalAddOns += scaledArtCharge;
+      }
+
+      if (colourWashCharge) {
+        totalAddOns += colourWashCharge;
+      }
+      state.order.orderLines[lineIndex].totalAddOns = totalAddOns;
     },
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
@@ -525,7 +541,6 @@ export const store = new Vuex.Store({
           itemsQty += item.totalUnits;
         }
       }
-
       if (totalAddOns > 0) {
         itemsTotal += totalAddOns;
       }

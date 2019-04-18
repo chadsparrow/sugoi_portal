@@ -117,14 +117,7 @@
           <label class="form-check-label" for="personalization">PRS - $10</label>
         </div>
         <div class="col">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value="true"
-            id="zap"
-            v-model="item.zap"
-            disabled
-          >
+          <input class="form-check-input" type="checkbox" id="zap" v-model="item.zap" disabled>
           <label class="form-check-label" for="zap">ZAP - $5</label>
         </div>
       </div>
