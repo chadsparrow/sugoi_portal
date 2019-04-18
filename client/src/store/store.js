@@ -292,17 +292,17 @@ export const store = new Vuex.Store({
     ADD_ONS: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];
 
-      item.addOns = 0;
+      let addOns = 0;
 
-      if (item.personalization && item.zap) {
-        item.addOns = 15;
-      } else if (item.personalization && !item.zap) {
-        item.addOns = 10;
-      } else if (!item.personalization && item.zap) {
-        item.addOns = 5;
-      } else {
-        item.addOns = 0;
+      if (item.personalization) {
+        addOns += 10.00;
       }
+
+      if (item.zap) {
+        addOns += 5.00
+      }
+
+      state.order.orderLines[lineIndex].items[itemIndex].addOns = addOns;
     },
     SET_SELECTED_STYLE: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];
@@ -497,11 +497,9 @@ export const store = new Vuex.Store({
         totalAddOns += state.order.orderLines[lineIndex].creativeCharge;
         totalAddOns += state.order.orderLines[lineIndex].scaledArtCharge;
         totalAddOns += state.order.orderLines[lineIndex].colourWashCharge;
-        totalAddOns += state.order.orderLines[lineIndex].revisionCharge;
 
         state.order.orderLines[lineIndex].totalAddOns = totalAddOns;
       }
-
     },
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
