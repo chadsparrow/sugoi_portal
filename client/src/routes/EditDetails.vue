@@ -16,7 +16,6 @@
             id="requestDate"
             :disabled="true"
             :bootstrapStyling="true"
-            :use-utc="true"
             input-class="form-control form-control-sm"
           ></DatePicker>
         </div>
@@ -25,7 +24,6 @@
           <DatePicker
             v-model="order.eventDate"
             :bootstrapStyling="true"
-            :use-utc="true"
             :clearButton="true"
             input-class="form-control form-control-sm"
             id="eventDate"
@@ -36,7 +34,6 @@
           <DatePicker
             v-model="order.latestInHand"
             :bootstrapStyling="true"
-            :use-utc="true"
             :clearButton="true"
             input-class="form-control form-control-sm"
             id="latestInHand"
@@ -47,7 +44,6 @@
           <DatePicker
             v-model="order.estDeliveryDate"
             :bootstrapStyling="true"
-            :use-utc="true"
             :clearButton="true"
             input-class="form-control form-control-sm"
             id="estShipDate"
