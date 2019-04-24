@@ -278,9 +278,9 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
   let instructions = [];
 
-  if (instruction != null || instruction != "") {
+  if (instruction) {
     instructions.push({
-      instruction: instruction,
+      instruction,
       instructionType: "Initial",
       user: isr
     });
@@ -389,9 +389,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         if (foundOrder.proofRequestDate === null) {
           foundOrder.proofRequestDate = dayjs().format();
         }
-        if (instruction != null || instruction != "") {
+        if (instruction) {
           foundOrder.instructions.push({
-            instruction: instruction,
+            instruction,
             instructionType: "Art Direction",
             user: foundOrder.isr
           });
