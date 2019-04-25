@@ -346,10 +346,16 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   Order.findOne({
     _id: req.params.id
   }).then(order => {
+    let artDirection = '';
+    let lastInstructions = order.instructions[order.instructions.length - 1];
+    if (lastInstructions.instructionType === "Art Direction") {
+      artDirection = lastInstructions.instruction;
+    };
     CustomArtist.find().then(customArtists => {
       res.render("orders/edit", {
         order,
-        customArtists
+        customArtists,
+        artDirection
       });
     });
   });
