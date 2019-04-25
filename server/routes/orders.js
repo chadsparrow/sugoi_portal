@@ -721,12 +721,12 @@ router.put(
   (req, res) => {
     let id = req.params.id;
     let instruction = req.body.instruction;
-    if (instruction === "" || instruction === null) {
+    if (!instruction) {
       req.flash("error_msg", "Blank Request Ignored");
       res.redirect("/orders/view/" + id);
       return;
     }
-    let instructionType = "Revision";
+
     let revUser = req.body.isr;
     let currentStatus = "G. Waiting for Revision";
     let revisionRequestDate = dayjs().format();
@@ -736,8 +736,8 @@ router.put(
         return logger.error(err);
       } else {
         foundOrder.instructions.push({
-          instruction: instruction,
-          instructionType: instructionType,
+          instruction,
+          instructionType: "Revision",
           user: revUser
         });
 
