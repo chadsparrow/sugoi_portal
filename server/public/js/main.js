@@ -2,7 +2,6 @@ $(document).ready(function () {
 
   //  THIS SECTION SHOWS AND HIDES EXTRA PRODUCTION FIELDS IF IT'S READY TO GO TO PRODUCTION
   $.fn.dataTable.moment('D-MMM-YY');
-
   $("#productionDiv").hide();
 
   if ($("#currentStatus").val() == "V. Sent to Vendor") {
@@ -17,14 +16,9 @@ $(document).ready(function () {
   });
 
 
+
   // THIS SECTION SHOWS ART DIRECTION FIELD IF IT IS WAITING FOR PROOF
   $("#proofDiv").hide();
-
-  if ($("#currentStatus").val() == "A. Waiting for Proof") {
-    $("#proofDiv").show();
-  } else {
-    $("#proofDiv").hide();
-  }
 
   $("#currentStatus").change(function () {
     if ($("#currentStatus").val() == "A. Waiting for Proof") {
