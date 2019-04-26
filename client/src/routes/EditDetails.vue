@@ -63,6 +63,7 @@
           <textarea
             class="form-control form-control-sm"
             rows="3"
+            style="font-size: 12px; white-space: pre-wrap;"
             id="orderNotes"
             v-model.trim="order.orderNotes"
           ></textarea>
@@ -72,6 +73,7 @@
           <textarea
             class="form-control form-control-sm"
             rows="3"
+            style="font-size: 12px; white-space: pre-wrap;"
             id="customerNotes"
             v-model.trim="order.customerNotes"
           ></textarea>

@@ -70,8 +70,9 @@
           <label for="orderNotes" class="mb-0 mt-2">Notes:</label>
           <textarea
             v-model.lazy="order.orderNotes"
-            class="form-control"
-            style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
+            class="form-control form-control-sm"
+            rows="3"
+            style="font-size: 12px; white-space: pre-wrap;"
             id="orderNotes"
             @change="saveNotes"
             :readonly="disabledEdit"
@@ -81,8 +82,9 @@
           <label for="customerNotes" class="mb-0 mt-2">Notes to Customer:</label>
           <textarea
             v-model.lazy="order.customerNotes"
-            class="form-control"
-            style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
+            class="form-control form-control-sm"
+            rows="3"
+            style="font-size: 12px; white-space: pre-wrap;"
             id="customerNotes"
             @change="saveNotes"
             :readonly="disabledEdit"
