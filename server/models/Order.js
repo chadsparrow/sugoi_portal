@@ -254,11 +254,18 @@ const OrderSchema = new Schema({
   },
   orderNotes: {
     type: String,
-    default: null
+    default: null,
+    trim: true
+  },
+  customerNotes: {
+    type: String,
+    default: null,
+    trim: true
   },
   customerPO: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   contactName: {
     type: String,

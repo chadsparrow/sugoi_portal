@@ -67,6 +67,15 @@
             v-model.trim="order.orderNotes"
           ></textarea>
         </div>
+        <div class="form-group">
+          <label for="customerNotes" class="small my-0">Notes to Customer:</label>
+          <textarea
+            class="form-control form-control-sm"
+            rows="3"
+            id="customerNotes"
+            v-model.trim="order.customerNotes"
+          ></textarea>
+        </div>
       </div>
       <div class="col-sm-7 border-left border-right mb-0">
         <div class="row">

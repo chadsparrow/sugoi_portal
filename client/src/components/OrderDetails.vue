@@ -77,6 +77,17 @@
             :readonly="disabledEdit"
           ></textarea>
         </div>
+        <div class="text-center">
+          <label for="customerNotes" class="mb-0 mt-2">Notes to Customer:</label>
+          <textarea
+            v-model.lazy="order.customerNotes"
+            class="form-control"
+            style="font-size: 12px; width: 100%; height: 125px; white-space: pre-wrap;"
+            id="customerNotes"
+            @change="saveNotes"
+            :readonly="disabledEdit"
+          ></textarea>
+        </div>
       </div>
       <div class="col-sm-6 border-left">
         <div class="row m-0">
