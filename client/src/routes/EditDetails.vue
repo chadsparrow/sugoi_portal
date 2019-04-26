@@ -59,16 +59,6 @@
           >
         </div>
         <div class="form-group">
-          <label for="orderNotes" class="small my-0">Notes:</label>
-          <textarea
-            class="form-control form-control-sm"
-            rows="3"
-            style="font-size: 12px; white-space: pre-wrap;"
-            id="orderNotes"
-            v-model.trim="order.orderNotes"
-          ></textarea>
-        </div>
-        <div class="form-group">
           <label for="customerNotes" class="small my-0">Notes to Customer:</label>
           <textarea
             class="form-control form-control-sm"
@@ -76,6 +66,16 @@
             style="font-size: 12px; white-space: pre-wrap;"
             id="customerNotes"
             v-model.trim="order.customerNotes"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="orderNotes" class="small my-0">Internal Notes:</label>
+          <textarea
+            class="form-control form-control-sm"
+            rows="3"
+            style="font-size: 12px; white-space: pre-wrap;"
+            id="orderNotes"
+            v-model.trim="order.orderNotes"
           ></textarea>
         </div>
       </div>
