@@ -42,35 +42,35 @@
         </div>
         <div class="col-sm-12 p-1" v-else>
           <div class="row m-0">
-            <div class="col">
+            <div class="col" v-if="item.xxs > 0">
               2XS:
               <span>{{item.xxs}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.xs > 0">
               XS:
               <span>{{item.xs}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.s > 0">
               S:
               <span>{{item.s}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.m > 0">
               M:
               <span>{{item.m}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.l > 0">
               L:
               <span>{{item.l}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.xl > 0">
               XL:
               <span>{{item.xl}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.xxl > 0">
               2XL:
               <span>{{item.xxl}}</span>
             </div>
-            <div class="col">
+            <div class="col" v-if="item.xxxl > 0">
               3XL:
               <span>{{item.xxxl}}</span>
             </div>

@@ -348,7 +348,7 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   }).then(order => {
     let instructions = order.instructions;
     let artDirection = '';
-    if (order.currentStatus === "A. Waiting for Proof"){
+    if (order.currentStatus === "A. Waiting for Proof") {
       if (instructions.length > 0) {
         let instruction = instructions[instructions.length - 1];
         if (instruction.instructionType === "Art Direction") {
@@ -488,31 +488,37 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           foundOrder.sentVendor = dayjs().format();
         }
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
-        if (foundOrder.signedOffDate === null) {
-          foundOrder.signedOffDate = dayjs().format();
-          let reportWeek = moment(dayjs().format()).format("W");
-          let reportYear = dayjs().format("YYYY");
-          let reportMonth = moment(dayjs().format()).format("M");
+        if (foundOrder.needSketch) {
+          req.flash("error_msg", "Cannot Sign Off - Mock Requested");
+          res.redirect("/orders");
+          return;
+        } else {
+          if (foundOrder.signedOffDate === null) {
+            foundOrder.signedOffDate = dayjs().format();
+            let reportWeek = moment(dayjs().format()).format("W");
+            let reportYear = dayjs().format("YYYY");
+            let reportMonth = moment(dayjs().format()).format("M");
 
-          let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
+            let reportWeekRange = getDateRangeOfWeek(reportWeek, reportYear);
 
-          Report.findOneAndUpdate(
-            {
-              reportWeekNumber: reportWeek,
-              reportYear: reportYear,
-              reportWeekRange: reportWeekRange,
-              reportMonth: reportMonth
-            },
-            {
-              $inc: { signOffs: 1 }
-            },
-            { upsert: true, new: true },
-            function (err, result) {
-              if (err) {
-                return logger.error(err);
+            Report.findOneAndUpdate(
+              {
+                reportWeekNumber: reportWeek,
+                reportYear: reportYear,
+                reportWeekRange: reportWeekRange,
+                reportMonth: reportMonth
+              },
+              {
+                $inc: { signOffs: 1 }
+              },
+              { upsert: true, new: true },
+              function (err, result) {
+                if (err) {
+                  return logger.error(err);
+                }
               }
-            }
-          )
+            )
+          }
         }
       } else if (foundOrder.currentStatus === "F. Proof Complete") {
         if (foundOrder.proofRequestDate === null) {
@@ -665,7 +671,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
             `${updatedOrder.orderNum} - update by ${req.user.username}`
           );
           req.flash("success_msg", "Order Updated");
-          res.redirect("/orders");
+          res.redirect(`/orders/view/${id}`);
         }
       });
     };

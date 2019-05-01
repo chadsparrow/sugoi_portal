@@ -42,6 +42,10 @@ const OrderSchema = new Schema({
     uppercase: true,
     default: null
   },
+  outRep: {
+    type: String,
+    default: null
+  },
   client: {
     type: String,
     default: null

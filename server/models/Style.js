@@ -44,10 +44,19 @@ const StyleSchema = new Schema({
       usd6: {
         type: Number
       },
+      usd6qd: {
+        type: Number
+      },
       usd12: {
         type: Number
       },
+      usd12qd: {
+        type: Number
+      },
       usd24: {
+        type: Number
+      },
+      usd24qd: {
         type: Number
       },
       usd50: {
@@ -68,10 +77,19 @@ const StyleSchema = new Schema({
       cad6: {
         type: Number
       },
+      cad6qd: {
+        type: Number
+      },
       cad12: {
         type: Number
       },
+      cad12qd: {
+        type: Number
+      },
       cad24: {
+        type: Number
+      },
+      cad24qd: {
         type: Number
       },
       cad50: {

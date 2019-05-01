@@ -47,13 +47,13 @@ module.exports = {
         return "deep-purple lighten-4";
         break;
       case "D. Proof Ready for QC":
-        return "yellow accent-2";
+        return "yellow accent-1";
         break;
       case "D-1. Proof QC in Progress":
         return "yellow accent-2";
         break;
       case "E. Proof QC Complete":
-        return "yellow accent-4";
+        return "yellow accent-3";
         break;
       case "F. Proof Complete":
         return "green accent-3";
@@ -68,13 +68,13 @@ module.exports = {
         return "light-blue lighten-2";
         break;
       case "J. Revision Ready for QC":
-        return "yellow accent-2";
+        return "yellow accent-1";
         break;
       case "J-1. Revision QC in Progress":
         return "yellow accent-2";
         break;
       case "K. Revision QC Complete":
-        return "yellow accent-4";
+        return "yellow accent-3";
         break;
       case "L. Revision Complete":
         return "green accent-3";
@@ -89,25 +89,25 @@ module.exports = {
         return "light-blue lighten-2";
         break;
       case "P. Output Ready for QC":
-        return "yellow accent-2";
+        return "yellow accent-1";
         break;
       case "P-1. Output QC in Progress":
         return "yellow accent-2";
         break;
       case "Q. Output QC Complete":
-        return "yellow accent-4";
+        return "yellow accent-3";
         break;
       case "R. Waiting for PNT":
         return "red white-text";
         break;
       case "S. PNT Ready for QC":
-        return "yellow accent-2";
+        return "yellow accent-1";
         break;
       case "S-1. PNT QC in Progress":
         return "yellow accent-2";
         break;
       case "T. PNT QC Complete":
-        return "yellow accent-4";
+        return "yellow accent-3";
         break;
       case "U. Uploaded":
         return "green darken-2 white-text";

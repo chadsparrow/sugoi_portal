@@ -9,6 +9,15 @@
             <option v-for="(rep, index) in reps" :value="rep.value" :key="index">{{rep.text}}</option>
           </select>
         </div>
+        <div class="form-group mb-1">
+          <label for="outRep">Outside Rep:</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="outRep"
+            v-model.trim="order.outRep"
+          >
+        </div>
         <div class="form-group">
           <label for="requestDate" class="small my-0">Order Date</label>
           <DatePicker
@@ -49,6 +58,7 @@
             id="estShipDate"
           ></DatePicker>
         </div>
+
         <div class="form-group mb-1">
           <label for="customerPO">Customer PO:</label>
           <input

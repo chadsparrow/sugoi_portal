@@ -65,7 +65,7 @@
       <i class="large material-icons">edit</i>
     </a>
     <ul>
-      {{#if user.editProofs}}
+      {{!-- {{#if user.editProofs}}
       {{#if (checkForQCStatus order.currentStatus)}}
       <li><a href="/proofs/qc/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
           data-tooltip="QC Order"><i class="material-icons">touch_app</i></a></li>
@@ -74,7 +74,9 @@
           data-tooltip="QC Archive"><i class="material-icons">
             format_list_bulleted
           </i></a></li>
-      {{/if}}
+      {{/if}} --}}
+      <li><a href="/orders/xml/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
+          data-tooltip="XML" target="_blank"><i class="material-icons">code</i></a></li>
       <li>
         <a href="#modal2" class="btn-floating grey lighten-1 tooltipped modal-trigger" data-position="left"
           data-tooltip="Add Notes/Instructions">

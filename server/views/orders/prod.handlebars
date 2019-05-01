@@ -80,7 +80,7 @@
             href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
             target="_blank" class="text-decoration:none !important;">{{confirmDeliveryStatus}} <i
               class="material-icons tiny">flight</i></a>
-          </a>{{/if}}</td>
+          {{/if}}</td>
         <!-- pull from Shippo API -->
         <td style="font-size: 12px;" class="center-align">{{#if confirmDeliveryDate}}{{formatDate confirmDeliveryDate
           "D-MMM-YY"}}{{/if}}</td>
@@ -96,6 +96,10 @@
         <!-- Prod Lead Time + Shipping Lead Time -->
         <td style="font-size: 12px;" class="center-align valign-wrapper">
           <span>
+            {{#if tracking}}
+            <a href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
+              target="_blank" class="text-decoration:none !important;"><i class="material-icons">flight</i></a>
+            {{/if}}
             {{#if ../user.editProd}}
             <a class="green-text" href="/prod/edit/{{_id}}">
               <i class="material-icons">edit</i>

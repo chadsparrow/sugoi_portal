@@ -43,6 +43,17 @@
             <span>{{order.isr}}</span>
           </li>
           <li class="list-group-item">
+            <label for="outRep">Outside Rep:</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="outRep"
+              v-model.lazy="order.outRep"
+              @change="saveNotes"
+              :readonly="disabledEdit"
+            >
+          </li>
+          <li class="list-group-item">
             Order Date:
             <span>{{formatDate(order.enteredDate)}}</span>
           </li>
