@@ -349,6 +349,7 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     let instructions = order.instructions;
     let artDirection = '';
     if (order.currentStatus === "A. Waiting for Proof") {
+
       if (instructions.length > 0) {
         let instruction = instructions[instructions.length - 1];
         if (instruction.instructionType === "Art Direction") {
@@ -400,6 +401,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         if (foundOrder.proofRequestDate === null) {
           foundOrder.proofRequestDate = dayjs().format();
         }
+        if (!instruction) {
+          req.flash("error_msg", "Art Direction required - Try Again");
+          res.redirect(`/orders/edit/${id}`);
+          return;
+        }
+
         if (instruction) {
           foundOrder.instructions.push({
             instruction,

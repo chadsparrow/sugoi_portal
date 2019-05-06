@@ -391,7 +391,7 @@ export default {
   methods: {
     formatPrice(value) {
       let val = (value / 1).toFixed(2);
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     selectStyle() {
       if (this.item.selectedStyle != -1) {

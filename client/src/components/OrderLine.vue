@@ -145,8 +145,8 @@ export default {
   },
   methods: {
     formatPrice(value) {
-      let val = Math.round((value / 1).toFixed(2) * 1e2) / 1e2;
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      let val = (value / 1).toFixed(2);
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     cancelLine() {
       let checkdelete = confirm("Are you sure?");

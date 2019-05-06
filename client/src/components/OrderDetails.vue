@@ -5,8 +5,7 @@
         <div class="col-sm-2">
           <span>Order Details</span>
         </div>
-        <div class="col-sm-2 d-print-none align-items-center">
-          <!-- <div class="form-group form-check"> -->
+        <div class="col-sm-2 d-print-none align-items-center" v-if="disabledEdit === false">
           <input
             type="checkbox"
             class="form-check-input"
@@ -15,10 +14,8 @@
             @change="saveNotes"
           >
           <label class="form-check-label" for="need3d">Require 3D</label>
-          <!-- </div> -->
         </div>
-        <div class="col-sm-2 d-print-none align-items-center">
-          <!-- <div class="form-group form-check"> -->
+        <div class="col-sm-2 d-print-none align-items-center" v-if="disabledEdit == false">
           <input
             type="checkbox"
             class="form-check-input"
@@ -27,7 +24,6 @@
             @change="saveNotes"
           >
           <label class="form-check-label" for="needSketch">Require Mock-Up</label>
-          <!-- </div> -->
         </div>
       </div>
     </div>
