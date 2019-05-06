@@ -421,7 +421,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
       if (foundOrder.currentStatus === "U. Uploaded") {
         if (foundOrder.signedOffDate === null) {
-          req.flash("error_msg", "Order has not been signed off yet");
+          req.flash("error_msg", "Order not signed off yet");
           res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
@@ -481,7 +481,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
       } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
         if (foundOrder.signedOffDate === null) {
-          req.flash("error_msg", "Order has not been signed off");
+          req.flash("error_msg", "Order not signed off");
           res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
@@ -525,7 +525,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
       } else if (foundOrder.currentStatus === "F. Proof Complete") {
         if (foundOrder.proofRequestDate === null) {
-          req.flash("error_msg", "Proof was not requested");
+          req.flash("error_msg", "Proof not requested - Cannot complete");
           res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
@@ -585,7 +585,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
       } else if (foundOrder.currentStatus === "L. Revision Complete") {
         if (foundOrder.revisionRequestDate == null) {
-          req.flash("error_msg", "Revision not requested");
+          req.flash("error_msg", "Revision not requested - Cannot complete");
           res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
@@ -728,7 +728,7 @@ router.put(
           }
         });
       } else {
-        req.flash("error_msg", "Blank Note Ignored");
+        req.flash("error_msg", "Blank Note Ignored - Try again");
         res.redirect(`/orders/view/${id}`);
       }
     });
@@ -744,7 +744,7 @@ router.put(
     let id = req.params.id;
     let instruction = req.body.instruction;
     if (!instruction) {
-      req.flash("error_msg", "Revision requires instructions...");
+      req.flash("error_msg", "Instructions required - Try Again");
       res.redirect(`/orders/view/${id}`);
       return;
     }
@@ -813,7 +813,7 @@ router.put(
             }
           });
         } else {
-          req.flash("error_msg", "Blank Note Ignored");
+          req.flash("error_msg", "Note empty - Try again");
           res.redirect(`/orders/view/${id}`);
         }
       }
