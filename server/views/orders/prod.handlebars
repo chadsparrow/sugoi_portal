@@ -100,12 +100,12 @@
             <a href="https://www.fedex.com/apps/fedextrack/index.html?action=track&tracknumbers={{tracking}}&locale=en_CA&cntry_code=en"
               target="_blank" class="text-decoration:none !important;"><i class="material-icons">flight</i></a>
             {{/if}}
+            <a class="blue-text" href="/{{orderNum}}" target="_blank">
+              <i class="material-icons">description</i>
+            </a>
             {{#if ../user.editProd}}
             <a class="green-text" href="/prod/edit/{{_id}}">
               <i class="material-icons">edit</i>
-            </a>
-            <a class="blue-text" href="/{{orderNum}}" target="_blank">
-              <i class="material-icons">description</i>
             </a>
             {{/if}}
           </span>
