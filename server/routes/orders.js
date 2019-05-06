@@ -422,9 +422,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       if (foundOrder.currentStatus === "U. Uploaded") {
         if (foundOrder.signedOffDate === null) {
           req.flash("error_msg", "Order has not been signed off yet");
-          res.redirect("/orders");
+          res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
+
         if (foundOrder.uploadDate === null) {
           foundOrder.uploadDate = dayjs().format();
           foundOrder.sentVendor = null;
@@ -481,16 +482,18 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
         if (foundOrder.signedOffDate === null) {
           req.flash("error_msg", "Order has not been signed off");
-          res.redirect("/orders");
+          res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
+
         if (foundOrder.sentVendor === null) {
           foundOrder.sentVendor = dayjs().format();
         }
+
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
         if (foundOrder.needSketch) {
           req.flash("error_msg", "Cannot Sign Off - Mock Requested");
-          res.redirect("/orders");
+          res.redirect(`/orders/edit/${req.params.id}`);
           return;
         } else {
           if (foundOrder.signedOffDate === null) {
@@ -523,9 +526,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "F. Proof Complete") {
         if (foundOrder.proofRequestDate === null) {
           req.flash("error_msg", "Proof was not requested");
-          res.redirect("/orders");
+          res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
+
         if (foundOrder.proofCompletionDate === null) {
           foundOrder.proofCompletionDate = dayjs().format();
           let date1 = dayjs(foundOrder.proofCompletionDate);
@@ -582,9 +586,10 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "L. Revision Complete") {
         if (foundOrder.revisionRequestDate == null) {
           req.flash("error_msg", "Revision not requested");
-          res.redirect("/orders");
+          res.redirect(`/orders/edit/${req.params.id}`);
           return;
         }
+
         if (foundOrder.revisionCompletionDate === null) {
           foundOrder.revisionCompletionDate = dayjs().format();
 
@@ -719,12 +724,12 @@ router.put(
             return logger.error(err);
           } else {
             req.flash("success_msg", "Note Updated");
-            res.redirect("/orders/view/" + id);
+            res.redirect(`/orders/view/${id}`);
           }
         });
       } else {
-        req.flash("error_msg", "Blank Request Ignored");
-        res.redirect("/orders/view/" + id);
+        req.flash("error_msg", "Blank Note Ignored");
+        res.redirect(`/orders/view/${id}`);
       }
     });
   }
@@ -739,8 +744,8 @@ router.put(
     let id = req.params.id;
     let instruction = req.body.instruction;
     if (!instruction) {
-      req.flash("error_msg", "Blank Request Ignored");
-      res.redirect("/orders/view/" + id);
+      req.flash("error_msg", "Revision requires instructions...");
+      res.redirect(`/orders/view/${id}`);
       return;
     }
 
@@ -767,13 +772,9 @@ router.put(
           if (err) {
             return logger.error(err);
           } else {
-            logger.info(
-              `${updatedOrder.orderNum} - revision request by ${
-              req.user.username
-              }`
-            );
+            logger.info(`${updatedOrder.orderNum} - revision request by ${req.user.username}`);
             req.flash("success_msg", "Revision Requested");
-            res.redirect("/orders/view/" + id);
+            res.redirect(`/orders/view/${id}`);
           }
         });
       }
@@ -808,12 +809,12 @@ router.put(
               return logger.error(err);
             } else {
               req.flash("success_msg", "Note Added");
-              res.redirect("/orders/view/" + id);
+              res.redirect(`/orders/view/${id}`);
             }
           });
         } else {
-          req.flash("error_msg", "Blank Request Ignored");
-          res.redirect("/orders/view/" + id);
+          req.flash("error_msg", "Blank Note Ignored");
+          res.redirect(`/orders/view/${id}`);
         }
       }
     });

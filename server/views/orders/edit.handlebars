@@ -152,12 +152,13 @@
                 {{/if}}
               </div>
               <div class="card-action">
-                <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
+
+                <button class="btn waves-effect waves-light" type="submit" name="action"><i
                     class="fas fa-check-square"></i>
                   Submit
                 </button>
-                <a href="javascript:history.back()" id="cancel" name="cancel"
-                  class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
+                <a href="/orders/view/{{order._id}}" id="cancel" name="cancel" class="btn waves-effect waves-light red"
+                  style="margin-left: 10px;"><i class="fas fa-times"></i>
                   Cancel</a>
               </div>
             </div>

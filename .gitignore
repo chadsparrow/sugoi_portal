@@ -3,3 +3,4 @@ dev.env
 /logs
 server/logs
 node_modules
+mogb

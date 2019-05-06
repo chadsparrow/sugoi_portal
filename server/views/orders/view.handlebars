@@ -97,42 +97,37 @@
 </div>
 
 <!-- Add Revision Modal -->
-<div id="modal1" class="modal">
-  <form action="/orders/revision/{{order._id}}?_method=PUT" method="post">
-    <div class="container">
-      <input type="hidden" name="_method" value="PUT">
-      <div class="modal-content">
-        <div class="row">
-          <div class="input-field col s12">
-            {{#select order.isr}}
-            <select name="isr">
-              <option value="DOSULLIVAN">Dean</option>
-              <option value="RPILLER">Reed</option>
-              <option value="SROBINSON">Sheila</option>
-              <option value="MBELLEAU">MJ</option>
-              <option value="TKAINTH">TJ</option>
-            </select>
-            {{/select}}
-            <label for="isr">Revision Requested By:</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea name="instruction" class="materialize-textarea" placeholder="type instructions here..."
-              required></textarea>
-            <label for="instruction">Revision Instructions:</label>
-          </div>
-
+<div id="modal1" class="modal container">
+  <form id="revisionForm" action="/orders/revision/{{order._id}}?_method=PUT" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="modal-content">
+      <div class="row">
+        <div class="input-field col s4">
+          {{#select order.isr}}
+          <select name="isr">
+            <option value="DOSULLIVAN">Dean</option>
+            <option value="RPILLER">Reed</option>
+            <option value="SROBINSON">Sheila</option>
+            <option value="MBELLEAU">MJ</option>
+            <option value="TKAINTH">TJ</option>
+          </select>
+          {{/select}}
+          <label for="isr">Revision Requested By:</label>
         </div>
       </div>
-
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea name="instruction" class="materialize-textarea" placeholder="type instructions here..."></textarea>
+          <label for="instruction">Revision Instructions:</label>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-      <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action"
+      <button class="modal-close btn waves-effect waves-light" type="submit" form="revisionForm"
         style="margin-right: 10px;"><i class="fas fa-check-square"></i>
         Submit
       </button>
-      <a href="#" id="cancel" name="cancel" class="modal-action modal-close btn waves-effect waves-light red"><i
+      <a href="#" id="cancel" name="cancel" class="modal-close btn waves-effect waves-light red"><i
           class="fas fa-times"></i>
         Cancel</a>
     </div>
@@ -140,40 +135,36 @@
 </div>
 
 <!-- Add Notes Modal -->
-<div class="container">
-  <div class="container"></div>
-  <div id="modal2" class="modal">
-    <form action="/orders/notes/{{order._id}}?_method=PUT" method="post">
-      <input type="hidden" name="_method" value="PUT">
-      <div class="modal-content">
-        <div class="row">
-          <div class="input-field col s12 m6">
-            <input style="text-transform: uppercase;" placeholder="enter name..." name="noteUser" type="text"
-              class="validate" {{#if user}} value="{{getHandle
-              user.username}}" {{/if}} required>
-            <label for="noteUser">Note By:</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea name="instruction" class="materialize-textarea" required></textarea>
-            <label for="instruction">Enter Note Details:</label>
-          </div>
-        </div>
-      </div>
 
-      <div class="modal-footer">
-        <button class="modal-action modal-close btn waves-effect waves-light" type="submit" name="action"
-          style="margin-right: 10px;"><i class="fas fa-check-square"></i>
-          Submit
-        </button>
-        <a href="#" id="cancel" name="cancel" class="modal-action modal-close btn waves-effect waves-light red"><i
-            class="fas fa-times"></i>
-          Cancel</a>
+<div id="modal2" class="modal container">
+  <form id="noteForm" action="/orders/notes/{{order._id}}?_method=PUT" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="modal-content">
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input style="text-transform: uppercase;" placeholder="enter name..." name="noteUser" type="text" {{#if user}}
+            value="{{getHandle user.username}}" {{/if}}>
+          <label for="noteUser">Note By:</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea name="instruction" class="materialize-textarea"></textarea>
+          <label for="instruction">Enter Note Details:</label>
+        </div>
       </div>
-    </form>
-  </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="modal-close btn waves-effect waves-light" type="submit" form="noteForm"
+        style="margin-right: 10px;"><i class="fas fa-check-square"></i>
+        Submit
+      </button>
+      <a href="#" id="cancel" name="cancel" class="modal-close btn waves-effect waves-light red"><i
+          class="fas fa-times"></i>
+        Cancel</a>
+    </div>
+  </form>
 </div>
+
 
 {{#if user}}
 <div id="backButton"><a href="/orders"><i class="material-icons large">chevron_left</i></a></div>
