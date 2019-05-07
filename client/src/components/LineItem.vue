@@ -3,7 +3,6 @@
     <div class="card-header bg-info text-light p-1">
       <div class="row align-items-center m-0">
         <div class="col-sm-1 d-print-none align-items-center ml-3" v-if="order.needSketch">
-          <!-- <div class="form-group form-check"> -->
           <input
             type="checkbox"
             class="form-check-input"
@@ -12,7 +11,6 @@
             @change="saveNotes"
           >
           <label class="form-check-label" for="sketchOnly">Mock</label>
-          <!-- </div> -->
         </div>
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
         <div class="col-sm-4">Description: {{item.extendedDescription}}</div>
