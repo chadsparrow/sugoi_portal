@@ -151,6 +151,7 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
           }
         }
       }
+
       const xml = jsonxml(newOrderObject);
       res.type('application/xml');
       res.send(xml);

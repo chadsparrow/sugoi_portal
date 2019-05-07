@@ -128,8 +128,8 @@ app.set("view engine", "handlebars");
 require("./config/passport")(passport);
 
 // Body Parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Method Override
 app.use(methodOverride("_method"));
@@ -205,6 +205,7 @@ var cronJob = cron.job("0 * * * *", function () {
     }
   });
 });
+
 cronJob.start();
 
 // Set static folder
@@ -235,7 +236,6 @@ app.use("/api/swatches", apiSwatchRoutes);
 app.get(/.*/, [ensureAuthenticated, ensureEditOrders], (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
-
 
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {
