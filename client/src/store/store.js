@@ -471,6 +471,10 @@ export const store = new Vuex.Store({
       state.order.beforeTaxes += (state.order.multiShips * 15);
       state.order.beforeTaxes += (state.order.prePacks * 5);
 
+      if (state.order.priorityShipping) {
+        state.order.beforeTaxes += state.order.priorityShipping;
+      }
+
       if (state.order.revisionCharge) {
         state.order.beforeTaxes += state.order.revisionCharge;
       }
@@ -519,14 +523,16 @@ export const store = new Vuex.Store({
     },
     SET_FINAL_UNIT_PRICE: (state, { lineIndex, itemIndex }) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
-      state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100));
+
       let qdDiscountAmount = 0;
       if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM' && state.order.orderLines[lineIndex].graphicCode != null) {
         if (state.order.orderLines[lineIndex].priceBreak === 6 || state.order.orderLines[lineIndex].priceBreak === 12) {
-          qdDiscountAmount = (item.totalUnits * item.finalUnitPrice) * .1;
+          qdDiscountAmount = item.unitPrice * .1;
         }
       }
-      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice) - qdDiscountAmount;
+      state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100)) - qdDiscountAmount;
+
+      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice);
     },
     SET_LINE_TOTAL: (state, lineIndex) => {
       const orderLine = state.order.orderLines[lineIndex];

@@ -103,7 +103,13 @@
           <br>
           <span
             style="font-weight: bold; font-size: 14px;"
-          >{{item.itemDiscount}}% - ${{formatPrice(discountAmount)}}</span>
+          >{{item.itemDiscount}}% (-${{formatPrice(discountAmount)}})</span>
+        </div>
+
+        <div v-if="qdDiscount > 0" class="col text-center">
+          QD Discount:
+          <br>
+          <span style="font-weight: bold; font-size: 14px;">10% (-${{formatPrice(qdDiscount)}})</span>
         </div>
 
         <div class="col text-center">
@@ -122,18 +128,10 @@
           <button class="btn btn-sm btn-danger" @click.prevent="cancelItem">Cancel Item</button>
         </div>
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
-          <div
-            v-if="qdDiscount > 0"
-            class="col bg-secondary rounded text-white align-middle p-1 mr-1"
-          >
-            SubTotal:
+          <div v-if="discountTotal > 0" class="col bg-primary text-white rounded p-1">
+            Discount Total:
             <br>
-            ${{formatPrice(subTotal)}}
-          </div>
-          <div v-if="qdDiscount > 0" class="col bg-warning rounded p-1">
-            QD Discount:
-            <br>
-            - ${{formatPrice(qdDiscount)}}
+            ${{formatPrice(discountTotal)}}
           </div>
           <div
             class="col"
@@ -177,6 +175,9 @@ export default {
     discountAmount() {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
     },
+    discountTotal() {
+      return (this.discountAmount + this.qdDiscount) * this.item.totalUnits;
+    },
     qdDiscount() {
       let qdDiscountAmount = 0;
       if (
@@ -189,13 +190,10 @@ export default {
           this.orderLine.priceBreak === 6 ||
           this.orderLine.priceBreak === 12
         ) {
-          qdDiscountAmount = this.subTotal * 0.1;
+          qdDiscountAmount = this.unitPrice * 0.1;
         }
       }
       return qdDiscountAmount;
-    },
-    subTotal() {
-      return this.item.totalUnits * this.item.finalUnitPrice;
     },
     disabledEdit() {
       return this.$store.getters.disableEdit;

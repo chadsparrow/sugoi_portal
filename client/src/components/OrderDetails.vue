@@ -181,6 +181,10 @@
             PrePacks:
             <span>{{order.prePacks}} @ $5 = ${{formatPrice(order.prePacks * 5)}}</span>
           </li>
+          <li v-if="order.priorityShipping >0" class="list-group-item">
+            Priority Shipping:
+            <span>${{formatPrice(order.priorityShipping)}}</span>
+          </li>
           <li v-if="order.revisionCharge >0" class="list-group-item">
             Extra Revisions:
             <span>${{formatPrice(order.revisionCharge)}}</span>

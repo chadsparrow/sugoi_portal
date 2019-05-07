@@ -282,6 +282,19 @@
             v-model.number="order.prePacks"
           >
         </div>
+
+        <div class="form-group mb-1">
+          <label for="priorityShipping" class="small my-0">Priority Shipping</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            id="priorityShipping"
+            min="0"
+            step=".01"
+            v-model.number="order.priorityShipping"
+          >
+        </div>
+
         <div class="form-group mb-1">
           <label for="revisionCharge" class="small my-0">Extra Revisions</label>
           <input
