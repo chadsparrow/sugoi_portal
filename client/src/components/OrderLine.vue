@@ -2,7 +2,7 @@
   <div v-if="cancelled === false">
     <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <hr>
-    <div class="card border-secondary mb-3">
+    <div class="card border-secondary mb-3 line-card" :id="orderLine.lineNumber">
       <div class="card-header bg-secondary text-light p-1 justify-items-center">
         <span>Line: {{orderLine.lineNumber}}</span>
         <div
