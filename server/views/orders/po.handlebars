@@ -94,15 +94,15 @@
                     <td>{{inkType}}</td>
                     <td>{{#if personalization}}Y{{else}}N{{/if}}</td>
                     <td></td>
-                    <td style="width: 30px;">{{xxs}}</td>
-                    <td style="width: 30px;">{{xs}}</td>
-                    <td style="width: 30px;">{{s}}</td>
-                    <td style="width: 30px;">{{m}}</td>
-                    <td style="width: 30px;">{{l}}</td>
-                    <td style="width: 30px;">{{xl}}</td>
-                    <td style="width: 30px;">{{xxl}}</td>
-                    <td style="width: 30px;">{{xxxl}}</td>
-                    <td style="width: 30px;">{{one}}</td>
+                    <td style="width: 30px;">{{#if xxs}}{{xxs}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if xs}}{{xs}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if s}}{{s}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if m}}{{m}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if l}}{{l}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if xl}}{{xl}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if xxl}}{{xxl}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if xxxl}}{{xxxl}}{{else}}{{/if}}</td>
+                    <td style="width: 30px;">{{#if one}}{{one}}{{else}}{{/if}}</td>
                     <td>{{totalUnits}}</td>
                     <td>{{unitCost}}</td>
                     <td>{{netAmount totalUnits unitCost}}</td>
