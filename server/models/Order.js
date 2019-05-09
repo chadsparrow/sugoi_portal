@@ -593,6 +593,10 @@ const OrderSchema = new Schema({
           sketchOnly: {
             type: Boolean,
             default: false
+          },
+          itemNote: {
+            type: String,
+            default: null
           }
         }
       ]

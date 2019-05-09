@@ -334,8 +334,18 @@
       </div>
     </div>
 
-    <div class="card-footer bg-dark text-light text-right p-2">
-      <button class="btn btn-sm btn-success mr-1" @click.prevent="commitItem">Commit Item</button>
+    <div class="card-footer bg-dark text-light p-2">
+      <div style="width: 350px;" class="float-left">
+        <label for="itemNote" class="small my-0">Item Note:</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="itemNote"
+          placeholder="Enter item note here..."
+          v-model.trim="item.itemNote"
+        >
+      </div>
+      <button class="btn btn-sm btn-success float-right" @click.prevent="commitItem">Commit Item</button>
     </div>
   </div>
 </template>

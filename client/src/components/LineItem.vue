@@ -20,6 +20,10 @@
     </div>
     <div class="card-body p-1">
       <div class="row align-items-center text-center">
+        <div class="col" v-if="item.itemNote">
+          Item Note:
+          <span>{{item.itemNote}}</span>
+        </div>
         <div class="col">Ink: {{item.inkType}}</div>
         <div v-if="item.childReference" class="col-sm-2">Child Ref#: {{item.childReference}}</div>
         <div class="col">Thread: {{item.thread}}</div>
