@@ -1,5 +1,5 @@
 <template>
-  <div class="anchorBox" v-if="orderLines && orderLines.length > 0">
+  <div class="anchorBox d-print-none" v-if="orderLines && orderLines.length > 0">
     <div class="my-2">
       <a href="#app">Top</a>
     </div>
