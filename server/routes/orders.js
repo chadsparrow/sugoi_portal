@@ -65,13 +65,12 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
       const newOrderObject = {};
       newOrderObject.SAP = [];
 
-      let client = order.client;
-      if (client) {
-        client.replace(/&/g, '&amp;');
-        client.replace(/</g, '&lt;');
-        client.replace(/>/g, '&gt;');
-        client.replace(/"/g, '&quot;');
-        client.replace(/'/g, '&apos;');
+      if (order.client) {
+        order.client = order.client.replace(/&/g, '&amp;');
+        order.client = order.client.replace(/</g, '&lt;');
+        order.client = order.client.replace(/>/g, '&gt;');
+        order.client = order.client.replace(/"/g, '&quot;');
+        order.client = order.client.replace(/'/g, '&apos;');
       }
 
       for (let orderLine of order.orderLines) {
@@ -94,16 +93,16 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
                   }
 
                   let extendedDescription = item.extendedDescription;
-                  extendedDescription.replace(/&/g, '&amp;');
-                  extendedDescription.replace(/</g, '&lt;');
-                  extendedDescription.replace(/>/g, '&gt;');
-                  extendedDescription.replace(/"/g, '&quot;');
-                  extendedDescription.replace(/'/g, '&apos;');
+                  extendedDescription = extendedDescription.replace(/&/g, '&amp;');
+                  extendedDescription = extendedDescription.replace(/</g, '&lt;');
+                  extendedDescription = extendedDescription.replace(/>/g, '&gt;');
+                  extendedDescription = extendedDescription.replace(/"/g, '&quot;');
+                  extendedDescription = extendedDescription.replace(/'/g, '&apos;');
 
                   newOrderObject.SAP.push({
                     'item': {
                       'SALESORDER': order.orderNum,
-                      'CLIENT': client,
+                      'CLIENT': order.client,
                       'CHILDWORKORDER': item.itemNumber,
                       'STYLENUM': item.autobahnCode,
                       'STYLENAME': extendedDescription,
