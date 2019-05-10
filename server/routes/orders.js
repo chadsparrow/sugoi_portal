@@ -73,6 +73,14 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
         client.replace(/"/g, '&quot;');
         client.replace(/'/g, '&apos;');
       }
+      let shipToName = order.shipToName;
+      if (shipToName) {
+        shipToName.replace(/&/g, '&amp;');
+        shipToName.replace(/</g, '&lt;');
+        shipToName.replace(/>/g, '&gt;');
+        shipToName.replace(/"/g, '&quot;');
+        shipToName.replace(/'/g, '&apos;');
+      }
 
       for (let orderLine of order.orderLines) {
         if (!orderLine.cancelled) {
