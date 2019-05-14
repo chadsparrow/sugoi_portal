@@ -9,7 +9,7 @@ const Order = require("../models/Order");
 
 router.get("/", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let pageTitle = "Payments - All";
-  Order.find({ currentStatus: { $nin: ["W. CANCELLED", "X. Archived", "1. Initial"] }, paymentStatus: { $ne: 'Complete' } }).then(orders => {
+  Order.find({ currentStatus: { $nin: ["W. CANCELLED", "X. Archived", "1. Initial"] } }).then(orders => {
     res.render("payments/", {
       orders,
       pageTitle
