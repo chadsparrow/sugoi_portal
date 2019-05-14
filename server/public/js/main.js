@@ -657,6 +657,50 @@ $(document).ready(function () {
     ]
   });
 
+  $("#itemOrderedTable").dataTable({
+    initComplete: function (settings, json) {
+      $(".main-loader").hide();
+    },
+    scrollX: true,
+    scrollCollapse: true,
+    pageLength: -1,
+    order: [[1, "desc"]],
+    oLanguage: {
+      sSearch: "Search",
+      sSearchPlaceholder: "Enter search text",
+      sInfo: "_START_ -_END_ of _TOTAL_",
+      sLengthMenu:
+        '<span>Rows per page:</span><select class="browser-default">' +
+        '<option value="15">15</option>' +
+        '<option value="30">30</option>' +
+        '<option value="40">40</option>' +
+        '<option value="50">50</option>' +
+        '<option value="-1">All</option>' +
+        "</select></div>"
+    },
+    bAutoWidth: false,
+    dom: "lBrftip",
+    buttons: [
+      {
+        extend: "excelHtml5",
+        className: "waves-effect waves-light btn-small",
+        text: "Export Excel",
+        title: "",
+        filename: function () {
+          var d = new Date();
+          var n = d.getTime();
+          return "Report " + n;
+        },
+        exportOptions: {
+          modifier: {
+            page: "current"
+          },
+          columns: ":not(:last-child)"
+        }
+      }
+    ]
+  });
+
   // ONLY ALLOWS DIGITS AND 7 CHARACTERS in SO NUMBER
   $("#orderNum").keydown(function (e) {
     // Allow: backspace, delete, tab, escape, enter and .

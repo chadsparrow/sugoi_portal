@@ -22,6 +22,33 @@ router.get("/", [ensureAuthenticated, ensureAdmin], (req, res) => {
     });
 });
 
+router.get('/items', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+  const pageTitle = "Items Sold"
+  let itemsOrdered = {};
+  try {
+    const orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
+
+    for (order of orders) {
+      let orderLines = order.orderLines;
+      for (orderLine of orderLines) {
+        let items = orderLine.items;
+        for (item of items) {
+          if (item.extendedDescription) {
+            if (item.extendedDescription in itemsOrdered) {
+              itemsOrdered[item.extendedDescription] += item.totalUnits;
+            } else {
+              itemsOrdered[item.extendedDescription] = item.totalUnits;
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  res.render('reports/items', { itemsOrdered, pageTitle });
+});
+
 router.get("/linechart/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment(dayjs().format()).format("W");
   Report.find({ reportYear: 2019 })
@@ -35,14 +62,14 @@ router.get("/linechart/", [ensureAuthenticated, ensureAdmin], (req, res) => {
       let avgRevisions = [];
       let avgOutput = [];
 
-      for (report of reports){
+      for (report of reports) {
         proofsCompleted.push(report.proofsCompleted);
         revisionsCompleted.push(report.revisionsCompleted);
         outputCompleted.push(report.outputCompleted);
-        weekNumbers.push (report.reportWeekNumber);
-        avgProofs.push (report.avgProofs);
-        avgRevisions.push (report.avgRevisions);
-        avgOutput.push (report.avgOutput);
+        weekNumbers.push(report.reportWeekNumber);
+        avgProofs.push(report.avgProofs);
+        avgRevisions.push(report.avgRevisions);
+        avgOutput.push(report.avgOutput);
       }
       res.render("reports/linechart", { proofsCompleted, revisionsCompleted, outputCompleted, weekNumbers, avgProofs, avgRevisions, avgOutput });
     });
