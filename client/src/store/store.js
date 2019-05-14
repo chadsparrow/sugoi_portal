@@ -481,7 +481,7 @@ export const store = new Vuex.Store({
 
       state.order.taxAmount = (state.order.beforeTaxes * (state.order.taxes / 100));
       state.order.netValue = (state.order.beforeTaxes + state.order.taxAmount);
-      state.order.balanceOutstanding = state.order.netValue - state.order.isrCollectedOrig - state.order.kitOrderPayment + state.order.isrRefunded;
+      state.order.balanceOutstanding = state.order.netValue - state.order.onTermPayment - state.order.isrCollectedOrig - state.order.kitOrderPayment + state.order.isrRefunded;
       if (state.order.balanceOutstanding > 0) {
         state.order.paymentStatus = "Balance Outstanding";
       } else if (state.order.balanceOutstanding < 0) {
