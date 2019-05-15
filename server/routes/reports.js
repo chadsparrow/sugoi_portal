@@ -49,6 +49,33 @@ router.get('/items', [ensureAuthenticated, ensureAdmin], async (req, res) => {
   res.render('reports/items', { itemsOrdered, pageTitle });
 });
 
+router.get('/qd', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+  const pageTitle = "Quick Design"
+  let itemsOrdered = {};
+  try {
+    const orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
+
+    for (order of orders) {
+      let orderLines = order.orderLines;
+      for (orderLine of orderLines) {
+        if (orderLine.graphicCode != "CUSTM" && orderLine.colourWayCode != "SUB" && !orderLine.cancelled) {
+          let items = orderLine.items;
+          for (item of items) {
+            if (`${orderLine.graphicCode} - ${orderLine.colourWayCode}` in itemsOrdered) {
+              itemsOrdered[`${orderLine.graphicCode} - ${orderLine.colourWayCode}`] += item.totalUnits;
+            } else {
+              itemsOrdered[`${orderLine.graphicCode} - ${orderLine.colourWayCode}`] = item.totalUnits;
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  res.render('reports/qd', { itemsOrdered, pageTitle });
+});
+
 router.get("/linechart/", [ensureAuthenticated, ensureAdmin], (req, res) => {
   const currentWeekNum = moment(dayjs().format()).format("W");
   Report.find({ reportYear: 2019 })

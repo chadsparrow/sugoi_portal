@@ -1,0 +1,36 @@
+<div class="main-loader">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 20px; margin-bottom: 50px;" class="container">
+    <h5 class='center-align'>{{pageTitle}}<br><small>Order confirmation orders only (March 21) - only sent to
+            vendor</small></h5></br>
+    <table class="display nowrap compact" id="itemOrderedTable">
+        <thead>
+            <tr>
+                <th class="center-align">QD Code</th>
+                <th class="center-align">Qty</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            {{#each itemsOrdered}}
+            <tr>
+                <td style="font-size: 14px;" class='center-align'>{{@key}}</td>
+                <td style="font-size: 12px;" class='center-align'>{{this}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div id="backButton"><a href="/admin/dash"><i class="material-icons large">chevron_left</i></a></div>
