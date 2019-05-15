@@ -33,7 +33,7 @@ router.get('/items', [ensureAuthenticated, ensureAdmin], async (req, res) => {
       for (orderLine of orderLines) {
         let items = orderLine.items;
         for (item of items) {
-          if (item.extendedDescription) {
+          if (item.extendedDescription && !item.cancelled) {
             if (item.extendedDescription in itemsOrdered) {
               itemsOrdered[item.extendedDescription] += item.totalUnits;
             } else {
