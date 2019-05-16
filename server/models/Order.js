@@ -98,7 +98,7 @@ const OrderSchema = new Schema({
     default: null
   },
   estValue: {
-    type: Number,
+    type: Float,
     default: null
   },
   currency: {
