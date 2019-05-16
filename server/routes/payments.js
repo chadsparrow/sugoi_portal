@@ -20,7 +20,7 @@ router.get("/", [ensureAuthenticated, ensureEditOrders], (req, res) => {
 // GETS all orders with a balance outstanding but not Cancelled, Archived or Initial Status
 router.get("/outstanding", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let pageTitle = "Payments - Balance Outstanding";
-  Order.find({ currentStatus: { $nin: ["W. CANCELLED", "X. Archived", "1. Initial"] }, paymentStatus: 'Balance Outstanding' }).then(orders => {
+  Order.find({ currentStatus: { $nin: ["W. CANCELLED", "X. Archived", "1. Initial"] }, paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] } }).then(orders => {
     res.render("payments/", {
       orders,
       pageTitle
@@ -31,7 +31,7 @@ router.get("/outstanding", [ensureAuthenticated, ensureEditOrders], (req, res) =
 // GETS all orders with a balance outstanding in Pre-Production Status
 router.get("/outstanding/preprod", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let pageTitle = "Payments - Balance Outstanding - Pre-Production";
-  Order.find({ currentStatus: { $in: ["A. Waiting for Proof", "B. Proof Started", "C. Proof - Waiting on Someone else", "D. Proof Ready for QC", "D-1. Proof QC in Progress", "E. Proof QC Complete", "F. Proof Complete", "G. Waiting for Revision", "H. Revision - Waiting on Someone else", "I. Revision Started", "J. Revision Ready for QC", "J-1. Revision QC in Progress", "K. Revision QC Complete", "L. Revision Complete"] }, paymentStatus: 'Balance Outstanding' }).then(orders => {
+  Order.find({ currentStatus: { $in: ["A. Waiting for Proof", "B. Proof Started", "C. Proof - Waiting on Someone else", "D. Proof Ready for QC", "D-1. Proof QC in Progress", "E. Proof QC Complete", "F. Proof Complete", "G. Waiting for Revision", "H. Revision - Waiting on Someone else", "I. Revision Started", "J. Revision Ready for QC", "J-1. Revision QC in Progress", "K. Revision QC Complete", "L. Revision Complete"] }, paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] } }).then(orders => {
     res.render("payments/", {
       orders,
       pageTitle
@@ -42,7 +42,7 @@ router.get("/outstanding/preprod", [ensureAuthenticated, ensureEditOrders], (req
 // GETS all orders with a balance outstanding in Production Status and not Shipped
 router.get("/outstanding/prod", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let pageTitle = "Payments - Balance Outstanding - In Production";
-  Order.find({ currentStatus: { $in: ["M. Waiting for Output", "N. Output - Waiting on Someone else", "O. Output Started", "P. Output Ready for QC", "P-1. Output QC in Progress", "Q. Output QC Complete", "R. Waiting for PNT", "S. PNT Ready for QC", "S-1. PNT QC in Progress", "T. PNT QC Complete", "U. Uploaded", "V. Sent to Vendor"] }, paymentStatus: 'Balance Outstanding', shipStatus: { $ne: 'Shipped' } }).then(orders => {
+  Order.find({ currentStatus: { $in: ["M. Waiting for Output", "N. Output - Waiting on Someone else", "O. Output Started", "P. Output Ready for QC", "P-1. Output QC in Progress", "Q. Output QC Complete", "R. Waiting for PNT", "S. PNT Ready for QC", "S-1. PNT QC in Progress", "T. PNT QC Complete", "U. Uploaded", "V. Sent to Vendor"] }, paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] }, shipStatus: { $ne: 'Shipped' } }).then(orders => {
     res.render("payments/", {
       orders,
       pageTitle
@@ -53,7 +53,7 @@ router.get("/outstanding/prod", [ensureAuthenticated, ensureEditOrders], (req, r
 // GETS all orders with a balance outstanding and shipped
 router.get("/outstanding/shipped", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   let pageTitle = "Payments - Balance Outstanding - Shipped";
-  Order.find({ shipStatus: 'Shipped', paymentStatus: 'Balance Outstanding' }).then(orders => {
+  Order.find({ shipStatus: 'Shipped', paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] } }).then(orders => {
     res.render("payments/", {
       orders,
       pageTitle
