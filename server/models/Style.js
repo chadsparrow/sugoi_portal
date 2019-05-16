@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Float = require ('mongoose-float').loadType(mongoose, 2);
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -39,75 +40,75 @@ const StyleSchema = new Schema({
         uppercase: true
       },
       usd1: {
-        type: Number
+        type: Float
       },
       usd6: {
-        type: Number
+        type: Float
       },
       usd6qd: {
-        type: Number
+        type: Float
       },
       usd12: {
-        type: Number
+        type: Float
       },
       usd12qd: {
-        type: Number
+        type: Float
       },
       usd24: {
-        type: Number
+        type: Float
       },
       usd24qd: {
-        type: Number
+        type: Float
       },
       usd50: {
-        type: Number
+        type: Float
       },
       usd100: {
-        type: Number
+        type: Float
       },
       usd200: {
-        type: Number
+        type: Float
       },
       usd500: {
-        type: Number
+        type: Float
       },
       cad1: {
-        type: Number
+        type: Float
       },
       cad6: {
-        type: Number
+        type: Float
       },
       cad6qd: {
-        type: Number
+        type: Float
       },
       cad12: {
-        type: Number
+        type: Float
       },
       cad12qd: {
-        type: Number
+        type: Float
       },
       cad24: {
-        type: Number
+        type: Float
       },
       cad24qd: {
-        type: Number
+        type: Float
       },
       cad50: {
-        type: Number
+        type: Float
       },
       cad100: {
-        type: Number
+        type: Float
       },
       cad200: {
-        type: Number
+        type: Float
       },
       cad500: {
-        type: Number
+        type: Float
       },
       minUnits: Number,
       usdTariff: String,
       cadTariff: String,
-      costUSD: [Number],
+      costUSD: [Float],
       zap: Boolean
     }
   ],

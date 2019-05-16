@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Float = require ('mongoose-float').loadType(mongoose, 2);
 const Schema = mongoose.Schema;
 const timestamps = require('mongoose-timestamp');
 
@@ -93,7 +94,7 @@ const OrderSchema = new Schema({
     default: null
   },
   netValue: {
-    type: Number,
+    type: Float,
     default: null
   },
   estValue: {
@@ -184,23 +185,23 @@ const OrderSchema = new Schema({
     default: null
   },
   onTermPayment: {
-    type: Number,
+    type: Float,
     default: null
   },
   kitOrderPayment: {
-    type: Number,
+    type: Float,
     default: null
   },
   isrCollectedOrig: {
-    type: Number,
+    type: Float,
     default: null
   },
   isrCollectedCAD: {
-    type: Number,
+    type: Float,
     default: null
   },
   isrRefunded: {
-    type: Number,
+    type: Float,
     default: null
   },
   isrRefundedDate: {
@@ -220,7 +221,7 @@ const OrderSchema = new Schema({
     default: null
   },
   balanceOutstanding: {
-    type: Number,
+    type: Float,
     default: null
   },
   paymentStatus: {
@@ -319,23 +320,23 @@ const OrderSchema = new Schema({
     default: null
   },
   priorityShipping: {
-    type: Number,
+    type: Float,
     default: null
   },
   revisionCharge: {
-    type: Number,
+    type: Float,
     default: null
   },
   deposit: {
-    type: Number,
+    type: Float,
     default: null
   },
   beforeTaxes: {
-    type: Number,
+    type: Float,
     default: null
   },
   taxAmount: {
-    type: Number,
+    type: Float,
     default: null
   },
   taxes: {
@@ -343,7 +344,7 @@ const OrderSchema = new Schema({
     default: null
   },
   orderDiscount: {
-    type: Number,
+    type: Float,
     default: null
   },
   need3d: {
@@ -388,23 +389,23 @@ const OrderSchema = new Schema({
         uppercase: true
       },
       tracingCharge: {
-        type: Number,
+        type: Float,
         default: null
       },
       colourWashCharge: {
-        type: Number,
+        type: Float,
         default: null
       },
       creativeCharge: {
-        type: Number,
+        type: Float,
         default: null
       },
       scaledArtCharge: {
-        type: Number,
+        type: Float,
         default: null
       },
       itemsSubTotal: {
-        type: Number,
+        type: Float,
         default: null
       },
       cancelled: {
@@ -412,7 +413,7 @@ const OrderSchema = new Schema({
         default: false
       },
       totalAddOns: {
-        type: Number,
+        type: Float,
         default: null
       },
       lineItemsQty: {
@@ -534,11 +535,11 @@ const OrderSchema = new Schema({
             default: 0
           },
           unitPrice: {
-            type: Number,
+            type: Float,
             default: 0
           },
           unitCost: {
-            type: Number,
+            type: Float,
             default: 0
           },
           usdTariff: {
@@ -550,7 +551,7 @@ const OrderSchema = new Schema({
             default: null
           },
           addOns: {
-            type: Number,
+            type: Float,
             default: 0
           },
           itemDiscount: {
@@ -558,11 +559,11 @@ const OrderSchema = new Schema({
             default: 0
           },
           finalUnitPrice: {
-            type: Number,
+            type: Float,
             default: 0
           },
           itemTotalPrice: {
-            type: Number,
+            type: Float,
             default: 0
           },
           cancelled: {
