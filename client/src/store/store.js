@@ -526,7 +526,7 @@ export const store = new Vuex.Store({
 
       let qdDiscountAmount = 0;
       if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM' && state.order.orderLines[lineIndex].graphicCode != null) {
-        if (state.order.orderLines[lineIndex].priceBreak === 6 || state.order.orderLines[lineIndex].priceBreak === 12) {
+        if (state.order.orderLines[lineIndex].priceBreak === 6 || state.order.orderLines[lineIndex].priceBreak === 12 || state.order.orderLines[lineIndex].priceBreak === 24) {
           qdDiscountAmount = item.unitPrice * .1;
         }
       }
