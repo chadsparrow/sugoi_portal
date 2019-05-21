@@ -128,7 +128,7 @@ app.set("view engine", "handlebars");
 require("./config/passport")(passport);
 
 // Body Parser middleware
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
 // Method Override
@@ -160,7 +160,7 @@ app.use((req, res, next) => {
 });
 
 // cron job to run every hour to update all tracking numbers status in the Orders db.
-var cronJob = cron.job("0 * * * *", function () {
+var cronJob = cron.job("0 */4 * * *", function () {
   Order.find({
     tracking: { $nin: ["", null] },
     confirmDeliveryStatus: { $ne: "Delivered" }

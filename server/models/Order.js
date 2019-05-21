@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Float = require ('mongoose-float').loadType(mongoose, 2);
+const Float = require('mongoose-float').loadType(mongoose, 2);
 const Schema = mongoose.Schema;
 const timestamps = require('mongoose-timestamp');
 
