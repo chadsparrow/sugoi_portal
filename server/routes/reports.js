@@ -127,21 +127,39 @@ router.get("/preprod", [ensureAuthenticated, ensureAdmin], (req, res) => {
     let cadTotal = 0;
     let usdTotal = 0;
 
-    for (let x = 0; x < orders.length; x++) {
-      if (orders[x].netValue === null || orders[x].netValue === 0) {
-        if (orders[x].currency === "CAD") {
-          cadTotal += orders[x].estValue;
-        } else if (orders[x].currency === "USD") {
-          usdTotal += orders[x].estValue;
+    for (order of orders) {
+      if (order.netValue) {
+        if (order.currency === "CAD") {
+          cadTotal += order.netValue;
+        } else {
+          usdTotal += order.netValue;
         }
       } else {
-        if (orders[x].currency === "CAD") {
-          cadTotal += orders[x].netValue;
-        } else if (orders[x].currency === "USD") {
-          usdTotal += orders[x].netValue;
+        if (order.estValue) {
+          if (order.currency === "CAD") {
+            cadTotal += order.estValue
+          } else {
+            usdTotal += order.estValue
+          }
         }
       }
     }
+
+    // for (let x = 0; x < orders.length; x++) {
+    //   if (orders[x].netValue === null || orders[x].netValue === 0) {
+    //     if (orders[x].currency === "CAD") {
+    //       cadTotal += orders[x].estValue;
+    //     } else if (orders[x].currency === "USD") {
+    //       usdTotal += orders[x].estValue;
+    //     }
+    //   } else {
+    //     if (orders[x].currency === "CAD") {
+    //       cadTotal += orders[x].netValue;
+    //     } else if (orders[x].currency === "USD") {
+    //       usdTotal += orders[x].netValue;
+    //     }
+    //   }
+    // }
 
     res.render("reports/inprogress", {
       orders,
@@ -149,7 +167,8 @@ router.get("/preprod", [ensureAuthenticated, ensureAdmin], (req, res) => {
       cadTotal,
       usdTotal
     });
-  });
+  })
+    .catch((err) => console.log(err));
 });
 
 // PRODUCTION REPORT
@@ -160,14 +179,23 @@ router.get("/production", [ensureAuthenticated, ensureAdmin], (req, res) => {
       let cadTotal = 0;
       let usdTotal = 0;
 
-      for (let x = 0; x < orders.length; x++) {
-        if (orders[x].currency === "CAD") {
-          cadTotal += orders[x].netValue;
-        } else if (orders[x].currency === "USD") {
-          usdTotal += orders[x].netValue;
+      for (order of orders) {
+        if (order.netValue) {
+          if (order.currency === "CAD") {
+            cadTotal += order.netValue
+          } else {
+            usdTotal += order.netValue
+          }
         }
       }
 
+      // for (let x = 0; x < orders.length; x++) {
+      //   if (orders[x].currency === "CAD") {
+      //     cadTotal += orders[x].netValue;
+      //   } else if (orders[x].currency === "USD") {
+      //     usdTotal += orders[x].netValue;
+      //   }
+      // }
 
       res.render("reports/production", {
         orders,
@@ -175,7 +203,8 @@ router.get("/production", [ensureAuthenticated, ensureAdmin], (req, res) => {
         cadTotal,
         usdTotal
       });
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;
