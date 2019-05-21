@@ -142,8 +142,6 @@ router.get("/preprod", [ensureAuthenticated, ensureAdmin], (req, res) => {
         }
       }
     }
-    cadTotal = cadTotal.toFixed(2);
-    usdTotal = usdTotal.toFixed(2);
 
     res.render("reports/inprogress", {
       orders,
@@ -170,8 +168,6 @@ router.get("/production", [ensureAuthenticated, ensureAdmin], (req, res) => {
         }
       }
 
-      cadTotal = cadTotal.toFixed(2);
-      usdTotal = usdTotal.toFixed(2);
 
       res.render("reports/production", {
         orders,
