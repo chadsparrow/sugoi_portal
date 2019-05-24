@@ -7,7 +7,8 @@ const timestamps = require('mongoose-timestamp');
 const OrderSchema = new Schema({
   orderNum: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   accountNum: {
     type: String,

@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 const dayjs = require('dayjs');
 const logger = require("../helpers/logs");
 const jsonxml = require('jsontoxml');
-const { ensureAuthenticated, ensureEditOrders, ensureAdmin } = require("../helpers/auth");
+const { ensureAuthenticated, ensureEditOrders } = require("../helpers/auth");
 
 // includes model for mongodb
 const Order = require("../models/Order");
@@ -236,29 +236,55 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  Order.findOne({})
-    .sort('-orderNum')
-    .exec((err, order) => {
-      CustomRep.find().then(customReps => {
-        const orderNum = (parseInt(order.orderNum) + 1).toString();
-        const priority = "";
-        const currentStatus = "";
-        const isr = "";
-        const instruction = "";
-        const vendor = "";
-        const estValue = "";
-        res.render("orders/add", {
-          orderNum,
-          priority,
-          currentStatus,
-          isr,
-          instruction,
-          vendor,
-          customReps,
-          estValue
-        });
-      }).catch(err => logger.error(err));
-    });
+  if (req.user.lgUser) {
+    CustomRep.find().then(customReps => {
+      const orderNum = "9LG_";
+      const priority = "";
+      const currentStatus = "";
+      const isr = "";
+      const instruction = "";
+      const vendor = "";
+      const estValue = "";
+      const lgOrder = req.user.lgUser ? true : false;
+      res.render("orders/add", {
+        orderNum,
+        priority,
+        currentStatus,
+        isr,
+        instruction,
+        vendor,
+        customReps,
+        estValue,
+        lgOrder
+      });
+    }).catch(err => logger.error(err));
+  } else {
+    Order.findOne({ orderNum: { $regex: /^\d+$/ } })
+      .sort('-orderNum')
+      .exec((err, order) => {
+        CustomRep.find().then(customReps => {
+          const orderNum = (parseInt(order.orderNum) + 1).toString();
+          const priority = "";
+          const currentStatus = "";
+          const isr = "";
+          const instruction = "";
+          const vendor = "";
+          const estValue = "";
+          const lgOrder = false;
+          res.render("orders/add", {
+            orderNum,
+            priority,
+            currentStatus,
+            isr,
+            instruction,
+            vendor,
+            customReps,
+            estValue,
+            lgOrder
+          });
+        }).catch(err => logger.error(err));
+      });
+  }
 });
 
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE FIELDS
@@ -286,6 +312,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     });
   }
 
+  const lgOrder = req.user.lgUser ? true : false;
+
   Order.findOne({ orderNum: orderNum }, function (err, order) {
     if (order) {
       req.flash("error_msg", "Order Number already entered");
@@ -299,8 +327,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         instructions,
         vendor,
         estValue,
-        currency
-        //proofRequestDate
+        currency,
+        lgOrder
       });
 
       newOrder
@@ -311,7 +339,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
           if (order.currentStatus === "1. Initial") {
             res.redirect("/orders/initial");
           } else {
-            res.redirect("/orders");
+            res.redirect("/orders/");
           }
         })
         .catch(err => {
@@ -343,9 +371,7 @@ router.get("/view/:id", ensureAuthenticated, (req, res) => {
 // @DESC - GETS ORDER EDIT PAGE FOR ORDER BASED ON ID#
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  Order.findOne({
-    _id: req.params.id
-  }).then(order => {
+  Order.findOne({ _id: req.params.id }).then(order => {
     let instructions = order.instructions;
     let artDirection = '';
     if (order.currentStatus === "A. Waiting for Proof") {
@@ -429,13 +455,14 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       if (foundOrder.currentStatus === "U. Uploaded") {
         if (foundOrder.signedOffDate === null) {
           req.flash("error_msg", "Order not signed off yet");
-          res.redirect(`/orders/edit/${req.params.id}`);
+          res.redirect(`/orders/edit/${id}`);
           return;
         }
 
         if (foundOrder.uploadDate === null) {
           foundOrder.uploadDate = dayjs().format();
           foundOrder.sentVendor = null;
+
           let date1 = dayjs(foundOrder.uploadDate);
           let date2 = dayjs(foundOrder.signedOffDate);
           let diff = new DateDiff(date1, date2);
@@ -485,11 +512,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
               );
             }
           );
+
         }
       } else if (foundOrder.currentStatus === "V. Sent to Vendor") {
         if (foundOrder.signedOffDate === null) {
           req.flash("error_msg", "Order not signed off");
-          res.redirect(`/orders/edit/${req.params.id}`);
+          res.redirect(`/orders/edit/${id}`);
           return;
         }
 
@@ -500,7 +528,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "M. Waiting for Output") {
         if (foundOrder.needSketch) {
           req.flash("error_msg", "Cannot Sign Off - Mock Requested");
-          res.redirect(`/orders/edit/${req.params.id}`);
+          res.redirect(`/orders/edit/${id}`);
           return;
         } else {
           if (foundOrder.signedOffDate === null) {
@@ -533,7 +561,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "F. Proof Complete") {
         if (foundOrder.proofRequestDate === null) {
           req.flash("error_msg", "Proof not requested - Cannot complete");
-          res.redirect(`/orders/edit/${req.params.id}`);
+          res.redirect(`/orders/edit/${id}`);
           return;
         }
 
@@ -593,7 +621,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       } else if (foundOrder.currentStatus === "L. Revision Complete") {
         if (foundOrder.revisionRequestDate == null) {
           req.flash("error_msg", "Revision not requested - Cannot complete");
-          res.redirect(`/orders/edit/${req.params.id}`);
+          res.redirect(`/orders/edit/${id}`);
           return;
         }
 

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="card col s12">
         <div class="card-content">
-          <span class="card-title">Add Order</span>
+          <span class="card-title">Add Order{{#if lgOrder}} - LG ORDER{{/if}}</span>
           <div class="card-action">
             <form action="/orders/add" method="POST">
               <span>
@@ -15,9 +15,9 @@
                 <div class="col s12 m6">
                   <div class="row">
                     <div class="input-field col s12 m6">
-                      <input type="text" name="orderNum" id="orderNum" pattern="[0-9]{7}" maxlength="7"
-                        value="{{orderNum}}" placeholder="enter 7 digit number" class="validate" required>
-                      <label for="orderNum">* Contract #:</label>
+                      <input type="text" name="orderNum" id="orderNum" value="{{orderNum}}"
+                        placeholder="enter contract #" class="validate" required>
+                      <label for="orderNum">* {{#if lgOrder}}LG {{/if}}Contract #:</label>
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="priority" id="priority">
@@ -43,8 +43,10 @@
                       <select name="vendor" id="vendor">
                         {{#select vendor}}
                         <option value="CCN">CCN</option>
+                        {{#unless ../user.lgUser}}
                         <option value="PNR">PNR</option>
                         <option value="MEX">MEX</option>
+                        {{/unless}}
                         {{/select}}
                       </select>
                       <label for="vendor">* Vendor:</label>

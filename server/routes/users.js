@@ -67,44 +67,45 @@ router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
 });
 
 router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let id = req.params.id;
-  let admin;
-  let editOrders;
-  let editProofs;
-  let viewProd;
-  let editProd;
+  let { admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
 
-  if (req.body.admin) {
-    admin = true;
-  } else {
-    admin = false;
-  }
+  admin = admin ? true : false;
+  editOrders = editOrders ? true : false;
+  editProofs = editProofs ? true : false;
+  viewProd = viewProd ? true : false;
+  editProd = editProd ? true : false;
+  lgUser = lgUser ? true : false;
+  // if (req.body.admin) {
+  //   admin = true;
+  // } else {
+  //   admin = false;
+  // }
 
-  if (req.body.editOrders) {
-    editOrders = true;
-  } else {
-    editOrders = false;
-  }
+  // if (req.body.editOrders) {
+  //   editOrders = true;
+  // } else {
+  //   editOrders = false;
+  // }
 
-  if (req.body.editProofs) {
-    editProofs = true;
-  } else {
-    editProofs = false;
-  }
+  // if (req.body.editProofs) {
+  //   editProofs = true;
+  // } else {
+  //   editProofs = false;
+  // }
 
-  if (req.body.viewProd) {
-    viewProd = true;
-  } else {
-    viewProd = false;
-  }
+  // if (req.body.viewProd) {
+  //   viewProd = true;
+  // } else {
+  //   viewProd = false;
+  // }
 
-  if (req.body.editProd) {
-    editProd = true;
-  } else {
-    editProd = false;
-  }
+  // if (req.body.editProd) {
+  //   editProd = true;
+  // } else {
+  //   editProd = false;
+  // }
 
-  User.findOne({ _id: id }, function (err, foundEmployee) {
+  User.findOne({ _id: req.params.id }, function (err, foundEmployee) {
     if (err) {
       logger.error(err);
       return;
@@ -114,6 +115,7 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
       foundEmployee.editProofs = editProofs;
       foundEmployee.viewProd = viewProd;
       foundEmployee.editProd = editProd;
+      foundEmployee.lgUser = lgUser;
 
       foundEmployee.save(function (err, updatedEmployee) {
         if (err) {
@@ -151,65 +153,78 @@ router.get("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 // User Register Form POST
 router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let userName = req.body.username;
-  userName = userName.toLowerCase();
+  let { username, password, password2, admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
+  username = username.toLowerCase();
 
-  let admin;
-  let editOrders;
-  let editProofs;
-  let viewProd;
-  let editProd;
+  admin = admin ? true : false;
+  editOrders = editOrders ? true : false;
+  editProofs = editProofs ? true : false;
+  viewProd = viewProd ? true : false;
+  editProd = editProd ? true : false;
+  lgUser = lgUser ? true : false;
+  // let admin;
+  // let editOrders;
+  // let editProofs;
+  // let viewProd;
+  // let editProd;
 
-  if (req.body.admin) {
-    admin = true;
-  } else {
-    admin = false;
-  }
+  // if (req.body.admin) {
+  //   admin = true;
+  // } else {
+  //   admin = false;
+  // }
 
-  if (req.body.editOrders) {
-    editOrders = true;
-  } else {
-    editOrders = false;
-  }
+  // if (req.body.editOrders) {
+  //   editOrders = true;
+  // } else {
+  //   editOrders = false;
+  // }
 
-  if (req.body.editProofs) {
-    editProofs = true;
-  } else {
-    editProofs = false;
-  }
+  // if (req.body.editProofs) {
+  //   editProofs = true;
+  // } else {
+  //   editProofs = false;
+  // }
 
-  if (req.body.viewProd) {
-    viewProd = true;
-  } else {
-    viewProd = false;
-  }
+  // if (req.body.viewProd) {
+  //   viewProd = true;
+  // } else {
+  //   viewProd = false;
+  // }
 
-  if (req.body.editProd) {
-    editProd = true;
-  } else {
-    editProd = false;
-  }
+  // if (req.body.editProd) {
+  //   editProd = true;
+  // } else {
+  //   editProd = false;
+  // }
 
-  if (req.body.password.length < 8) {
+  // if (req.body.editProd) {
+  //   editProd = true;
+  // } else {
+  //   editProd = false;
+  // }
+
+  if (password.length < 8) {
     req.flash("error_msg", "Password needs to be at least 8 characters");
     res.redirect("/users/register");
-  } else if (req.body.password !== req.body.password2) {
+  } else if (password !== password2) {
     req.flash("error_msg", "Password needs to match");
     res.redirect("/users/register");
   } else {
-    User.findOne({ username: userName }, function (err, user) {
+    User.findOne({ username }, function (err, user) {
       if (user) {
         req.flash("error_msg", "User already registered");
         res.redirect("/users/register");
       } else {
         const newUser = new User({
-          username: userName,
-          password: req.body.password,
-          admin: admin,
-          editOrders: editOrders,
-          editProofs: editProofs,
-          viewProd: viewProd,
-          editProd: editProd
+          username,
+          password,
+          admin,
+          editOrders,
+          editProofs,
+          viewProd,
+          editProd,
+          lgUser
         });
 
         bcrypt.genSalt(10, (err, salt) => {

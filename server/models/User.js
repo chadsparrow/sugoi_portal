@@ -31,6 +31,10 @@ const UserSchema = new Schema({
   editProd: {
     type: Boolean,
     required: true
+  },
+  lgUser: {
+    type: Boolean,
+    default: false
   }
 });
 

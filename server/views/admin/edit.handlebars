@@ -11,8 +11,8 @@
                   <form action="/users/edit/{{employee._id}}?_method=PUT" method="post">
                     <input type="hidden" name="_method" value="PUT">
                     <div class="input-field col s12">
-                      <input type="text" value="{{employee.username}}" name="username" id="username" class="white-text validate"
-                        readonly>
+                      <input type="text" value="{{employee.username}}" name="username" id="username"
+                        class="white-text validate" readonly>
                       <label for="username"><i class="fas fa-envelope-square"></i> Username:</label>
                     </div>
                     <div class="row rights">
@@ -29,7 +29,8 @@
                       <div class="col s2">
                         <label>
                           {{#if employee.editOrders}}
-                          <input type="checkbox" class="form-check-input" name="editOrders" id="editOrders" checked="checked" />
+                          <input type="checkbox" class="form-check-input" name="editOrders" id="editOrders"
+                            checked="checked" />
                           {{else}}
                           <input type="checkbox" class="form-check-input" name="editOrders" id="editOrders" />
                           {{/if}}
@@ -39,7 +40,8 @@
                       <div class="col s2">
                         <label>
                           {{#if employee.editProofs}}
-                          <input type="checkbox" class="form-check-input" name="editProofs" id="editProofs" checked="checked" />
+                          <input type="checkbox" class="form-check-input" name="editProofs" id="editProofs"
+                            checked="checked" />
                           {{else}}
                           <input type="checkbox" class="form-check-input" name="editProofs" id="editProofs" />
                           {{/if}}
@@ -49,7 +51,8 @@
                       <div class="col s2">
                         <label>
                           {{#if employee.viewProd}}
-                          <input type="checkbox" class="form-check-input" name="viewProd" id="viewProd" checked="checked" />
+                          <input type="checkbox" class="form-check-input" name="viewProd" id="viewProd"
+                            checked="checked" />
                           {{else}}
                           <input type="checkbox" class="form-check-input" name="viewProd" id="viewProd" />
                           {{/if}}
@@ -58,20 +61,30 @@
                       <div class="col s2">
                         <label>
                           {{#if employee.editProd}}
-                          <input type="checkbox" class="form-check-input" name="editProd" id="editProd" checked="checked" />
+                          <input type="checkbox" class="form-check-input" name="editProd" id="editProd"
+                            checked="checked" />
                           {{else}}
                           <input type="checkbox" class="form-check-input" name="editProd" id="editProd" />
                           {{/if}}
                           <span style="font-size: 12px;">Edit Prod.</span></label>
                       </div>
+                      <div class="col s2">
+                        <label>
+                          {{#if employee.lgUser}}
+                          <input type="checkbox" class="form-check-input" name="lgUser" id="lgUser" checked="checked" />
+                          {{else}}
+                          <input type="checkbox" class="form-check-input" name="lgUser" id="lgUser" />
+                          {{/if}}
+                          <span style="font-size: 12px;">LG User.</span></label>
+                      </div>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
-                        class="
+                    <button class="btn waves-effect waves-light" type="submit" name="action"
+                      style="margin-right: 10px;"><i class="
                     fas fa-check-square"></i>
                       Submit
                     </button>
-                    <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
-                        class="fas fa-times"></i>
+                    <a href="javascript:history.back()" id="cancel" name="cancel"
+                      class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
                       Cancel</a>
                   </form>
                 </div>

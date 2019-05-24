@@ -51,7 +51,8 @@
     <tbody>
       {{#each orders}}
       <tr>
-        <td style="font-size: 12px;" class="center-align">{{orderNum}}</td>
+        <td style="font-size: 12px;" class="center-align">{{orderNum}}{{#if lgOrder}}<span class='badge black'
+            style="color: white; font-size: 10px; max-width: 10px;">LG</span>{{/if}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
         <td style="font-size: 12px;" class="center-align">{{accountNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{qty}}</td>
