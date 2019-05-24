@@ -313,7 +313,6 @@ export const store = new Vuex.Store({
       item.selectedConfig = -1;
       item.zipper = null;
       item.contrast = null;
-      item.thread = null;
 
       item.one = 0;
       item.xxs = 0;

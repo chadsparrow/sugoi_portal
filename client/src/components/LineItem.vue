@@ -190,7 +190,8 @@ export default {
       } else {
         if (
           this.orderLine.priceBreak === 6 ||
-          this.orderLine.priceBreak === 12
+          this.orderLine.priceBreak === 12 ||
+          this.orderLine.priceBreak === 24
         ) {
           qdDiscountAmount = this.unitPrice * 0.1;
         }

@@ -313,6 +313,7 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   }
 
   const lgOrder = req.user.lgUser ? true : false;
+  const quoteToggle = req.user.lgUser ? false : true;
 
   Order.findOne({ orderNum: orderNum }, function (err, order) {
     if (order) {
@@ -328,7 +329,8 @@ router.post("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         vendor,
         estValue,
         currency,
-        lgOrder
+        lgOrder,
+        quoteToggle
       });
 
       newOrder

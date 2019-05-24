@@ -43,10 +43,8 @@
                       <select name="vendor" id="vendor">
                         {{#select vendor}}
                         <option value="CCN">CCN</option>
-                        {{#unless ../user.lgUser}}
                         <option value="PNR">PNR</option>
                         <option value="MEX">MEX</option>
-                        {{/unless}}
                         {{/select}}
                       </select>
                       <label for="vendor">* Vendor:</label>
