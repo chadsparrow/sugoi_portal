@@ -355,6 +355,10 @@ const OrderSchema = new Schema({
     type: Boolean,
     default: false
   },
+  lgOrder: {
+    type: Boolean,
+    default: false
+  },
   orderLines: [
     {
       lineNumber: {
