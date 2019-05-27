@@ -103,14 +103,12 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
       if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
         let balanceOutstanding =
           foundOrder.netValue -
-          onTermPayment -
+          foundOrder.onTermPayment -
           foundOrder.deposit -
-          kitOrderPayment -
-          isrCollectedOrig +
-          isrRefunded;
-        foundOrder.balanceOutstanding = parseFloat(balanceOutstanding).toFixed(
-          2
-        );
+          foundOrder.kitOrderPayment -
+          foundOrder.isrCollectedOrig +
+          foundOrder.isrRefunded;
+        foundOrder.balanceOutstanding = balanceOutstanding;
         if (foundOrder.balanceOutstanding > 0) {
           foundOrder.paymentStatus = "Balance Outstanding";
         } else if (foundOrder.balanceOutstanding == 0) {
