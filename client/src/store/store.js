@@ -369,7 +369,7 @@ export const store = new Vuex.Store({
 
       item.zipper = null;
       item.contrast = null;
-      item.thread = null;
+      // item.thread = null;
       item.one = 0;
       item.xxs = 0;
       item.xs = 0;

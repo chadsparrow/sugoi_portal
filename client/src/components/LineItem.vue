@@ -178,7 +178,11 @@ export default {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
     },
     discountTotal() {
-      return (this.discountAmount + this.qdDiscount) * this.item.totalUnits;
+      return (
+        (this.item.unitPrice * (this.item.itemDiscount / 100) +
+          this.qdDiscount) *
+        this.item.totalUnits
+      );
     },
     qdDiscount() {
       let qdDiscountAmount = 0;

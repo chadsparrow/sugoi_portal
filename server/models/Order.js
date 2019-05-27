@@ -99,7 +99,7 @@ const OrderSchema = new Schema({
     default: null
   },
   estValue: {
-    type: Float,
+    type: Number,
     default: null
   },
   currency: {
@@ -186,23 +186,23 @@ const OrderSchema = new Schema({
     default: null
   },
   onTermPayment: {
-    type: Float,
+    type: Number,
     default: null
   },
   kitOrderPayment: {
-    type: Float,
+    type: Number,
     default: null
   },
   isrCollectedOrig: {
-    type: Float,
+    type: Number,
     default: null
   },
   isrCollectedCAD: {
-    type: Float,
+    type: Number,
     default: null
   },
   isrRefunded: {
-    type: Float,
+    type: Number,
     default: null
   },
   isrRefundedDate: {
@@ -321,23 +321,23 @@ const OrderSchema = new Schema({
     default: null
   },
   priorityShipping: {
-    type: Float,
+    type: Number,
     default: null
   },
   revisionCharge: {
-    type: Float,
+    type: Number,
     default: null
   },
   deposit: {
-    type: Float,
+    type: Number,
     default: null
   },
   beforeTaxes: {
-    type: Float,
+    type: Number,
     default: null
   },
   taxAmount: {
-    type: Float,
+    type: Number,
     default: null
   },
   taxes: {
@@ -345,7 +345,7 @@ const OrderSchema = new Schema({
     default: null
   },
   orderDiscount: {
-    type: Float,
+    type: Number,
     default: null
   },
   need3d: {
@@ -394,23 +394,23 @@ const OrderSchema = new Schema({
         uppercase: true
       },
       tracingCharge: {
-        type: Float,
+        type: Number,
         default: null
       },
       colourWashCharge: {
-        type: Float,
+        type: Number,
         default: null
       },
       creativeCharge: {
-        type: Float,
+        type: Number,
         default: null
       },
       scaledArtCharge: {
-        type: Float,
+        type: Number,
         default: null
       },
       itemsSubTotal: {
-        type: Float,
+        type: Number,
         default: null
       },
       cancelled: {
@@ -418,7 +418,7 @@ const OrderSchema = new Schema({
         default: false
       },
       totalAddOns: {
-        type: Float,
+        type: Number,
         default: null
       },
       lineItemsQty: {
@@ -444,12 +444,12 @@ const OrderSchema = new Schema({
             default: null
           },
           selectedStyle: {
-            type: String,
-            default: 0
+            type: Number,
+            default: -1
           },
           selectedConfig: {
-            type: String,
-            default: 0
+            type: Number,
+            default: -1
           },
           jbaCode: {
             type: String,
@@ -540,11 +540,11 @@ const OrderSchema = new Schema({
             default: 0
           },
           unitPrice: {
-            type: Float,
+            type: Number,
             default: 0
           },
           unitCost: {
-            type: Float,
+            type: Number,
             default: 0
           },
           usdTariff: {
@@ -556,7 +556,7 @@ const OrderSchema = new Schema({
             default: null
           },
           addOns: {
-            type: Float,
+            type: Number,
             default: 0
           },
           itemDiscount: {
@@ -564,11 +564,11 @@ const OrderSchema = new Schema({
             default: 0
           },
           finalUnitPrice: {
-            type: Float,
+            type: Number,
             default: 0
           },
           itemTotalPrice: {
-            type: Float,
+            type: Number,
             default: 0
           },
           cancelled: {

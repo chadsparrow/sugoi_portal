@@ -14,7 +14,7 @@
               v-model="orderLine.lineJobType"
               ref="lineJobType"
             >
-              <option>NEW</option>
+              <option selected>NEW</option>
               <option>NWR</option>
               <option>REC</option>
               <option>MSR</option>
@@ -59,7 +59,11 @@
                 v-model="orderLine.graphicCode"
                 @change="loadColourWays"
               >
-                <option v-for="(code, index) in graphicCodes" :key="index">{{code.graphicCode}}</option>
+                <option
+                  v-for="(code, index) in graphicCodes"
+                  :key="index"
+                  :value="code.graphicCode"
+                >{{code.graphicName}}</option>
               </select>
             </div>
             <div
@@ -86,7 +90,7 @@
         </div>
         <div class="col-sm-3 border-left">
           <div class="form-group mb-1 col-sm-12">
-            <label for="tracingCharge" class="small my-0">Tracing:</label>
+            <label for="tracingCharge" class="small my-0">Tracing: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -96,7 +100,7 @@
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
-            <label for="creativeCharge" class="small my-0">Creative:</label>
+            <label for="creativeCharge" class="small my-0">Creative: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -106,7 +110,7 @@
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
-            <label for="scaledArtCharge" class="small my-0">Scaled Art:</label>
+            <label for="scaledArtCharge" class="small my-0">Scaled Art: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -116,7 +120,7 @@
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
-            <label for="colourWashCharge" class="small my-0">Colour Wash:</label>
+            <label for="colourWashCharge" class="small my-0">Colour Wash: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -178,15 +182,10 @@ export default {
     },
     commitLine() {
       if (
-        this.$refs.lineJobType.value != "NEW" &&
+        (this.$refs.lineJobType.value === "NWR" ||
+          this.$refs.lineJobType.value === "REC" ||
+          this.$refs.lineJobType.value === "MSR") &&
         this.$refs.swoReference.value === null
-      ) {
-        this.$refs.swoReference.focus();
-        alert("Enter SO# Reference");
-        return;
-      } else if (
-        this.$refs.lineJobType.value != "NEW" &&
-        this.$refs.swoReference.value === ""
       ) {
         this.$refs.swoReference.focus();
         alert("Enter SO# Reference");

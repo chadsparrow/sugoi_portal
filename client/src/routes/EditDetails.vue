@@ -104,7 +104,7 @@
             <label for="client" class="small my-0">Client</label>
             <input
               type="text"
-              class="form-control form-control-sm capitalized"
+              class="form-control form-control-sm"
               id="client"
               v-model.trim="order.client"
               ref="client"
@@ -114,7 +114,7 @@
             <label for="contactName" class="small my-0">Contact Name</label>
             <input
               type="text"
-              class="form-control form-control-sm capitalized"
+              class="form-control form-control-sm"
               id="contactName"
               v-model.trim="order.contactName"
               ref="contactName"
@@ -124,7 +124,7 @@
             <label for="shipToName" class="small my-0">Ship To Name</label>
             <input
               type="text"
-              class="form-control form-control-sm capitalized"
+              class="form-control form-control-sm"
               id="shipToName"
               v-model.trim="order.shipToName"
               ref="shipToName"
@@ -134,7 +134,7 @@
             <label for="shipToAddress" class="small my-0">Ship To Address</label>
             <input
               type="text"
-              class="form-control form-control-sm capitalized"
+              class="form-control form-control-sm"
               id="shipToAddress"
               v-model.trim="order.shipToAddress"
               ref="shipToAddress"
@@ -144,7 +144,7 @@
             <label for="shipToCity" class="small my-0">City</label>
             <input
               type="text"
-              class="form-control form-control-sm capitalized"
+              class="form-control form-control-sm"
               id="shipToCity"
               v-model.trim="order.shipToCity"
               ref="shipToCity"
@@ -203,7 +203,7 @@
             <label for="shipToProvState" class="small my-0">State/Prov</label>
             <input
               type="text"
-              class="form-control form-control-sm capitalized"
+              class="form-control form-control-sm"
               id="shipToProvState"
               v-model.trim="order.shipToProvState"
               @change="setTaxOther(0)"
@@ -262,8 +262,11 @@
         </div>
       </div>
       <div class="col-sm-2">
-        <div class="form-group mb-1" v-if="order.prePacks === 0 || order.prePacks === null">
-          <label for="multiShips" class="small my-0">Multi-Ships</label>
+        <div
+          class="form-group mb-1"
+          v-if="order.prePacks === 0 || order.prePacks === null || order.prePacks === ''"
+        >
+          <label for="multiShips" class="small my-0">Multi-Ships (Qty)</label>
           <input
             type="number"
             class="form-control form-control-sm"
@@ -272,8 +275,11 @@
             v-model.number="order.multiShips"
           >
         </div>
-        <div class="form-group mb-1" v-if="order.multiShips === 0 || order.multiShips === null">
-          <label for="prePacks" class="small my-0">Pre-Packs</label>
+        <div
+          class="form-group mb-1"
+          v-if="order.multiShips === 0 || order.multiShips === null || order.multiShip === ''"
+        >
+          <label for="prePacks" class="small my-0">Pre-Packs (Qty)</label>
           <input
             type="number"
             class="form-control form-control-sm"
@@ -284,7 +290,7 @@
         </div>
 
         <div class="form-group mb-1">
-          <label for="priorityShipping" class="small my-0">Priority Shipping</label>
+          <label for="priorityShipping" class="small my-0">Priority Shipping ($ Value)</label>
           <input
             type="number"
             class="form-control form-control-sm"
@@ -296,7 +302,7 @@
         </div>
 
         <div class="form-group mb-1">
-          <label for="revisionCharge" class="small my-0">Extra Revisions</label>
+          <label for="revisionCharge" class="small my-0">Extra Revisions ($ Value)</label>
           <input
             type="number"
             class="form-control form-control-sm"
@@ -307,7 +313,7 @@
           >
         </div>
 
-        <div class="form-group mb-2 mt-3">
+        <div class="form-group mb-1 mt-3">
           <label for="currency" class="small my-0">Currency</label>
           <select
             class="form-control form-control-sm"
@@ -320,7 +326,7 @@
           </select>
         </div>
         <div class="mb-1">
-          <label for="taxes" class="small my-0">Taxes</label>
+          <label for="taxes" class="small my-0">Taxes (%)</label>
           <input
             type="number"
             class="form-control form-control-sm"
@@ -483,10 +489,6 @@ export default {
 </script>
 
 <style scoped>
-.capitalized {
-  text-transform: capitalize;
-}
-
 .uppercase {
   text-transform: uppercase;
 }
