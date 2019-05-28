@@ -301,7 +301,7 @@
           >
         </div>
 
-        <div class="form-group mb-1">
+        <div class="form-group mb-1" v-if="order.lgOrder != true">
           <label for="revisionCharge" class="small my-0">Extra Revisions ($ Value)</label>
           <input
             type="number"
@@ -325,7 +325,7 @@
             <option value="USD">USD</option>
           </select>
         </div>
-        <div class="mb-1">
+        <div class="mb-1" v-if="order.lgOrder != true">
           <label for="taxes" class="small my-0">Taxes (%)</label>
           <input
             type="number"

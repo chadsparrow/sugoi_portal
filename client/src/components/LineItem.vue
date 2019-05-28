@@ -94,13 +94,13 @@
           <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
         </div>
 
-        <div class="col text-center">
+        <div class="col text-center" v-if="order.lgOrder != true">
           Unit Price ({{order.currency}}{{priceBreak}})
           <br>
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(unitPrice)}}</span>
         </div>
 
-        <div v-if="item.itemDiscount > 0" class="col text-center">
+        <div v-if="item.itemDiscount > 0 && order.lgOrder != true" class="col text-center">
           Discount
           <br>
           <span
@@ -108,13 +108,13 @@
           >{{item.itemDiscount}}% (-${{formatPrice(discountAmount)}})</span>
         </div>
 
-        <div v-if="qdDiscount > 0" class="col text-center">
+        <div v-if="qdDiscount > 0 && order.lgOrder != true" class="col text-center">
           QD Discount:
           <br>
           <span style="font-weight: bold; font-size: 14px;">10% (-${{formatPrice(qdDiscount)}})</span>
         </div>
 
-        <div class="col text-center">
+        <div class="col text-center" v-if="order.lgOrder != true">
           Final Unit Price
           <br>
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.finalUnitPrice)}}</span>
@@ -130,16 +130,23 @@
           <button class="btn btn-sm btn-danger" @click.prevent="cancelItem">Cancel Item</button>
         </div>
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
-          <div v-if="discountTotal > 0" class="col bg-primary text-white rounded p-1">
+          <div
+            v-if="discountTotal > 0 && order.lgOrder != true"
+            class="col bg-primary text-white rounded p-1"
+          >
             Discount Total:
             <br>
             ${{formatPrice(discountTotal)}}
           </div>
           <div
             class="col"
+            v-if="order.lgOrder != true"
             style="font-size: 16px;"
           >Item Total: ${{formatPrice(item.itemTotalPrice)}}</div>
-          <div v-if="item.addOns >0" class="col bg-dark rounded text-light p-1 ml-1">
+          <div
+            v-if="item.addOns >0 && order.lgOrder != true"
+            class="col bg-dark rounded text-light p-1 ml-1"
+          >
             Add-Ons:
             <br>
             ${{formatPrice(item.addOns * item.totalUnits)}}

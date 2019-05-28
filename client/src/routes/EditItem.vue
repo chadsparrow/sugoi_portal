@@ -4,7 +4,7 @@
       <div>Item#: {{item.itemNumber}}</div>
       <div
         class="badge badge-warning text-center ml-3"
-        v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
+        v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && order.lgOrder != true"
       >Quick Design - 10% OFF</div>
     </div>
     <div class="card-body p-3">
@@ -306,13 +306,13 @@
           <span>{{item.totalUnits}}</span>
         </div>
 
-        <div class="col">
+        <div class="col" v-if="order.lgOrder != true">
           Unit Price ({{order.currency}}{{priceBreak}})
           <br>
           <span>$ {{formatPrice(unitPrice)}}</span>
         </div>
 
-        <div class="col">
+        <div class="col" v-if="order.lgOrder != true">
           <label for="itemDiscount" class="small my-0">Discount % - ${{formatPrice(discountAmount)}}</label>
           <input
             type="number"
@@ -326,7 +326,7 @@
           >
         </div>
 
-        <div class="col">
+        <div class="col" v-if="order.lgOrder != true">
           Final Unit Price
           <br>
           <span>$ {{formatPrice(item.finalUnitPrice)}}</span>

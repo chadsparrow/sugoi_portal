@@ -232,58 +232,42 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
   });
 });
 
-
 // @DESC - GETS ADD A NEW ORDER PAGE
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
-router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  if (req.user.lgUser) {
-    CustomRep.find({ office: "LG" }).then(customReps => {
-      const orderNum = "9LG_";
-      const priority = "";
-      const currentStatus = "";
-      const isr = "";
-      const instruction = "";
-      const vendor = "";
-      const estValue = "";
-      const lgOrder = req.user.lgUser ? true : false;
+router.get("/add", [ensureAuthenticated, ensureEditOrders], async (req, res) => {
+  try {
+
+    if (req.user.lgUser) {
+      const customReps = await CustomRep.find({ office: "LG" });
       res.render("orders/add", {
-        orderNum,
-        priority,
-        currentStatus,
-        isr,
-        instruction,
-        vendor,
-        customReps,
-        estValue,
-        lgOrder
+        orderNum: "9LG_",
+        priority: "",
+        currentStatus: "",
+        isr: "",
+        instruction: "",
+        vendor: "CCN",
+        estValue: 0,
+        lgOrder: true,
+        customReps: customReps
       });
-    }).catch(err => logger.error(err));
-  } else {
-    Order.findOne({ orderNum: { $regex: /^\d+$/ } })
-      .sort('-orderNum')
-      .exec((err, order) => {
-        CustomRep.find({ office: "SUGOI" }).then(customReps => {
-          const orderNum = (parseInt(order.orderNum) + 1).toString();
-          const priority = "";
-          const currentStatus = "";
-          const isr = "";
-          const instruction = "";
-          const vendor = "";
-          const estValue = "";
-          const lgOrder = false;
-          res.render("orders/add", {
-            orderNum,
-            priority,
-            currentStatus,
-            isr,
-            instruction,
-            vendor,
-            customReps,
-            estValue,
-            lgOrder
-          });
-        }).catch(err => logger.error(err));
+    } else {
+      const order = await Order.findOne({ orderNum: { $regex: /^\d+$/ } }).sort('-orderNum');
+      const newOrderNum = (parseInt(order.orderNum) + 1).toString();
+      const customReps = await CustomRep.find({ office: "SUGOI" });
+      res.render("orders/add", {
+        orderNum: newOrderNum,
+        priority: "",
+        currentStatus: "",
+        isr: "",
+        instruction: "",
+        vendor: "",
+        customReps: customReps,
+        estValue: 0,
+        lgOrder: false
       });
+    }
+  } catch (error) {
+    logger.error(err);
   }
 });
 

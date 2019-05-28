@@ -15,30 +15,34 @@
             PrePacks:
             <span>{{order.prePacks}} @ $5 = ${{formatPrice(order.prePacks * 5)}}</span>
           </li>
-          <li v-if="order.revisionCharge >0" class="list-group-item">
+          <li v-if="order.revisionCharge >0 && order.lgOrder != true" class="list-group-item">
             Extra Revisions:
             <span>${{formatPrice(order.revisionCharge)}}</span>
           </li>
-          <li v-if="order.taxes" class="list-group-item">
+          <li v-if="order.taxes && order.lgOrder != true" class="list-group-item">
             Sub Total:
             <span>${{formatPrice(order.beforeTaxes)}}</span>
           </li>
-          <li v-if="order.taxes" class="list-group-item" style="border-bottom:none;">
+          <li
+            v-if="order.taxes && order.lgOrder != true"
+            class="list-group-item"
+            style="border-bottom:none;"
+          >
             Taxes: {{order.taxes}}% |
             <span>${{formatPrice(order.taxAmount)}}</span>
           </li>
         </ul>
-        <div class="col-sm-12 mb-2 p-1 border border-3 rounded">
+        <div class="col-sm-12 mb-2 p-1 border border-3 rounded" v-if="order.lgOrder != true">
           <span style="font-size: 18px; font-weight: bold;">
             Total:
             <br>
             ${{formatPrice(order.netValue)}}
           </span>
         </div>
-        <ul class="list-group list-group-flush col-sm-12">
+        <ul class="list-group list-group-flush col-sm-12" v-if="order.lgOrder != true">
           <li v-if="order.deposit" class="list-group-item">Deposit: $ {{formatPrice(order.deposit)}}</li>
         </ul>
-        <div class="mb-2 p-1 border rounded col-sm-12">
+        <div class="mb-2 p-1 border rounded col-sm-12" v-if="order.lgOrder != true">
           <h6>
             Balance Due:
             <br>

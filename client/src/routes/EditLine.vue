@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3 border-left">
+        <div class="col-sm-3 border-left" v-if="order.lgOrder != true">
           <div class="form-group mb-1 col-sm-12">
             <label for="tracingCharge" class="small my-0">Tracing: ($ Value)</label>
             <input

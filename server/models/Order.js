@@ -85,6 +85,7 @@ const OrderSchema = new Schema({
   vendor: {
     type: String,
     uppercase: true,
+    default: "CCN"
   },
   sentVendor: {
     type: Date,

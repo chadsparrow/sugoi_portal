@@ -33,7 +33,9 @@
                       <select name="isr" id="isr">
                         {{#select isr}}
                         {{#each customReps}}
+                        {{#select ../user.username}}
                         <option value="{{value}}">{{text}}</option>
+                        {{/select}}
                         {{/each}}
                         {{/select}}
                       </select>
@@ -41,21 +43,29 @@
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="vendor" id="vendor">
+                        {{#if lgOrder}}
+                        {{#select vendor}}
+                        <option value="CCN">CCN</option>
+                        {{/select}}
+                        {{else}}
                         {{#select vendor}}
                         <option value="CCN">CCN</option>
                         <option value="PNR">PNR</option>
                         <option value="MEX">MEX</option>
                         {{/select}}
+                        {{/if}}
                       </select>
                       <label for="vendor">* Vendor:</label>
                     </div>
+                    {{#unless lgOrder}}
                     <div class="input-field col s12 m6">
                       <input type="number" step=".01" name="estValue" id="estValue" value="{{estValue}}">
                       <label for="estValue">Estimated Value:</label>
                     </div>
+                    {{/unless}}
                     <div class="input-field col s12 m6">
                       <select name="currency" id="currency">
-                        {{#select vendor}}
+                        {{#select currency}}
                         <option value="CAD">CAD</option>
                         <option value="USD">USD</option>
                         {{/select}}

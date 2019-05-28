@@ -2,7 +2,7 @@
   <div id="home">
     <order-details/>
     <order-lines-holder/>
-    <totals-box/>
+    <totals-box v-if="order.lgOrder != true"/>
     <anchor-box/>
   </div>
 </template>
@@ -20,6 +20,11 @@ export default {
     OrderLinesHolder,
     TotalsBox,
     AnchorBox
+  },
+  computed: {
+    order() {
+      return this.$store.state.order;
+    }
   }
 };
 </script>
