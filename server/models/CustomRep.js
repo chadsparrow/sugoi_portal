@@ -5,11 +5,17 @@ const Schema = mongoose.Schema;
 const RepsSchema = new Schema({
   value: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true
   },
   text: {
     type: String,
     required: true
+  },
+  office: {
+    type: String,
+    required: true,
+    uppercase: true
   }
 });
 

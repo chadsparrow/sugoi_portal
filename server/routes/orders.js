@@ -237,7 +237,7 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
   if (req.user.lgUser) {
-    CustomRep.find().then(customReps => {
+    CustomRep.find({ office: "LG" }).then(customReps => {
       const orderNum = "9LG_";
       const priority = "";
       const currentStatus = "";
@@ -262,7 +262,7 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], (req, res) => {
     Order.findOne({ orderNum: { $regex: /^\d+$/ } })
       .sort('-orderNum')
       .exec((err, order) => {
-        CustomRep.find().then(customReps => {
+        CustomRep.find({ office: "SUGOI" }).then(customReps => {
           const orderNum = (parseInt(order.orderNum) + 1).toString();
           const priority = "";
           const currentStatus = "";
