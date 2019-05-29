@@ -31,11 +31,9 @@
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="isr" id="isr">
-                        {{#select isr}}
+                        {{#select currentUser}}
                         {{#each customReps}}
-                        {{#select ../user.username}}
                         <option value="{{value}}">{{text}}</option>
-                        {{/select}}
                         {{/each}}
                         {{/select}}
                       </select>

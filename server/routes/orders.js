@@ -236,9 +236,9 @@ router.get("/archived", ensureAuthenticated, (req, res) => {
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
 router.get("/add", [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
-
+    const currentUser = req.user.username.toUpperCase();
     if (req.user.lgUser) {
-      const customReps = await CustomRep.find({ office: "LG" });
+      const customReps = await CustomRep.find({ office: "LG" }).sort('text');
       res.render("orders/add", {
         orderNum: "9LG_",
         priority: "",
@@ -248,12 +248,13 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], async (req, res) => 
         vendor: "CCN",
         estValue: 0,
         lgOrder: true,
-        customReps: customReps
+        customReps: customReps,
+        currentUser: currentUser
       });
     } else {
       const order = await Order.findOne({ orderNum: { $regex: /^\d+$/ } }).sort('-orderNum');
       const newOrderNum = (parseInt(order.orderNum) + 1).toString();
-      const customReps = await CustomRep.find({ office: "SUGOI" });
+      const customReps = await CustomRep.find({ office: "SUGOI" }).sort('text');
       res.render("orders/add", {
         orderNum: newOrderNum,
         priority: "",
@@ -263,7 +264,8 @@ router.get("/add", [ensureAuthenticated, ensureEditOrders], async (req, res) => 
         vendor: "",
         customReps: customReps,
         estValue: 0,
-        lgOrder: false
+        lgOrder: false,
+        currentUser: currentUser
       });
     }
   } catch (error) {

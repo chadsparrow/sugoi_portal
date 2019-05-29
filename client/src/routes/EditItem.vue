@@ -72,15 +72,15 @@
             v-model="item.thread"
             ref="threadInput"
           >
-            <option value="BLK">BLK</option>
-            <option value="WHT">WHT</option>
-            <option value="GNM">GNM</option>
-            <option value="INC">INC</option>
-            <option value="REF">REF</option>
-            <option value="IND">IND</option>
-            <option value="F1R">F1R</option>
-            <option value="VPK">VPK</option>
-            <option value="FLY">FLY</option>
+            <option value="BLK">Black</option>
+            <option value="WHT">White</option>
+            <option value="GNM">Gunmetal</option>
+            <option value="INC">Ink Blue</option>
+            <option value="REF">Reflex Blue</option>
+            <option value="IND">Indy</option>
+            <option value="F1R">F1 Red</option>
+            <option value="VPK">Victory Pink</option>
+            <option value="FLY">Fly Green</option>
           </select>
         </div>
         <div class="col" v-if="item.zipperOptions.length">

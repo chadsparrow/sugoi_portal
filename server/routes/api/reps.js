@@ -11,9 +11,9 @@ router.get("/", async (req, res) => {
     try {
         let reps = [];
         if (req.user.lgUser) {
-            reps = await CustomRep.find({ office: "LG" });
+            reps = await CustomRep.find({ office: "LG" }).sort('text');
         } else {
-            reps = await CustomRep.find({ office: "SUGOI" });
+            reps = await CustomRep.find({ office: "SUGOI" }).sort('text');
         }
         res.json(reps);
     } catch (error) {
