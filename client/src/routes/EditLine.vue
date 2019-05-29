@@ -17,6 +17,7 @@
               <option selected>NEW</option>
               <option>NWR</option>
               <option>REC</option>
+              <option>REO</option>
               <option>MSR</option>
             </select>
           </div>
@@ -184,6 +185,7 @@ export default {
       if (
         (this.$refs.lineJobType.value === "NWR" ||
           this.$refs.lineJobType.value === "REC" ||
+          this.$refs.lineJobType.value === "REO" ||
           this.$refs.lineJobType.value === "MSR") &&
         this.$refs.swoReference.value === null
       ) {
