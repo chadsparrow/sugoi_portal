@@ -16,31 +16,27 @@ router.get("/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
 });
 
 //Styles Page
-router.get('/styles', [ensureAuthenticated, ensureAdmin], (req, res) => {
-    Style.find().then(styles => {
+router.get('/styles', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+    try {
+        const styles = await Style.find();
         res.render("admin/styles", { styles });
-    }).catch(err => {
+    } catch (err) {
         logger.error(err);
         req.flash("error_msg", err);
         res.redirect("/admin/dash");
-    });
-
+    }
 });
 
 //User Admin Page
-router.get("/users", [ensureAuthenticated, ensureAdmin], (req, res) => {
-    User.find()
-        .sort([["username", "asc"]])
-        .then(employees => {
-            res.render("admin/users", {
-                employees
-            });
-        })
-        .catch(err => {
-            logger.error(err);
-            req.flash("error_msg", err);
-            res.redirect("/orders");
-        });
+router.get("/users", [ensureAuthenticated, ensureAdmin], async (req, res) => {
+    try {
+        const employees = await User.find().sort({ username: 1 });
+        res.render("admin/users", { employees });
+    } catch (err) {
+        logger.error(err);
+        req.flash("error_msg", err);
+        res.redirect("/orders");
+    }
 });
 
 

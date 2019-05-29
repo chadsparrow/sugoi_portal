@@ -34,27 +34,10 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-//User Admin Page
-router.get("/admin", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  User.find()
-    .sort([["username", "asc"]])
-    .then(employees => {
-      res.render("admin/users", {
-        employees
-      });
-    })
-    .catch(err => {
-      logger.error(err);
-      req.flash("error_msg", err);
-      res.redirect("/orders");
-    });
-});
-
 //Admin Page
 router.get("/admin/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
   res.render("admin/dash");
 });
-
 
 router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   User.findOne({
@@ -66,7 +49,7 @@ router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   });
 });
 
-router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
+router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], async (req, res) => {
   let { admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
 
   admin = admin ? true : false;
@@ -75,75 +58,36 @@ router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
   viewProd = viewProd ? true : false;
   editProd = editProd ? true : false;
   lgUser = lgUser ? true : false;
-  // if (req.body.admin) {
-  //   admin = true;
-  // } else {
-  //   admin = false;
-  // }
 
-  // if (req.body.editOrders) {
-  //   editOrders = true;
-  // } else {
-  //   editOrders = false;
-  // }
+  try {
+    let foundEmployee = await User.findOne({ _id: req.params.id });
+    foundEmployee.admin = admin;
+    foundEmployee.editOrders = editOrders;
+    foundEmployee.editProofs = editProofs;
+    foundEmployee.viewProd = viewProd;
+    foundEmployee.editProd = editProd;
+    foundEmployee.lgUser = lgUser;
 
-  // if (req.body.editProofs) {
-  //   editProofs = true;
-  // } else {
-  //   editProofs = false;
-  // }
-
-  // if (req.body.viewProd) {
-  //   viewProd = true;
-  // } else {
-  //   viewProd = false;
-  // }
-
-  // if (req.body.editProd) {
-  //   editProd = true;
-  // } else {
-  //   editProd = false;
-  // }
-
-  User.findOne({ _id: req.params.id }, function (err, foundEmployee) {
-    if (err) {
-      logger.error(err);
-      return;
-    } else {
-      foundEmployee.admin = admin;
-      foundEmployee.editOrders = editOrders;
-      foundEmployee.editProofs = editProofs;
-      foundEmployee.viewProd = viewProd;
-      foundEmployee.editProd = editProd;
-      foundEmployee.lgUser = lgUser;
-
-      foundEmployee.save(function (err, updatedEmployee) {
-        if (err) {
-          logger.error(err);
-          return;
-        } else {
-          logger.info(`${updatedEmployee} - updated by ${req.user.username}`);
-          req.flash("success_msg", "Employee Updated");
-          res.redirect("/admin/users");
-        }
-      });
-    }
-  });
+    const updatedEmployee = await foundEmployee.save();
+    logger.info(`${updatedEmployee} - updated by ${req.user.username}`);
+    req.flash("success_msg", "Employee Updated");
+    res.redirect("/admin/users");
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
-router.get("/delete/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let id = req.params.id;
-  User.findOneAndRemove({ _id: id }, function (err) {
-    if (err) {
-      logger.error(err);
-      req.flash("error_msg", err);
-      res.redirect("/admin/users");
-    } else {
-      logger.info(`User deleted by ${req.user.username}`);
-      req.flash("success_msg", "Employee Deleted");
-      res.redirect("/admin/users");
-    }
-  });
+router.get("/delete/:id", [ensureAuthenticated, ensureAdmin], async (req, res) => {
+  try {
+    await User.findOneAndDelete({ _id: req.params.id });
+    logger.info(`User deleted by ${req.user.username}`);
+    req.flash("success_msg", "Employee Deleted");
+    res.redirect("/admin/users");
+  } catch (err) {
+    logger.error(err);
+    req.flash("error_msg", err);
+    res.redirect("/admin/users");
+  }
 });
 
 // User Register Form
@@ -162,47 +106,6 @@ router.post("/register", [ensureAuthenticated, ensureAdmin], (req, res) => {
   viewProd = viewProd ? true : false;
   editProd = editProd ? true : false;
   lgUser = lgUser ? true : false;
-  // let admin;
-  // let editOrders;
-  // let editProofs;
-  // let viewProd;
-  // let editProd;
-
-  // if (req.body.admin) {
-  //   admin = true;
-  // } else {
-  //   admin = false;
-  // }
-
-  // if (req.body.editOrders) {
-  //   editOrders = true;
-  // } else {
-  //   editOrders = false;
-  // }
-
-  // if (req.body.editProofs) {
-  //   editProofs = true;
-  // } else {
-  //   editProofs = false;
-  // }
-
-  // if (req.body.viewProd) {
-  //   viewProd = true;
-  // } else {
-  //   viewProd = false;
-  // }
-
-  // if (req.body.editProd) {
-  //   editProd = true;
-  // } else {
-  //   editProd = false;
-  // }
-
-  // if (req.body.editProd) {
-  //   editProd = true;
-  // } else {
-  //   editProd = false;
-  // }
 
   if (password.length < 8) {
     req.flash("error_msg", "Password needs to be at least 8 characters");
