@@ -7,23 +7,17 @@ const GraphicCode = require("../../models/GraphicCode");
 
 // @DESC - GETS ALL QD GRAPHIC CODES FROM THE SERVER
 // SEC - PUBLIC API
-router.get("/", (req, res) => {
-  if (req.user.lgUser) {
-    GraphicCode.find({ $or: [{ graphicCode: "CUSTM" }, { brand: "Sombrio" }] })
-      .then(graphicCodes => {
-        res.json(graphicCodes);
-      })
-      .catch(err => {
-        logger.error(err);
-      });
-  } else {
-    GraphicCode.find()
-      .then(graphicCodes => {
-        res.json(graphicCodes);
-      })
-      .catch(err => {
-        logger.error(err);
-      });
+router.get("/", async (req, res) => {
+  try {
+    let graphicCodes = [];
+    if (req.user.lgUser) {
+      graphicCodes = await GraphicCode.find({ $or: [{ graphicCode: "CUSTM" }, { brand: "Sombrio" }] });
+    } else {
+      graphicCodes = await GraphicCode.find();
+    }
+    res.json(graphicCodes);
+  } catch (err) {
+    logger.error(err);
   }
 });
 

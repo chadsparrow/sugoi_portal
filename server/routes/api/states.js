@@ -7,15 +7,13 @@ const State = require("../../models/State");
 
 // @DESC - GETS ALL USA STATES AND TERRITORIES
 // SEC - PUBLIC API
-router.get("/", (req, res) => {
-    State.find()
-        .sort({ state: 1 })
-        .then(states => {
-            res.json(states);
-        })
-        .catch(err => {
-            logger.error(err);
-        });
+router.get("/", async (req, res) => {
+    try {
+        const states = await State.find().sort({ state: 1 });
+        res.json(states);
+    } catch (err) {
+        logger.error(err);
+    }
 });
 
 module.exports = router;

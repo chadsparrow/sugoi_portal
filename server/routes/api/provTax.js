@@ -7,15 +7,13 @@ const ProvTax = require("../../models/ProvTax");
 
 // @DESC - GETS ALL PROVINCES AND PROVINCIAL TAX AMOUNTS FROM SERVER
 // SEC - PUBLIC API
-router.get("/", (req, res) => {
-    ProvTax.find()
-        .sort({ province: 1 })
-        .then(provs => {
-            res.json(provs);
-        })
-        .catch(err => {
-            logger.error(err);
-        });
+router.get("/", async (req, res) => {
+    try {
+        const provs = await ProvTax.find().sort({ province: 1 });
+        res.json(provs);
+    } catch (err) {
+        logger.error(err);
+    }
 });
 
 module.exports = router;

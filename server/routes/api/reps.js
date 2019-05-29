@@ -6,7 +6,7 @@ const logger = require("../../helpers/logs");
 const CustomRep = require("../../models/CustomRep");
 
 // @DESC - GETS ALL THE REPS AT SUGOI OR LG Based on who's logged in.
-// SEC - PUBLIC API
+// SEC - PUBLIC API.
 router.get("/", async (req, res) => {
     try {
         let reps = [];
@@ -16,8 +16,8 @@ router.get("/", async (req, res) => {
             reps = await CustomRep.find({ office: "SUGOI" }).sort('text');
         }
         res.json(reps);
-    } catch (error) {
-        logger.log(error);
+    } catch (err) {
+        logger.error(err);
     }
 });
 
