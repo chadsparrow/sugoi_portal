@@ -13,16 +13,11 @@ const User = mongoose.model("users");
 
 // User Login Form
 router.get("/login", (req, res) => {
+  if (req.user) {
+    res.redirect("/orders");
+    return;
+  }
   res.render("users/login");
-});
-
-router.get("/login/:userName/:key", (req, res) => {
-  const userName = req.params.userName;
-  const key = req.params.key;
-  res.render("users/loginwparams", {
-    key,
-    userName
-  });
 });
 
 // User Login POST
@@ -39,27 +34,26 @@ router.get("/admin/dash", [ensureAuthenticated, ensureAdmin], (req, res) => {
   res.render("admin/dash");
 });
 
-router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], (req, res) => {
-  User.findOne({
-    _id: req.params.id
-  }).then(employee => {
-    res.render("admin/edit", {
-      employee
-    });
-  });
+router.get("/edit/:id", [ensureAuthenticated, ensureAdmin], async (req, res) => {
+  try {
+    const employee = await User.findOne({ _id: req.params.id });
+    res.render("admin/edit", { employee });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 router.put("/edit/:id", [ensureAuthenticated, ensureAdmin], async (req, res) => {
-  let { admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
-
-  admin = admin ? true : false;
-  editOrders = editOrders ? true : false;
-  editProofs = editProofs ? true : false;
-  viewProd = viewProd ? true : false;
-  editProd = editProd ? true : false;
-  lgUser = lgUser ? true : false;
-
   try {
+    let { admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
+
+    admin = admin ? true : false;
+    editOrders = editOrders ? true : false;
+    editProofs = editProofs ? true : false;
+    viewProd = viewProd ? true : false;
+    editProd = editProd ? true : false;
+    lgUser = lgUser ? true : false;
+
     let foundEmployee = await User.findOne({ _id: req.params.id });
     foundEmployee.admin = admin;
     foundEmployee.editOrders = editOrders;
