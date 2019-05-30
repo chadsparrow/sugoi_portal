@@ -17,23 +17,26 @@ const CustomRep = require('../models/CustomRep');
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN ORDER TABLE
 // SEC - MUST BE LOGGED IN
-router.get("/all", ensureAuthenticated, (req, res) => {
-  let pageTitle = "All";
-  Order.find().then(orders => {
-    res.render("orders/index", {
-      orders,
-      pageTitle
-    });
-  });
+router.get("/all", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = "All";
+    const orders = await Order.find();
+    res.render("orders/index", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - LOADS PO PAGE WITH SINGLE ORDER DETAILS
 // SEC - MUST BE LOGGED IN
-router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
-  let pageTitle = `${req.params.orderNum} PO`;
-  let poDate = dayjs().format('MM/DD/YYYY');
-  let items = [];
-  Order.findOne({ orderNum: req.params.orderNum }).then(order => {
+router.get("/po/:orderNum", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = `${req.params.orderNum} PO`;
+    let poDate = dayjs().format('MM/DD/YYYY');
+    let items = [];
+
+    const order = await Order.findOne({ orderNum: req.params.orderNum });
+
     for (let orderLine of order.orderLines) {
       if (!orderLine.cancelled) {
         for (let item of orderLine.items) {
@@ -53,7 +56,9 @@ router.get("/po/:orderNum", ensureAuthenticated, (req, res) => {
       poDate,
       items
     });
-  });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS XML PAGE FOR A SINGLE ORDER
@@ -422,15 +427,13 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
 
         if (instruction) {
-          const instructionsLength = foundOrder.instructions.length;
-          if (foundOrder.instructions[instructionsLength - 1] != instruction) {
-            foundOrder.instructions.push({
-              instruction,
-              instructionType: "Art Direction",
-              user: foundOrder.isr
-            });
-          }
+          foundOrder.instructions.push({
+            instruction,
+            instructionType: "Art Direction",
+            user: foundOrder.isr
+          });
         }
+
         foundOrder.currentArtist = "";
       }
 
