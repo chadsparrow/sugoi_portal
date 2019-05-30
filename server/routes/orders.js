@@ -408,14 +408,11 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
 
         if (instruction) {
-          const instructionsLength = foundOrder.instructions.length;
-          if (foundOrder.instructions[instructionsLength - 1] != instruction) {
-            foundOrder.instructions.push({
-              instruction,
-              instructionType: "Art Direction",
-              user: foundOrder.isr
-            });
-          }
+          foundOrder.instructions.push({
+            instruction,
+            instructionType: "Art Direction",
+            user: foundOrder.isr
+          });
         }
         foundOrder.currentArtist = "";
       }
