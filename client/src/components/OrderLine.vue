@@ -7,7 +7,7 @@
         <span>Line: {{orderLine.lineNumber}}</span>
         <div
           class="badge badge-warning text-center ml-3"
-          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak === 6 || orderLine.priceBreak === 12 || orderLine.priceBreak === 24) && order.lgOrder != true"
+          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak === 6 || orderLine.priceBreak === 12)"
         >Quick Design - 10% OFF</div>
       </div>
       <div class="card-body m-0 p-1">
@@ -33,34 +33,25 @@
             <span>{{orderLine.colourWayCode}}</span>
           </div>
           <div
-            v-if="orderLine.tracingCharge && orderLine.creativeCharge && orderLine.scaledArtCharge && orderLine.colourWashCharge && order.lgOrder != true"
+            v-if="orderLine.tracingCharge && orderLine.creativeCharge && orderLine.scaledArtCharge && orderLine.colourWashCharge"
             class="my-2 col-sm-12 bg-dark text-white text-center rounded"
           >Line Add-Ons</div>
-          <div v-if="orderLine.tracingCharge && order.lgOrder != true" class="col-sm-3 text-center">
+          <div v-if="orderLine.tracingCharge" class="col-sm-3 text-center">
             <span
               class="badge badge-dark text-light"
             >Tracing: ${{formatPrice(orderLine.tracingCharge)}}</span>
           </div>
-          <div
-            v-if="orderLine.creativeCharge && order.lgOrder != true"
-            class="col-sm-3 text-center"
-          >
+          <div v-if="orderLine.creativeCharge" class="col-sm-3 text-center">
             <span
               class="badge badge-dark text-light"
             >Creative: ${{formatPrice(orderLine.creativeCharge)}}</span>
           </div>
-          <div
-            v-if="orderLine.scaledArtCharge && order.lgOrder != true"
-            class="col-sm-3 text-center"
-          >
+          <div v-if="orderLine.scaledArtCharge" class="col-sm-3 text-center">
             <span
               class="badge badge-dark text-light"
             >Scaled Art: ${{formatPrice(orderLine.scaledArtCharge)}}</span>
           </div>
-          <div
-            v-if="orderLine.colourWashCharge && order.lgOrder != true"
-            class="col-sm-3 text-center"
-          >
+          <div v-if="orderLine.colourWashCharge" class="col-sm-3 text-center">
             <span
               class="badge badge-dark text-light"
             >Colour Wash: ${{formatPrice(orderLine.colourWashCharge)}}</span>
@@ -101,15 +92,14 @@
         <div class="float-right">
           <div
             class="text-center p-1"
-            v-if="orderLine.totalAddOns > 0 && order.lgOrder != true"
+            v-if="orderLine.totalAddOns > 0"
           >Sub Total: ${{formatPrice(totalBeforeAddOns)}}</div>
           <div
             class="rounded bg-dark text-center text-white p-1"
-            v-if="orderLine.totalAddOns > 0 && order.lgOrder != true"
+            v-if="orderLine.totalAddOns > 0"
           >Total Add-Ons: ${{formatPrice(orderLine.totalAddOns)}}</div>
           <div
             class="rounded bg-secondary text-center text-light p-2"
-            v-if="order.lgOrder != true"
             style="font-size: 16px; font-weight: bold;"
           >Line Total: $ {{formatPrice(orderLine.itemsSubTotal)}}</div>
         </div>
@@ -137,9 +127,6 @@ export default {
     Loading
   },
   computed: {
-    order() {
-      return this.$store.state.order;
-    },
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
     },
