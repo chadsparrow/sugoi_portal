@@ -38,6 +38,7 @@
         <th class="center-align">ISR Payment Type</th>
         <th class="center-align">Refunded / Credited</th>
         <th class="center-align">Refunded / Credited Date</th>
+        <th class="center-align">Modified Date</th>
         <th class="center-align">Notes</th>
         <th class="center-align">JBA Invoice #</th>
         <th class="center-align">Invoice Sent Date</th>
@@ -69,6 +70,7 @@
         <td style="font-size: 12px;" class="center-align">{{isrRefunded}}</td>
         <td style="font-size: 12px;" class="center-align">
           {{#if isrRefundedDate}}{{formatDate isrRefundedDate "D-MMM-YY"}}{{/if}}</td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate updatedAt "D-MMM-YY"}}</td>
         <td style="font-size: 12px;" class="center-align">{{paymentNotes}}</td>
         <td style="font-size: 12px;" class="center-align">{{jbaInvoiceNum}}</td>
         <td style="font-size: 12px;" class="center-align">{{#if invoiceSent}}{{formatDate invoiceSent
