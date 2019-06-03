@@ -15,9 +15,11 @@
           </li>
           {{/if}}
           {{#if user.editOrders}}
+          {{#unless user.lgUser}}
           <li>
             <a href="/payments/outstanding"><i class="fas fa-file-invoice-dollar"></i> Payments</a>
           </li>
+          {{/unless}}
           {{/if}}
           <li>
             <a class='dropdown-trigger btn' href="#" data-target="dropdown1" style="width: 180px;">{{getHandle
@@ -70,9 +72,11 @@
   </li>
   {{/if}}
   {{#if user.editOrders}}
+  {{#unless user.lgUser}}
   <li>
     <a href="/payments"><i class="material-icons">attach_money</i>Payments</a>
   </li>
+  {{/unless}}
   {{/if}}
   <li class="divider"></li>
   {{#if user.admin}}

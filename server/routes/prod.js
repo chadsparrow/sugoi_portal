@@ -15,69 +15,105 @@ const Order = require("../models/Order");
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN PROD TABLE
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
-router.get("/", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  let pageTitle = "Production";
-  Order.find({ currentStatus: "V. Sent to Vendor" }).then(orders => {
-    res.render("orders/prod", {
-      orders,
-      pageTitle
-    });
-  });
-});
-
-router.get("/ccn", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  Order.find({
-    currentStatus: "V. Sent to Vendor"
-  }).then(orders => {
-    res.render("orders/ccnview", {
-      orders
-    });
-  });
-});
-
-router.get("/open", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  let pageTitle = "Open Orders";
-  Order.find({
-    $and: [
-      { currentStatus: "V. Sent to Vendor" },
-      {
-        $or: [
-          { shipStatus: "" },
-          { shipStatus: null }
-        ]
-      },
-    ]
-  }).then(orders => {
-    res.render("orders/prod", {
-      orders,
-      pageTitle
-    });
-  });
-});
-
-router.get("/pending", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  let pageTitle = "Shipped Orders";
-  Order.find({
-    $and: [
-      { currentStatus: "V. Sent to Vendor" },
-      { vendorConfirmShip: { $ne: null } },
-      { shipStatus: "Shipped" }
-    ]
-  }).then(orders => {
+router.get("/", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+  try {
+    let pageTitle = "Production";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG Production";
+      orders = await Order.find({ currentStatus: "V. Sent to Vendor", lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
+    }
     res.render("orders/prod", { orders, pageTitle });
-  });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
-router.get("/cancelled", [ensureAuthenticated, ensureViewProd], (req, res) => {
-  let pageTitle = "Cancelled Orders";
-  Order.find({
-    currentStatus: "W. CANCELLED"
-  }).then(orders => {
-    res.render("orders/prod", {
-      orders,
-      pageTitle
-    });
-  });
+// router.get("/ccn", [ensureAuthenticated, ensureViewProd], (req, res) => {
+//   Order.find({
+//     currentStatus: "V. Sent to Vendor"
+//   }).then(orders => {
+//     res.render("orders/ccnview", {
+//       orders
+//     });
+//   });
+// });
+
+router.get("/open", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+  try {
+    let pageTitle = "Open Orders";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG Open Orders";
+      orders = await Order.find({
+        $and: [
+          { currentStatus: "V. Sent to Vendor" },
+          { $or: [{ shipStatus: "" }, { shipStatus: null }] },
+          { lgOrder: true }
+        ]
+      });
+    } else {
+      orders = await Order.find({
+        $and: [
+          { currentStatus: "V. Sent to Vendor" },
+          { $or: [{ shipStatus: "" }, { shipStatus: null }] }
+        ]
+      });
+    }
+
+    res.render("orders/prod", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
+});
+
+router.get("/pending", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+  try {
+    let pageTitle = "Shipped Orders";
+    let orders;
+
+    if (req.user.lgUser) {
+      pageTitle = "LG Shipped Orders";
+      orders = await Order.find({
+        $and: [
+          { currentStatus: "V. Sent to Vendor" },
+          { vendorConfirmShip: { $ne: null } },
+          { shipStatus: "Shipped" },
+          { lgOrder: true }
+        ]
+      });
+    } else {
+      orders = await Order.find({
+        $and: [
+          { currentStatus: "V. Sent to Vendor" },
+          { vendorConfirmShip: { $ne: null } },
+          { shipStatus: "Shipped" }
+        ]
+      });
+    }
+    res.render("orders/prod", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
+});
+
+router.get("/cancelled", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+  try {
+    let pageTitle = "Cancelled Orders";
+    let orders;
+
+    if (req.user.lgUser) {
+      pageTitle = "LG Cancelled Orders";
+      orders = await Order.find({ currentStatus: "W. CANCELLED", lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: "W. CANCELLED" });
+    }
+    res.render("orders/prod", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ORDER BY ID# AND DISPLAYS IN MODAL WITH EDITABLE FIELDS

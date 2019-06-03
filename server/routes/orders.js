@@ -20,7 +20,13 @@ const CustomRep = require('../models/CustomRep');
 router.get("/all", ensureAuthenticated, async (req, res) => {
   try {
     let pageTitle = "All";
-    const orders = await Order.find();
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG All"
+      orders = await Order.find({ lgOrder: true });
+    } else {
+      orders = await Order.find();
+    }
     res.render("orders/index", { orders, pageTitle });
   } catch (err) {
     logger.error(err);
@@ -167,74 +173,101 @@ router.get("/xml/:orderNum", ensureAuthenticated, (req, res) => {
 
 // @DESC - GETS ALL IN PROGRESS ORDERS
 // SEC - MUST BE LOGGED IN
-router.get("/", ensureAuthenticated, (req, res) => {
-  let pageTitle = "In Progress";
-  Order.find({
-    currentStatus: {
-      $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "1. Initial", "X. Archived"] }
+router.get("/", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = "In Progress";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG In Progress";
+      orders = await Order.find({
+        currentStatus: {
+          $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "1. Initial", "X. Archived"] }
+        },
+        lgOrder: true
+      });
+    } else {
+      orders = await Order.find({
+        currentStatus: {
+          $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "1. Initial", "X. Archived"] }
+        }
+      });
     }
-  }).then(orders => {
-    res.render("orders/index", {
-      orders,
-      pageTitle
-    });
-  });
+    res.render("orders/index", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ALL IN INITIAL ORDERS - BEFORE IN PROGRESS
 // SEC - MUST BE LOGGED IN
-router.get("/initial", ensureAuthenticated, (req, res) => {
-  let pageTitle = "Initial";
-  Order.find({
-    currentStatus: "1. Initial"
-  }).then(orders => {
-    res.render("orders/index", {
-      orders,
-      pageTitle
-    });
-  });
+router.get("/initial", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = "Initial";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG Initial";
+      orders = await Order.find({ currentStatus: "1. Initial", lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: "1. Initial" });
+    }
+    res.render("orders/index", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ALL IN COMPLETED ORDERS - IN PRODUCTION
 // SEC - MUST BE LOGGED IN
-router.get("/completed", ensureAuthenticated, (req, res) => {
-  let pageTitle = "Completed";
-  Order.find({
-    currentStatus: "V. Sent to Vendor"
-  }).then(orders => {
-    res.render("orders/notinprogress", {
-      orders,
-      pageTitle
-    });
-  });
+router.get("/completed", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = "Completed";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG Completed";
+      orders = await Order.find({ currentStatus: "V. Sent to Vendor", lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
+    }
+    res.render("orders/notinprogress", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ALL CANCELLED ORDERS
 // SEC - MUST BE LOGGED IN
-router.get("/cancelled", ensureAuthenticated, (req, res) => {
-  let pageTitle = "Cancelled";
-  Order.find({
-    currentStatus: "W. CANCELLED"
-  }).then(orders => {
-    res.render("orders/notinprogress", {
-      orders,
-      pageTitle
-    });
-  });
+router.get("/cancelled", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = "Cancelled";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG Cancelled"
+      orders = await Order.find({ currentStatus: "W. CANCELLED", lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: "W. CANCELLED" });
+    }
+    res.render("orders/notinprogress", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ALL IN ARCHIVED ORDERS - MAINLY NEVER GONE TO PRODUCTION
 // SEC - MUST BE LOGGED IN
-router.get("/archived", ensureAuthenticated, (req, res) => {
-  let pageTitle = "Archived";
-  Order.find({
-    currentStatus: "X. Archived"
-  }).then(orders => {
-    res.render("orders/index", {
-      orders,
-      pageTitle
-    });
-  });
+router.get("/archived", ensureAuthenticated, async (req, res) => {
+  try {
+    let pageTitle = "Archived";
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = "LG Archived";
+      orders = await Order.find({ currentStatus: "X. Archived", lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: "X. Archived" });
+    }
+    res.render("orders/index", { orders, pageTitle });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ADD A NEW ORDER PAGE

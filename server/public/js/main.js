@@ -268,13 +268,13 @@ $(document).ready(function () {
     bAutoWidth: false,
     dom: "lBrftip",
     buttons: [
-      {
-        text: "Vendor Copy",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/ccn");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
+      // {
+      //   text: "Vendor Copy",
+      //   action: function (e, dt, node, config) {
+      //     $(location).attr("href", "/prod/ccn");
+      //   },
+      //   className: "waves-effect waves-light btn-small"
+      // },
       {
         text: "All Orders",
         action: function (e, dt, node, config) {
