@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -19,4 +19,4 @@ const RepsSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("customreps", RepsSchema);
+module.exports = mongoose.model('customreps', RepsSchema);

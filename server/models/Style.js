@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Float = require ('mongoose-float').loadType(mongoose, 2);
+const mongoose = require('mongoose');
+const Float = require('mongoose-float').loadType(mongoose, 2);
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -119,4 +119,4 @@ const StyleSchema = new Schema({
   factory: String
 });
 
-module.exports = mongoose.model("styles2019", StyleSchema);
+module.exports = mongoose.model('styles2019', StyleSchema);

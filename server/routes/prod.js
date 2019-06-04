@@ -1,31 +1,27 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const DateDiff = require("date-diff");
+const DateDiff = require('date-diff');
 const dayjs = require('dayjs');
-const logger = require("../helpers/logs");
+const logger = require('../helpers/logs');
 
-const {
-  ensureAuthenticated,
-  ensureViewProd,
-  ensureEditProd
-} = require("../helpers/auth");
+const { ensureAuthenticated, ensureViewProd, ensureEditProd } = require('../helpers/auth');
 
 // includes model for mongodb
-const Order = require("../models/Order");
+const Order = require('../models/Order');
 
 // @DESC - GETS ALL ORDERS AND DISPLAYS IN PROD TABLE
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
-router.get("/", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+router.get('/', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = "Production";
+    let pageTitle = 'Production';
     let orders;
     if (req.user.lgUser) {
-      pageTitle = "LG Production";
-      orders = await Order.find({ currentStatus: "V. Sent to Vendor", lgOrder: true });
+      pageTitle = 'LG Production';
+      orders = await Order.find({ currentStatus: 'V. Sent to Vendor', lgOrder: true });
     } else {
-      orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
+      orders = await Order.find({ currentStatus: 'V. Sent to Vendor' });
     }
-    res.render("orders/prod", { orders, pageTitle });
+    res.render('orders/prod', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
   }
@@ -41,76 +37,60 @@ router.get("/", [ensureAuthenticated, ensureViewProd], async (req, res) => {
 //   });
 // });
 
-router.get("/open", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+router.get('/open', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = "Open Orders";
+    let pageTitle = 'Open Orders';
     let orders;
     if (req.user.lgUser) {
-      pageTitle = "LG Open Orders";
+      pageTitle = 'LG Open Orders';
       orders = await Order.find({
-        $and: [
-          { currentStatus: "V. Sent to Vendor" },
-          { $or: [{ shipStatus: "" }, { shipStatus: null }] },
-          { lgOrder: true }
-        ]
+        $and: [{ currentStatus: 'V. Sent to Vendor' }, { $or: [{ shipStatus: '' }, { shipStatus: null }] }, { lgOrder: true }]
       });
     } else {
       orders = await Order.find({
-        $and: [
-          { currentStatus: "V. Sent to Vendor" },
-          { $or: [{ shipStatus: "" }, { shipStatus: null }] }
-        ]
+        $and: [{ currentStatus: 'V. Sent to Vendor' }, { $or: [{ shipStatus: '' }, { shipStatus: null }] }]
       });
     }
 
-    res.render("orders/prod", { orders, pageTitle });
+    res.render('orders/prod', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
   }
 });
 
-router.get("/pending", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+router.get('/pending', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = "Shipped Orders";
+    let pageTitle = 'Shipped Orders';
     let orders;
 
     if (req.user.lgUser) {
-      pageTitle = "LG Shipped Orders";
+      pageTitle = 'LG Shipped Orders';
       orders = await Order.find({
-        $and: [
-          { currentStatus: "V. Sent to Vendor" },
-          { vendorConfirmShip: { $ne: null } },
-          { shipStatus: "Shipped" },
-          { lgOrder: true }
-        ]
+        $and: [{ currentStatus: 'V. Sent to Vendor' }, { vendorConfirmShip: { $ne: null } }, { shipStatus: 'Shipped' }, { lgOrder: true }]
       });
     } else {
       orders = await Order.find({
-        $and: [
-          { currentStatus: "V. Sent to Vendor" },
-          { vendorConfirmShip: { $ne: null } },
-          { shipStatus: "Shipped" }
-        ]
+        $and: [{ currentStatus: 'V. Sent to Vendor' }, { vendorConfirmShip: { $ne: null } }, { shipStatus: 'Shipped' }]
       });
     }
-    res.render("orders/prod", { orders, pageTitle });
+    res.render('orders/prod', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
   }
 });
 
-router.get("/cancelled", [ensureAuthenticated, ensureViewProd], async (req, res) => {
+router.get('/cancelled', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = "Cancelled Orders";
+    let pageTitle = 'Cancelled Orders';
     let orders;
 
     if (req.user.lgUser) {
-      pageTitle = "LG Cancelled Orders";
-      orders = await Order.find({ currentStatus: "W. CANCELLED", lgOrder: true });
+      pageTitle = 'LG Cancelled Orders';
+      orders = await Order.find({ currentStatus: 'W. CANCELLED', lgOrder: true });
     } else {
-      orders = await Order.find({ currentStatus: "W. CANCELLED" });
+      orders = await Order.find({ currentStatus: 'W. CANCELLED' });
     }
-    res.render("orders/prod", { orders, pageTitle });
+    res.render('orders/prod', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
   }
@@ -118,10 +98,10 @@ router.get("/cancelled", [ensureAuthenticated, ensureViewProd], async (req, res)
 
 // @DESC - GETS ORDER BY ID# AND DISPLAYS IN MODAL WITH EDITABLE FIELDS
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
-router.get("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
+router.get('/edit/:id', [ensureAuthenticated, ensureEditProd], (req, res) => {
   let id = req.params.id;
   Order.findOne({ _id: id }).then(order => {
-    res.render("orders/prod-edit", {
+    res.render('orders/prod-edit', {
       order
     });
   });
@@ -129,7 +109,7 @@ router.get("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
 
 // @DESC - UPDATES ORDER BY ID# BASED ON CHANGES TO EDIT FORM
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
-router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
+router.put('/edit/:id', [ensureAuthenticated, ensureEditProd], (req, res) => {
   const id = req.params.id;
   const {
     latestShipDate,
@@ -145,17 +125,17 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
     qty
   } = req.body;
 
-  Order.findOne({ _id: id }, function (err, foundOrder) {
+  Order.findOne({ _id: id }, function(err, foundOrder) {
     if (err) {
       logger.error(err);
       return;
     } else {
       if (foundOrder.balanceOutstanding > 0) {
-        foundOrder.paymentStatus = "Balance Outstanding";
+        foundOrder.paymentStatus = 'Balance Outstanding';
       } else if (foundOrder.balanceOutstanding < 0) {
-        foundOrder.paymentStatus = "Refund Customer";
+        foundOrder.paymentStatus = 'Refund Customer';
       } else if (foundOrder.balanceOutstanding == 0) {
-        foundOrder.paymentStatus = "Complete";
+        foundOrder.paymentStatus = 'Complete';
       }
       if (latestShipDate) {
         foundOrder.latestShipDate = latestShipDate;
@@ -170,8 +150,8 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
         const prodLeadTime = diff.days();
         foundOrder.prodLeadTime = parseInt(prodLeadTime);
       } else if (vendorConfirmShip && !sentVendor) {
-        req.flash("error", "No Sent to Vendor Date");
-        res.redirect("/prod/edit/" + foundOrder._id);
+        req.flash('error', 'No Sent to Vendor Date');
+        res.redirect('/prod/edit/' + foundOrder._id);
         foundOrder.prodLeadTime = 0;
         return;
       } else {
@@ -196,7 +176,9 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.jbaGNRNum = jbaGNRNum;
       foundOrder.jbaInvoiceNum = jbaInvoiceNum;
       if ((foundOrder.jbaInvoiceNum != '' || foundOrder.jbaInvoiceNum != null) && foundOrder.jbaInvoiceDate === null) {
-        foundOrder.jbaInvoiceDate = dayjs().set('hour', 7).format();
+        foundOrder.jbaInvoiceDate = dayjs()
+          .set('hour', 7)
+          .format();
       }
       foundOrder.shipStatus = shipStatus;
       foundOrder.shippingNotes = shippingNotes;
@@ -205,22 +187,19 @@ router.put("/edit/:id", [ensureAuthenticated, ensureEditProd], (req, res) => {
       foundOrder.currency = currency;
 
       if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
-        foundOrder.totalLeadTime =
-          foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+        foundOrder.totalLeadTime = foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
       } else {
         foundOrder.totalLeadTime = 0;
       }
 
-      foundOrder.save(function (err, updatedOrder) {
+      foundOrder.save(function(err, updatedOrder) {
         if (err) {
           logger.error(err);
           return;
         } else {
-          logger.info(
-            `${updatedOrder.orderNum} - update by ${req.user.username}`
-          );
-          req.flash("success_msg", "Order Production Updated");
-          res.redirect("/prod");
+          logger.info(`${updatedOrder.orderNum} - update by ${req.user.username}`);
+          req.flash('success_msg', 'Order Production Updated');
+          res.redirect('/prod');
         }
       });
     }

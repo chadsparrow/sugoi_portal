@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -13,4 +13,4 @@ const ArtistsSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("customartists", ArtistsSchema);
+module.exports = mongoose.model('customartists', ArtistsSchema);

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -8,8 +8,8 @@ const ThreadSchema = new Schema({
   },
   code: {
     type: String,
-    uppercase: true 
+    uppercase: true
   }
 });
 
-module.exports = mongoose.model("threads", ThreadSchema);
+module.exports = mongoose.model('threads', ThreadSchema);

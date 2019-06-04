@@ -1,8 +1,8 @@
-const winston = require("winston");
-const fs = require("fs");
-const path = require("path");
-const logDir = "logs";
-const moment = require("moment-timezone");
+const winston = require('winston');
+const fs = require('fs');
+const path = require('path');
+const logDir = 'logs';
+const moment = require('moment-timezone');
 const dayjs = require('dayjs');
 
 if (!fs.existsSync(logDir)) {
@@ -29,19 +29,16 @@ const appendTimestamp = winston.format((info, opts) => {
 winston.remove(winston.transports.Console);
 
 const logger = winston.createLogger({
-  format: winston.format.combine(
-    appendTimestamp({ tz: "America/Los_Angeles" }),
-    winston.format.simple()
-  ),
+  format: winston.format.combine(appendTimestamp({ tz: 'America/Los_Angeles' }), winston.format.simple()),
   transports: [
     new winston.transports.File({
-      filename: path.join(logDir, "logfile.log"),
+      filename: path.join(logDir, 'logfile.log'),
       colorize: true
     })
   ]
 });
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new winston.transports.Console({
       colorize: true

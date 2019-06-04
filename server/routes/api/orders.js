@@ -1,15 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const logger = require("../../helpers/logs");
+const logger = require('../../helpers/logs');
 
-const { ensureAuthenticated, ensureEditOrders } = require("../../helpers/auth");
+const { ensureAuthenticated, ensureEditOrders } = require('../../helpers/auth');
 
 // includes model for mongodb
-const Order = require("../../models/Order");
+const Order = require('../../models/Order');
 
 // @DESC - GETS JSON DATA OF CERTAIN ORDER NUMBER
 // SEC - MUST BE LOGGED IN
-router.get("/:orderNum", ensureAuthenticated, async (req, res) => {
+router.get('/:orderNum', ensureAuthenticated, async (req, res) => {
   try {
     const order = await Order.findOne({ orderNum: req.params.orderNum }, { checkpoints: 0, instruction: 0 });
     res.json(order);
@@ -37,7 +37,9 @@ router.put('/:orderNum/:lineNumber/:itemNumber', [ensureAuthenticated, ensureEdi
   try {
     let foundOrder = await Order.findOne({ orderNum: req.params.orderNum });
     const newItemNumber = `${foundOrder.orderNum}-${foundOrder.orderLines[req.params.lineNumber].lineNumber}-${req.params.itemNumber}`;
-    foundOrder.orderLines[req.params.lineNumber].items.push({ itemNumber: newItemNumber });
+    foundOrder.orderLines[req.params.lineNumber].items.push({
+      itemNumber: newItemNumber
+    });
     const savedOrder = await foundOrder.save();
     res.json(savedOrder);
   } catch (err) {
@@ -45,7 +47,7 @@ router.put('/:orderNum/:lineNumber/:itemNumber', [ensureAuthenticated, ensureEdi
   }
 });
 
-router.put("/:orderNum", [ensureAuthenticated, ensureEditOrders], async (req, res) => {
+router.put('/:orderNum', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     const requestOrder = req.body;
     const order = await Order.findOneAndUpdate({ orderNum: req.params.orderNum }, requestOrder, { new: true, upsert: true });

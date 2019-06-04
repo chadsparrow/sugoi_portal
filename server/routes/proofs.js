@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 //const fse = require("fs-extra");
 //const multer = require("multer");
 //const path = require("path");
 //const StreamZip = require("node-stream-zip");
-const logger = require("../helpers/logs");
+const logger = require('../helpers/logs');
 const dayjs = require('dayjs');
 
-const { ensureAuthenticated, ensureEditProofs } = require("../helpers/auth");
+const { ensureAuthenticated, ensureEditProofs } = require('../helpers/auth');
 
-const Proof = require("../models/Proof");
-const Order = require("../models/Order");
+const Proof = require('../models/Proof');
+const Order = require('../models/Order');
 
 // router.get(
 //   "/uploadform",
@@ -163,7 +163,7 @@ const Order = require("../models/Order");
 //   });
 // });
 
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
   Proof.findOne({ _id: req.params.id }, ensureAuthenticated, (err, foundProof) => {
     if (err) {
       logger.error(err);
@@ -174,7 +174,7 @@ router.get("/:id", (req, res) => {
         logger.error(err);
         return;
       }
-      res.render("proofs/view", {
+      res.render('proofs/view', {
         foundProof,
         mainOrder
       });
@@ -182,123 +182,98 @@ router.get("/:id", (req, res) => {
   });
 });
 
-router.get(
-  "/qc/:orderNum",
-  [ensureAuthenticated, ensureEditProofs],
-  (req, res) => {
-    Proof.find({ orderNum: req.params.orderNum }, (err, foundProofs) => {
+router.get('/qc/:orderNum', [ensureAuthenticated, ensureEditProofs], (req, res) => {
+  Proof.find({ orderNum: req.params.orderNum }, (err, foundProofs) => {
+    if (err) {
+      logger.error(err);
+      return;
+    }
+    Order.findOne({ orderNum: req.params.orderNum }, (err, mainOrder) => {
       if (err) {
         logger.error(err);
         return;
       }
-      Order.findOne({ orderNum: req.params.orderNum }, (err, mainOrder) => {
-        if (err) {
-          logger.error(err);
-          return;
-        }
-        res.render("proofs/qc", {
-          foundProofs,
-          mainOrder
-        });
+      res.render('proofs/qc', {
+        foundProofs,
+        mainOrder
       });
     });
-  }
-);
+  });
+});
 
-router.get(
-  "/qc/edit/:id",
-  [ensureAuthenticated, ensureEditProofs],
-  (req, res) => {
-    Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
-      if (err) {
-        logger.error(err);
-      }
-      res.render("proofs/qc-edit", {
-        foundProof
-      });
+router.get('/qc/edit/:id', [ensureAuthenticated, ensureEditProofs], (req, res) => {
+  Proof.findOne({ _id: req.params.id }, (err, foundProof) => {
+    if (err) {
+      logger.error(err);
+    }
+    res.render('proofs/qc-edit', {
+      foundProof
     });
-  }
-);
+  });
+});
 
-router.put(
-  "/qc/edit/:id",
-  [ensureAuthenticated, ensureEditProofs],
-  (req, res) => {
-    const id = req.params.id;
-    const { note, noteUser } = req.body;
-    const hasQCNote = true;
-    const qcnote = {
-      noteDate: dayjs().format(),
-      noteUser: noteUser,
-      note: note
-    };
+router.put('/qc/edit/:id', [ensureAuthenticated, ensureEditProofs], (req, res) => {
+  const id = req.params.id;
+  const { note, noteUser } = req.body;
+  const hasQCNote = true;
+  const qcnote = {
+    noteDate: dayjs().format(),
+    noteUser: noteUser,
+    note: note
+  };
 
-    Proof.findOneAndUpdate(
-      { _id: id },
-      { hasQCNote: hasQCNote, qcnote: qcnote },
-      { new: true, upsert: true },
-      function (err, updatedProof) {
+  Proof.findOneAndUpdate({ _id: id }, { hasQCNote: hasQCNote, qcnote: qcnote }, { new: true, upsert: true }, function(err, updatedProof) {
+    if (err) {
+      logger.error(err);
+      return;
+    } else {
+      req.flash('success_msg', 'Proof QC Updated');
+      res.redirect('/proofs/qc/' + updatedProof.orderNum);
+    }
+  });
+});
+
+router.get('/qc/archive/:id', [ensureAuthenticated, ensureEditProofs], (req, res) => {
+  const id = req.params.id;
+  Proof.findOne({ _id: id }, function(err, foundProof) {
+    if (err) {
+      logger.error(err);
+      return;
+    } else {
+      foundProof.hasQCNote = false;
+      const qcnote = foundProof.qcnote;
+      foundProof.qcnotearchive.push(qcnote);
+      foundProof.qcnote = {
+        noteDate: null,
+        noteUser: null,
+        note: null
+      };
+
+      foundProof.save(function(err, updatedProof) {
         if (err) {
           logger.error(err);
           return;
         } else {
-          req.flash("success_msg", "Proof QC Updated");
-          res.redirect("/proofs/qc/" + updatedProof.orderNum);
+          req.flash('success_msg', 'Proof QC Archived');
+          res.redirect('/proofs/qc/' + updatedProof.orderNum);
         }
-      }
-    );
-  }
-);
-
-router.get(
-  "/qc/archive/:id",
-  [ensureAuthenticated, ensureEditProofs],
-  (req, res) => {
-    const id = req.params.id;
-    Proof.findOne({ _id: id }, function (err, foundProof) {
-      if (err) {
-        logger.error(err);
-        return;
-      } else {
-        foundProof.hasQCNote = false;
-        const qcnote = foundProof.qcnote;
-        foundProof.qcnotearchive.push(qcnote);
-        foundProof.qcnote = {
-          noteDate: null,
-          noteUser: null,
-          note: null
-        };
-
-        foundProof.save(function (err, updatedProof) {
-          if (err) {
-            logger.error(err);
-            return;
-          } else {
-            req.flash("success_msg", "Proof QC Archived");
-            res.redirect("/proofs/qc/" + updatedProof.orderNum);
-          }
-        });
-      }
-    });
-  }
-);
-
-router.get(
-  "/qc/archive/view/:orderNum",
-  [ensureAuthenticated, ensureEditProofs],
-  (req, res) => {
-    const orderNum = req.params.orderNum;
-    Proof.find({ orderNum: orderNum }, function (err, foundProofs) {
-      if (err) {
-        logger.error(err);
-        return;
-      }
-      res.render("proofs/qc-archive", {
-        foundProofs,
-        orderNum
       });
+    }
+  });
+});
+
+router.get('/qc/archive/view/:orderNum', [ensureAuthenticated, ensureEditProofs], (req, res) => {
+  const orderNum = req.params.orderNum;
+  Proof.find({ orderNum: orderNum }, function(err, foundProofs) {
+    if (err) {
+      logger.error(err);
+      return;
+    }
+    res.render('proofs/qc-archive', {
+      foundProofs,
+      orderNum
     });
-  }
-);
+  });
+});
 
 module.exports = router;

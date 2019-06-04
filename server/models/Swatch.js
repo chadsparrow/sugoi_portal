@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -8,4 +8,4 @@ const SwatchSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("swatches", SwatchSchema);
+module.exports = mongoose.model('swatches', SwatchSchema);
