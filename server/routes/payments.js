@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../helpers/logs');
+const dayjs = require('dayjs');
 
 const { ensureAuthenticated, ensureEditOrders } = require('../helpers/auth');
 
@@ -112,6 +113,17 @@ router.get('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   });
 });
 
+router.get('/logs/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
+  Order.findOne({ _id: req.params.id }).then(order => {
+    let logs = [];
+    const { paymentNotes, paymentNotesDate } = order;
+    if (order.paymentNotesLog) {
+      logs = order.paymentNotesLog.reverse();
+    }
+    res.render('payments/logs', { logs, paymentNotes, paymentNotesDate });
+  });
+});
+
 router.put('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
   const id = req.params.id;
   let {
@@ -138,7 +150,17 @@ router.put('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
       foundOrder.isrCollectedOrig = isrCollectedOrig;
       foundOrder.isrPaymentDate = isrPaymentDate;
       foundOrder.isrPaymentType = isrPaymentType;
-      foundOrder.paymentNotes = paymentNotes;
+
+      if (paymentNotes != foundOrder.paymentNotes) {
+        if (!foundOrder.paymentNotesLog) {
+          foundOrder.paymentNotesLog = [];
+        }
+        let currentDate = dayjs().format();
+        foundOrder.paymentNotesLog.push({ note: foundOrder.paymentNotes, date: foundOrder.paymentNotesDate });
+        foundOrder.paymentNotes = paymentNotes;
+        foundOrder.paymentNotesDate = currentDate;
+      }
+
       foundOrder.isrRefunded = isrRefunded;
       foundOrder.isrRefundedDate = isrRefundedDate;
       foundOrder.invoiceSent = invoiceSent;
@@ -167,7 +189,7 @@ router.put('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
         } else {
           logger.info(`${updatedOrder.orderNum} - Payment updated by ${req.user.username}`);
           req.flash('success_msg', 'Payment Updated');
-          res.redirect('/payments/');
+          res.redirect('/payments/outstanding');
         }
       });
     }

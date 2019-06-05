@@ -226,6 +226,19 @@ const OrderSchema = new Schema({
     type: String,
     default: null
   },
+  paymentNotesDate: {
+    type: Date
+  },
+  paymentNotesLog: [
+    {
+      note: {
+        type: String
+      },
+      date: {
+        type: Date
+      }
+    }
+  ],
   balanceOutstanding: {
     type: Float,
     default: null
