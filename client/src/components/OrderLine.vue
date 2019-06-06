@@ -7,7 +7,7 @@
         <span>Line: {{orderLine.lineNumber}}</span>
         <div
           class="badge badge-warning text-center ml-3"
-          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak === 6 || orderLine.priceBreak === 12)"
+          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak == 2 || orderLine.priceBreak == 6 || orderLine.priceBreak == 12 || orderLine.priceBreak == 24 || orderLine.priceBreak == 13)"
         >Quick Design - 10% OFF</div>
       </div>
       <div class="card-body m-0 p-1">
@@ -127,6 +127,9 @@ export default {
     Loading
   },
   computed: {
+    order() {
+      return this.$store.state.order;
+    },
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
     },

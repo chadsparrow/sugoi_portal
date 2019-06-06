@@ -10,7 +10,8 @@
       >
       <label class="custom-control-label" for="customSwitches">Quote</label>
     </div>
-    <img class="float-right" src="../../public/img/sugoi_sombrio-customlogo_black.png">
+    <img class="float-right" src="../../public/img/sombrio_black.png" v-if="order.lgOrder">
+    <img class="float-right" src="../../public/img/sugoi_sombrio-customlogo_black.png" v-else>
     <h1 class="card-title display-4">{{headerTitle}}</h1>
   </div>
 </template>
@@ -19,6 +20,9 @@
 export default {
   name: "Header",
   computed: {
+    order() {
+      return this.$store.state.order;
+    },
     headerTitle() {
       return this.quoteToggle ? "Initial Quote" : "Order Confirmation";
     },

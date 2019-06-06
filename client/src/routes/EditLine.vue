@@ -31,7 +31,7 @@
               ref="swoReference"
             >
           </div>
-          <div class="form-group mb-1">
+          <div class="form-group mb-1" v-if="order.lgOrder != true">
             <label for="priceBreak" class="small my-0">Price Break:</label>
             <select
               class="form-control form-control-sm"
@@ -46,6 +46,23 @@
               <option>100</option>
               <option>200</option>
               <option>500</option>
+            </select>
+          </div>
+          <div class="form-group mb-1" v-if="order.lgOrder == true">
+            <label for="priceBreak" class="small my-0">Price Break:</label>
+            <select
+              class="form-control form-control-sm"
+              id="jobType"
+              v-model.number="orderLine.priceBreak"
+            >
+              <option value="1">1</option>
+              <option value="2">2-5</option>
+              <option value="6">6-12</option>
+              <option value="13">13-49</option>
+              <option value="50">50-99</option>
+              <option value="100">100-249</option>
+              <option value="250">250-499</option>
+              <option value="500">500+</option>
             </select>
           </div>
         </div>
@@ -89,7 +106,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3 border-left" v-if="order.lgOrder != true">
+        <div class="col-sm-3 border-left">
           <div class="form-group mb-1 col-sm-12">
             <label for="tracingCharge" class="small my-0">Tracing: ($ Value)</label>
             <input

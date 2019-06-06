@@ -2,7 +2,7 @@
   <div id="home">
     <order-details/>
     <order-lines-holder/>
-    <totals-box v-if="order.lgOrder != true"/>
+    <totals-box/>
     <anchor-box/>
   </div>
 </template>

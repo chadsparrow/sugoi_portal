@@ -1,6 +1,6 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import axios from "axios";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
         .put(`/api/orders/${state.order.orderNum}`, order)
         .then(r => r.data)
         .then(() => {
-          commit("SAVE_ORDER_DATA");
+          commit('SAVE_ORDER_DATA');
         });
     },
     getOrderData: ({ commit }, orderNum) => {
@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
         .get(`/api/orders/${orderNum}`)
         .then(r => r.data)
         .then(order => {
-          commit("SET_ORDER_DATA", order);
+          commit('SET_ORDER_DATA', order);
         });
     },
     getReps: ({ commit }) => {
@@ -41,7 +41,7 @@ export const store = new Vuex.Store({
         .get(`/api/reps`)
         .then(r => r.data)
         .then(reps => {
-          commit("SET_REPS", reps);
+          commit('SET_REPS', reps);
         });
     },
     getProvincialTaxes: ({ commit }) => {
@@ -49,7 +49,7 @@ export const store = new Vuex.Store({
         .get(`/api/provTax`)
         .then(r => r.data)
         .then(provTax => {
-          commit("SET_PROVINCIAL_TAXES", provTax);
+          commit('SET_PROVINCIAL_TAXES', provTax);
         });
     },
     getUSAStates: ({ commit }) => {
@@ -57,7 +57,7 @@ export const store = new Vuex.Store({
         .get(`/api/states`)
         .then(r => r.data)
         .then(states => {
-          commit("SET_USA_STATES", states);
+          commit('SET_USA_STATES', states);
         });
     },
     getStyles: ({ commit }) => {
@@ -65,7 +65,7 @@ export const store = new Vuex.Store({
         .get(`/api/styles`)
         .then(r => r.data)
         .then(styles => {
-          commit("SET_STYLES", styles);
+          commit('SET_STYLES', styles);
         });
     },
     getGraphicCodes: ({ commit }) => {
@@ -73,7 +73,7 @@ export const store = new Vuex.Store({
         .get(`/api/graphicCodes`)
         .then(r => r.data)
         .then(graphicCodes => {
-          commit("SET_GRAPHIC_CODES", graphicCodes);
+          commit('SET_GRAPHIC_CODES', graphicCodes);
         });
     },
     getSwatches: ({ commit }) => {
@@ -81,7 +81,7 @@ export const store = new Vuex.Store({
         .get(`/api/swatches`)
         .then(r => r.data)
         .then(swatches => {
-          commit("SET_SWATCHES", swatches);
+          commit('SET_SWATCHES', swatches);
         });
     },
     setProvTax: ({ commit }, tax) => {
@@ -106,8 +106,7 @@ export const store = new Vuex.Store({
           const items = orderLine.items;
           for (let [itemIndex, item] of items.entries()) {
             if (item.cancelled === false) {
-              dispatch('getItemUnitPrice', { lineIndex, itemIndex })
-
+              dispatch('getItemUnitPrice', { lineIndex, itemIndex });
             }
           }
         }
@@ -145,7 +144,7 @@ export const store = new Vuex.Store({
       dispatch('setLineTotal', lineIndex);
     },
     setLineTotal: ({ commit, dispatch }, lineIndex) => {
-      commit("SET_LINE_TOTAL", lineIndex);
+      commit('SET_LINE_TOTAL', lineIndex);
       dispatch('setOrderTotal');
     },
     addLine: ({ commit, state }) => {
@@ -153,24 +152,26 @@ export const store = new Vuex.Store({
         const lineLength = state.order.orderLines.length;
         let nextLineNumber = parseInt(lineLength + 1);
         if (nextLineNumber < 10) {
-          nextLineNumber = "0" + nextLineNumber;
+          nextLineNumber = '0' + nextLineNumber;
         } else {
           nextLineNumber = nextLineNumber.toString();
         }
         state.isLoading = true;
-        axios.put(`/api/orders/${state.order.orderNum}/${nextLineNumber}`)
+        axios
+          .put(`/api/orders/${state.order.orderNum}/${nextLineNumber}`)
           .then(r => r.data)
           .then(order => {
-            commit("SET_ORDER_DATA", order);
+            commit('SET_ORDER_DATA', order);
             state.isLoading = false;
             resolve(lineLength);
-          }).catch((err) => {
+          })
+          .catch(err => {
             reject(err);
           });
       });
     },
     cancelLine: ({ commit, dispatch }, lineIndex) => {
-      commit("CANCEL_LINE", lineIndex);
+      commit('CANCEL_LINE', lineIndex);
       dispatch('saveOrder');
       dispatch('updateAllLines');
     },
@@ -179,30 +180,32 @@ export const store = new Vuex.Store({
         const itemLength = state.order.orderLines[lineIndex].items.length;
         let nextItemNumber = parseInt(itemLength + 1);
         if (nextItemNumber < 10) {
-          nextItemNumber = "0" + nextItemNumber;
+          nextItemNumber = '0' + nextItemNumber;
         } else {
           nextItemNumber = nextItemNumber.toString();
         }
         state.isLoading = true;
-        axios.put(`/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
+        axios
+          .put(`/api/orders/${state.order.orderNum}/${lineIndex}/${nextItemNumber}`)
           .then(r => r.data)
           .then(order => {
-            commit("SET_ORDER_DATA", order);
+            commit('SET_ORDER_DATA', order);
             state.isLoading = false;
             resolve(itemLength);
-          }).catch((err) => {
-            reject(err);
           })
+          .catch(err => {
+            reject(err);
+          });
       });
     },
     cancelItem: ({ commit, dispatch }, { lineIndex, itemIndex }) => {
-      commit("CANCEL_ITEM", { lineIndex, itemIndex });
+      commit('CANCEL_ITEM', { lineIndex, itemIndex });
       dispatch('setAddOns', lineIndex);
       dispatch('saveOrder');
       dispatch('updateAllLines');
     },
     setHeaderTitle: ({ commit, dispatch }) => {
-      commit("SET_HEADER_TITLE");
+      commit('SET_HEADER_TITLE');
       dispatch('saveOrder');
     }
   },
@@ -243,51 +246,51 @@ export const store = new Vuex.Store({
     },
     SET_CURRENCY: (state, text) => {
       if (text === 'CA' || text === 'CAN' || text === 'CANADA') {
-        state.order.currency = "CAD"
+        state.order.currency = 'CAD';
       } else {
-        state.order.currency = "USD";
+        state.order.currency = 'USD';
       }
     },
     SET_COUNTRY_UPPER: (state, text) => {
       state.order.shipToCountry = text;
     },
-    RESET_STATE_PROV: (state) => {
+    RESET_STATE_PROV: state => {
       state.order.shipToProvState = null;
       state.order.taxes = null;
     },
     SET_ITEM_TOTAL_UNITS: (state, { lineIndex, itemIndex }) => {
       let { one, xxs, xs, s, m, l, xl, xxl, xxxl } = state.order.orderLines[lineIndex].items[itemIndex];
-      if (one == null || one == "") {
+      if (one == null || one == '') {
         one = 0;
       }
-      if (xxs == null || xxs == "") {
+      if (xxs == null || xxs == '') {
         xxs = 0;
       }
-      if (xs == null || xs == "") {
+      if (xs == null || xs == '') {
         xs = 0;
       }
-      if (s == null || s == "") {
+      if (s == null || s == '') {
         s = 0;
       }
-      if (m == null || m == "") {
+      if (m == null || m == '') {
         m = 0;
       }
-      if (l == null || l == "") {
+      if (l == null || l == '') {
         l = 0;
       }
-      if (xl == null || xl == "") {
+      if (xl == null || xl == '') {
         xl = 0;
       }
-      if (xxl == null || xxl == "") {
+      if (xxl == null || xxl == '') {
         xxl = 0;
       }
-      if (xxxl == null || xxxl == "") {
+      if (xxxl == null || xxxl == '') {
         xxxl = 0;
       }
       let totalsArray = [one, xxs, xs, s, m, l, xl, xxl, xxxl];
       state.order.orderLines[lineIndex].items[itemIndex].totalUnits = totalsArray.reduce((previous, current) => {
         return previous + current;
-      })
+      });
     },
     ADD_ONS: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];
@@ -295,11 +298,11 @@ export const store = new Vuex.Store({
       let addOns = 0;
 
       if (item.personalization) {
-        addOns += 10.00;
+        addOns += 10.0;
       }
 
       if (item.zap) {
-        addOns += 5.00
+        addOns += 5.0;
       }
 
       state.order.orderLines[lineIndex].items[itemIndex].addOns = addOns;
@@ -337,13 +340,7 @@ export const store = new Vuex.Store({
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       const { selectedStyle, selectedConfig } = item;
 
-      const {
-        autobahnCode,
-        jbaCode,
-        sizeRange,
-        styleCode,
-        extendedDescription
-      } = state.styles[selectedStyle].configurations[selectedConfig];
+      const { autobahnCode, jbaCode, sizeRange, styleCode, extendedDescription } = state.styles[selectedStyle].configurations[selectedConfig];
 
       item.autobahnCode = autobahnCode;
       item.jbaCode = jbaCode;
@@ -353,7 +350,7 @@ export const store = new Vuex.Store({
 
       item.addOns = 0;
 
-      if (item.extendedDescription.includes("ZAP")) {
+      if (item.extendedDescription.includes('ZAP')) {
         item.zap = true;
       } else {
         item.zap = false;
@@ -393,6 +390,7 @@ export const store = new Vuex.Store({
       let unitCost = state.order.orderLines[lineIndex].items[itemIndex].unitCost;
       const totalUnits = state.order.orderLines[lineIndex].items[itemIndex].totalUnits;
       const vendor = state.order.vendor;
+      const lgOrder = state.order.lgOrder;
 
       state.order.orderLines[lineIndex].items[itemIndex].usdTariff = currentConfig.usdTariff;
       state.order.orderLines[lineIndex].items[itemIndex].cadTariff = currentConfig.cadTariff;
@@ -400,10 +398,9 @@ export const store = new Vuex.Store({
       state.order.orderLines[lineIndex].items[itemIndex].gender = currentConfig.gender;
       state.order.orderLines[lineIndex].items[itemIndex].fabric = currentConfig.fabric;
 
-
-      if (vendor === "CCN") {
+      if (vendor === 'CCN') {
         unitCost = currentConfig.costUSD[0];
-      } else if (vendor === "PNR") {
+      } else if (vendor === 'PNR') {
         if (totalUnits >= 6 && totalUnits <= 11) {
           unitCost = currentConfig.costUSD[0];
         } else if (totalUnits >= 12 && totalUnits <= 23) {
@@ -417,47 +414,88 @@ export const store = new Vuex.Store({
         }
       }
 
-      if (currency === "CAD" && selectedConfig > -1) {
-        if (priceBreak === 1) {
-          unitPrice = currentConfig.cad1;
-        } else if (priceBreak === 6) {
-          unitPrice = currentConfig.cad6;
-        } else if (priceBreak === 12) {
-          unitPrice = currentConfig.cad12;
-        } else if (priceBreak === 24) {
-          unitPrice = currentConfig.cad24;
-        } else if (priceBreak === 50) {
-          unitPrice = currentConfig.cad50;
-        } else if (priceBreak === 100) {
-          unitPrice = currentConfig.cad100;
-        } else if (priceBreak === 200) {
-          unitPrice = currentConfig.cad200;
-        } else if (priceBreak === 500) {
-          unitPrice = currentConfig.cad500;
+      if (!lgOrder) {
+        if (currency === 'CAD' && selectedConfig > -1) {
+          if (priceBreak === 1) {
+            unitPrice = currentConfig.cad1;
+          } else if (priceBreak === 6) {
+            unitPrice = currentConfig.cad6;
+          } else if (priceBreak === 12) {
+            unitPrice = currentConfig.cad12;
+          } else if (priceBreak === 24) {
+            unitPrice = currentConfig.cad24;
+          } else if (priceBreak === 50) {
+            unitPrice = currentConfig.cad50;
+          } else if (priceBreak === 100) {
+            unitPrice = currentConfig.cad100;
+          } else if (priceBreak === 200) {
+            unitPrice = currentConfig.cad200;
+          } else if (priceBreak === 500) {
+            unitPrice = currentConfig.cad500;
+          }
+        } else if (currency === 'USD' && selectedConfig > -1) {
+          if (priceBreak === 1) {
+            unitPrice = currentConfig.usd1;
+          } else if (priceBreak === 6) {
+            unitPrice = currentConfig.usd6;
+          } else if (priceBreak === 12) {
+            unitPrice = currentConfig.usd12;
+          } else if (priceBreak === 24) {
+            unitPrice = currentConfig.usd24;
+          } else if (priceBreak === 50) {
+            unitPrice = currentConfig.usd50;
+          } else if (priceBreak === 100) {
+            unitPrice = currentConfig.usd100;
+          } else if (priceBreak === 200) {
+            unitPrice = currentConfig.usd200;
+          } else if (priceBreak === 500) {
+            unitPrice = currentConfig.usd500;
+          }
         }
-      } else if (currency === "USD" && selectedConfig > -1) {
-        if (priceBreak === 1) {
-          unitPrice = currentConfig.usd1;
-        } else if (priceBreak === 6) {
-          unitPrice = currentConfig.usd6;
-        } else if (priceBreak === 12) {
-          unitPrice = currentConfig.usd12;
-        } else if (priceBreak === 24) {
-          unitPrice = currentConfig.usd24;
-        } else if (priceBreak === 50) {
-          unitPrice = currentConfig.usd50;
-        } else if (priceBreak === 100) {
-          unitPrice = currentConfig.usd100;
-        } else if (priceBreak === 200) {
-          unitPrice = currentConfig.usd200;
-        } else if (priceBreak === 500) {
-          unitPrice = currentConfig.usd500;
+      } else {
+        if (currency === 'CAD' && selectedConfig > -1) {
+          if (priceBreak == '1') {
+            unitPrice = currentConfig.cad1;
+          } else if (priceBreak == '2') {
+            unitPrice = currentConfig.cad2;
+          } else if (priceBreak == '6') {
+            unitPrice = currentConfig.cad6;
+          } else if (priceBreak == '13') {
+            unitPrice = currentConfig.cad13;
+          } else if (priceBreak == '50') {
+            unitPrice = currentConfig.cad50;
+          } else if (priceBreak == '100') {
+            unitPrice = currentConfig.cad100;
+          } else if (priceBreak == '250') {
+            unitPrice = currentConfig.cad250;
+          } else if (priceBreak == '500') {
+            unitPrice = currentConfig.cad500;
+          }
+        } else if (currency === 'USD' && selectedConfig > -1) {
+          if (priceBreak == '1') {
+            unitPrice = currentConfig.usd1;
+          } else if (priceBreak == '2') {
+            unitPrice = currentConfig.usd2;
+          } else if (priceBreak == '6') {
+            unitPrice = currentConfig.usd6;
+          } else if (priceBreak == '13') {
+            unitPrice = currentConfig.usd13;
+          } else if (priceBreak == '50') {
+            unitPrice = currentConfig.usd50;
+          } else if (priceBreak == '100') {
+            unitPrice = currentConfig.usd100;
+          } else if (priceBreak == '250') {
+            unitPrice = currentConfig.usd250;
+          } else if (priceBreak == '500') {
+            unitPrice = currentConfig.usd500;
+          }
         }
       }
+
       state.order.orderLines[lineIndex].items[itemIndex].unitPrice = unitPrice;
       state.order.orderLines[lineIndex].items[itemIndex].unitCost = unitCost;
     },
-    SET_ORDER_TOTALS: (state) => {
+    SET_ORDER_TOTALS: state => {
       state.order.beforeTaxes = 0;
       state.order.qty = 0;
       const orderLines = state.order.orderLines;
@@ -467,8 +505,8 @@ export const store = new Vuex.Store({
           state.order.qty += orderLine.lineItemsQty;
         }
       }
-      state.order.beforeTaxes += (state.order.multiShips * 15);
-      state.order.beforeTaxes += (state.order.prePacks * 5);
+      state.order.beforeTaxes += state.order.multiShips * 15;
+      state.order.beforeTaxes += state.order.prePacks * 5;
 
       if (state.order.priorityShipping) {
         state.order.beforeTaxes += state.order.priorityShipping;
@@ -478,19 +516,20 @@ export const store = new Vuex.Store({
         state.order.beforeTaxes += state.order.revisionCharge;
       }
 
-      state.order.taxAmount = (state.order.beforeTaxes * (state.order.taxes / 100));
-      state.order.netValue = (state.order.beforeTaxes + state.order.taxAmount);
-      state.order.balanceOutstanding = state.order.netValue - state.order.onTermPayment - state.order.isrCollectedOrig - state.order.kitOrderPayment + state.order.isrRefunded;
+      state.order.taxAmount = state.order.beforeTaxes * (state.order.taxes / 100);
+      state.order.netValue = state.order.beforeTaxes + state.order.taxAmount;
+      state.order.balanceOutstanding =
+        state.order.netValue - state.order.onTermPayment - state.order.isrCollectedOrig - state.order.kitOrderPayment + state.order.isrRefunded;
       if (state.order.balanceOutstanding > 0) {
-        state.order.paymentStatus = "Balance Outstanding";
+        state.order.paymentStatus = 'Balance Outstanding';
       } else if (state.order.balanceOutstanding < 0) {
-        state.order.paymentStatus = "Refund Customer";
+        state.order.paymentStatus = 'Refund Customer';
       } else if (state.order.balanceOutstanding == 0) {
-        state.order.paymentStatus = "Complete";
+        state.order.paymentStatus = 'Complete';
       }
     },
     SET_ADD_ONS: (state, lineIndex) => {
-      let totalAddOns = 0
+      let totalAddOns = 0;
       const tracingCharge = state.order.orderLines[lineIndex].tracingCharge;
       const creativeCharge = state.order.orderLines[lineIndex].creativeCharge;
       const scaledArtCharge = state.order.orderLines[lineIndex].scaledArtCharge;
@@ -499,7 +538,7 @@ export const store = new Vuex.Store({
       const items = state.order.orderLines[lineIndex].items;
       for (let item of items) {
         if (item.cancelled === false) {
-          totalAddOns += (item.addOns * item.totalUnits);
+          totalAddOns += item.addOns * item.totalUnits;
         }
       }
 
@@ -525,13 +564,20 @@ export const store = new Vuex.Store({
 
       let qdDiscountAmount = 0;
       if (state.order.orderLines[lineIndex].graphicCode != 'CUSTM' && state.order.orderLines[lineIndex].graphicCode != null) {
-        if (state.order.orderLines[lineIndex].priceBreak === 6 || state.order.orderLines[lineIndex].priceBreak === 12 || state.order.orderLines[lineIndex].priceBreak === 24) {
-          qdDiscountAmount = item.unitPrice * .1;
+        if (
+          state.order.orderLines[lineIndex].priceBreak == 2 ||
+          state.order.orderLines[lineIndex].priceBreak == 6 ||
+          state.order.orderLines[lineIndex].priceBreak == 12 ||
+          state.order.orderLines[lineIndex].priceBreak == 13 ||
+          state.order.orderLines[lineIndex].priceBreak == 24
+        ) {
+          qdDiscountAmount = item.unitPrice * 0.1;
         }
       }
-      state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice = item.unitPrice - (item.unitPrice * (item.itemDiscount / 100)) - qdDiscountAmount;
+      state.order.orderLines[lineIndex].items[itemIndex].finalUnitPrice =
+        item.unitPrice - item.unitPrice * (item.itemDiscount / 100) - qdDiscountAmount;
 
-      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = (item.totalUnits * item.finalUnitPrice);
+      state.order.orderLines[lineIndex].items[itemIndex].itemTotalPrice = item.totalUnits * item.finalUnitPrice;
     },
     SET_LINE_TOTAL: (state, lineIndex) => {
       const orderLine = state.order.orderLines[lineIndex];
@@ -566,10 +612,10 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
-    getColourWays: (state) => (index) => {
+    getColourWays: state => index => {
       return state.graphicCodes[index].colourWays;
     },
-    totalBeforeAddOns: (state) => (lineIndex) => {
+    totalBeforeAddOns: state => lineIndex => {
       const orderLine = state.order.orderLines[lineIndex];
       let totalBeforeAddOns = 0;
       for (let item of orderLine.items) {
@@ -579,31 +625,32 @@ export const store = new Vuex.Store({
       }
       return totalBeforeAddOns;
     },
-    lineCancelled: (state) => (lineIndex) => {
+    lineCancelled: state => lineIndex => {
       const orderLine = state.order.orderLines[lineIndex];
       return orderLine.cancelled;
     },
-    itemCancelled: (state) => (lineIndex, itemIndex) => {
+    itemCancelled: state => (lineIndex, itemIndex) => {
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       return item.cancelled;
     },
-    isLoading: (state) => {
+    isLoading: state => {
       return state.isLoading;
     },
-    disableEdit: (state) => {
+    disableEdit: state => {
       const currentStatus = state.order.currentStatus;
-      if (currentStatus === "M. Waiting for Output" ||
-        currentStatus === "N. Output - Waiting on Someone else" ||
-        currentStatus === "O. Output Started" ||
-        currentStatus === "P. Output Ready for QC" ||
-        currentStatus === "P-1. Output QC in Progress" ||
-        currentStatus === "Q. Output QC Complete" ||
-        currentStatus === "R. Waiting for PNT" ||
-        currentStatus === "S. PNT Ready for QC" ||
-        currentStatus === "S-1. PNT QC in Progress" ||
-        currentStatus === "T. PNT QC Complete" ||
-        currentStatus === "U. Uploaded" ||
-        currentStatus === "V. Sent to Vendor"
+      if (
+        currentStatus === 'M. Waiting for Output' ||
+        currentStatus === 'N. Output - Waiting on Someone else' ||
+        currentStatus === 'O. Output Started' ||
+        currentStatus === 'P. Output Ready for QC' ||
+        currentStatus === 'P-1. Output QC in Progress' ||
+        currentStatus === 'Q. Output QC Complete' ||
+        currentStatus === 'R. Waiting for PNT' ||
+        currentStatus === 'S. PNT Ready for QC' ||
+        currentStatus === 'S-1. PNT QC in Progress' ||
+        currentStatus === 'T. PNT QC Complete' ||
+        currentStatus === 'U. Uploaded' ||
+        currentStatus === 'V. Sent to Vendor'
       ) {
         return true;
       } else {
@@ -612,4 +659,3 @@ export const store = new Vuex.Store({
     }
   }
 });
-
