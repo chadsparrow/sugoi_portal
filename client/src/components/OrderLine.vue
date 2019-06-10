@@ -7,7 +7,7 @@
         <span>Line: {{orderLine.lineNumber}}</span>
         <div
           class="badge badge-warning text-center ml-3"
-          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak == 2 || orderLine.priceBreak == 6 || orderLine.priceBreak == 12 || orderLine.priceBreak == 24 || orderLine.priceBreak == 13)"
+          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak == 2 || orderLine.priceBreak == 6 || orderLine.priceBreak == 12 || orderLine.priceBreak == 24)"
         >Quick Design - 10% OFF</div>
       </div>
       <div class="card-body m-0 p-1">

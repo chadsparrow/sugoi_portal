@@ -57,8 +57,8 @@
             >
               <option value="1">1</option>
               <option value="2">2-5</option>
-              <option value="6">6-12</option>
-              <option value="13">13-49</option>
+              <option value="6">6-11</option>
+              <option value="12">12-49</option>
               <option value="50">50-99</option>
               <option value="100">100-249</option>
               <option value="250">250-499</option>

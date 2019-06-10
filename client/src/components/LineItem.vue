@@ -196,7 +196,6 @@ export default {
           this.orderLine.priceBreak == 2 ||
           this.orderLine.priceBreak == 6 ||
           this.orderLine.priceBreak == 12 ||
-          this.orderLine.priceBreak == 13 ||
           this.orderLine.priceBreak == 24
         ) {
           qdDiscountAmount = this.unitPrice * 0.1;

@@ -460,8 +460,8 @@ export const store = new Vuex.Store({
             unitPrice = currentConfig.cad2;
           } else if (priceBreak == '6') {
             unitPrice = currentConfig.cad6;
-          } else if (priceBreak == '13') {
-            unitPrice = currentConfig.cad13;
+          } else if (priceBreak == '12') {
+            unitPrice = currentConfig.cad12;
           } else if (priceBreak == '50') {
             unitPrice = currentConfig.cad50;
           } else if (priceBreak == '100') {
@@ -478,8 +478,8 @@ export const store = new Vuex.Store({
             unitPrice = currentConfig.usd2;
           } else if (priceBreak == '6') {
             unitPrice = currentConfig.usd6;
-          } else if (priceBreak == '13') {
-            unitPrice = currentConfig.usd13;
+          } else if (priceBreak == '12') {
+            unitPrice = currentConfig.usd12;
           } else if (priceBreak == '50') {
             unitPrice = currentConfig.usd50;
           } else if (priceBreak == '100') {
@@ -568,7 +568,6 @@ export const store = new Vuex.Store({
           state.order.orderLines[lineIndex].priceBreak == 2 ||
           state.order.orderLines[lineIndex].priceBreak == 6 ||
           state.order.orderLines[lineIndex].priceBreak == 12 ||
-          state.order.orderLines[lineIndex].priceBreak == 13 ||
           state.order.orderLines[lineIndex].priceBreak == 24
         ) {
           qdDiscountAmount = item.unitPrice * 0.1;

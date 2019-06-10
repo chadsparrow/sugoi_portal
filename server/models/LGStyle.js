@@ -48,7 +48,7 @@ const StyleSchema = new Schema({
       usd6: {
         type: Float
       },
-      usd13: {
+      usd12: {
         type: Float
       },
       usd50: {
@@ -72,7 +72,7 @@ const StyleSchema = new Schema({
       cad6: {
         type: Float
       },
-      cad13: {
+      cad12: {
         type: Float
       },
       cad50: {
