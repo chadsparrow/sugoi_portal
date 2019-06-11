@@ -368,27 +368,27 @@ router.post('/add', [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
 // @DESC - GETS ORDER FROM ORDERS COLLECTION BASED ON ID#
 // SEC - PUBLIC ACCESS
-router.get('/view/:id', ensureAuthenticated, (req, res) => {
-  Order.findOne({
-    _id: req.params.id
-  }).then(order => {
-    Proof.find({ orderNum: order.orderNum })
-      .then(proofs => {
-        res.render('orders/view', {
-          order,
-          proofs
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
+router.get('/view/:id', ensureAuthenticated, async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id });
+    const proofs = await Proof.find({ orderNum: order.orderNum });
+    let customReps = [];
+    if (order.lgOrder) {
+      customReps = await CustomRep.find({ office: 'LG' }).sort('text');
+    } else {
+      customReps = await CustomRep.find({ office: 'SUGOI' }).sort('text');
+    }
+    res.render('orders/view', { order, proofs, customReps });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ORDER EDIT PAGE FOR ORDER BASED ON ID#
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
-router.get('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  Order.findOne({ _id: req.params.id }).then(order => {
+router.get('/edit/:id', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id });
     let instructions = order.instructions;
     let artDirection = '';
     if (order.currentStatus === 'A. Waiting for Proof') {
@@ -399,14 +399,11 @@ router.get('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
         }
       }
     }
-    CustomArtist.find().then(customArtists => {
-      res.render('orders/edit', {
-        order,
-        customArtists,
-        artDirection
-      });
-    });
-  });
+    const customArtists = await CustomArtist.find();
+    res.render('orders/edit', { order, customArtists, artDirection });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - UPDATES ORDER IN ORDER COLLECTION BASED ON ID# - USES CURRENTSTATUS TO DETERMINE WHAT TO DO

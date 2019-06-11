@@ -104,15 +104,13 @@
     <div class="modal-content">
       <div class="row">
         <div class="input-field col s4">
-          {{#select order.isr}}
           <select name="isr">
-            <option value="DOSULLIVAN">Dean</option>
-            <option value="RPILLER">Reed</option>
-            <option value="SROBINSON">Sheila</option>
-            <option value="MBELLEAU">MJ</option>
-            <option value="TKAINTH">TJ</option>
+            {{#select order.isr}}
+            {{#each customReps}}
+            <option value="{{value}}">{{text}}</option>
+            {{/each}}
+            {{/select}}
           </select>
-          {{/select}}
           <label for="isr">Revision Requested By:</label>
         </div>
       </div>
