@@ -164,7 +164,7 @@ export default {
           this.$router.push({ path: `/edititem/${this.index}/${itemLength}` });
         })
         .catch(err => {
-          console.log(err);
+          //
         });
     }
   }
