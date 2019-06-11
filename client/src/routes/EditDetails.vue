@@ -49,17 +49,6 @@
           ></DatePicker>
         </div>
         <div class="form-group mb-1">
-          <label for="estShipDate" class="small my-0">Est. Ship Date</label>
-          <DatePicker
-            v-model="order.estDeliveryDate"
-            :bootstrapStyling="true"
-            :clearButton="true"
-            input-class="form-control form-control-sm"
-            id="estShipDate"
-          ></DatePicker>
-        </div>
-
-        <div class="form-group mb-1">
           <label for="customerPO">Customer PO:</label>
           <input
             type="text"
