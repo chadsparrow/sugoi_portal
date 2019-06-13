@@ -63,7 +63,7 @@ router.put('/edit/:id', [ensureAuthenticated, ensureAdmin], async (req, res) => 
     foundEmployee.lgUser = lgUser;
 
     const updatedEmployee = await foundEmployee.save();
-    logger.info(`${updatedEmployee} - updated by ${req.user.username}`);
+    logger.info(`${updatedEmployee.username} - updated by ${req.user.username}`);
     req.flash('success_msg', 'Employee Updated');
     res.redirect('/admin/users');
   } catch (err) {
