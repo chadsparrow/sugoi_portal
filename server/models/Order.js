@@ -443,6 +443,10 @@ const OrderSchema = new Schema({
         type: Number,
         default: null
       },
+      useLGPricing: {
+        type: Boolean,
+        default: false
+      },
       items: [
         {
           itemNumber: {

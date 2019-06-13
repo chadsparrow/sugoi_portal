@@ -9,7 +9,7 @@
     </div>
     <div class="card-body p-3">
       <div class="row align-items-center mb-2">
-        <div class="col-sm-3">
+        <div class="col-sm-3" v-if="orderLine.useLGPricing != true">
           <label for="selectedStyle" class="small my-0">Style:</label>
           <select
             class="form-control form-control-sm"
@@ -26,7 +26,41 @@
             >{{style.style}}-{{style.description}}</option>
           </select>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3" v-if="orderLine.useLGPricing == true">
+          <label for="selectedStyle" class="small my-0">Style:</label>
+          <select
+            class="form-control form-control-sm"
+            id="selectedStyle"
+            v-model="item.selectedStyle"
+            @change="selectStyle"
+            ref="styleInput"
+          >
+            <option
+              v-for="(style, index) in lgstyles"
+              :key="index"
+              :index="index"
+              :value="index"
+            >{{style.style}}-{{style.description}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4" v-if="orderLine.useLGPricing != true">
+          <label for="selectedConfig" class="small my-0">Config:</label>
+          <select
+            class="form-control form-control-sm"
+            id="selectedConfig"
+            v-model="item.selectedConfig"
+            @change="selectConfig"
+            ref="configInput"
+          >
+            <option
+              v-for="(config, index) in item.configs"
+              :key="index"
+              :index="index"
+              :value="index"
+            >{{config.extendedDescription}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4" v-if="orderLine.useLGPricing == true">
           <label for="selectedConfig" class="small my-0">Config:</label>
           <select
             class="form-control form-control-sm"
@@ -382,6 +416,9 @@ export default {
     },
     styles() {
       return this.$store.state.styles;
+    },
+    lgstyles() {
+      return this.$store.state.lgstyles;
     },
     swatches() {
       return this.$store.state.swatches;

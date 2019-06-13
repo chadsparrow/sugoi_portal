@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     provs: [],
     states: [],
     styles: [],
+    lgstyles: [],
     graphicCodes: [],
     swatches: [],
     isLoading: false
@@ -66,6 +67,14 @@ export const store = new Vuex.Store({
         .then(r => r.data)
         .then(styles => {
           commit('SET_STYLES', styles);
+        });
+    },
+    getLGStyles: ({ commit }) => {
+      axios
+        .get(`/api/styles/lg`)
+        .then(r => r.data)
+        .then(lgstyles => {
+          commit('SET_LG_STYLES', lgstyles);
         });
     },
     getGraphicCodes: ({ commit }) => {
@@ -228,6 +237,9 @@ export const store = new Vuex.Store({
     SET_STYLES: (state, styles) => {
       state.styles = styles;
     },
+    SET_LG_STYLES: (state, lgstyles) => {
+      state.lgstyles = lgstyles;
+    },
     SET_GRAPHIC_CODES: (state, graphicCodes) => {
       state.graphicCodes = graphicCodes;
     },
@@ -310,9 +322,17 @@ export const store = new Vuex.Store({
     SET_SELECTED_STYLE: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];
       let { selectedStyle } = item;
-      item.configs = state.styles[selectedStyle].configurations;
-      item.zipperOptions = state.styles[selectedStyle].zipperOptions;
-      item.contrastOptions = state.styles[selectedStyle].contrastOptions;
+
+      if (state.order.orderLines[lineIndex].useLGPricing) {
+        item.configs = state.lgstyles[selectedStyle].configurations;
+        item.zipperOptions = state.lgstyles[selectedStyle].zipperOptions;
+        item.contrastOptions = state.lgstyles[selectedStyle].contrastOptions;
+      } else {
+        item.configs = state.styles[selectedStyle].configurations;
+        item.zipperOptions = state.styles[selectedStyle].zipperOptions;
+        item.contrastOptions = state.styles[selectedStyle].contrastOptions;
+      }
+
       item.selectedConfig = -1;
       item.zipper = null;
       item.contrast = null;
@@ -340,7 +360,25 @@ export const store = new Vuex.Store({
       const item = state.order.orderLines[lineIndex].items[itemIndex];
       const { selectedStyle, selectedConfig } = item;
 
-      const { autobahnCode, jbaCode, sizeRange, styleCode, extendedDescription } = state.styles[selectedStyle].configurations[selectedConfig];
+      let autobahnCode;
+      let jbaCode;
+      let sizeRange;
+      let styleCode;
+      let extendedDescription;
+
+      if (state.order.orderLines[lineIndex].useLGPricing) {
+        autobahnCode = state.lgstyles[selectedStyle].configurations[selectedConfig].autobahnCode;
+        jbaCode = state.lgstyles[selectedStyle].configurations[selectedConfig].jbaCode;
+        sizeRange = state.lgstyles[selectedStyle].configurations[selectedConfig].sizeRange;
+        styleCode = state.lgstyles[selectedStyle].configurations[selectedConfig].styleCode;
+        extendedDescription = state.lgstyles[selectedStyle].configurations[selectedConfig].extendedDescription;
+      } else {
+        autobahnCode = state.styles[selectedStyle].configurations[selectedConfig].autobahnCode;
+        jbaCode = state.styles[selectedStyle].configurations[selectedConfig].jbaCode;
+        sizeRange = state.styles[selectedStyle].configurations[selectedConfig].sizeRange;
+        styleCode = state.styles[selectedStyle].configurations[selectedConfig].styleCode;
+        extendedDescription = state.styles[selectedStyle].configurations[selectedConfig].extendedDescription;
+      }
 
       item.autobahnCode = autobahnCode;
       item.jbaCode = jbaCode;
@@ -385,7 +423,14 @@ export const store = new Vuex.Store({
       const { selectedStyle, selectedConfig } = item;
       const currency = state.order.currency;
       const priceBreak = state.order.orderLines[lineIndex].priceBreak;
-      const currentConfig = state.styles[selectedStyle].configurations[selectedConfig];
+      let currentConfig;
+
+      if (state.order.orderLines[lineIndex].useLGPricing) {
+        currentConfig = state.lgstyles[selectedStyle].configurations[selectedConfig];
+      } else {
+        currentConfig = state.styles[selectedStyle].configurations[selectedConfig];
+      }
+
       let unitPrice = state.order.orderLines[lineIndex].items[itemIndex].unitPrice;
       let unitCost = state.order.orderLines[lineIndex].items[itemIndex].unitCost;
       const totalUnits = state.order.orderLines[lineIndex].items[itemIndex].totalUnits;
@@ -414,7 +459,7 @@ export const store = new Vuex.Store({
         }
       }
 
-      if (!lgOrder) {
+      if (!lgOrder && !state.order.orderLines[lineIndex].useLGPricing) {
         if (currency === 'CAD' && selectedConfig > -1) {
           if (priceBreak === 1) {
             unitPrice = currentConfig.cad1;
@@ -452,7 +497,7 @@ export const store = new Vuex.Store({
             unitPrice = currentConfig.usd500;
           }
         }
-      } else {
+      } else if (lgOrder || state.order.orderLines[lineIndex].useLGPricing) {
         if (currency === 'CAD' && selectedConfig > -1) {
           if (priceBreak == '1') {
             unitPrice = currentConfig.cad1;

@@ -11,6 +11,8 @@
         >Quick Design - 10% OFF</div>
       </div>
       <div class="card-body m-0 p-1">
+        <span class="d-print-none" v-if="!order.lgOrder && !orderLine.useLGPricing">SUGOI</span>
+        <span class="d-print-none" v-if="!order.lgOrder && orderLine.useLGPricing">SOMBRIO</span>
         <div class="row m-0 mb-3">
           <div class="col">
             Job Type:

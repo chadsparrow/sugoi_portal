@@ -21,7 +21,7 @@
               <option>MSR</option>
             </select>
           </div>
-          <div class="form-group mb-1">
+          <div class="form-group mb-2">
             <label for="swoReference" class="small my-0">SO# Reference:</label>
             <input
               type="text"
@@ -31,7 +31,12 @@
               ref="swoReference"
             >
           </div>
-          <div class="form-group mb-1" v-if="order.lgOrder != true">
+          <div v-if="order.lgOrder != true">
+            <span class="mr-2">SG</span>
+            <switches v-model="orderLine.useLGPricing"></switches>
+            <span class="ml-2">LG</span>
+          </div>
+          <div class="form-group mb-1" v-if="order.lgOrder != true && !orderLine.useLGPricing">
             <label for="priceBreak" class="small my-0">Price Break:</label>
             <select
               class="form-control form-control-sm"
@@ -48,7 +53,7 @@
               <option>500</option>
             </select>
           </div>
-          <div class="form-group mb-1" v-if="order.lgOrder == true">
+          <div class="form-group mb-1" v-if="order.lgOrder == true || orderLine.useLGPricing">
             <label for="priceBreak" class="small my-0">Price Break:</label>
             <select
               class="form-control form-control-sm"
@@ -161,8 +166,12 @@
 </template>
 
 <script>
+import Switches from "vue-switches";
 export default {
   name: "EditLine",
+  components: {
+    Switches
+  },
   data() {
     return {
       lineIndex: this.$route.params.lineIndex,
@@ -185,9 +194,6 @@ export default {
     },
     orderLine() {
       return this.$store.state.order.orderLines[this.lineIndex];
-    },
-    styles() {
-      return this.$store.state.styles;
     },
     graphicCodes() {
       return this.$store.state.graphicCodes;

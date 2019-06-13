@@ -12,13 +12,21 @@ const LGStyle = require('../../models/LGStyle');
 // SEC - MUST BE LOGGED IN.
 router.get('/', ensureAuthenticated, async (req, res) => {
   try {
-    let styles = [];
     if (req.user.lgUser) {
       styles = await LGStyle.find();
     } else {
       styles = await Style.find();
     }
     res.json(styles);
+  } catch (err) {
+    logger.error(err);
+  }
+});
+
+router.get('/lg', ensureAuthenticated, async (req, res) => {
+  try {
+    const lgStyles = await LGStyle.find();
+    res.json(lgStyles);
   } catch (err) {
     logger.error(err);
   }
