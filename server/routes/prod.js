@@ -98,112 +98,104 @@ router.get('/cancelled', [ensureAuthenticated, ensureViewProd], async (req, res)
 
 // @DESC - GETS ORDER BY ID# AND DISPLAYS IN MODAL WITH EDITABLE FIELDS
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
-router.get('/edit/:id', [ensureAuthenticated, ensureEditProd], (req, res) => {
-  let id = req.params.id;
-  Order.findOne({ _id: id }).then(order => {
-    res.render('orders/prod-edit', {
-      order
-    });
-  });
+router.get('/edit/:id', [ensureAuthenticated, ensureEditProd], async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id });
+    res.render('orders/prod-edit', { order });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - UPDATES ORDER BY ID# BASED ON CHANGES TO EDIT FORM
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
-router.put('/edit/:id', [ensureAuthenticated, ensureEditProd], (req, res) => {
-  const id = req.params.id;
-  const {
-    latestShipDate,
-    vendorConfirmShip,
-    jbaPONum,
-    jbaGNRNum,
-    jbaInvoiceNum,
-    shipStatus,
-    tracking,
-    shippingNotes,
-    netValue,
-    currency,
-    qty
-  } = req.body;
+router.put('/edit/:id', [ensureAuthenticated, ensureEditProd], async (req, res) => {
+  try {
+    const {
+      latestShipDate,
+      vendorConfirmShip,
+      jbaPONum,
+      jbaGNRNum,
+      jbaInvoiceNum,
+      shipStatus,
+      tracking,
+      shippingNotes,
+      netValue,
+      currency,
+      qty
+    } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
-    if (err) {
-      logger.error(err);
+    let foundOrder = await Order.findOne({ _id: req.params.id });
+
+    if (foundOrder.balanceOutstanding > 0) {
+      foundOrder.paymentStatus = 'Balance Outstanding';
+    } else if (foundOrder.balanceOutstanding < 0) {
+      foundOrder.paymentStatus = 'Refund Customer';
+    } else if (foundOrder.balanceOutstanding == 0) {
+      foundOrder.paymentStatus = 'Complete';
+    }
+    if (latestShipDate) {
+      foundOrder.latestShipDate = latestShipDate;
+    }
+
+    const sentVendor = foundOrder.sentVendor;
+    if (vendorConfirmShip && sentVendor) {
+      foundOrder.vendorConfirmShip = vendorConfirmShip;
+      let date1 = dayjs(vendorConfirmShip);
+      let date2 = dayjs(sentVendor);
+      let diff = new DateDiff(date1, date2);
+      const prodLeadTime = diff.days();
+      foundOrder.prodLeadTime = parseInt(prodLeadTime);
+    } else if (vendorConfirmShip && !sentVendor) {
+      req.flash('error', 'No Sent to Vendor Date');
+      res.redirect('/prod/edit/' + foundOrder._id);
+      foundOrder.prodLeadTime = 0;
       return;
     } else {
-      if (foundOrder.balanceOutstanding > 0) {
-        foundOrder.paymentStatus = 'Balance Outstanding';
-      } else if (foundOrder.balanceOutstanding < 0) {
-        foundOrder.paymentStatus = 'Refund Customer';
-      } else if (foundOrder.balanceOutstanding == 0) {
-        foundOrder.paymentStatus = 'Complete';
-      }
-      if (latestShipDate) {
-        foundOrder.latestShipDate = latestShipDate;
-      }
-
-      const sentVendor = foundOrder.sentVendor;
-      if (vendorConfirmShip && sentVendor) {
-        foundOrder.vendorConfirmShip = vendorConfirmShip;
-        let date1 = dayjs(vendorConfirmShip);
-        let date2 = dayjs(sentVendor);
-        let diff = new DateDiff(date1, date2);
-        const prodLeadTime = diff.days();
-        foundOrder.prodLeadTime = parseInt(prodLeadTime);
-      } else if (vendorConfirmShip && !sentVendor) {
-        req.flash('error', 'No Sent to Vendor Date');
-        res.redirect('/prod/edit/' + foundOrder._id);
-        foundOrder.prodLeadTime = 0;
-        return;
-      } else {
-        foundOrder.prodLeadTime = 0;
-      }
-
-      if (tracking != foundOrder.tracking) {
-        foundOrder.tracking = tracking;
-      }
-
-      if (foundOrder.confirmDeliveryDate && vendorConfirmShip) {
-        let date1 = dayjs(foundOrder.confirmDeliveryDate);
-        let date2 = dayjs(vendorConfirmShip);
-        let diff = new DateDiff(date1, date2);
-        const shippingLeadTime = diff.days();
-        foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
-      } else {
-        foundOrder.shippingLeadTime = 0;
-      }
-
-      foundOrder.jbaPONum = jbaPONum;
-      foundOrder.jbaGNRNum = jbaGNRNum;
-      foundOrder.jbaInvoiceNum = jbaInvoiceNum;
-      if ((foundOrder.jbaInvoiceNum != '' || foundOrder.jbaInvoiceNum != null) && foundOrder.jbaInvoiceDate === null) {
-        foundOrder.jbaInvoiceDate = dayjs()
-          .set('hour', 7)
-          .format();
-      }
-      foundOrder.shipStatus = shipStatus;
-      foundOrder.shippingNotes = shippingNotes;
-      foundOrder.netValue = netValue;
-      foundOrder.qty = qty;
-      foundOrder.currency = currency;
-
-      if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
-        foundOrder.totalLeadTime = foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
-      } else {
-        foundOrder.totalLeadTime = 0;
-      }
-
-      foundOrder.save(function(err, updatedOrder) {
-        if (err) {
-          logger.error(err);
-          return;
-        } else {
-          logger.info(`${updatedOrder.orderNum} - update by ${req.user.username}`);
-          req.flash('success_msg', 'Order Production Updated');
-          res.redirect('/prod');
-        }
-      });
+      foundOrder.prodLeadTime = 0;
     }
-  });
+
+    if (tracking != foundOrder.tracking) {
+      foundOrder.tracking = tracking;
+    }
+
+    if (foundOrder.confirmDeliveryDate && vendorConfirmShip) {
+      let date1 = dayjs(foundOrder.confirmDeliveryDate);
+      let date2 = dayjs(vendorConfirmShip);
+      let diff = new DateDiff(date1, date2);
+      const shippingLeadTime = diff.days();
+      foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+    } else {
+      foundOrder.shippingLeadTime = 0;
+    }
+
+    foundOrder.jbaPONum = jbaPONum;
+    foundOrder.jbaGNRNum = jbaGNRNum;
+    foundOrder.jbaInvoiceNum = jbaInvoiceNum;
+    if ((foundOrder.jbaInvoiceNum != '' || foundOrder.jbaInvoiceNum != null) && foundOrder.jbaInvoiceDate === null) {
+      foundOrder.jbaInvoiceDate = dayjs()
+        .set('hour', 7)
+        .format();
+    }
+    foundOrder.shipStatus = shipStatus;
+    foundOrder.shippingNotes = shippingNotes;
+    foundOrder.netValue = netValue;
+    foundOrder.qty = qty;
+    foundOrder.currency = currency;
+
+    if (foundOrder.prodLeadTime !== 0 && foundOrder.shippingLeadTime !== 0) {
+      foundOrder.totalLeadTime = foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+    } else {
+      foundOrder.totalLeadTime = 0;
+    }
+
+    const updatedOrder = await foundOrder.save();
+    logger.info(`${updatedOrder.orderNum} - update by ${req.user.username}`);
+    req.flash('success_msg', 'Order Production Updated');
+    res.redirect('/prod');
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 module.exports = router;

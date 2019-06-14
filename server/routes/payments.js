@@ -127,76 +127,67 @@ router.get('/logs/:id', [ensureAuthenticated, ensureEditOrders], async (req, res
   }
 });
 
-router.put('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  const id = req.params.id;
-  let {
-    approvedTerms,
-    onTermPayment,
-    kitOrderPayment,
-    isrCollectedOrig,
-    isrPaymentDate,
-    isrPaymentType,
-    paymentNotes,
-    isrRefunded,
-    isrRefundedDate,
-    invoiceSent
-  } = req.body;
+router.put('/edit/:id', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
+  try {
+    let {
+      approvedTerms,
+      onTermPayment,
+      kitOrderPayment,
+      isrCollectedOrig,
+      isrPaymentDate,
+      isrPaymentType,
+      paymentNotes,
+      isrRefunded,
+      isrRefundedDate,
+      invoiceSent
+    } = req.body;
 
-  Order.findOne({ _id: id }, function(err, foundOrder) {
-    if (err) {
-      logger.error(err);
-      return;
-    } else {
-      foundOrder.approvedTerms = approvedTerms;
-      foundOrder.onTermPayment = onTermPayment;
-      foundOrder.kitOrderPayment = kitOrderPayment;
-      foundOrder.isrCollectedOrig = isrCollectedOrig;
-      foundOrder.isrPaymentDate = isrPaymentDate;
-      foundOrder.isrPaymentType = isrPaymentType;
+    let foundOrder = await Order.findOne({ _id: req.params.id });
+    foundOrder.approvedTerms = approvedTerms;
+    foundOrder.onTermPayment = onTermPayment;
+    foundOrder.kitOrderPayment = kitOrderPayment;
+    foundOrder.isrCollectedOrig = isrCollectedOrig;
+    foundOrder.isrPaymentDate = isrPaymentDate;
+    foundOrder.isrPaymentType = isrPaymentType;
 
-      if (paymentNotes != foundOrder.paymentNotes) {
-        if (!foundOrder.paymentNotesLog) {
-          foundOrder.paymentNotesLog = [];
-        }
-        let currentDate = dayjs().format();
-        foundOrder.paymentNotesLog.push({ note: foundOrder.paymentNotes, date: foundOrder.paymentNotesDate });
-        foundOrder.paymentNotes = paymentNotes;
-        foundOrder.paymentNotesDate = currentDate;
+    if (paymentNotes != foundOrder.paymentNotes) {
+      if (!foundOrder.paymentNotesLog) {
+        foundOrder.paymentNotesLog = [];
       }
-
-      foundOrder.isrRefunded = isrRefunded;
-      foundOrder.isrRefundedDate = isrRefundedDate;
-      foundOrder.invoiceSent = invoiceSent;
-      if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
-        let balanceOutstanding =
-          foundOrder.netValue -
-          foundOrder.onTermPayment -
-          foundOrder.deposit -
-          foundOrder.kitOrderPayment -
-          foundOrder.isrCollectedOrig +
-          foundOrder.isrRefunded;
-        foundOrder.balanceOutstanding = balanceOutstanding;
-        if (foundOrder.balanceOutstanding > 0) {
-          foundOrder.paymentStatus = 'Balance Outstanding';
-        } else if (foundOrder.balanceOutstanding == 0) {
-          foundOrder.paymentStatus = 'Complete';
-        } else if (foundOrder.balanceOutstanding < 0) {
-          foundOrder.paymentStatus = 'Refund Customer';
-        }
-      }
-
-      foundOrder.save(function(err, updatedOrder) {
-        if (err) {
-          logger.error(err);
-          return;
-        } else {
-          logger.info(`${updatedOrder.orderNum} - Payment updated by ${req.user.username}`);
-          req.flash('success_msg', 'Payment Updated');
-          res.redirect('/payments/outstanding');
-        }
-      });
+      let currentDate = dayjs().format();
+      foundOrder.paymentNotesLog.push({ note: foundOrder.paymentNotes, date: foundOrder.paymentNotesDate });
+      foundOrder.paymentNotes = paymentNotes;
+      foundOrder.paymentNotesDate = currentDate;
     }
-  });
+
+    foundOrder.isrRefunded = isrRefunded;
+    foundOrder.isrRefundedDate = isrRefundedDate;
+    foundOrder.invoiceSent = invoiceSent;
+    if (foundOrder.netValue != null || foundOrder.netValue != undefined) {
+      let balanceOutstanding =
+        foundOrder.netValue -
+        foundOrder.onTermPayment -
+        foundOrder.deposit -
+        foundOrder.kitOrderPayment -
+        foundOrder.isrCollectedOrig +
+        foundOrder.isrRefunded;
+      foundOrder.balanceOutstanding = balanceOutstanding;
+      if (foundOrder.balanceOutstanding > 0) {
+        foundOrder.paymentStatus = 'Balance Outstanding';
+      } else if (foundOrder.balanceOutstanding == 0) {
+        foundOrder.paymentStatus = 'Complete';
+      } else if (foundOrder.balanceOutstanding < 0) {
+        foundOrder.paymentStatus = 'Refund Customer';
+      }
+    }
+
+    const updatedOrder = await foundOrder.save();
+    logger.info(`${updatedOrder.orderNum} - Payment updated by ${req.user.username}`);
+    req.flash('success_msg', 'Payment Updated');
+    res.redirect('/payments/outstanding');
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 module.exports = router;
