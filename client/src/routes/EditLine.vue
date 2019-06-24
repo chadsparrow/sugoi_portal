@@ -17,7 +17,7 @@
               <option value="NEW" selected>New Order</option>
               <option value="NWR">New Order w/Reference</option>
               <option value="REC">Re-Order with Change</option>
-              <option value="REO">Straigh Re-Order</option>
+              <option value="REO">Re-Order - No Change</option>
               <option value="MSR">Mis-Ship Replacement</option>
             </select>
           </div>
