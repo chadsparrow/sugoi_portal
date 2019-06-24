@@ -14,11 +14,11 @@
               v-model="orderLine.lineJobType"
               ref="lineJobType"
             >
-              <option selected>NEW</option>
-              <option>NWR</option>
-              <option>REC</option>
-              <option>REO</option>
-              <option>MSR</option>
+              <option value="NEW" selected>New Order</option>
+              <option value="NWR">New Order w/Reference</option>
+              <option value="REC">Re-Order with Change</option>
+              <option value="REO">Straigh Re-Order</option>
+              <option value="MSR">Mis-Ship Replacement</option>
             </select>
           </div>
           <div class="form-group mb-2">
