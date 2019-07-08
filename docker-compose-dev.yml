@@ -1,9 +1,5 @@
 version: '3'
 
-# Setup Node.js container / MondoDB containers
-
-## Need to add Subnet info - confirm with Jordin
-
 services:
   server:
     build: ./server
@@ -21,7 +17,7 @@ services:
     links:
       - mongo
     env_file:
-      - dev.env
+      - .env
   mongo:
     container_name: mongo
     restart: always
@@ -31,10 +27,9 @@ services:
     volumes:
       - mongodbdata:/data/db
     env_file:
-      - dev.env
+      - .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-    command: mongod --auth
 volumes:
   mongodbdata:
