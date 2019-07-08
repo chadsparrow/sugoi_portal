@@ -18,14 +18,6 @@ const appendTimestamp = winston.format((info, opts) => {
   }
 });
 
-// const transport = new winston.transports.DailyRotateFile({
-//   filename: "./logs/logfile.log"
-// });
-
-// transport.on("rotate", function(oldFilename, newFileName) {
-//   //do something
-// });
-
 winston.remove(winston.transports.Console);
 
 const logger = winston.createLogger({
