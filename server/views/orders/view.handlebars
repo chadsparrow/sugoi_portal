@@ -1,62 +1,66 @@
 <div class="container">
   <div class="row">
-    <div class="col s12 center-align" style="padding: 15px;">
-      <div style="margin-bottom: 5px; margin-top: 0px;">
-        <span style="font-weight:200; font-size:2rem;">{{#if order.lgOrder}}LG {{/if}}Order Details:
-          {{order.orderNum}}</span>
+    <div class="col s3" style="padding: 20px;">
+      <div class="row">
+        <div class="col s12">
+          <div style="margin-bottom: 10px; margin-top: 0px;">
+            <span style="font-weight:600;">{{#if order.lgOrder}}LG {{/if}}Order Details:</span>
+            <br>
+            <span style="font-weight:600; font-size: 1.5rem;">{{order.orderNum}}</span>
+          </div>
+        </div>
+        <div class="col s12" style="margin-bottom: 20px;">
+          <span style="font-weight:300; font-size:1rem;">Current Status:</span>
+          <br>
+          <span style="font-weight:600; font-size:1.25rem;">{{stripStatusCode order.currentStatus}}</span>
+        </div>
+        <div class="col s12" style="margin-bottom: 20px;">
+          <span class="grey-text">Entered: </span>{{formatDate order.enteredDate "D-MMM-YY"}}
+        </div>
+        {{#if order.eventDate}}
+        <div class="col s12" style="margin-bottom: 20px;">
+          <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "D-MMM-YY"}}
+        </div>
+        {{/if}}
+        {{#if order.latestInHand}}
+        <div class="col s12" style="margin-bottom: 20px;">
+          <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "D-MMM-YY"}}
+        </div>
+        {{/if}}
+        {{#if order.currentArtist}}
+        <div class="col s12" style="margin-bottom: 20px;">
+          <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
+        </div>
+        {{/if}}
       </div>
     </div>
-    <div class="col s12 center-align">
-      <span style="font-weight:300; font-size:1.25em; margin-right: 5px;">Current Status:</span>
-      <br>
-      <span style="font-weight:600; font-size:1.5rem;">{{stripStatusCode order.currentStatus}}</span>
-    </div>
-    <div class="row">
-      <div class="col s12 center-align" style="padding: 6px 0;">
-        <span class="grey-text">Entered: </span>{{formatDate order.enteredDate "D-MMM-YY"}}
-      </div>
-      {{#if order.eventDate}}
-      <div class="col s6 center-align" style="padding: 6px 0;">
-        <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "D-MMM-YY"}}
-      </div>
-      {{/if}}
-      {{#if order.latestInHand}}
-      <div class="col s6 center-align" style="padding: 6px 0;">
-        <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "D-MMM-YY"}}
-      </div>
-      {{/if}}
-      {{#if order.currentArtist}}
-      <div class="col s6 center-align" style="padding: 6px 0;">
-        <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
-      </div>
-      {{/if}}
-    </div>
-    {{#if order.instructions}}
-    <hr>
-    <div class="row center-align">
-      <div class="col s12">
-        <h5 style="font-weight: 600; margin-bottom: 20px;">Order Notes</h5>
-        <div class="instructionsBox">
-          <ul class="collapsible">
-            {{#each (getInstructions order.instructions)}}
-            <li class="{{#unless @index}}active{{/unless}}">
-              <div class="collapsible-header {{catNotes this.instructionType}} valign-wrapper"
-                style="display: block; height: 35px;">
-                <span class='left'><i class="material-icons">expand_more</i></span>
-                <span>{{formatDate this.date "D-MMM-YY"}} -
-                  {{this.user}} - {{this.instructionType}}</span>
-                <span class='right'><a class="white-text" href="/orders/note-edit/{{this._id}}">
-                    <i class="material-icons">edit</i>
-                  </a></span>
-              </div>
-              <div class="collapsible-body white">{{this.instruction}}</div>
-            </li>
-            {{/each}}
-          </ul>
+    <div class="col s9">
+      {{#if order.instructions}}
+      <div class="row center-align">
+        <div class="col s12">
+          <h6 style="font-weight: 600; margin-bottom: 20px;">Order Notes</h6>
+          <div class="instructionsBox">
+            <ul class="collapsible">
+              {{#each (getInstructions order.instructions)}}
+              <li class="{{#unless @index}}active{{/unless}}">
+                <div class="collapsible-header {{catNotes this.instructionType}} valign-wrapper"
+                  style="display: block; height: 35px;">
+                  <span class='left'><i class="material-icons">expand_more</i></span>
+                  <span>{{formatDate this.date "D-MMM-YY"}} -
+                    {{this.user}} - {{this.instructionType}}</span>
+                  <span class='right'><a class="white-text" href="/orders/note-edit/{{this._id}}">
+                      <i class="material-icons">edit</i>
+                    </a></span>
+                </div>
+                <div class="collapsible-body white">{{this.instruction}}</div>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
         </div>
       </div>
+      {{/if}}
     </div>
-    {{/if}}
   </div>
 
   {{#if user.editOrders}}
