@@ -1,4 +1,5 @@
 const winston = require('winston');
+require('winston-daily-rotate-file');
 const fs = require('fs');
 const path = require('path');
 const logDir = 'logs';
@@ -22,12 +23,7 @@ winston.remove(winston.transports.Console);
 
 const logger = winston.createLogger({
   format: winston.format.combine(appendTimestamp({ tz: 'America/Los_Angeles' }), winston.format.simple()),
-  transports: [
-    new winston.transports.File({
-      filename: path.join(logDir, 'logfile.log'),
-      colorize: true
-    })
-  ]
+  transports: [new winston.transports.DailyRotateFile({ filename: path.join(logDir, 'customproofs-%DATE%.log'), maxFiles: '14d' })]
 });
 
 if (process.env.NODE_ENV !== 'production') {
