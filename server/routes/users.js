@@ -128,17 +128,14 @@ router.post('/register', [ensureAuthenticated, ensureAdmin], async (req, res) =>
       lgUser
     });
 
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
 
-        await newUser.save();
-        logger.info(`${newUser.username} - created by ${req.user.username}`);
-        req.flash('success_msg', 'User registered.');
-        res.redirect('/admin/users');
-      });
-    });
+    newUser.password = hash;
+    await newUser.save();
+    logger.info(`${newUser.username} - created by ${req.user.username}`);
+    req.flash('success_msg', 'User registered.');
+    res.redirect('/admin/users');
   } catch (err) {
     logger.error(err);
   }
@@ -167,23 +164,23 @@ router.put('/password', ensureAuthenticated, async (req, res) => {
     if (pass.length < 5) {
       req.flash('error_msg', 'Password needs to be at least 8 characters');
       return res.redirect('/users/password');
-    } 
+    }
 
     if (pass !== pass2) {
       req.flash('error_msg', 'Password fields need to match');
       return res.redirect('/users/password');
-    } 
+    }
 
-    let foundUser = await User.findOne({username: userName});
+    let foundUser = await User.findOne({ username: userName });
 
-    bcrypt.genSalt(10, (err, salt)=>{
-      bcrypt.hash(pass, salt, (err, hash)=>{
-        foundUser.password = hash;
-        await foundUser.save();
-        req.flash('success_msg', 'Password Changed');
-        res.redirect('/orders');
-      })
-    });
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(pass, salt);
+
+    foundUser.password = hash;
+    await foundUser.save();
+
+    req.flash('success_msg', 'Password Changed');
+    res.redirect('/orders');
   } catch (err) {
     logger.error(err);
   }
