@@ -8,12 +8,14 @@ const OrderSchema = new Schema({
   orderNum: {
     type: String,
     required: true,
-    uppercase: true
+    uppercase: true,
+    trim: true
   },
   accountNum: {
     type: String,
     default: null,
-    uppercase: true
+    uppercase: true,
+    trim: true
   },
   quoteToggle: {
     type: Boolean,
@@ -48,11 +50,13 @@ const OrderSchema = new Schema({
   },
   outRep: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   client: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   instructions: [
     {
@@ -139,7 +143,8 @@ const OrderSchema = new Schema({
   tracking: {
     type: String,
     default: null,
-    uppercase: true
+    uppercase: true,
+    trim: true
   },
   confirmDeliveryDate: {
     type: Date,
@@ -152,15 +157,18 @@ const OrderSchema = new Schema({
   jbaPONum: {
     type: String,
     default: null,
-    uppercase: true
+    uppercase: true,
+    trim: true
   },
   jbaGNRNum: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   jbaInvoiceNum: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   jbaInvoiceDate: {
     type: Date,
@@ -293,11 +301,13 @@ const OrderSchema = new Schema({
   },
   contactName: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   shipToName: {
     type: String,
-    default: null
+    default: null,
+    trim: true
   },
   shipToAddress: {
     type: String,

@@ -9,6 +9,13 @@
             <span style="font-weight:600; font-size: 1.5rem;">{{order.orderNum}}</span>
           </div>
         </div>
+        <div class="col s12">
+          <div style="margin-bottom: 10px; margin-top: 0px;">
+            <span style="font-weight:600;">Client:</span>
+            <br>
+            <span style="font-weight:600; font-size: 1rem;">{{order.client}}</span>
+          </div>
+        </div>
         <div class="col s12" style="margin-bottom: 20px;">
           <span style="font-weight:300; font-size:1rem;">Current Status:</span>
           <br>
@@ -19,17 +26,17 @@
         </div>
         {{#if order.eventDate}}
         <div class="col s12" style="margin-bottom: 20px;">
-          <span class="grey-text">Event Date:</span><br>{{formatDate order.eventDate "D-MMM-YY"}}
+          <span class="grey-text">Event Date: </span>{{formatDate order.eventDate "D-MMM-YY"}}
         </div>
         {{/if}}
         {{#if order.latestInHand}}
         <div class="col s12" style="margin-bottom: 20px;">
-          <span class="grey-text">Needed In-Hand:</span><br>{{formatDate order.latestInHand "D-MMM-YY"}}
+          <span class="grey-text">Needed In-Hand: </span>{{formatDate order.latestInHand "D-MMM-YY"}}
         </div>
         {{/if}}
         {{#if order.currentArtist}}
         <div class="col s12" style="margin-bottom: 20px;">
-          <span class="grey-text">Current Artist:</span><br>{{order.currentArtist}}
+          <span class="grey-text">Current Artist: </span>{{order.currentArtist}}
         </div>
         {{/if}}
       </div>
@@ -43,8 +50,7 @@
             <ul class="collapsible">
               {{#each (getInstructions order.instructions)}}
               <li class="{{#unless @index}}active{{/unless}}">
-                <div class="collapsible-header {{catNotes this.instructionType}} valign-wrapper"
-                  style="display: block; height: 35px;">
+                <div class="collapsible-header {{catNotes this.instructionType}}" style="display: block; height: 35px;">
                   <span class='left'><i class="material-icons">expand_more</i></span>
                   <span>{{formatDate this.date "D-MMM-YY"}} -
                     {{this.user}} - {{this.instructionType}}</span>
@@ -70,16 +76,6 @@
       <i class="large material-icons">edit</i>
     </a>
     <ul>
-      {{!-- {{#if user.editProofs}}
-      {{#if (checkForQCStatus order.currentStatus)}}
-      <li><a href="/proofs/qc/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
-          data-tooltip="QC Order"><i class="material-icons">touch_app</i></a></li>
-      {{/if}}
-      <li><a href="/proofs/qc/archive/view/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
-          data-tooltip="QC Archive"><i class="material-icons">
-            format_list_bulleted
-          </i></a></li>
-      {{/if}} --}}
       <li><a href="/orders/xml/{{order.orderNum}}" class="btn-floating red tooltipped" data-position="left"
           data-tooltip="XML" target="_blank"><i class="material-icons">code</i></a></li>
       <li>

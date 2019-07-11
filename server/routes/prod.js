@@ -13,10 +13,10 @@ const Order = require('../models/Order');
 // SEC - MUST BE LOGGED IN - MUST HAVE VIEW PROD ACCESS
 router.get('/', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = 'Production';
+    let pageTitle = 'Production - All Orders';
     let orders;
     if (req.user.lgUser) {
-      pageTitle = 'LG Production';
+      pageTitle = 'LG Production - All Orders';
       orders = await Order.find({ currentStatus: 'V. Sent to Vendor', lgOrder: true });
     } else {
       orders = await Order.find({ currentStatus: 'V. Sent to Vendor' });
@@ -39,10 +39,10 @@ router.get('/', [ensureAuthenticated, ensureViewProd], async (req, res) => {
 
 router.get('/open', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = 'Open Orders';
+    let pageTitle = 'Production - Open Orders';
     let orders;
     if (req.user.lgUser) {
-      pageTitle = 'LG Open Orders';
+      pageTitle = 'LG Production - Open Orders';
       orders = await Order.find({
         $and: [{ currentStatus: 'V. Sent to Vendor' }, { $or: [{ shipStatus: '' }, { shipStatus: null }] }, { lgOrder: true }]
       });
@@ -60,11 +60,11 @@ router.get('/open', [ensureAuthenticated, ensureViewProd], async (req, res) => {
 
 router.get('/pending', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = 'Shipped Orders';
+    let pageTitle = 'Production - Shipped Orders';
     let orders;
 
     if (req.user.lgUser) {
-      pageTitle = 'LG Shipped Orders';
+      pageTitle = 'LG Production - Shipped Orders';
       orders = await Order.find({
         $and: [{ currentStatus: 'V. Sent to Vendor' }, { vendorConfirmShip: { $ne: null } }, { shipStatus: 'Shipped' }, { lgOrder: true }]
       });
@@ -81,11 +81,11 @@ router.get('/pending', [ensureAuthenticated, ensureViewProd], async (req, res) =
 
 router.get('/cancelled', [ensureAuthenticated, ensureViewProd], async (req, res) => {
   try {
-    let pageTitle = 'Cancelled Orders';
+    let pageTitle = 'Production - Cancelled Orders';
     let orders;
 
     if (req.user.lgUser) {
-      pageTitle = 'LG Cancelled Orders';
+      pageTitle = 'LG Production - Cancelled Orders';
       orders = await Order.find({ currentStatus: 'W. CANCELLED', lgOrder: true });
     } else {
       orders = await Order.find({ currentStatus: 'W. CANCELLED' });

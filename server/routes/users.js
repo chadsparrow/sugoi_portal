@@ -36,7 +36,7 @@ router.get('/admin/dash', [ensureAuthenticated, ensureAdmin], (req, res) => {
 
 router.get('/edit/:id', [ensureAuthenticated, ensureAdmin], async (req, res) => {
   try {
-    const employee = await User.findOne({ _id: req.params.id });
+    const employee = await User.findById(req.params.id);
     res.render('admin/edit', { employee });
   } catch (err) {
     logger.error(err);
@@ -90,58 +90,57 @@ router.get('/register', [ensureAuthenticated, ensureAdmin], (req, res) => {
 });
 
 // User Register Form POST
-router.post('/register', [ensureAuthenticated, ensureAdmin], (req, res) => {
-  let { username, password, password2, admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
-  username = username.toLowerCase();
+router.post('/register', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+  try {
+    let { username, password, password2, admin, editOrders, editProofs, viewProd, editProd, lgUser } = req.body;
+    username = username.toLowerCase();
 
-  admin = admin ? true : false;
-  editOrders = editOrders ? true : false;
-  editProofs = editProofs ? true : false;
-  viewProd = viewProd ? true : false;
-  editProd = editProd ? true : false;
-  lgUser = lgUser ? true : false;
+    admin = admin ? true : false;
+    editOrders = editOrders ? true : false;
+    editProofs = editProofs ? true : false;
+    viewProd = viewProd ? true : false;
+    editProd = editProd ? true : false;
+    lgUser = lgUser ? true : false;
 
-  if (password.length < 8) {
-    req.flash('error_msg', 'Password needs to be at least 8 characters');
-    res.redirect('/users/register');
-  } else if (password !== password2) {
-    req.flash('error_msg', 'Password needs to match');
-    res.redirect('/users/register');
-  } else {
-    User.findOne({ username }, function(err, user) {
-      if (user) {
-        req.flash('error_msg', 'User already registered');
-        res.redirect('/users/register');
-      } else {
-        const newUser = new User({
-          username,
-          password,
-          admin,
-          editOrders,
-          editProofs,
-          viewProd,
-          editProd,
-          lgUser
-        });
+    if (password.length < 8) {
+      req.flash('error_msg', 'Password must be at least 8 characters.');
+      return res.redirect('/users/register');
+    }
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => {
-                logger.info(`${user.username} - user created by ${req.user.username}`);
-                req.flash('success_msg', 'User registered');
-                res.redirect('/admin/users');
-              })
-              .catch(err => {
-                logger.error(err);
-              });
-          });
-        });
-      }
+    if (password !== password2) {
+      req.flash('error_msg', 'Passwords need to match');
+      return res.redirect('/users/register');
+    }
+
+    let user = await User.findOne({ username });
+    if (user) {
+      req.flash('error_msg', 'User already registered');
+      return res.redirect('/users/register');
+    }
+
+    const newUser = new User({
+      username,
+      admin,
+      editOrders,
+      editProofs,
+      viewProd,
+      editProd,
+      lgUser
     });
+
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+
+        await newUser.save();
+        logger.info(`${newUser.username} - created by ${req.user.username}`);
+        req.flash('success_msg', 'User registered.');
+        res.redirect('/admin/users');
+      });
+    });
+  } catch (err) {
+    logger.error(err);
   }
 });
 
@@ -159,43 +158,34 @@ router.get('/password', ensureAuthenticated, (req, res) => {
 });
 
 // User Password Post
-router.put('/password', ensureAuthenticated, (req, res) => {
-  let pass = req.body.password;
-  let pass2 = req.body.password2;
-  let userName = req.body.username;
+router.put('/password', ensureAuthenticated, async (req, res) => {
+  try {
+    let pass = req.body.password;
+    let pass2 = req.body.password2;
+    let userName = req.body.username;
 
-  if (pass.length < 5) {
-    req.flash('error_msg', 'Password needs to be at least 8 characters');
-    res.redirect('/users/password');
-  } else if (pass !== pass2) {
-    req.flash('error_msg', 'Password fields need to match');
-    res.redirect('/users/password');
-  } else {
-    User.findOne({ username: userName }, function(err, foundObject) {
-      if (err) {
-        logger.error(err);
-        return;
-      }
+    if (pass.length < 5) {
+      req.flash('error_msg', 'Password needs to be at least 8 characters');
+      return res.redirect('/users/password');
+    } 
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(pass, salt, (err, hash) => {
-          if (err) {
-            logger.error(err);
-            return;
-          }
-          foundObject.password = hash;
-          foundObject
-            .save()
-            .then(user => {
-              req.flash('success_msg', 'Password Updated');
-              res.redirect('/orders/');
-            })
-            .catch(err => {
-              logger.error(err);
-            });
-        });
-      });
+    if (pass !== pass2) {
+      req.flash('error_msg', 'Password fields need to match');
+      return res.redirect('/users/password');
+    } 
+
+    let foundUser = await User.findOne({username: userName});
+
+    bcrypt.genSalt(10, (err, salt)=>{
+      bcrypt.hash(pass, salt, (err, hash)=>{
+        foundUser.password = hash;
+        await foundUser.save();
+        req.flash('success_msg', 'Password Changed');
+        res.redirect('/orders');
+      })
     });
+  } catch (err) {
+    logger.error(err);
   }
 });
 
