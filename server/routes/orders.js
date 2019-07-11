@@ -309,7 +309,6 @@ router.get('/add', [ensureAuthenticated, ensureEditOrders], async (req, res) => 
 router.post('/add', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     let { orderNum, priority, isr, instruction, vendor, estValue, currency } = req.body;
-    orderNum = orderNum.toString();
     isr = isr.toUpperCase();
 
     let instructions = [];
@@ -345,12 +344,9 @@ router.post('/add', [ensureAuthenticated, ensureEditOrders], async (req, res) =>
     });
 
     await newOrder.save();
-    logger.info(`${order.orderNum} added to the database by ${req.user.username}`);
+    logger.info(`${newOrder.orderNum} added to the database by ${req.user.username}`);
     req.flash('success_msg', 'Order Added');
-    if (order.currentStatus === '1. Initial') {
-      return res.redirect('/orders/initial');
-    }
-    res.redirect('/orders/');
+    res.redirect('/orders/initial');
   } catch (err) {
     logger.error(err);
   }
