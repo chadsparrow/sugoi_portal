@@ -312,58 +312,54 @@ router.get('/add', [ensureAuthenticated, ensureEditOrders], async (req, res) => 
 
 // @DESC - POSTS A NEW ORDER INTO COLLECTION BASED ON ADD ORDER PAGE FIELDS
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
-router.post('/add', [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  let { orderNum, priority, isr, instruction, vendor, estValue, currency } = req.body;
-  orderNum = orderNum.toString();
-  isr = isr.toUpperCase();
+router.post('/add', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
+  try {
+    let { orderNum, priority, isr, instruction, vendor, estValue, currency } = req.body;
+    orderNum = orderNum.toString();
+    isr = isr.toUpperCase();
 
-  let instructions = [];
+    let instructions = [];
 
-  if (instruction) {
-    instructions.push({
-      instruction,
-      instructionType: 'Initial',
-      user: isr
-    });
-  }
+    if (instruction) {
+      instructions.push({
+        instruction,
+        instructionType: 'Initial',
+        user: isr
+      });
+    }
 
-  const lgOrder = req.user.lgUser ? true : false;
-  const quoteToggle = req.user.lgUser ? false : true;
+    const lgOrder = req.user.lgUser ? true : false;
+    const quoteToggle = req.user.lgUser ? false : true;
 
-  Order.findOne({ orderNum: orderNum }, function(err, order) {
+    let order = await Order.findOne({ orderNum: orderNum });
     if (order) {
       req.flash('error_msg', 'Order Number already entered');
       res.redirect('/orders/add');
       return;
-    } else {
-      const newOrder = new Order({
-        orderNum,
-        priority,
-        isr,
-        instructions,
-        vendor,
-        estValue,
-        currency,
-        lgOrder,
-        quoteToggle
-      });
-
-      newOrder
-        .save()
-        .then(order => {
-          logger.info(`${order.orderNum} added to database by ${req.user.username}`);
-          req.flash('success_msg', 'Order Saved');
-          if (order.currentStatus === '1. Initial') {
-            res.redirect('/orders/initial');
-          } else {
-            res.redirect('/orders/');
-          }
-        })
-        .catch(err => {
-          logger.error(err);
-        });
     }
-  });
+
+    const newOrder = new Order({
+      orderNum,
+      priority,
+      isr,
+      instructions,
+      vendor,
+      estValue,
+      currency,
+      lgOrder,
+      quoteToggle
+    });
+
+    await newOrder.save();
+    logger.info(`${order.orderNum} added to the database by ${req.user.username}`);
+    req.flash('success_msg', 'Order Added');
+    if (order.currentStatus === '1. Initial') {
+      return res.redirect('/orders/initial');
+    }
+    res.redirect('/orders/');
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - GETS ORDER FROM ORDERS COLLECTION BASED ON ID#
@@ -736,14 +732,14 @@ router.put('/edit/:id', [ensureAuthenticated, ensureEditOrders], (req, res) => {
 
 // @DESC - GETS NOTE EDIT PAGE BASED ON NOTE ID#
 // SEC - MUST BE LOGGED IN - MUST HAVE EDIT ORDERS ACCESS
-router.get('/note-edit/:noteid', [ensureAuthenticated, ensureEditOrders], (req, res) => {
-  let noteid = req.params.noteid;
-  Order.findOne({ 'instructions._id': noteid }).then(order => {
-    let note = order.instructions.id(noteid);
-    res.render('orders/note-edit', {
-      note
-    });
-  });
+router.get('/note-edit/:noteid', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
+  try {
+    const order = await Order.findOne({ 'instructions._id': req.params.noteid });
+    const note = order.instructions.id(req.params.noteid);
+    res.render('orders/note-edit', { note });
+  } catch (err) {
+    logger.error(err);
+  }
 });
 
 // @DESC - UPDATES NOTE (INSTRUCTIONS) IN ORDERS COLLECTION BASED ON ORDER ID#
@@ -754,27 +750,31 @@ router.put('/note-edit/:noteid', [ensureAuthenticated, ensureEditOrders], (req, 
   let isr = req.body.isr;
   let instructionType = req.body.instructionType;
 
-  Order.findOne({ 'instructions._id': noteid }).then(foundOrder => {
-    let note = foundOrder.instructions.id(noteid);
-    let id = foundOrder.id;
-    if (instruction) {
-      note.instruction = instruction;
-      note.isr = isr;
-      note.instructionType = instructionType;
+  Order.findOne({ 'instructions._id': noteid })
+    .then(foundOrder => {
+      let note = foundOrder.instructions.id(noteid);
+      let id = foundOrder.id;
+      if (instruction) {
+        note.instruction = instruction;
+        note.isr = isr;
+        note.instructionType = instructionType;
 
-      foundOrder.save(function(err, updatedOrder) {
-        if (err) {
-          return logger.error(err);
-        } else {
-          req.flash('success_msg', 'Note Updated');
-          res.redirect(`/orders/view/${id}`);
-        }
-      });
-    } else {
-      req.flash('error_msg', 'Blank Note Ignored - Try again');
-      res.redirect(`/orders/view/${id}`);
-    }
-  });
+        foundOrder.save(function(err, updatedOrder) {
+          if (err) {
+            return logger.error(err);
+          } else {
+            req.flash('success_msg', 'Note Updated');
+            res.redirect(`/orders/view/${id}`);
+          }
+        });
+      } else {
+        req.flash('error_msg', 'Blank Note Ignored - Try again');
+        res.redirect(`/orders/view/${id}`);
+      }
+    })
+    .catch(err => {
+      logger.error(err);
+    });
 });
 
 // @DESC - EDITS NOTES BY PUSHING NEW ONE TO ARRAY BASED ON ORDER ID#
