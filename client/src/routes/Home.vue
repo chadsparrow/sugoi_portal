@@ -20,6 +20,11 @@ export default {
     OrderLinesHolder,
     TotalsBox,
     AnchorBox
+  },
+  computed: {
+    order() {
+      return this.$store.state.order;
+    }
   }
 };
 </script>

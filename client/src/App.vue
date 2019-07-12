@@ -24,6 +24,7 @@ export default {
     this.isLoading = true;
     this.$store.dispatch("getOrderData", this.orderNum);
     this.$store.dispatch("getStyles");
+    this.$store.dispatch("getLGStyles");
     this.$store.dispatch("getGraphicCodes");
     this.$store.dispatch("getReps");
     this.$store.dispatch("getProvincialTaxes");

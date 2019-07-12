@@ -1,8 +1,4 @@
-version: "3"
-
-# Setup Node.js container / MondoDB containers
-
-## Need to add Subnet info - confirm with Jordin
+version: '3'
 
 services:
   server:
@@ -12,7 +8,7 @@ services:
     image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server:1.0.0
     restart: always
     ports:
-      - "5000:5000"
+      - '5000:5000'
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
@@ -21,20 +17,19 @@ services:
     links:
       - mongo
     env_file:
-      - dev.env
+      - .env
   mongo:
     container_name: mongo
     restart: always
     image: mongo
     ports:
-      - "27017:27017"
+      - '27017:27017'
     volumes:
       - mongodbdata:/data/db
     env_file:
-      - dev.env
+      - .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-    command: mongod --auth
 volumes:
   mongodbdata:

@@ -53,7 +53,7 @@ export default {
           this.$router.push({ path: `/editline/${lineLength}` });
         })
         .catch(err => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }

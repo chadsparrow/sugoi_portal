@@ -1,8 +1,9 @@
-const winston = require("winston");
-const fs = require("fs");
-const path = require("path");
-const logDir = "logs";
-const moment = require("moment-timezone");
+const winston = require('winston');
+require('winston-daily-rotate-file');
+const fs = require('fs');
+const path = require('path');
+const logDir = 'logs';
+const moment = require('moment-timezone');
 const dayjs = require('dayjs');
 
 if (!fs.existsSync(logDir)) {
@@ -18,30 +19,14 @@ const appendTimestamp = winston.format((info, opts) => {
   }
 });
 
-// const transport = new winston.transports.DailyRotateFile({
-//   filename: "./logs/logfile.log"
-// });
-
-// transport.on("rotate", function(oldFilename, newFileName) {
-//   //do something
-// });
-
 winston.remove(winston.transports.Console);
 
 const logger = winston.createLogger({
-  format: winston.format.combine(
-    appendTimestamp({ tz: "America/Los_Angeles" }),
-    winston.format.simple()
-  ),
-  transports: [
-    new winston.transports.File({
-      filename: path.join(logDir, "logfile.log"),
-      colorize: true
-    })
-  ]
+  format: winston.format.combine(appendTimestamp({ tz: 'America/Los_Angeles' }), winston.format.simple()),
+  transports: [new winston.transports.DailyRotateFile({ filename: path.join(logDir, 'customproofs-%DATE%.log'), maxFiles: '14d' })]
 });
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new winston.transports.Console({
       colorize: true

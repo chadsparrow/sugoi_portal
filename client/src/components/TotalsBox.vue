@@ -51,8 +51,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   name: "OrderDetails",
   computed: {
@@ -90,4 +88,3 @@ span {
   }
 }
 </style>
-

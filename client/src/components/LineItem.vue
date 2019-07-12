@@ -178,7 +178,11 @@ export default {
       return this.item.unitPrice * (this.item.itemDiscount / 100);
     },
     discountTotal() {
-      return (this.discountAmount + this.qdDiscount) * this.item.totalUnits;
+      return (
+        (this.item.unitPrice * (this.item.itemDiscount / 100) +
+          this.qdDiscount) *
+        this.item.totalUnits
+      );
     },
     qdDiscount() {
       let qdDiscountAmount = 0;
@@ -189,8 +193,10 @@ export default {
         qdDiscountAmount = 0;
       } else {
         if (
-          this.orderLine.priceBreak === 6 ||
-          this.orderLine.priceBreak === 12
+          this.orderLine.priceBreak == 2 ||
+          this.orderLine.priceBreak == 6 ||
+          this.orderLine.priceBreak == 12 ||
+          this.orderLine.priceBreak == 24
         ) {
           qdDiscountAmount = this.unitPrice * 0.1;
         }

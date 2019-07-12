@@ -3,7 +3,7 @@
     <div class="row">
       <div class="card col s12">
         <div class="card-content">
-          <span class="card-title">Add Order</span>
+          <span class="card-title">Add Order{{#if lgOrder}} - LG ORDER{{/if}}</span>
           <div class="card-action">
             <form action="/orders/add" method="POST">
               <span>
@@ -15,9 +15,9 @@
                 <div class="col s12 m6">
                   <div class="row">
                     <div class="input-field col s12 m6">
-                      <input type="text" name="orderNum" id="orderNum" pattern="[0-9]{7}" maxlength="7"
-                        value="{{orderNum}}" placeholder="enter 7 digit number" class="validate" required>
-                      <label for="orderNum">* Contract #:</label>
+                      <input type="text" name="orderNum" id="orderNum" value="{{orderNum}}"
+                        placeholder="enter contract #" class="validate" required>
+                      <label for="orderNum">* {{#if lgOrder}}LG {{/if}}Contract #:</label>
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="priority" id="priority">
@@ -25,13 +25,14 @@
                         <option value=""></option>
                         <option value="RUSH">RUSH</option>
                         <option value="VIP">VIP</option>
+                        <option value="CONCEPT">CONCEPT</option>
                         {{/select}}
                       </select>
                       <label for="priority">Priority:</label>
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="isr" id="isr">
-                        {{#select isr}}
+                        {{#select currentUser}}
                         {{#each customReps}}
                         <option value="{{value}}">{{text}}</option>
                         {{/each}}
@@ -41,21 +42,29 @@
                     </div>
                     <div class="input-field col s12 m6">
                       <select name="vendor" id="vendor">
+                        {{#if lgOrder}}
+                        {{#select vendor}}
+                        <option value="CCN">CCN</option>
+                        {{/select}}
+                        {{else}}
                         {{#select vendor}}
                         <option value="CCN">CCN</option>
                         <option value="PNR">PNR</option>
                         <option value="MEX">MEX</option>
                         {{/select}}
+                        {{/if}}
                       </select>
                       <label for="vendor">* Vendor:</label>
                     </div>
+                    {{#unless lgOrder}}
                     <div class="input-field col s12 m6">
                       <input type="number" step=".01" name="estValue" id="estValue" value="{{estValue}}">
                       <label for="estValue">Estimated Value:</label>
                     </div>
+                    {{/unless}}
                     <div class="input-field col s12 m6">
                       <select name="currency" id="currency">
-                        {{#select vendor}}
+                        {{#select currency}}
                         <option value="CAD">CAD</option>
                         <option value="USD">USD</option>
                         {{/select}}

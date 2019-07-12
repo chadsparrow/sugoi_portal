@@ -12,7 +12,7 @@
                   <h6>ISR Entry Fields:</h6>
                   <div class="input-field col s12 m6">
                     <input type="text" id="orderNum" name="orderNum" value="{{order.orderNum}}" readonly>
-                    <label for="orderNum">Contract #:</label>
+                    <label for="orderNum">{{#if order.lgOrder}}LG {{/if}}Contract #:</label>
                   </div>
                   <div class="input-field col s12 m6">
                     <input type="text" id="accountNum" name="accountNum" value="{{order.accountNum}}">
@@ -24,6 +24,7 @@
                       <option value=""></option>
                       <option value="RUSH">RUSH</option>
                       <option value="VIP">VIP</option>
+                      <option value="CONCEPT">CONCEPT</option>
                       {{/select}}
                     </select>
                     <label for="priority">Priority:</label>
@@ -79,6 +80,7 @@
                   <div class="input-field col s12 center-align">
                     <select name="currentStatus" id="currentStatus"> {{#select order.currentStatus}}
                       <option value="1. Initial">Initial Order</option>
+                      {{#unless ../user.lgUser}}
                       <option value="A. Waiting for Proof">Waiting for Proof</option>
                       <option value="B. Proof Started">Proof Started</option>
                       <option value="C. Proof - Waiting on Someone else">Proof - Waiting on Someone else</option>
@@ -103,6 +105,7 @@
                       <option value="S. PNT Ready for QC">PNT Ready for QC</option>
                       <option value="S-1. PNT QC in Progress">PNT QC in Progress</option>
                       <option value="T. PNT QC Complete">PNT QC Complete</option>
+                      {{/unless}}
                       <option value="U. Uploaded">Uploaded</option>
                       <option value="V. Sent to Vendor">Sent to Vendor</option>
                       <option value="W. CANCELLED">CANCELLED</option>
@@ -131,8 +134,8 @@
                   <div id="proofDiv">
                     <div class="col s12">
                       <div class="input-field">
-                        <textarea name="instruction" id="instruction"
-                          class="materialize-textarea">{{artDirection}}</textarea>
+                        <textarea name="instruction" id="instruction" class="materialize-textarea"
+                          style="font-size: 14px;">{{artDirection}}</textarea>
                         <label for="instruction">Art Direction:</label>
                       </div>
                     </div>

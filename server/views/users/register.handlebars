@@ -10,18 +10,19 @@
                 <div class="row">
                   <form action="/users/register" method="post" class="col s12">
                     <div class="input-field col s12">
-                      <input type="text" name="username" id="username" placeholder="enter user name" style="text-transform: lowercase;"
-                        on keyup="javascript:this.value=this.value.toLowerCase();" class="white-text validate" required
-                        autofocus>
+                      <input type="text" name="username" id="username" placeholder="enter user name"
+                        style="text-transform: lowercase;" on keyup="javascript:this.value=this.value.toLowerCase();"
+                        class="white-text validate" required autofocus>
                       <label for="username"><i class="fas fa-envelope-square"></i> Username:</label>
                     </div>
                     <div class="input-field col s12">
-                      <input type="password" name="password" id="password" placeholder="enter password" class="white-text validate"
-                        required>
+                      <input type="password" name="password" id="password" placeholder="enter password"
+                        class="white-text validate" required>
                       <label for="password"><i class="fas fa-key"></i> Password:</label>
                     </div>
                     <div class="input-field col s12">
-                      <input type="password" name="password2" id="password2" placeholder="confirm password" class="white-text validate">
+                      <input type="password" name="password2" id="password2" placeholder="confirm password"
+                        class="white-text validate">
                       <label for="password2" required><i class="fas fa-key"></i> Confirm Password:</label>
                     </div>
                     <div class="row rights">
@@ -49,16 +50,19 @@
                       <div class="col s2">
                         <label><input type="checkbox" class="form-check-input" name="editProd" id="editProd" />
                           <span style="font-size: 12px;">Edit Prod.</span></label>
-
+                      </div>
+                      <div class="col s2">
+                        <label><input type="checkbox" class="form-check-input" name="lgUser" id="lgUser" />
+                          <span style="font-size: 12px;">LG User.</span></label>
                       </div>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-right: 10px;"><i
-                        class="
+                    <button class="btn waves-effect waves-light" type="submit" name="action"
+                      style="margin-right: 10px;"><i class="
                     fas fa-check-square"></i>
                       Submit
                     </button>
-                    <a href="javascript:history.back()" id="cancel" name="cancel" class="btn waves-effect waves-light red"><i
-                        class="fas fa-times"></i>
+                    <a href="javascript:history.back()" id="cancel" name="cancel"
+                      class="btn waves-effect waves-light red"><i class="fas fa-times"></i>
                       Cancel</a>
                   </form>
                 </div>

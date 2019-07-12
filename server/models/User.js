@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //Create User Schema
@@ -31,7 +31,11 @@ const UserSchema = new Schema({
   editProd: {
     type: Boolean,
     required: true
+  },
+  lgUser: {
+    type: Boolean,
+    default: false
   }
 });
 
-module.exports = mongoose.model("users", UserSchema);
+module.exports = mongoose.model('users', UserSchema);

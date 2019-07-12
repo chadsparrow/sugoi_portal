@@ -13,7 +13,7 @@
                   <hr>
                   <div class="row">
                     <div class="col s12 m4">
-                      <span class="grey-text">Contract #: </span>{{order.orderNum}}
+                      <span class="grey-text">{{#if order.lgOrder}}LG {{/if}}Contract #: </span>{{order.orderNum}}
                     </div>
                     <div class="col s12 m8">
                       <span class="grey-text">Client: </span>{{order.client}}

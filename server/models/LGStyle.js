@@ -42,22 +42,13 @@ const StyleSchema = new Schema({
       usd1: {
         type: Float
       },
+      usd2: {
+        type: Float
+      },
       usd6: {
         type: Float
       },
-      usd6qd: {
-        type: Float
-      },
       usd12: {
-        type: Float
-      },
-      usd12qd: {
-        type: Float
-      },
-      usd24: {
-        type: Float
-      },
-      usd24qd: {
         type: Float
       },
       usd50: {
@@ -66,7 +57,7 @@ const StyleSchema = new Schema({
       usd100: {
         type: Float
       },
-      usd200: {
+      usd250: {
         type: Float
       },
       usd500: {
@@ -75,22 +66,13 @@ const StyleSchema = new Schema({
       cad1: {
         type: Float
       },
+      cad2: {
+        type: Float
+      },
       cad6: {
         type: Float
       },
-      cad6qd: {
-        type: Float
-      },
       cad12: {
-        type: Float
-      },
-      cad12qd: {
-        type: Float
-      },
-      cad24: {
-        type: Float
-      },
-      cad24qd: {
         type: Float
       },
       cad50: {
@@ -99,7 +81,7 @@ const StyleSchema = new Schema({
       cad100: {
         type: Float
       },
-      cad200: {
+      cad250: {
         type: Float
       },
       cad500: {
@@ -119,4 +101,4 @@ const StyleSchema = new Schema({
   factory: String
 });
 
-module.exports = mongoose.model('styles2019', StyleSchema);
+module.exports = mongoose.model('lgstyles2019', StyleSchema);

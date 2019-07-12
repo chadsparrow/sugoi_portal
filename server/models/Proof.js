@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Proof Schema
@@ -146,4 +146,4 @@ const ProofSchema = new Schema({
   ]
 });
 
-module.exports = mongoose.model("proofs", ProofSchema);
+module.exports = mongoose.model('proofs', ProofSchema);

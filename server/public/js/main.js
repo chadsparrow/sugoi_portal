@@ -1,82 +1,81 @@
-$(document).ready(function () {
-
+$(document).ready(function() {
   //  THIS SECTION SHOWS AND HIDES EXTRA PRODUCTION FIELDS IF IT'S READY TO GO TO PRODUCTION
   $.fn.dataTable.moment('D-MMM-YY');
-  $("#productionDiv").hide();
+  $('#productionDiv').hide();
 
-  if ($("#currentStatus").val() == "V. Sent to Vendor") {
-    $("#productionDiv").show();
+  if ($('#currentStatus').val() == 'V. Sent to Vendor') {
+    $('#productionDiv').show();
   }
-  $("#currentStatus").change(function () {
-    if ($("#currentStatus").val() == "V. Sent to Vendor") {
-      $("#productionDiv").show();
+  $('#currentStatus').change(function() {
+    if ($('#currentStatus').val() == 'V. Sent to Vendor') {
+      $('#productionDiv').show();
     } else {
-      $("#productionDiv").hide();
+      $('#productionDiv').hide();
     }
   });
 
   // THIS SECTION SHOWS ART DIRECTION FIELD IF IT IS WAITING FOR PROOF
-  $("#proofDiv").hide();
+  $('#proofDiv').hide();
 
-  if ($("#currentStatus").val() == "A. Waiting for Proof") {
-    $("#proofDiv").show();
+  if ($('#currentStatus').val() == 'A. Waiting for Proof') {
+    $('#proofDiv').show();
   }
 
-  $("#currentStatus").change(function () {
-    if ($("#currentStatus").val() == "A. Waiting for Proof") {
-      $("#proofDiv").show();
+  $('#currentStatus').change(function() {
+    if ($('#currentStatus').val() == 'A. Waiting for Proof') {
+      $('#proofDiv').show();
     } else {
-      $("#proofDiv").hide();
+      $('#proofDiv').hide();
     }
   });
 
-  $("#admin").click(function () {
-    if ($("#admin").is(":checked")) {
-      $(".form-check-input").attr("checked", true);
+  $('#admin').click(function() {
+    if ($('#admin').is(':checked')) {
+      $('.form-check-input').attr('checked', true);
     } else {
-      $(".form-check-input").attr("checked", false);
+      $('.form-check-input').attr('checked', false);
     }
   });
 
   //  FORMATS PRICING WITH , AFTER 3 DIGITS
-  $("input.number").keyup(function (event) {
+  $('input.number').keyup(function(event) {
     // skip for arrow keys
     if (event.which >= 37 && event.which <= 40) return;
 
     // format number
-    $(this).val(function (index, value) {
-      return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    $(this).val(function(index, value) {
+      return value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     });
   });
 
-  $(".input-date").datepicker({
+  $('.input-date').datepicker({
     minDate: new Date(),
     setDefaultDate: true
   });
 
   //payment date
-  $(".input-date2").datepicker({
+  $('.input-date2').datepicker({
     setDefaultDate: true
   });
 
   //latest in hand
-  $("#latestInHand").datepicker({
+  $('#latestInHand').datepicker({
     minDate: new Date(),
     setDefaultDate: true
   });
 
-  var eventDateElem = $("#eventDate").length;
+  var eventDateElem = $('#eventDate').length;
 
   if (eventDateElem > 0) {
-    var eventDateVal = $("#eventDate")
-      .datepicker({ format: "MM/DD/YYYY" })
+    var eventDateVal = $('#eventDate')
+      .datepicker({ format: 'MM/DD/YYYY' })
       .val();
     if (eventDateVal) {
       var selectedDate = new Date(eventDateVal);
       var msecsInADay = 86400000;
       var endDate = new Date(selectedDate.getTime() + msecsInADay - 1);
 
-      $("#latestInHand").datepicker({
+      $('#latestInHand').datepicker({
         maxDate: endDate,
         minDate: new Date(),
         setDefaultDate: true
@@ -85,25 +84,27 @@ $(document).ready(function () {
   }
 
   var tableExporter = $('.poTable').tableExport({
-    formats: ["xlsx"],
+    formats: ['xlsx'],
     fileName: 'id',
     bootstrap: false,
-    position: "bottom",
+    position: 'bottom',
     trimWhitespace: true
   });
 
-  tableExporter.types.date.assert = function (v) { return false; };
+  tableExporter.types.date.assert = function(v) {
+    return false;
+  };
 
   // event date selector
-  $("#eventDate").datepicker({
+  $('#eventDate').datepicker({
     minDate: new Date(),
     setDefaultDate: true,
-    onSelect: function (date) {
+    onSelect: function(date) {
       var selectedDate = new Date(date);
       var msecsInADay = 86400000;
       var endDate = new Date(selectedDate.getTime() + msecsInADay - 1);
 
-      $("#latestInHand").datepicker({
+      $('#latestInHand').datepicker({
         maxDate: endDate,
         minDate: new Date(),
         setDefaultDate: true
@@ -115,9 +116,9 @@ $(document).ready(function () {
     window.history.back();
   }
 
-  $("#styleTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#styleTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     responsive: true,
     fixedHeader: {
@@ -127,9 +128,9 @@ $(document).ready(function () {
     },
     pageLength: -1,
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="10">10</option>' +
@@ -138,26 +139,26 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
     dom: "r<'myFilter'f>tip",
-    buttons: ["excelHtml5"]
+    buttons: ['excelHtml5']
   });
 
   //ORDER TABLE
-  $("#orderTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#orderTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     responsive: false,
     select: true,
     pageLength: -1,
-    order: [[1, "asc"], [3, "asc"]],
+    order: [[1, 'asc'], [3, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="10">10</option>' +
@@ -166,76 +167,76 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
       {
-        text: "All",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/all");
+        text: 'All',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/orders/all');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Initial",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/initial");
+        text: 'Initial',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/orders/initial');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "In Progress",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders");
+        text: 'In Progress',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/orders');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Completed",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/completed");
+        text: 'Completed',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/orders/completed');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Archived",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/archived");
+        text: 'Archived',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/orders/archived');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Cancelled",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/orders/cancelled");
+        text: 'Cancelled',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/orders/cancelled');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Orders-Report " + n;
+          return 'Orders-Report ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           },
-          columns: ":not(:last-child)"
+          columns: ':not(:last-child)'
         }
       }
     ]
   });
 
-  $("#prodTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#prodTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     fixedColumns: {
       leftColumns: 1,
@@ -244,18 +245,18 @@ $(document).ready(function () {
     columnDefs: [
       {
         targets: 4,
-        data: "netValue",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'netValue',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       }
     ],
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[0, "asc"]],
+    order: [[0, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -263,69 +264,69 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
+      // {
+      //   text: "Vendor Copy",
+      //   action: function (e, dt, node, config) {
+      //     $(location).attr("href", "/prod/ccn");
+      //   },
+      //   className: "waves-effect waves-light btn-small"
+      // },
       {
-        text: "Vendor Copy",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/ccn");
+        text: 'All Orders',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/prod/');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "All Orders",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/");
+        text: 'Open Orders',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/prod/open');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Open Orders",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/open");
+        text: 'Shipped',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/prod/pending');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Shipped",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/pending");
+        text: 'Cancelled',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/prod/cancelled');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Cancelled",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/cancelled");
-        },
-        className: "waves-effect waves-light btn-small"
-      },
-      {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Production-Report " + n;
+          return 'Production-Report ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           },
-          columns: ":not(:last-child)"
+          columns: ':not(:last-child)'
         }
       }
     ]
   });
 
-  $("#prodCCNTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#prodCCNTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     fixedColumns: {
       leftColumns: 1,
@@ -334,11 +335,11 @@ $(document).ready(function () {
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[0, "asc"]],
+    order: [[0, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -346,40 +347,40 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
       {
-        text: "All Orders",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/prod/");
+        text: 'All Orders',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/prod/');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Production-Report-CCN " + n;
+          return 'Production-Report-CCN ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           }
         }
       }
     ]
   });
 
-  $("#paymentTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#paymentTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     fixedColumns: {
       leftColumns: 1,
@@ -388,44 +389,44 @@ $(document).ready(function () {
     columnDefs: [
       {
         targets: 2,
-        data: "netValue",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'netValue',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       },
       {
         targets: 3,
-        data: "balanceOutstanding",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
-      },
-      {
-        targets: 10,
-        data: "onTermPayment",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'balanceOutstanding',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       },
       {
         targets: 11,
-        data: "kitOrderPayment",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'onTermPayment',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       },
       {
         targets: 12,
-        data: "isrCollectedOrig",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'kitOrderPayment',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       },
       {
-        targets: 15,
-        data: "isrRefunded",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        targets: 13,
+        data: 'isrCollectedOrig',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
+      },
+      {
+        targets: 16,
+        data: 'isrRefunded',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       }
     ],
     select: true,
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[0, "asc"]],
+    order: [[0, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -433,72 +434,72 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
       {
-        text: "All",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/payments/");
+        text: 'All',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/payments/');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Outstanding All",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/payments/outstanding");
+        text: 'Outstanding All',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/payments/outstanding');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Outstanding Pre-Prod",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/payments/outstanding/preprod");
+        text: 'Outstanding Pre-Prod',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/payments/outstanding/preprod');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Outstanding Prod",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/payments/outstanding/prod");
+        text: 'Outstanding Prod',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/payments/outstanding/prod');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        text: "Outstanding Shipped",
-        action: function (e, dt, node, config) {
-          $(location).attr("href", "/payments/outstanding/shipped");
+        text: 'Outstanding Shipped',
+        action: function(e, dt, node, config) {
+          $(location).attr('href', '/payments/outstanding/shipped');
         },
-        className: "waves-effect waves-light btn-small"
+        className: 'waves-effect waves-light btn-small'
       },
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Payments-Report " + n;
+          return 'Payments-Report ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           },
-          columns: ":not(:last-child)"
+          columns: ':not(:last-child)'
         }
       }
     ]
   });
 
-  $("#userTable").dataTable({
+  $('#userTable').dataTable({
     pageLength: -1,
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -506,29 +507,24 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
     dom: "r<'myFilter'f>tip",
-    buttons: ["excelHtml5"]
+    buttons: ['excelHtml5']
   });
 
-  $("#qcTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#qcTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
-    columnDefs: [
-      { width: "10%", targets: 0 },
-      { width: "10%", targets: 1 },
-      { width: "15%", targets: 2 },
-      { width: "65%", targets: 3 }
-    ],
+    columnDefs: [{ width: '10%', targets: 0 }, { width: '10%', targets: 1 }, { width: '15%', targets: 2 }, { width: '65%', targets: 3 }],
     pageLength: 10,
-    order: [[0, "asc"]],
+    order: [[0, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -536,15 +532,15 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lrftip"
+    dom: 'lrftip'
   });
 
-  $("#reportTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#reportTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     fixedColumns: {
       leftColumns: 1,
@@ -553,23 +549,23 @@ $(document).ready(function () {
     columnDefs: [
       {
         targets: 9,
-        data: "netValue",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'netValue',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       },
       {
         targets: 10,
-        data: "estValue",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'estValue',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       }
     ],
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[1, "asc"]],
+    order: [[1, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -577,34 +573,34 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Report " + n;
+          return 'Report ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           },
-          columns: ":not(:last-child)"
+          columns: ':not(:last-child)'
         }
       }
     ]
   });
 
-  $("#reportTable2").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#reportTable2').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     fixedColumns: {
       leftColumns: 1,
@@ -613,18 +609,18 @@ $(document).ready(function () {
     columnDefs: [
       {
         targets: 9,
-        data: "netValue",
-        render: $.fn.dataTable.render.number(",", ".", 2, "$")
+        data: 'netValue',
+        render: $.fn.dataTable.render.number(',', '.', 2, '$')
       }
     ],
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[1, "asc"]],
+    order: [[1, 'asc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -632,43 +628,43 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Report " + n;
+          return 'Report ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           },
-          columns: ":not(:last-child)"
+          columns: ':not(:last-child)'
         }
       }
     ]
   });
 
-  $("#itemOrderedTable").dataTable({
-    initComplete: function (settings, json) {
-      $(".main-loader").hide();
+  $('#itemOrderedTable').dataTable({
+    initComplete: function(settings, json) {
+      $('.main-loader').hide();
     },
     scrollX: true,
     scrollCollapse: true,
     pageLength: -1,
-    order: [[1, "desc"]],
+    order: [[1, 'desc']],
     oLanguage: {
-      sSearch: "Search",
-      sSearchPlaceholder: "Enter search text",
-      sInfo: "_START_ -_END_ of _TOTAL_",
+      sSearch: 'Search',
+      sSearchPlaceholder: 'Enter search text',
+      sInfo: '_START_ -_END_ of _TOTAL_',
       sLengthMenu:
         '<span>Rows per page:</span><select class="browser-default">' +
         '<option value="15">15</option>' +
@@ -676,26 +672,26 @@ $(document).ready(function () {
         '<option value="40">40</option>' +
         '<option value="50">50</option>' +
         '<option value="-1">All</option>' +
-        "</select></div>"
+        '</select></div>'
     },
     bAutoWidth: false,
-    dom: "lBrftip",
+    dom: 'lBrftip',
     buttons: [
       {
-        extend: "excelHtml5",
-        className: "waves-effect waves-light btn-small",
-        text: "Export Excel",
-        title: "",
-        filename: function () {
+        extend: 'excelHtml5',
+        className: 'waves-effect waves-light btn-small',
+        text: 'Export Excel',
+        title: '',
+        filename: function() {
           var d = new Date();
           var n = d.getTime();
-          return "Report " + n;
+          return 'Report ' + n;
         },
         exportOptions: {
           modifier: {
-            page: "current"
+            page: 'current'
           },
-          columns: ":not(:last-child)"
+          columns: ':not(:last-child)'
         }
       }
     ]

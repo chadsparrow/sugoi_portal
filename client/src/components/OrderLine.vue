@@ -7,10 +7,12 @@
         <span>Line: {{orderLine.lineNumber}}</span>
         <div
           class="badge badge-warning text-center ml-3"
-          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak === 6 || orderLine.priceBreak === 12)"
+          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak == 2 || orderLine.priceBreak == 6 || orderLine.priceBreak == 12 || orderLine.priceBreak == 24)"
         >Quick Design - 10% OFF</div>
       </div>
       <div class="card-body m-0 p-1">
+        <span class="d-print-none" v-if="!order.lgOrder && !orderLine.useLGPricing">SUGOI</span>
+        <span class="d-print-none" v-if="!order.lgOrder && orderLine.useLGPricing">SOMBRIO</span>
         <div class="row m-0 mb-3">
           <div class="col">
             Job Type:
@@ -127,6 +129,9 @@ export default {
     Loading
   },
   computed: {
+    order() {
+      return this.$store.state.order;
+    },
     orderLine() {
       return this.$store.state.order.orderLines[this.index];
     },
@@ -161,7 +166,7 @@ export default {
           this.$router.push({ path: `/edititem/${this.index}/${itemLength}` });
         })
         .catch(err => {
-          console.log(err);
+          //
         });
     }
   }

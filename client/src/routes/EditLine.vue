@@ -14,13 +14,14 @@
               v-model="orderLine.lineJobType"
               ref="lineJobType"
             >
-              <option>NEW</option>
-              <option>NWR</option>
-              <option>REC</option>
-              <option>MSR</option>
+              <option value="NEW" selected>New Order</option>
+              <option value="NWR">New Order w/Reference</option>
+              <option value="REC">Re-Order with Change</option>
+              <option value="REO">Re-Order - No Change</option>
+              <option value="MSR">Mis-Ship Replacement</option>
             </select>
           </div>
-          <div class="form-group mb-1">
+          <div class="form-group mb-2">
             <label for="swoReference" class="small my-0">SO# Reference:</label>
             <input
               type="text"
@@ -30,7 +31,12 @@
               ref="swoReference"
             >
           </div>
-          <div class="form-group mb-1">
+          <div v-if="order.lgOrder != true">
+            <span class="mr-2">SG</span>
+            <switches v-model="orderLine.useLGPricing"></switches>
+            <span class="ml-2">LG</span>
+          </div>
+          <div class="form-group mb-1" v-if="order.lgOrder != true && !orderLine.useLGPricing">
             <label for="priceBreak" class="small my-0">Price Break:</label>
             <select
               class="form-control form-control-sm"
@@ -47,6 +53,23 @@
               <option>500</option>
             </select>
           </div>
+          <div class="form-group mb-1" v-if="order.lgOrder == true || orderLine.useLGPricing">
+            <label for="priceBreak" class="small my-0">Price Break:</label>
+            <select
+              class="form-control form-control-sm"
+              id="jobType"
+              v-model.number="orderLine.priceBreak"
+            >
+              <option value="1">1</option>
+              <option value="2">2-5</option>
+              <option value="6">6-11</option>
+              <option value="12">12-49</option>
+              <option value="50">50-99</option>
+              <option value="100">100-249</option>
+              <option value="250">250-499</option>
+              <option value="500">500+</option>
+            </select>
+          </div>
         </div>
         <div class="col-sm-6">
           <div class="row">
@@ -59,7 +82,11 @@
                 v-model="orderLine.graphicCode"
                 @change="loadColourWays"
               >
-                <option v-for="(code, index) in graphicCodes" :key="index">{{code.graphicCode}}</option>
+                <option
+                  v-for="(code, index) in graphicCodes"
+                  :key="index"
+                  :value="code.graphicCode"
+                >{{code.graphicName}}</option>
               </select>
             </div>
             <div
@@ -86,7 +113,7 @@
         </div>
         <div class="col-sm-3 border-left">
           <div class="form-group mb-1 col-sm-12">
-            <label for="tracingCharge" class="small my-0">Tracing:</label>
+            <label for="tracingCharge" class="small my-0">Tracing: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -96,7 +123,7 @@
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
-            <label for="creativeCharge" class="small my-0">Creative:</label>
+            <label for="creativeCharge" class="small my-0">Creative: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -106,7 +133,7 @@
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
-            <label for="scaledArtCharge" class="small my-0">Scaled Art:</label>
+            <label for="scaledArtCharge" class="small my-0">Scaled Art: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -116,7 +143,7 @@
             >
           </div>
           <div class="form-group mb-1 col-sm-12">
-            <label for="colourWashCharge" class="small my-0">Colour Wash:</label>
+            <label for="colourWashCharge" class="small my-0">Colour Wash: ($ Value)</label>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -139,8 +166,12 @@
 </template>
 
 <script>
+import Switches from "vue-switches";
 export default {
   name: "EditLine",
+  components: {
+    Switches
+  },
   data() {
     return {
       lineIndex: this.$route.params.lineIndex,
@@ -164,9 +195,6 @@ export default {
     orderLine() {
       return this.$store.state.order.orderLines[this.lineIndex];
     },
-    styles() {
-      return this.$store.state.styles;
-    },
     graphicCodes() {
       return this.$store.state.graphicCodes;
     }
@@ -178,15 +206,11 @@ export default {
     },
     commitLine() {
       if (
-        this.$refs.lineJobType.value != "NEW" &&
+        (this.$refs.lineJobType.value === "NWR" ||
+          this.$refs.lineJobType.value === "REC" ||
+          this.$refs.lineJobType.value === "REO" ||
+          this.$refs.lineJobType.value === "MSR") &&
         this.$refs.swoReference.value === null
-      ) {
-        this.$refs.swoReference.focus();
-        alert("Enter SO# Reference");
-        return;
-      } else if (
-        this.$refs.lineJobType.value != "NEW" &&
-        this.$refs.swoReference.value === ""
       ) {
         this.$refs.swoReference.focus();
         alert("Enter SO# Reference");

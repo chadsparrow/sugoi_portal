@@ -1,0 +1,30 @@
+<div class="row container center-align">
+  <h4>Payment Note Logs</h4>
+  <section>
+    {{#if paymentNotes}}
+    <div class="card col s12" style="padding: 0px;">
+      <div class="card-title black white-text" style="margin:0px; padding:2px">
+        <span>Current Note: <small>{{formatDate paymentNotesDate "ddd MMM YYYY hh:mm a"}}</small></span>
+      </div>
+      <div class="card-content">
+        {{paymentNotes}}
+      </div>
+    </div>
+    {{/if}}
+  </section>
+  <section class="section">
+    {{#each logs}}
+    <div class="card col s12" style="padding: 0px;">
+      <div class="card-title grey lighten-3" style="margin:0px; padding:2px">
+        <small>{{#if date}}{{formatDate date "ddd MMM YYYY hh:mm a"}}{{/if}}</small>
+      </div>
+      <div class="card-content">
+        {{note}}
+      </div>
+    </div>
+    {{/each}}
+  </section>
+</div>
+{{#if user}}
+<div id="backButton"><a href="/payments/outstanding"><i class="material-icons large">chevron_left</i></a></div>
+{{/if}}
