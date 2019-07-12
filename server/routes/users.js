@@ -102,8 +102,8 @@ router.post('/register', [ensureAuthenticated, ensureAdmin], async (req, res) =>
     editProd = editProd ? true : false;
     lgUser = lgUser ? true : false;
 
-    if (password.length < 8) {
-      req.flash('error_msg', 'Password must be at least 8 characters.');
+    if (password.length < 5) {
+      req.flash('error_msg', 'Password must be at least 5 characters.');
       return res.redirect('/users/register');
     }
 
@@ -162,7 +162,7 @@ router.put('/password', ensureAuthenticated, async (req, res) => {
     let userName = req.body.username;
 
     if (pass.length < 5) {
-      req.flash('error_msg', 'Password needs to be at least 8 characters');
+      req.flash('error_msg', 'Password needs to be at least 5 characters');
       return res.redirect('/users/password');
     }
 
