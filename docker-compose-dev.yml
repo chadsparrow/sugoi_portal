@@ -2,7 +2,6 @@ version: '3'
 
 services:
   server:
-    build: ./server
     container_name: sugoi_portal
     command: npm run dev
     image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server:1.0.0
@@ -17,7 +16,7 @@ services:
     links:
       - mongo
     env_file:
-      - .env
+      - .env.development
   mongo:
     container_name: mongo
     restart: always
@@ -27,7 +26,7 @@ services:
     volumes:
       - mongodbdata:/data/db
     env_file:
-      - .env
+      - .env.development
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
