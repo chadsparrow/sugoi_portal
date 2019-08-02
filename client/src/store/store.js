@@ -307,13 +307,15 @@ export const store = new Vuex.Store({
     ADD_ONS: (state, { lineIndex, itemIndex }) => {
       let item = state.order.orderLines[lineIndex].items[itemIndex];
 
+      const msrOrder = state.order.orderLines[lineIndex].lineJobType === 'MSR' ? true : false;
+
       let addOns = 0;
 
-      if (item.personalization) {
+      if (item.personalization && !msrOrder) {
         addOns += 10.0;
       }
 
-      if (item.zap) {
+      if (item.zap && !msrOrder) {
         addOns += 5.0;
       }
 
@@ -394,17 +396,17 @@ export const store = new Vuex.Store({
         item.zap = false;
       }
 
-      if (item.personalization && item.zap) {
+      const msrOrder = state.order.orderLines[lineIndex].lineJobType === 'MSR' ? true : false;
+      if (item.personalization && item.zap && !msrOrder) {
         item.addOns = 15;
-      } else if (item.personalization && !item.zap) {
+      } else if (item.personalization && !item.zap && !msrOrder) {
         item.addOns = 10;
-      } else if (!item.personalization && item.zap) {
+      } else if (!item.personalization && item.zap && !msrOrder) {
         item.addOns = 5;
       }
 
       item.zipper = null;
       item.contrast = null;
-      // item.thread = null;
       item.one = 0;
       item.xxs = 0;
       item.xs = 0;
@@ -544,20 +546,27 @@ export const store = new Vuex.Store({
       state.order.beforeTaxes = 0;
       state.order.qty = 0;
       const orderLines = state.order.orderLines;
+      let msrOrder = false;
       for (let orderLine of orderLines) {
         if (orderLine.cancelled === false) {
           state.order.beforeTaxes += orderLine.itemsSubTotal;
           state.order.qty += orderLine.lineItemsQty;
         }
+        if (orderLine.lineJobType === 'MSR') {
+          msrOrder = true;
+        }
       }
-      state.order.beforeTaxes += state.order.multiShips * 15;
-      state.order.beforeTaxes += state.order.prePacks * 5;
 
-      if (state.order.priorityShipping) {
+      if (!msrOrder) {
+        state.order.beforeTaxes += state.order.multiShips * 15;
+        state.order.beforeTaxes += state.order.prePacks * 5;
+      }
+
+      if (state.order.priorityShipping && !msrOrder) {
         state.order.beforeTaxes += state.order.priorityShipping;
       }
 
-      if (state.order.revisionCharge) {
+      if (state.order.revisionCharge && !msrOrder) {
         state.order.beforeTaxes += state.order.revisionCharge;
       }
 
@@ -581,25 +590,26 @@ export const store = new Vuex.Store({
       const colourWashCharge = state.order.orderLines[lineIndex].colourWashCharge;
 
       const items = state.order.orderLines[lineIndex].items;
+      const msrOrder = state.order.orderLines[lineIndex].lineJobType === 'MSR' ? true : false;
       for (let item of items) {
-        if (item.cancelled === false) {
+        if (item.cancelled === false && !msrOrder) {
           totalAddOns += item.addOns * item.totalUnits;
         }
       }
 
-      if (tracingCharge) {
+      if (tracingCharge && !msrOrder) {
         totalAddOns += tracingCharge;
       }
 
-      if (creativeCharge) {
+      if (creativeCharge && !msrOrder) {
         totalAddOns += creativeCharge;
       }
 
-      if (scaledArtCharge) {
+      if (scaledArtCharge && !msrOrder) {
         totalAddOns += scaledArtCharge;
       }
 
-      if (colourWashCharge) {
+      if (colourWashCharge && !msrOrder) {
         totalAddOns += colourWashCharge;
       }
       state.order.orderLines[lineIndex].totalAddOns = totalAddOns;

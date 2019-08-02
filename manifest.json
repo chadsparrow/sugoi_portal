@@ -1,6 +1,6 @@
 {
   "LGS_APP_NAME": "Sugoi_Custom_Portal",
-  "LGS_APP_VER": "1.5.0",
+  "LGS_APP_VER": "1.5.1",
   "LGS_APP_SUBDOMAIN": "portal",
   "LGS_APP_DOMAIN": "sugoi.com",
   "LGS_DOCKER_REGISTRY_SERVER": "registry.gitlab.com/garneau-dev/sugoi/custom-proofs/app",
