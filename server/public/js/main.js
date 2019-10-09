@@ -608,7 +608,7 @@ $(document).ready(function() {
     },
     columnDefs: [
       {
-        targets: 9,
+        targets: 10,
         data: 'netValue',
         render: $.fn.dataTable.render.number(',', '.', 2, '$')
       }

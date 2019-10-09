@@ -33,6 +33,7 @@
         <th class="center-align">Modified</th>
         <th class="center-align">Event Date</th>
         <th class="center-align">Latest In-Hand</th>
+        <th class="center-align">Latest Ship Date</th>
         <th class="center-align">ISR</th>
         <th class="center-align">Client</th>
         <th class="center-align">Qty</th>
@@ -52,6 +53,8 @@
         <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate eventDate "D-MMM-YY"}}{{/if}}
         </td>
         <td style="font-size: 12px;" class="center-align">{{#if eventDate}}{{formatDate latestInHand "D-MMM-YY"}}{{/if}}
+        </td>
+        <td style="font-size: 12px;" class="center-align">{{formatDate latestShipDate "D-MMM-YY"}}
         </td>
         <td style="font-size: 12px;" class="center-align">{{isr}}</td>
         <td style="font-size: 12px;" class="center-align">{{client}}</td>
