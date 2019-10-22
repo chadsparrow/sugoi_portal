@@ -78,7 +78,8 @@ const connectWithRetry = function() {
   return mongoose
     .connect(process.env.DB_HOST, {
       useNewUrlParser: true,
-      autoReconnect: true
+      autoReconnect: true,
+      useFindAndModify: false
     })
     .then(() => logger.info('MongoDB Connected...'))
     .catch(err => {
@@ -87,7 +88,6 @@ const connectWithRetry = function() {
     });
 };
 connectWithRetry();
-mongoose.set('useFindAndModify', false);
 
 // Load the order model from mongodb
 const Order = require('./models/Order');

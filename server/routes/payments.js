@@ -30,7 +30,7 @@ router.get('/outstanding', [ensureAuthenticated, ensureEditOrders], async (req, 
     let pageTitle = 'Payments - Balance Outstanding';
     let orders;
     if (req.user.lgUser) {
-      pagetTitle = 'LG Payments - Balance Outstanding';
+      pageTitle = 'LG Payments - Balance Outstanding';
       orders = await Order.find({
         currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] },
         paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] },
