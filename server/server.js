@@ -79,7 +79,8 @@ const connectWithRetry = function() {
     .connect(process.env.DB_HOST, {
       useNewUrlParser: true,
       autoReconnect: true,
-      useFindAndModify: false
+      useFindAndModify: false,
+      useUnifiedTopology: true
     })
     .then(() => logger.info('MongoDB Connected...'))
     .catch(err => {
