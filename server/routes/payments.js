@@ -11,7 +11,13 @@ const Order = require('../models/Order');
 router.get('/', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     let pageTitle = 'Payments - All';
-    const orders = await Order.find({ currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] } });
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = 'LG Payments - All';
+      orders = await Order.find({ currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] }, lgOrder: true });
+    } else {
+      orders = await Order.find({ currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] } });
+    }
     res.render('payments/', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
@@ -22,10 +28,20 @@ router.get('/', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
 router.get('/outstanding', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     let pageTitle = 'Payments - Balance Outstanding';
-    const orders = await Order.find({
-      currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] },
-      paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] }
-    });
+    let orders;
+    if (req.user.lgUser) {
+      pagetTitle = 'LG Payments - Balance Outstanding';
+      orders = await Order.find({
+        currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] },
+        paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] },
+        lgOrder: true
+      });
+    } else {
+      orders = await Order.find({
+        currentStatus: { $nin: ['W. CANCELLED', 'X. Archived', '1. Initial'] },
+        paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] }
+      });
+    }
     res.render('payments/', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
@@ -36,27 +52,54 @@ router.get('/outstanding', [ensureAuthenticated, ensureEditOrders], async (req, 
 router.get('/outstanding/preprod', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     let pageTitle = 'Payments - Balance Outstanding - Pre-Production';
-    const orders = await Order.find({
-      currentStatus: {
-        $in: [
-          'A. Waiting for Proof',
-          'B. Proof Started',
-          'C. Proof - Waiting on Someone else',
-          'D. Proof Ready for QC',
-          'D-1. Proof QC in Progress',
-          'E. Proof QC Complete',
-          'F. Proof Complete',
-          'G. Waiting for Revision',
-          'H. Revision - Waiting on Someone else',
-          'I. Revision Started',
-          'J. Revision Ready for QC',
-          'J-1. Revision QC in Progress',
-          'K. Revision QC Complete',
-          'L. Revision Complete'
-        ]
-      },
-      paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] }
-    });
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = 'LG Payments - Balance Outstanding - Pre-Production';
+      orders = await Order.find({
+        currentStatus: {
+          $in: [
+            'A. Waiting for Proof',
+            'B. Proof Started',
+            'C. Proof - Waiting on Someone else',
+            'D. Proof Ready for QC',
+            'D-1. Proof QC in Progress',
+            'E. Proof QC Complete',
+            'F. Proof Complete',
+            'G. Waiting for Revision',
+            'H. Revision - Waiting on Someone else',
+            'I. Revision Started',
+            'J. Revision Ready for QC',
+            'J-1. Revision QC in Progress',
+            'K. Revision QC Complete',
+            'L. Revision Complete'
+          ]
+        },
+        paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] },
+        lgOrder: true
+      });
+    } else {
+      orders = await Order.find({
+        currentStatus: {
+          $in: [
+            'A. Waiting for Proof',
+            'B. Proof Started',
+            'C. Proof - Waiting on Someone else',
+            'D. Proof Ready for QC',
+            'D-1. Proof QC in Progress',
+            'E. Proof QC Complete',
+            'F. Proof Complete',
+            'G. Waiting for Revision',
+            'H. Revision - Waiting on Someone else',
+            'I. Revision Started',
+            'J. Revision Ready for QC',
+            'J-1. Revision QC in Progress',
+            'K. Revision QC Complete',
+            'L. Revision Complete'
+          ]
+        },
+        paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] }
+      });
+    }
     res.render('payments/', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
@@ -67,26 +110,52 @@ router.get('/outstanding/preprod', [ensureAuthenticated, ensureEditOrders], asyn
 router.get('/outstanding/prod', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     let pageTitle = 'Payments - Balance Outstanding - In Production';
-    const orders = await Order.find({
-      currentStatus: {
-        $in: [
-          'M. Waiting for Output',
-          'N. Output - Waiting on Someone else',
-          'O. Output Started',
-          'P. Output Ready for QC',
-          'P-1. Output QC in Progress',
-          'Q. Output QC Complete',
-          'R. Waiting for PNT',
-          'S. PNT Ready for QC',
-          'S-1. PNT QC in Progress',
-          'T. PNT QC Complete',
-          'U. Uploaded',
-          'V. Sent to Vendor'
-        ]
-      },
-      paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] },
-      shipStatus: { $ne: 'Shipped' }
-    });
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = 'LG Payments - Balance Outstanding - In Production';
+      orders = await Order.find({
+        currentStatus: {
+          $in: [
+            'M. Waiting for Output',
+            'N. Output - Waiting on Someone else',
+            'O. Output Started',
+            'P. Output Ready for QC',
+            'P-1. Output QC in Progress',
+            'Q. Output QC Complete',
+            'R. Waiting for PNT',
+            'S. PNT Ready for QC',
+            'S-1. PNT QC in Progress',
+            'T. PNT QC Complete',
+            'U. Uploaded',
+            'V. Sent to Vendor'
+          ]
+        },
+        paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] },
+        shipStatus: { $ne: 'Shipped' },
+        lgOrder: true
+      });
+    } else {
+      orders = await Order.find({
+        currentStatus: {
+          $in: [
+            'M. Waiting for Output',
+            'N. Output - Waiting on Someone else',
+            'O. Output Started',
+            'P. Output Ready for QC',
+            'P-1. Output QC in Progress',
+            'Q. Output QC Complete',
+            'R. Waiting for PNT',
+            'S. PNT Ready for QC',
+            'S-1. PNT QC in Progress',
+            'T. PNT QC Complete',
+            'U. Uploaded',
+            'V. Sent to Vendor'
+          ]
+        },
+        paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] },
+        shipStatus: { $ne: 'Shipped' }
+      });
+    }
     res.render('payments/', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
@@ -97,7 +166,13 @@ router.get('/outstanding/prod', [ensureAuthenticated, ensureEditOrders], async (
 router.get('/outstanding/shipped', [ensureAuthenticated, ensureEditOrders], async (req, res) => {
   try {
     let pageTitle = 'Payments - Balance Outstanding - Shipped';
-    const orders = await Order.find({ shipStatus: 'Shipped', paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] } });
+    let orders;
+    if (req.user.lgUser) {
+      pageTitle = 'LG Payments - Balance Outstanding - Shipped';
+      orders = await Order.find({ shipStatus: 'Shipped', paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] }, lgOrder: true });
+    } else {
+      orders = await Order.find({ shipStatus: 'Shipped', paymentStatus: { $in: ['Balance Outstanding', 'Refund Customer'] } });
+    }
     res.render('payments/', { orders, pageTitle });
   } catch (err) {
     logger.error(err);
