@@ -178,7 +178,7 @@
         class="row align-items-center text-center"
         v-else-if="item.sizeRange !=='ONE' && item.sizeRange"
       >
-        <div class="form-group col" v-if="item.sizeRange.includes('2XS')">
+        <div class="form-group col sizeinput" v-if="item.sizeRange.includes('2XS')">
           <label for="xxs" class="small my-0">2XS</label>
           <input
             type="number"
@@ -191,7 +191,7 @@
             ref="xxs"
           />
         </div>
-        <div class="form-group col" v-if="item.sizeRange !== 'S,L'">
+        <div class="form-group col sizeinput" v-if="item.sizeRange !== 'S,L'">
           <label for="xs" class="small my-0">XS</label>
           <input
             type="number"
@@ -204,7 +204,7 @@
             ref="xs"
           />
         </div>
-        <div class="form-group col">
+        <div class="form-group col sizeinput">
           <label for="s" class="small my-0">S</label>
           <input
             type="number"
@@ -217,7 +217,7 @@
             ref="s"
           />
         </div>
-        <div class="form-group col" v-if="item.sizeRange !== 'S,L'">
+        <div class="form-group col sizeinput" v-if="item.sizeRange !== 'S,L'">
           <label for="m" class="small my-0">M</label>
           <input
             type="number"
@@ -230,7 +230,7 @@
             ref="m"
           />
         </div>
-        <div class="form-group col">
+        <div class="form-group col sizeinput">
           <label for="l" class="small my-0">L</label>
           <input
             type="number"
@@ -243,7 +243,7 @@
             ref="l"
           />
         </div>
-        <div class="form-group col" v-if="item.sizeRange !== 'S,L'">
+        <div class="form-group col sizeinput" v-if="item.sizeRange !== 'S,L'">
           <label for="xl" class="small my-0">XL</label>
           <input
             type="number"
@@ -257,7 +257,7 @@
           />
         </div>
         <div
-          class="form-group col"
+          class="form-group col sizeinput"
           v-if="item.sizeRange.includes('2XL') || item.sizeRange.includes('3XL')"
         >
           <label for="xxl" class="small my-0">2XL</label>
@@ -272,7 +272,7 @@
             ref="xxl"
           />
         </div>
-        <div class="form-group col" v-if="item.sizeRange.includes('3XL')">
+        <div class="form-group col sizeinput" v-if="item.sizeRange.includes('3XL')">
           <label for="xxxl" class="small my-0">3XL</label>
           <input
             type="number"
@@ -641,5 +641,9 @@ export default {
 span {
   font-weight: bold;
   font-size: 14px;
+}
+
+.sizeinput{
+  max-width: 200px;
 }
 </style>
