@@ -96,7 +96,7 @@
             id="childReference"
             v-model.trim="item.childReference"
             ref="childReference"
-          >
+          />
         </div>
         <div class="col">
           <label for="thread" class="small my-0">Thread:</label>
@@ -147,15 +147,15 @@
             id="personalization"
             v-model="item.personalization"
             @change="addOns"
-          >
+          />
           <label class="form-check-label" for="personalization">PRS - $10</label>
         </div>
         <div class="col">
-          <input class="form-check-input" type="checkbox" id="zap" v-model="item.zap" disabled>
+          <input class="form-check-input" type="checkbox" id="zap" v-model="item.zap" disabled />
           <label class="form-check-label" for="zap">ZAP - $5</label>
         </div>
       </div>
-      <hr class="my-2">
+      <hr class="my-2" />
       <div
         class="row align-items-center text-center"
         v-if="item.sizeRange ==='ONE' && item.sizeRange"
@@ -171,7 +171,7 @@
             v-model.number="item.one"
             @change="setTotalUnits"
             ref="one"
-          >
+          />
         </div>
       </div>
       <div
@@ -189,9 +189,9 @@
             v-model.number="item.xxs"
             @change="setTotalUnits"
             ref="xxs"
-          >
+          />
         </div>
-        <div class="form-group col">
+        <div class="form-group col" v-if="item.sizeRange !== 'S,L'">
           <label for="xs" class="small my-0">XS</label>
           <input
             type="number"
@@ -202,7 +202,7 @@
             v-model.number="item.xs"
             @change="setTotalUnits"
             ref="xs"
-          >
+          />
         </div>
         <div class="form-group col">
           <label for="s" class="small my-0">S</label>
@@ -215,9 +215,9 @@
             v-model.number="item.s"
             @change="setTotalUnits"
             ref="s"
-          >
+          />
         </div>
-        <div class="form-group col">
+        <div class="form-group col" v-if="item.sizeRange !== 'S,L'">
           <label for="m" class="small my-0">M</label>
           <input
             type="number"
@@ -228,7 +228,7 @@
             v-model.number="item.m"
             @change="setTotalUnits"
             ref="m"
-          >
+          />
         </div>
         <div class="form-group col">
           <label for="l" class="small my-0">L</label>
@@ -241,9 +241,9 @@
             v-model.number="item.l"
             @change="setTotalUnits"
             ref="l"
-          >
+          />
         </div>
-        <div class="form-group col">
+        <div class="form-group col" v-if="item.sizeRange !== 'S,L'">
           <label for="xl" class="small my-0">XL</label>
           <input
             type="number"
@@ -254,7 +254,7 @@
             v-model.number="item.xl"
             @change="setTotalUnits"
             ref="xl"
-          >
+          />
         </div>
         <div
           class="form-group col"
@@ -270,7 +270,7 @@
             v-model.number="item.xxl"
             @change="setTotalUnits"
             ref="xxl"
-          >
+          />
         </div>
         <div class="form-group col" v-if="item.sizeRange.includes('3XL')">
           <label for="xxxl" class="small my-0">3XL</label>
@@ -282,10 +282,10 @@
             v-model.number="item.xxxl"
             @change="setTotalUnits"
             ref="xxxl"
-          >
+          />
         </div>
       </div>
-      <hr class="my-2">
+      <hr class="my-2" />
       <div class="row p-0 m-0 align-items-center text-center">
         <div class="col" v-if="orderLine.graphicColours > 0 || orderLine.colour1">
           <div class="row">
@@ -336,13 +336,13 @@
 
         <div class="col text-center">
           Total Units
-          <br>
+          <br />
           <span>{{item.totalUnits}}</span>
         </div>
 
         <div class="col">
           Unit Price ({{order.currency}}{{priceBreak}})
-          <br>
+          <br />
           <span>$ {{formatPrice(unitPrice)}}</span>
         </div>
 
@@ -357,12 +357,12 @@
             @change="finalUnitPrice"
             v-model.number="item.itemDiscount"
             style="font-weight: bold; font-size: 14px;"
-          >
+          />
         </div>
 
         <div class="col">
           Final Unit Price
-          <br>
+          <br />
           <span>$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
       </div>
@@ -377,7 +377,7 @@
           id="itemNote"
           placeholder="Enter item note here..."
           v-model.trim="item.itemNote"
-        >
+        />
       </div>
       <button class="btn btn-sm btn-success float-right" @click.prevent="commitItem">Commit Item</button>
     </div>
@@ -386,268 +386,255 @@
 
 <script>
 export default {
-  name: "EditItem",
+  name: 'EditItem',
   data() {
     return {
       itemIndex: this.$route.params.itemIndex,
       lineIndex: this.$route.params.lineIndex,
       isCommitted: false
-    };
+    }
   },
   beforeRouteLeave(to, from, next) {
     if (this.isCommitted) {
-      next();
+      next()
     } else {
-      alert("You must click commit to leave this page!");
-      next(false);
+      alert('You must click commit to leave this page!')
+      next(false)
     }
   },
   computed: {
     order() {
-      return this.$store.state.order;
+      return this.$store.state.order
     },
     orderLine() {
-      return this.$store.state.order.orderLines[this.lineIndex];
+      return this.$store.state.order.orderLines[this.lineIndex]
     },
     item() {
-      return this.$store.state.order.orderLines[this.lineIndex].items[
-        this.itemIndex
-      ];
+      return this.$store.state.order.orderLines[this.lineIndex].items[this.itemIndex]
     },
     styles() {
-      return this.$store.state.styles;
+      return this.$store.state.styles
     },
     lgstyles() {
-      return this.$store.state.lgstyles;
+      return this.$store.state.lgstyles
     },
     swatches() {
-      return this.$store.state.swatches;
+      return this.$store.state.swatches
     },
     priceBreak() {
-      return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
+      return this.$store.state.order.orderLines[this.lineIndex].priceBreak
     },
     unitPrice() {
-      return this.$store.state.order.orderLines[this.lineIndex].items[
-        this.itemIndex
-      ].unitPrice;
+      return this.$store.state.order.orderLines[this.lineIndex].items[this.itemIndex].unitPrice
     },
     discountAmount() {
-      return this.item.unitPrice * (this.item.itemDiscount / 100);
+      return this.item.unitPrice * (this.item.itemDiscount / 100)
     }
   },
   methods: {
     formatPrice(value) {
-      let val = (value / 1).toFixed(2);
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      let val = (value / 1).toFixed(2)
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     selectStyle() {
       if (this.item.selectedStyle != -1) {
-        this.$store.dispatch("setSelectedStyle", {
+        this.$store.dispatch('setSelectedStyle', {
           lineIndex: this.lineIndex,
           itemIndex: this.itemIndex
-        });
+        })
       }
     },
     selectConfig() {
-      if (
-        this.item.selectedConfig !== undefined ||
-        this.item.selectedConfig > -1
-      ) {
-        this.$store.dispatch("setSelectedConfig", {
+      if (this.item.selectedConfig !== undefined || this.item.selectedConfig > -1) {
+        this.$store.dispatch('setSelectedConfig', {
           lineIndex: this.lineIndex,
           itemIndex: this.itemIndex
-        });
+        })
       }
     },
     setTotalUnits() {
-      this.$store.commit("SET_ITEM_TOTAL_UNITS", {
+      this.$store.commit('SET_ITEM_TOTAL_UNITS', {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex
-      });
+      })
     },
     addOns() {
-      this.$store.commit("ADD_ONS", {
+      this.$store.commit('ADD_ONS', {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex
-      });
+      })
     },
     setFlo() {
-      this.$store.commit("SET_FLO", {
+      this.$store.commit('SET_FLO', {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex,
-        inkType: "D"
-      });
+        inkType: 'D'
+      })
 
       if (this.$refs.colour1 != undefined) {
         if (
-          this.$refs.colour1.value === "ELECTRIC SALMON" ||
-          this.$refs.colour1.value.includes("Flo ")
+          this.$refs.colour1.value === 'ELECTRIC SALMON' ||
+          this.$refs.colour1.value.includes('Flo ')
         ) {
-          this.$store.commit("SET_FLO", {
+          this.$store.commit('SET_FLO', {
             lineIndex: this.lineIndex,
             itemIndex: this.itemIndex,
-            inkType: "F"
-          });
+            inkType: 'F'
+          })
         }
       }
       if (this.$refs.colour2 != undefined) {
         if (
-          this.$refs.colour2.value === "ELECTRIC SALMON" ||
-          this.$refs.colour2.value.includes("Flo ")
+          this.$refs.colour2.value === 'ELECTRIC SALMON' ||
+          this.$refs.colour2.value.includes('Flo ')
         ) {
-          this.$store.commit("SET_FLO", {
+          this.$store.commit('SET_FLO', {
             lineIndex: this.lineIndex,
             itemIndex: this.itemIndex,
-            inkType: "F"
-          });
+            inkType: 'F'
+          })
         }
       }
 
       if (this.$refs.colour3 != undefined) {
         if (
-          this.$refs.colour3.value === "ELECTRIC SALMON" ||
-          this.$refs.colour3.value.includes("Flo ")
+          this.$refs.colour3.value === 'ELECTRIC SALMON' ||
+          this.$refs.colour3.value.includes('Flo ')
         ) {
-          this.$store.commit("SET_FLO", {
+          this.$store.commit('SET_FLO', {
             lineIndex: this.lineIndex,
             itemIndex: this.itemIndex,
-            inkType: "F"
-          });
+            inkType: 'F'
+          })
         }
       }
     },
     finalUnitPrice() {
-      this.$store.dispatch("setFinalUnitPrice", {
+      this.$store.dispatch('setFinalUnitPrice', {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex
-      });
+      })
     },
     commitItem() {
-      if (this.$refs.styleInput.value === "") {
-        this.$refs.styleInput.focus();
-        alert("Style not selected!");
-        return;
+      if (this.$refs.styleInput.value === '') {
+        this.$refs.styleInput.focus()
+        alert('Style not selected!')
+        return
       }
-      if (this.$refs.configInput.value === "") {
-        this.$refs.configInput.focus();
-        alert("Configuration not selected!");
-        return;
-      }
-
-      if (this.$refs.threadInput.value === "") {
-        this.$refs.threadInput.focus();
-        alert("Thread not selected!");
-        return;
-      }
-      if (
-        this.$refs.zipperInput != undefined &&
-        this.$refs.zipperInput.value === ""
-      ) {
-        this.$refs.zipperInput.focus();
-        alert("Zipper not selected!");
-        return;
+      if (this.$refs.configInput.value === '') {
+        this.$refs.configInput.focus()
+        alert('Configuration not selected!')
+        return
       }
 
-      if (
-        this.$refs.contrastInput != undefined &&
-        this.$refs.contrastInput.value === ""
-      ) {
-        this.$refs.contrastInput.focus();
-        alert("Contrast not selected!");
-        return;
+      if (this.$refs.threadInput.value === '') {
+        this.$refs.threadInput.focus()
+        alert('Thread not selected!')
+        return
+      }
+      if (this.$refs.zipperInput != undefined && this.$refs.zipperInput.value === '') {
+        this.$refs.zipperInput.focus()
+        alert('Zipper not selected!')
+        return
       }
 
-      if (this.$refs.colour1 != undefined && this.$refs.colour1.value === "") {
-        this.$refs.colour1.focus();
-        alert("Fill in Colours for QD");
-        return;
-      }
-      if (this.$refs.colour2 != undefined && this.$refs.colour2.value === "") {
-        this.$refs.colour2.focus();
-        alert("Fill in Colours for QD");
-        return;
-      }
-      if (this.$refs.colour3 != undefined && this.$refs.colour3.value === "") {
-        this.$refs.colour3.focus();
-        alert("Fill in Colours for QD");
-        return;
+      if (this.$refs.contrastInput != undefined && this.$refs.contrastInput.value === '') {
+        this.$refs.contrastInput.focus()
+        alert('Contrast not selected!')
+        return
       }
 
-      if (this.$refs.one != undefined && this.$refs.one.value == "") {
-        this.item.one = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
+      if (this.$refs.colour1 != undefined && this.$refs.colour1.value === '') {
+        this.$refs.colour1.focus()
+        alert('Fill in Colours for QD')
+        return
       }
-      if (this.$refs.xxs != undefined && this.$refs.xxs.value == "") {
-        this.item.xxs = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
+      if (this.$refs.colour2 != undefined && this.$refs.colour2.value === '') {
+        this.$refs.colour2.focus()
+        alert('Fill in Colours for QD')
+        return
       }
-      if (this.$refs.xs != undefined && this.$refs.xs.value == "") {
-        this.item.xs = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
-      }
-      if (this.$refs.s != undefined && this.$refs.s.value == "") {
-        this.item.s = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
-      }
-      if (this.$refs.m != undefined && this.$refs.m.value == "") {
-        this.item.m = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
-      }
-      if (this.$refs.l != undefined && this.$refs.l.value == "") {
-        this.item.l = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
-      }
-      if (this.$refs.xl != undefined && this.$refs.xl.value == "") {
-        this.item.xl = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
-      }
-      if (this.$refs.xxl != undefined && this.$refs.xxl.value == "") {
-        this.item.xxl = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
-      }
-      if (this.$refs.xxxl != undefined && this.$refs.xxxl.value == "") {
-        this.item.xxxl = 0;
-        this.$store.commit("SET_ITEM_TOTAL_UNITS", {
-          lineIndex: this.lineIndex,
-          itemIndex: this.itemIndex
-        });
+      if (this.$refs.colour3 != undefined && this.$refs.colour3.value === '') {
+        this.$refs.colour3.focus()
+        alert('Fill in Colours for QD')
+        return
       }
 
-      this.isCommitted = true;
+      if (this.$refs.one != undefined && this.$refs.one.value == '') {
+        this.item.one = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.xxs != undefined && this.$refs.xxs.value == '') {
+        this.item.xxs = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.xs != undefined && this.$refs.xs.value == '') {
+        this.item.xs = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.s != undefined && this.$refs.s.value == '') {
+        this.item.s = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.m != undefined && this.$refs.m.value == '') {
+        this.item.m = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.l != undefined && this.$refs.l.value == '') {
+        this.item.l = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.xl != undefined && this.$refs.xl.value == '') {
+        this.item.xl = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.xxl != undefined && this.$refs.xxl.value == '') {
+        this.item.xxl = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
+      if (this.$refs.xxxl != undefined && this.$refs.xxxl.value == '') {
+        this.item.xxxl = 0
+        this.$store.commit('SET_ITEM_TOTAL_UNITS', {
+          lineIndex: this.lineIndex,
+          itemIndex: this.itemIndex
+        })
+      }
 
-      this.$store.dispatch("setAddOns", this.lineIndex);
-      this.$store.dispatch("setFinalUnitPrice", {
+      this.isCommitted = true
+
+      this.$store.dispatch('setAddOns', this.lineIndex)
+      this.$store.dispatch('setFinalUnitPrice', {
         lineIndex: this.lineIndex,
         itemIndex: this.itemIndex
-      });
-      this.$router.push({ path: `/${this.order.orderNum}` });
+      })
+      this.$router.push({ path: `/${this.order.orderNum}` })
     }
   }
-};
+}
 </script>
 
 <style scoped>
