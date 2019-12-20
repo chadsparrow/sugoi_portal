@@ -40,14 +40,20 @@ router.get('/po/:orderNum', ensureAuthenticated, async (req, res) => {
     let items = [];
 
     const order = await Order.findOne({ orderNum: req.params.orderNum });
+    const vendor = order.vendor
 
     for (let orderLine of order.orderLines) {
       if (!orderLine.cancelled) {
         for (let item of orderLine.items) {
           if (!item.cancelled) {
+            if (vendor === "PNR"){
+              item.unitCost = 0;
+            }
+            
             if (item.personalization === true) {
               item.unitCost += 5.0;
             }
+            
             items.push(item);
           }
         }
