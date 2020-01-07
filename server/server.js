@@ -23,8 +23,8 @@ const DateDiff = require("date-diff");
 // initializes the app using express
 const app = express();
 
-const privateKey = fs.readFileSync("certs/sugoi.com.key", "utf8");
-const certificate = fs.readFileSync("certs/ssl_certificate.crt", "utf8");
+const privateKey = fs.readFileSync("./certs/sugoi.com.key", "utf8");
+const certificate = fs.readFileSync("./certs/ssl_certificate.crt", "utf8");
 let credentials = { key: privateKey, cert: certificate };
 
 // initialize helmet security

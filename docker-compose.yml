@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 networks:
   default:
@@ -11,7 +11,7 @@ services:
     restart: always
     image: mongo:4.0
     ports:
-      - '27017:27017'
+      - "27017:27017"
     volumes:
       - /data/storage/sugoi-custom-proofs.mongodb:/data/db
       - /data/storage/sugoi-custom-proofs.mongodb/backups:/data/db/backups
@@ -27,9 +27,9 @@ services:
     restart: always
     working_dir: /usr/src/app/server
     ports:
-      - '5000:5000'
+      - "5000:5000"
     volumes:
-      - /data/certs/sugoi:/usr/src/app/server/certs
+      #- /data/certs/sugoi:/usr/src/app/server/certs
       - /data/logs/sugoi-custom-proofs/npm:/root/.npm/
     depends_on:
       - mongo
