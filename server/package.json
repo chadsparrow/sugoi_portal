@@ -1,6 +1,6 @@
 {
   "name": "sugoi-custom-portal",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Sugoi Custom Portal",
   "main": "server.js",
   "scripts": {
