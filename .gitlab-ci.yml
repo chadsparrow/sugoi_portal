@@ -51,7 +51,7 @@ Build staging:
       --pull
       --build-arg VCS_REF=staging
       --build-arg VCS_URL=$CI_PROJECT_URL
-      --cache-from $CI_REGISTRY_IMAGE/app:staging
-      --tag $CI_REGISTRY_IMAGE/app:staging
+      --cache-from $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME
+      --tag $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME
       .
-    - docker push $CI_REGISTRY_IMAGE/app:staging
+    - docker push $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME
