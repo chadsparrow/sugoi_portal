@@ -4,7 +4,7 @@
     {{#if paymentNotes}}
     <div class="card col s12" style="padding: 0px;">
       <div class="card-title black white-text" style="margin:0px; padding:2px">
-        <span>Current Note: <small>{{formatDate paymentNotesDate "ddd MMM YYYY hh:mm a"}}</small></span>
+        <span>Current Note: <small>{{formatDate paymentNotesDate "DD MMM YYYY hh:mm a"}}</small></span>
       </div>
       <div class="card-content">
         {{paymentNotes}}
@@ -16,7 +16,7 @@
     {{#each logs}}
     <div class="card col s12" style="padding: 0px;">
       <div class="card-title grey lighten-3" style="margin:0px; padding:2px">
-        <small>{{#if date}}{{formatDate date "ddd MMM YYYY hh:mm a"}}{{/if}}</small>
+        <small>{{#if date}}{{formatDate date "DD MMM YYYY hh:mm a"}}{{/if}}</small>
       </div>
       <div class="card-content">
         {{note}}
