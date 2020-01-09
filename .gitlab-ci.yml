@@ -41,7 +41,7 @@ Build staging:
     - staging
   script:
     # fetches the latest image (not failing if image is not found)
-    # socker pull $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME || true
+    - docker pull $CI_REGISTRY_IMAGE/app:staging || true
     # builds the project, passing vcs vars for LABEL
     # notice the cache-from, which is going to use the image we just pulled locally
     # the built image is tagged locally with the commit SHA, and then pushed to
@@ -51,7 +51,7 @@ Build staging:
       --pull
       --build-arg VCS_REF=staging
       --build-arg VCS_URL=$CI_PROJECT_URL
-      --cache-from $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME
-      --tag $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME
+      --cache-from $CI_REGISTRY_IMAGE/app:staging
+      --tag $CI_REGISTRY_IMAGE/app:staging
       .
-    - docker push $CI_REGISTRY_IMAGE/app:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE/app:staging
