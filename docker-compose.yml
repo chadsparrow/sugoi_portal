@@ -29,7 +29,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      #- /data/certs/sugoi:/usr/src/app/server/certs
+      - /data/certs/sugoi:/usr/src/app/server/certs
       - /data/logs/sugoi-custom-proofs/npm:/root/.npm/
     depends_on:
       - mongo

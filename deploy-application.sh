@@ -32,23 +32,39 @@ function checkDependency {
 checkDependency "jq" "https://stedolan.github.io/jq/"
 checkDependency "sshpass" "https://gist.github.com/arunoda/7790979"
 
+LGS_HOST_ENVIRONMENT=$1
 
 ## --------------- LOAD AND EXPORT MANIFEST VARIABLES ---------------------
 
 printf "\nLOADING MANIFEST >>>\n"
 
-    # Read manifest json and export to local environment variables
-    if [ -f "manifest.json" ]; then
-        manifest=$(cat manifest.json)
+    # Read manifest json or manifest-staging json based on host environment and export to local environment variables
+    if [[ $LGS_HOST_ENVIRONMENT = "stage" ]]; then
+        if [ -f "manifest-staging.json" ]; then
+            manifest=$(cat manifest-staging.json)
 
-        for s in $(echo $manifest | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' ); do
-            echo "     - loaded : ${s}"
-            export ${s}
-        done
+            for s in $(echo $manifest | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' ); do
+                echo "     - loaded : ${s}"
+                export ${s}
+            done
+        else
+            echo "ERROR: No app manifest found"
+            exit 1
+        fi
     else
-       echo "ERROR: No app manifest found"
-       exit 1
+        if [ -f "manifest.json" ]; then
+            manifest=$(cat manifest.json)
+
+            for s in $(echo $manifest | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' ); do
+                echo "     - loaded : ${s}"
+                export ${s}
+            done
+        else
+            echo "ERROR: No app manifest found"
+            exit 1
+        fi
     fi
+
     export LGS_DOCKER_IMAGE1="${LGS_DOCKER_REGISTRY_SERVER}:${LGS_APP_VER}"
 
 printf "\n<<< LOADING DONE\n"
@@ -59,7 +75,7 @@ printf "\n<<< LOADING DONE\n"
 printf "\nSTART DEPLOYMENT >>>\n"
    
     # Host server IP Configuration
-    LGS_HOST_ENVIRONMENT=$1
+    # LGS_HOST_ENVIRONMENT=$1
     LGS_HOST_ENVIRONMENT_DOMAIN=""
 
     if [[ $LGS_HOST_ENVIRONMENT =~ ^stage|prod|ext$ ]]; then
@@ -116,17 +132,17 @@ printf "\nSTART DEPLOYMENT >>>\n"
         read -s host_password
     printf "<<< GATHERING INFORMATION\n"
 
-    printf "\nBUILDING IMAGE >>>\n"
-        sleep 1
-        docker login registry.gitlab.com -u ${GitLab_user} -p ${GitLab_password} && \
-        docker build -t ${LGS_DOCKER_IMAGE1} --pull .
-    printf "<<< BUILD DONE\n"
+    # printf "\nBUILDING IMAGE >>>\n"
+    #    sleep 1
+    #    docker login registry.gitlab.com -u ${GitLab_user} -p ${GitLab_password} && \
+    #     docker build -t ${LGS_DOCKER_IMAGE1} --pull .
+    # printf "<<< BUILD DONE\n"
 
 
-    printf "\nPUSHING IMAGE TO GITLAB >>>\n"
-        sleep 1
-        docker push ${LGS_DOCKER_IMAGE1}
-    printf "<<< PUSH DONE\n"
+    # printf "\nPUSHING IMAGE TO GITLAB >>>\n"
+    #    sleep 1
+    #    docker push ${LGS_DOCKER_IMAGE1}
+    # printf "<<< PUSH DONE\n"
 
     printf "\nCONFIGURING REMOTE HOST >>>\n"
         #Create Application Directory on Host
