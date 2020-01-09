@@ -15,7 +15,7 @@ router.get("/", ensureAuthenticated, async (req, res) => {
     if (req.user.lgUser) {
       styles = await LGStyle.find();
     } else {
-      styles = await Style.find({ inactive: { $ne: true } });
+      styles = await Style.find();
     }
     res.json(styles);
   } catch (err) {

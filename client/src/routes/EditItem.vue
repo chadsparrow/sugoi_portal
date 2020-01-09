@@ -23,6 +23,7 @@
               :key="index"
               :index="index"
               :value="index"
+              :disabled="style.inactive"
             >{{style.style}}-{{style.description}}</option>
           </select>
         </div>
