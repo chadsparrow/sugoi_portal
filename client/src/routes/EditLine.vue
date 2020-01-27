@@ -116,6 +116,9 @@
                 <option value="DEJ">Deep Jade</option>
                 <option value="LCH">Lichen</option>
                 <option value="LGR">Light Grey</option>
+                <option value="SHD">Shred</option>
+                <option value="CRK">Creek</option>
+                <option value="EVG">Evergreen</option>
               </select>
             </div>
           </div>
