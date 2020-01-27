@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Float = require('mongoose-float').loadType(mongoose, 2);
+const mongoose = require("mongoose");
+const Float = require("mongoose-float").loadType(mongoose, 2);
 const Schema = mongoose.Schema;
-const timestamps = require('mongoose-timestamp');
+const timestamps = require("mongoose-timestamp");
 
 // Create Order Schema
 const OrderSchema = new Schema({
@@ -23,7 +23,7 @@ const OrderSchema = new Schema({
   },
   currentStatus: {
     type: String,
-    default: '1. Initial'
+    default: "1. Initial"
   },
   priority: {
     type: String,
@@ -93,7 +93,7 @@ const OrderSchema = new Schema({
   vendor: {
     type: String,
     uppercase: true,
-    default: 'CCN'
+    default: "CCN"
   },
   sentVendor: {
     type: Date,
@@ -114,7 +114,7 @@ const OrderSchema = new Schema({
   currency: {
     type: String,
     uppercase: true,
-    default: 'USD'
+    default: "USD"
   },
   latestShipDate: {
     type: Date,
@@ -388,6 +388,9 @@ const OrderSchema = new Schema({
     type: Boolean,
     default: false
   },
+  use2020Pricing: {
+    type: Boolean
+  },
   orderLines: [
     {
       lineNumber: {
@@ -409,7 +412,7 @@ const OrderSchema = new Schema({
       },
       graphicCode: {
         type: String,
-        default: 'CUSTM',
+        default: "CUSTM",
         uppercase: true
       },
       graphicColours: {
@@ -418,7 +421,7 @@ const OrderSchema = new Schema({
       },
       colourWayCode: {
         type: String,
-        default: 'SUB',
+        default: "SUB",
         uppercase: true
       },
       tracingCharge: {
@@ -500,7 +503,7 @@ const OrderSchema = new Schema({
           },
           inkType: {
             type: String,
-            default: 'D',
+            default: "D",
             uppercase: true
           },
           zipper: {
@@ -595,6 +598,11 @@ const OrderSchema = new Schema({
             type: Number,
             default: 0
           },
+          itemDiscountType: {
+            type: String,
+            enum: ["%", "$"],
+            default: "%"
+          },
           finalUnitPrice: {
             type: Number,
             default: 0
@@ -612,15 +620,15 @@ const OrderSchema = new Schema({
           zipperOptions: [],
           colour1: {
             type: String,
-            default: ''
+            default: ""
           },
           colour2: {
             type: String,
-            default: ''
+            default: ""
           },
           colour3: {
             type: String,
-            default: ''
+            default: ""
           },
           gender: {
             type: String
@@ -644,4 +652,4 @@ const OrderSchema = new Schema({
 
 OrderSchema.plugin(timestamps);
 
-module.exports = mongoose.model('orders', OrderSchema);
+module.exports = mongoose.model("orders", OrderSchema);

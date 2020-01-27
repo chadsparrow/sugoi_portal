@@ -1,6 +1,6 @@
 {
   "name": "sugoi-custom-portal",
-  "version": "1.6.6",
+  "version": "2.0.0",
   "description": "Sugoi Custom Portal",
   "main": "server.js",
   "scripts": {
@@ -12,10 +12,12 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "colors": "^1.4.0",
     "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.5",
     "cron": "^1.5.0",
+    "csvtojson": "^2.0.10",
     "date-diff": "^0.2.1",
     "dayjs": "^1.8.9",
     "delivery-tracker": "^2.0.2",

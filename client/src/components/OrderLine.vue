@@ -1,18 +1,16 @@
 <template>
   <div v-if="cancelled === false">
     <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
-    <hr>
+    <hr />
     <div class="card border-secondary mb-3 line-card" :id="orderLine.lineNumber">
       <div class="card-header bg-secondary text-light p-1 justify-items-center">
         <span>Line: {{orderLine.lineNumber}}</span>
         <div
           class="badge badge-warning text-center ml-3"
-          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null && (orderLine.priceBreak == 2 || orderLine.priceBreak == 6 || orderLine.priceBreak == 12 || orderLine.priceBreak == 24)"
-        >Quick Design - 10% OFF</div>
+          v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
+        >Quick Design Discount</div>
       </div>
       <div class="card-body m-0 p-1">
-        <span class="d-print-none" v-if="!order.lgOrder && !orderLine.useLGPricing">SUGOI</span>
-        <span class="d-print-none" v-if="!order.lgOrder && orderLine.useLGPricing">SOMBRIO</span>
         <div class="row m-0 mb-3">
           <div class="col">
             Job Type:
@@ -111,18 +109,18 @@
 </template>
 
 <script>
-import LineItem from "./LineItem.vue";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
+import LineItem from './LineItem.vue'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
-  name: "OrderLine",
-  props: ["index"],
+  name: 'OrderLine',
+  props: ['index'],
   data() {
     return {
       fullPage: true,
-      title: "Lines"
-    };
+      title: 'Lines'
+    }
   },
   components: {
     LineItem,
@@ -130,47 +128,47 @@ export default {
   },
   computed: {
     order() {
-      return this.$store.state.order;
+      return this.$store.state.order
     },
     orderLine() {
-      return this.$store.state.order.orderLines[this.index];
+      return this.$store.state.order.orderLines[this.index]
     },
     totalBeforeAddOns() {
-      return this.$store.getters.totalBeforeAddOns(this.index);
+      return this.$store.getters.totalBeforeAddOns(this.index)
     },
     cancelled() {
-      return this.$store.getters.lineCancelled(this.index);
+      return this.$store.getters.lineCancelled(this.index)
     },
     isLoading() {
-      return this.$store.getters.isLoading;
+      return this.$store.getters.isLoading
     },
     disabledEdit() {
-      return this.$store.getters.disableEdit;
+      return this.$store.getters.disableEdit
     }
   },
   methods: {
     formatPrice(value) {
-      let val = (value / 1).toFixed(2);
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      let val = (value / 1).toFixed(2)
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     cancelLine() {
-      let checkdelete = confirm("Are you sure?");
+      let checkdelete = confirm('Are you sure?')
       if (checkdelete) {
-        this.$store.dispatch("cancelLine", this.index);
+        this.$store.dispatch('cancelLine', this.index)
       }
     },
     addItem() {
       this.$store
-        .dispatch("addItem", this.index)
+        .dispatch('addItem', this.index)
         .then(itemLength => {
-          this.$router.push({ path: `/edititem/${this.index}/${itemLength}` });
+          this.$router.push({ path: `/edititem/${this.index}/${itemLength}` })
         })
         .catch(err => {
           //
-        });
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -1,13 +1,13 @@
-version: '3'
+version: "3"
 
 services:
   server:
     container_name: sugoi_portal
     command: npm run dev
-    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/server:1.0.0
+    image: registry.gitlab.com/garneau-dev/sugoi/custom-proofs/app:staging
     restart: always
     ports:
-      - '5000:5000'
+      - "5000:5000"
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
@@ -22,7 +22,7 @@ services:
     restart: always
     image: mongo
     ports:
-      - '27017:27017'
+      - "27017:27017"
     volumes:
       - mongodbdata:/data/db
     env_file:
