@@ -1,29 +1,32 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated, ensureAdmin } = require('../helpers/auth');
-const moment = require('moment');
-const dayjs = require('dayjs');
-const logger = require('../helpers/logs');
+const { ensureAuthenticated, ensureAdmin } = require("../helpers/auth");
+const moment = require("moment");
+const dayjs = require("dayjs");
+const logger = require("../helpers/logs");
 
-const Report = require('../models/Report');
-const Order = require('../models/Order');
+const Report = require("../models/Report");
+const Order = require("../models/Order");
 
-router.get('/', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+router.get("/", [ensureAuthenticated, ensureAdmin], async (req, res) => {
   try {
-    const currentWeekNum = moment(dayjs().format()).format('W');
-    const reports = await Report.find().sort({ reportYear: -1, reportWeekNumber: -1 });
+    const currentWeekNum = moment(dayjs().format()).format("W");
+    const reports = await Report.find().sort({
+      reportYear: -1,
+      reportWeekNumber: -1
+    });
     const report = await Report.findOne({ reportWeekNumber: currentWeekNum });
-    res.render('reports/index', { reports, report });
+    res.render("reports/index", { reports, report });
   } catch (err) {
     logger.error(err);
   }
 });
 
-router.get('/items', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+router.get("/items", [ensureAuthenticated, ensureAdmin], async (req, res) => {
   try {
-    const pageTitle = 'Items Sold';
+    const pageTitle = "Items Sold";
     let itemsOrdered = {};
-    const orders = await Order.find({ currentStatus: 'V. Sent to Vendor' });
+    const orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
 
     for (order of orders) {
       let orderLines = order.orderLines;
@@ -40,82 +43,115 @@ router.get('/items', [ensureAuthenticated, ensureAdmin], async (req, res) => {
         }
       }
     }
-    res.render('reports/items', { itemsOrdered, pageTitle });
+    res.render("reports/items", { itemsOrdered, pageTitle });
   } catch (err) {
     logger.error(err);
   }
 });
 
-router.get('/qd', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+router.get("/qd", [ensureAuthenticated, ensureAdmin], async (req, res) => {
   try {
-    const pageTitle = 'Quick Design';
+    const pageTitle = "Quick Design";
     let itemsOrdered = {};
-    const orders = await Order.find({ currentStatus: 'V. Sent to Vendor' });
+    const orders = await Order.find({ currentStatus: "V. Sent to Vendor" });
 
     for (order of orders) {
       let orderLines = order.orderLines;
       for (orderLine of orderLines) {
-        if (orderLine.graphicCode != 'CUSTM' && orderLine.colourWayCode != 'SUB' && !orderLine.cancelled) {
+        if (
+          orderLine.graphicCode != "CUSTM" &&
+          orderLine.colourWayCode != "SUB" &&
+          !orderLine.cancelled
+        ) {
           let items = orderLine.items;
           for (item of items) {
-            if (`${orderLine.graphicCode} - ${orderLine.colourWayCode}` in itemsOrdered) {
-              itemsOrdered[`${orderLine.graphicCode} - ${orderLine.colourWayCode}`] += item.totalUnits;
+            if (
+              `${orderLine.graphicCode} - ${orderLine.colourWayCode}` in
+              itemsOrdered
+            ) {
+              itemsOrdered[
+                `${orderLine.graphicCode} - ${orderLine.colourWayCode}`
+              ] += item.totalUnits;
             } else {
-              itemsOrdered[`${orderLine.graphicCode} - ${orderLine.colourWayCode}`] = item.totalUnits;
+              itemsOrdered[
+                `${orderLine.graphicCode} - ${orderLine.colourWayCode}`
+              ] = item.totalUnits;
             }
           }
         }
       }
     }
-    res.render('reports/qd', { itemsOrdered, pageTitle });
+    res.render("reports/qd", { itemsOrdered, pageTitle });
   } catch (err) {
     logger.error(err);
   }
 });
 
-router.get('/linechart/', [ensureAuthenticated, ensureAdmin], async (req, res) => {
-  try {
-    let proofsCompleted = [];
-    let revisionsCompleted = [];
-    let outputCompleted = [];
-    let weekNumbers = [];
-    let avgProofs = [];
-    let avgRevisions = [];
-    let avgOutput = [];
-    const reports = await Report.find({ reportYear: 2019 }).sort({ reportWeekNumber: 1 });
-    for (report of reports) {
-      proofsCompleted.push(report.proofsCompleted);
-      revisionsCompleted.push(report.revisionsCompleted);
-      outputCompleted.push(report.outputCompleted);
-      weekNumbers.push(report.reportWeekNumber);
-      avgProofs.push(report.avgProofs);
-      avgRevisions.push(report.avgRevisions);
-      avgOutput.push(report.avgOutput);
+router.get(
+  "/linechart/",
+  [ensureAuthenticated, ensureAdmin],
+  async (req, res) => {
+    try {
+      let proofsCompleted = [];
+      let revisionsCompleted = [];
+      let outputCompleted = [];
+      let weekNumbers = [];
+      let avgProofs = [];
+      let avgRevisions = [];
+      let avgOutput = [];
+      const reports = await Report.find().sort({
+        reportYear: 1,
+        reportWeekNumber: 1
+      });
+      for (report of reports) {
+        proofsCompleted.push(report.proofsCompleted);
+        revisionsCompleted.push(report.revisionsCompleted);
+        outputCompleted.push(report.outputCompleted);
+        weekNumbers.push(report.reportWeekNumber);
+        avgProofs.push(report.avgProofs);
+        avgRevisions.push(report.avgRevisions);
+        avgOutput.push(report.avgOutput);
+      }
+      res.render("reports/linechart", {
+        proofsCompleted,
+        revisionsCompleted,
+        outputCompleted,
+        weekNumbers,
+        avgProofs,
+        avgRevisions,
+        avgOutput
+      });
+    } catch (err) {
+      logger.error(err);
     }
-    res.render('reports/linechart', { proofsCompleted, revisionsCompleted, outputCompleted, weekNumbers, avgProofs, avgRevisions, avgOutput });
-  } catch (err) {
-    logger.error(err);
   }
-});
+);
 
-router.get('/week/:weekNum', [ensureAuthenticated, ensureAdmin], async (req, res) => {
-  try {
-    const weekNum = req.params.weekNum;
-    const reports = await Report.find().sort({ reportWeekNumber: -1 });
-    const report = await Report.findOne({ reportWeekNumber: weekNum });
-    res.render('reports/index', { reports, report });
-  } catch (err) {
-    logger.error(err);
+router.get(
+  "/week/:weekNum",
+  [ensureAuthenticated, ensureAdmin],
+  async (req, res) => {
+    try {
+      const weekNum = req.params.weekNum;
+      const reports = await Report.find().sort({
+        reportYear: -1,
+        reportWeekNumber: -1
+      });
+      const report = await Report.findOne({ reportWeekNumber: weekNum });
+      res.render("reports/index", { reports, report });
+    } catch (err) {
+      logger.error(err);
+    }
   }
-});
+);
 
 // PRE-PRODUCTION REPORT
-router.get('/preprod', [ensureAuthenticated, ensureAdmin], async (req, res) => {
+router.get("/preprod", [ensureAuthenticated, ensureAdmin], async (req, res) => {
   try {
-    let pageTitle = 'Pre-Production Report';
+    let pageTitle = "Pre-Production Report";
     const orders = await Order.find({
       currentStatus: {
-        $not: { $in: ['V. Sent to Vendor', 'W. CANCELLED', 'X. Archived'] }
+        $not: { $in: ["V. Sent to Vendor", "W. CANCELLED", "X. Archived"] }
       }
     });
 
@@ -124,14 +160,14 @@ router.get('/preprod', [ensureAuthenticated, ensureAdmin], async (req, res) => {
 
     for (order of orders) {
       if (order.netValue) {
-        if (order.currency === 'CAD') {
+        if (order.currency === "CAD") {
           cadTotal += order.netValue;
         } else {
           usdTotal += order.netValue;
         }
       } else {
         if (order.estValue) {
-          if (order.currency === 'CAD') {
+          if (order.currency === "CAD") {
             cadTotal += order.estValue;
           } else {
             usdTotal += order.estValue;
@@ -140,45 +176,60 @@ router.get('/preprod', [ensureAuthenticated, ensureAdmin], async (req, res) => {
       }
     }
 
-    res.render('reports/inprogress', { orders, pageTitle, cadTotal, usdTotal });
+    res.render("reports/inprogress", { orders, pageTitle, cadTotal, usdTotal });
   } catch (err) {
     logger.error(err);
   }
 });
 
 // PRODUCTION REPORT
-router.get('/production', [ensureAuthenticated, ensureAdmin], async (req, res) => {
-  try {
-    let pageTitle = 'Production Report - Not Invoiced / Invoiced Today Only';
+router.get(
+  "/production",
+  [ensureAuthenticated, ensureAdmin],
+  async (req, res) => {
+    try {
+      let pageTitle = "Production Report - Not Invoiced / Invoiced Today Only";
 
-    const orders = await Order.find({
-      $or: [
-        { jbaInvoiceNum: { $in: ['', null] }, currentStatus: 'V. Sent to Vendor' },
-        {
-          jbaInvoiceNum: { $nin: ['', null] },
-          currentStatus: 'V. Sent to Vendor',
-          jbaInvoiceDate: { $gte: dayjs().startOf('day'), $lte: dayjs().endOf('day') }
-        }
-      ]
-    });
+      const orders = await Order.find({
+        $or: [
+          {
+            jbaInvoiceNum: { $in: ["", null] },
+            currentStatus: "V. Sent to Vendor"
+          },
+          {
+            jbaInvoiceNum: { $nin: ["", null] },
+            currentStatus: "V. Sent to Vendor",
+            jbaInvoiceDate: {
+              $gte: dayjs().startOf("day"),
+              $lte: dayjs().endOf("day")
+            }
+          }
+        ]
+      });
 
-    let cadTotal = 0;
-    let usdTotal = 0;
+      let cadTotal = 0;
+      let usdTotal = 0;
 
-    for (order of orders) {
-      if (order.netValue) {
-        if (order.currency === 'CAD') {
-          cadTotal += order.netValue;
-        } else {
-          usdTotal += order.netValue;
+      for (order of orders) {
+        if (order.netValue) {
+          if (order.currency === "CAD") {
+            cadTotal += order.netValue;
+          } else {
+            usdTotal += order.netValue;
+          }
         }
       }
-    }
 
-    res.render('reports/production', { orders, pageTitle, cadTotal, usdTotal });
-  } catch (err) {
-    logger.error(err);
+      res.render("reports/production", {
+        orders,
+        pageTitle,
+        cadTotal,
+        usdTotal
+      });
+    } catch (err) {
+      logger.error(err);
+    }
   }
-});
+);
 
 module.exports = router;

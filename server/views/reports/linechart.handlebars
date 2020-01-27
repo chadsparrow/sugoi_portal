@@ -1,65 +1,65 @@
 <div class="container row" style="margin-top: 20px; margin-bottom: 50px;">
-  <h6 class='center-align'>2019 Custom Reports</h6>
-  <div class="chart1"></div>
-  <div class="chart2"></div>
+    <h6 class='center-align'>2019-2020 Custom Reports</h6>
+    <div class="chart1"></div>
+    <div class="chart2"></div>
 </div>
 <div id="backButton"><a href="/admin/dash"><i class="material-icons large">chevron_left</i></a></div>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-  var options1 = {
-    chart: {
-        height: 350,
-        type: 'line',
-        shadow: {
+    var options1 = {
+        chart: {
+            height: 350,
+            type: 'line',
+            shadow: {
+                enabled: true,
+                color: '#000',
+                top: 18,
+                left: 7,
+                blur: 10,
+                opacity: 1
+            },
+            toolbar: {
+                show: false
+            }
+        },
+        dataLabels: {
             enabled: true,
-            color: '#000',
-            top: 18,
-            left: 7,
-            blur: 10,
-            opacity: 1
         },
-        toolbar: {
-            show: false
-        }
-    },
-    dataLabels: {
-        enabled: true,
-    },
-    stroke: {
-        curve: 'smooth'
-    },
-    series: [{
+        stroke: {
+            curve: 'smooth'
+        },
+        series: [{
             name: "Proofs",
-            data: [{{proofsCompleted}}]
-        },
+            data: [{{ proofsCompleted }}]
+    },
         {
             name: "Revisions",
-            data: [{{revisionsCompleted}}]
+            data: [{{ revisionsCompleted }}]
         },
-        {
-            name: "Output",
-            data: [{{outputCompleted}}]
+    {
+        name: "Output",
+            data: [{{ outputCompleted }}]
         }
     ],
     title: {
         text: 'Custom Art Completed',
-        align: 'left'
+            align: 'left'
     },
     grid: {
         borderColor: '#e7e7e7',
-        row: {
+            row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+                opacity: 0.5
         },
     },
     markers: {
         size: 6
     },
     xaxis: {
-        categories: [{{weekNumbers}}],
-        title: {
-            text: 'Week'
-        }
+        categories: [{{ weekNumbers }}],
+    title: {
+        text: 'Week'
+    }
     },
     yaxis: {
         title: {
@@ -68,71 +68,71 @@
     },
     legend: {
         position: 'top',
-        horizontalAlign: 'right',
-        floating: true,
-        offsetY: -25,
-        offsetX: -5
+            horizontalAlign: 'right',
+                floating: true,
+                    offsetY: -25,
+                        offsetX: -5
     }
   }
 
- var chart1 = new ApexCharts(document.querySelector(".chart1"), options1);
+    var chart1 = new ApexCharts(document.querySelector(".chart1"), options1);
 
-  chart1.render();
-  
-  var options2 = {
-    chart: {
-        height: 350,
-        type: 'line',
-        shadow: {
+    chart1.render();
+
+    var options2 = {
+        chart: {
+            height: 350,
+            type: 'line',
+            shadow: {
+                enabled: true,
+                color: '#000',
+                top: 18,
+                left: 7,
+                blur: 10,
+                opacity: 1
+            },
+            toolbar: {
+                show: false
+            }
+        },
+        dataLabels: {
             enabled: true,
-            color: '#000',
-            top: 18,
-            left: 7,
-            blur: 10,
-            opacity: 1
         },
-        toolbar: {
-            show: false
-        }
-    },
-    dataLabels: {
-        enabled: true,
-    },
-    stroke: {
-        curve: 'smooth'
-    },
-    series: [{
+        stroke: {
+            curve: 'smooth'
+        },
+        series: [{
             name: "Proofs",
-            data: [{{avgProofs}}]
-        },
+            data: [{{ avgProofs }}]
+    },
         {
             name: "Revisions",
-            data: [{{avgRevisions}}]
+            data: [{{ avgRevisions }}]
         },
-        {
-            name: "Output",
-            data: [{{avgOutput}}]
+    {
+        name: "Output",
+            data: [{{ avgOutput }}]
         }
     ],
     title: {
         text: 'Custom Art Avg Completion Time',
-        align: 'left'
+            align: 'left'
     },
     grid: {
         borderColor: '#e7e7e7',
-        row: {
+            row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+                opacity: 0.5
         },
     },
     markers: {
         size: 6
     },
     xaxis: {
-        categories: [{{weekNumbers}}],
-        title: {
-            text: 'Week'
-        }
+        categories: [{{ weekNumbers }}],
+    title: {
+        text: 'Week'
+    }
     },
     yaxis: {
         title: {
@@ -141,14 +141,14 @@
     },
     legend: {
         position: 'top',
-        horizontalAlign: 'right',
-        floating: true,
-        offsetY: -25,
-        offsetX: -5
+            horizontalAlign: 'right',
+                floating: true,
+                    offsetY: -25,
+                        offsetX: -5
     }
   }
 
- var chart2 = new ApexCharts(document.querySelector(".chart2"), options2);
+    var chart2 = new ApexCharts(document.querySelector(".chart2"), options2);
 
-  chart2.render();
+    chart2.render();
 </script>

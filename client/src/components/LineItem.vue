@@ -9,7 +9,7 @@
             id="sketchOnly"
             v-model="item.sketchOnly"
             @change="saveNotes"
-          >
+          />
           <label class="form-check-label" for="sketchOnly">Mock</label>
         </div>
         <div class="col-sm-2">Item: {{item.itemNumber}}</div>
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <hr class="my-2">
+      <hr class="my-2" />
       <div class="row m-0 p-0">
         <div class="col text-center" v-if="orderLine.graphicColours > 0">
           <div class="row">
@@ -90,33 +90,33 @@
         </div>
         <div class="col text-center">
           Total Units
-          <br>
+          <br />
           <span style="font-weight: bold; font-size: 14px;">{{item.totalUnits}}</span>
         </div>
 
         <div class="col text-center">
           Unit Price ({{order.currency}}{{priceBreak}})
-          <br>
+          <br />
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(unitPrice)}}</span>
         </div>
 
         <div v-if="item.itemDiscount > 0" class="col text-center">
           Discount
-          <br>
+          <br />
           <span
             style="font-weight: bold; font-size: 14px;"
-          >{{item.itemDiscount}}% (-${{formatPrice(discountAmount)}})</span>
+          >{{item.itemDiscountType === "$" ? "$" : "%"}} {{item.itemDiscount}} (-${{formatPrice(discountAmount)}})</span>
         </div>
 
         <div v-if="qdDiscount > 0" class="col text-center">
           QD Discount:
-          <br>
-          <span style="font-weight: bold; font-size: 14px;">10% (-${{formatPrice(qdDiscount)}})</span>
+          <br />
+          <span style="font-weight: bold; font-size: 14px;">(-${{formatPrice(qdDiscount)}})</span>
         </div>
 
         <div class="col text-center">
           Final Unit Price
-          <br>
+          <br />
           <span style="font-weight: bold; font-size: 14px;">$ {{formatPrice(item.finalUnitPrice)}}</span>
         </div>
       </div>
@@ -132,7 +132,7 @@
         <div class="row text-center float-right m-0" style="font-weight: bold; font-size: 12px;">
           <div v-if="discountTotal > 0" class="col bg-primary text-white rounded p-1">
             Discount Total:
-            <br>
+            <br />
             ${{formatPrice(discountTotal)}}
           </div>
           <div
@@ -141,7 +141,7 @@
           >Item Total: ${{formatPrice(item.itemTotalPrice)}}</div>
           <div v-if="item.addOns >0" class="col bg-dark rounded text-light p-1 ml-1">
             Add-Ons:
-            <br>
+            <br />
             ${{formatPrice(item.addOns * item.totalUnits)}}
           </div>
         </div>
@@ -152,80 +152,79 @@
 
 <script>
 export default {
-  name: "LineItem",
-  props: ["lineIndex", "index", "lineNumber"],
+  name: 'LineItem',
+  props: ['lineIndex', 'index', 'lineNumber'],
   computed: {
     item() {
-      return this.$store.state.order.orderLines[this.lineIndex].items[
-        this.index
-      ];
+      return this.$store.state.order.orderLines[this.lineIndex].items[this.index]
     },
     order() {
-      return this.$store.state.order;
+      return this.$store.state.order
     },
     orderLine() {
-      return this.$store.state.order.orderLines[this.lineIndex];
+      return this.$store.state.order.orderLines[this.lineIndex]
     },
     priceBreak() {
-      return this.$store.state.order.orderLines[this.lineIndex].priceBreak;
+      return this.$store.state.order.orderLines[this.lineIndex].priceBreak
     },
     unitPrice() {
-      return this.$store.state.order.orderLines[this.lineIndex].items[
-        this.index
-      ].unitPrice;
+      return this.$store.state.order.orderLines[this.lineIndex].items[this.index].unitPrice
     },
     discountAmount() {
-      return this.item.unitPrice * (this.item.itemDiscount / 100);
+      if (this.item.itemDiscountType === '$') {
+        return this.item.itemDiscount
+      }
+      return this.unitPrice * (this.item.itemDiscount / 100)
     },
     discountTotal() {
-      return (
-        (this.item.unitPrice * (this.item.itemDiscount / 100) +
-          this.qdDiscount) *
-        this.item.totalUnits
-      );
+      if (this.item.itemDiscountType === '$') {
+        return (this.item.itemDiscount + this.qdDiscount) * this.item.totalUnits
+      }
+
+      return (this.item.unitPrice * (this.item.itemDiscount / 100) + this.qdDiscount) * this.item.totalUnits
     },
     qdDiscount() {
-      let qdDiscountAmount = 0;
-      if (
-        this.orderLine.graphicCode === "CUSTM" ||
-        this.orderLine.graphicCode === null
-      ) {
-        qdDiscountAmount = 0;
+      let qdDiscountAmount = 0
+      if (this.orderLine.graphicCode === 'CUSTM' || this.orderLine.graphicCode === null) {
+        qdDiscountAmount = 0
       } else {
-        if (
-          this.orderLine.priceBreak == 2 ||
-          this.orderLine.priceBreak == 6 ||
-          this.orderLine.priceBreak == 12 ||
-          this.orderLine.priceBreak == 24
-        ) {
-          qdDiscountAmount = this.unitPrice * 0.1;
+        if (!this.order.use2020Pricing) {
+          if (this.priceBreak == 2 || this.priceBreak == 6 || this.priceBreak == 12 || this.priceBreak == 24) {
+            qdDiscountAmount = this.unitPrice * 0.1
+          }
+        } else {
+          if (this.item.brand !== 'Sugoi') {
+            qdDiscountAmount = 7.0
+          } else {
+            qdDiscountAmount = this.unitPrice * 0.1
+          }
         }
       }
-      return qdDiscountAmount;
+      return qdDiscountAmount
     },
     disabledEdit() {
-      return this.$store.getters.disableEdit;
+      return this.$store.getters.disableEdit
     }
   },
   methods: {
     formatPrice(value) {
-      let val = (value / 1).toFixed(2);
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      let val = (value / 1).toFixed(2)
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     cancelItem() {
-      let checkdelete = confirm("Are you sure?");
+      let checkdelete = confirm('Are you sure?')
       if (checkdelete) {
-        this.$store.dispatch("cancelItem", {
+        this.$store.dispatch('cancelItem', {
           lineIndex: this.lineIndex,
           itemIndex: this.index
-        });
+        })
       }
     },
     saveNotes() {
-      this.$store.dispatch("saveOrder");
+      this.$store.dispatch('saveOrder')
     }
   }
-};
+}
 </script>
 
 <style>

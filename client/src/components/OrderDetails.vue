@@ -12,7 +12,7 @@
             id="need3d"
             v-model="order.need3d"
             @change="saveNotes"
-          >
+          />
           <label class="form-check-label" for="need3d">Require 3D</label>
         </div>
         <div class="col-sm-2 d-print-none align-items-center" v-if="disabledEdit == false">
@@ -22,9 +22,12 @@
             id="needSketch"
             v-model="order.needSketch"
             @change="saveNotes"
-          >
+          />
           <label class="form-check-label" for="needSketch">Require Mock-Up</label>
         </div>
+        <div
+          class="col-sm-2 d-print-none align-items-center"
+        >{{order.use2020Pricing ? "2020 Pricing": "2019 Pricing"}}</div>
       </div>
     </div>
     <div class="row card-body p-2">
@@ -47,7 +50,7 @@
               v-model.lazy="order.outRep"
               @change="saveNotes"
               :readonly="disabledEdit"
-            >
+            />
           </li>
           <li class="list-group-item">
             Order Date:
@@ -70,7 +73,7 @@
               v-model.trim.lazy="order.customerPO"
               @change="saveNotes"
               :readonly="disabledEdit"
-            >
+            />
           </li>
         </ul>
         <div class="text-center">
@@ -123,7 +126,7 @@
           <ul class="list-group list-group-flush col-sm-12">
             <li class="list-group-item">
               Ship To Address:
-              <br>
+              <br />
               <span>{{order.shipToAddress}}</span>
             </li>
           </ul>
@@ -202,14 +205,14 @@
         <div class="col-sm-12 mb-2 p-1 text-center border border-3 rounded">
           <span style="font-size: 18px; font-weight: bold;">
             Total:
-            <br>
+            <br />
             ${{formatPrice(order.netValue)}}
           </span>
         </div>
         <div class="mb-2 p-1 text-center border rounded">
           <h6>
             Balance Due:
-            <br>
+            <br />
             ${{formatPrice(order.balanceOutstanding)}}
           </h6>
         </div>
@@ -226,37 +229,37 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment'
 
 export default {
-  name: "OrderDetails",
+  name: 'OrderDetails',
   computed: {
     order() {
-      return this.$store.state.order;
+      return this.$store.state.order
     },
     disabledEdit() {
-      return this.$store.getters.disableEdit;
+      return this.$store.getters.disableEdit
     }
   },
   methods: {
     formatPrice(value) {
-      let val = (value / 1).toFixed(2);
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      let val = (value / 1).toFixed(2)
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     formatDate(date) {
       if (date) {
         return moment(date)
           .utc()
-          .format("DD-MMM-YYYY");
+          .format('DD-MMM-YYYY')
       } else {
-        return null;
+        return null
       }
     },
     saveNotes() {
-      this.$store.dispatch("saveOrder");
+      this.$store.dispatch('saveOrder')
     }
   }
-};
+}
 </script>
 
 <style scoped>

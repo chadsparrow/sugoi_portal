@@ -5,11 +5,11 @@
       <div
         class="badge badge-warning text-center ml-3"
         v-if="orderLine.graphicCode != 'CUSTM' && orderLine.graphicCode != null"
-      >Quick Design - 10% OFF</div>
+      >Quick Design Discount</div>
     </div>
     <div class="card-body p-3">
       <div class="row align-items-center mb-2">
-        <div class="col-sm-3" v-if="orderLine.useLGPricing != true">
+        <div class="col-sm-3" v-if="!order.lgOrder && orderLine.useLGPricing != true">
           <label for="selectedStyle" class="small my-0">Style:</label>
           <select
             class="form-control form-control-sm"
@@ -27,7 +27,7 @@
             >{{style.style}}-{{style.description}}</option>
           </select>
         </div>
-        <div class="col-sm-3" v-if="orderLine.useLGPricing == true">
+        <div class="col-sm-3" v-if="order.lgOrder || orderLine.useLGPricing == true">
           <label for="selectedStyle" class="small my-0">Style:</label>
           <select
             class="form-control form-control-sm"
@@ -44,7 +44,7 @@
             >{{style.style}}-{{style.description}}</option>
           </select>
         </div>
-        <div class="col-sm-4" v-if="orderLine.useLGPricing != true">
+        <div class="col-sm-4" v-if="!order.lgOrder && orderLine.useLGPricing != true">
           <label for="selectedConfig" class="small my-0">Config:</label>
           <select
             class="form-control form-control-sm"
@@ -61,7 +61,7 @@
             >{{config.extendedDescription}}</option>
           </select>
         </div>
-        <div class="col-sm-4" v-if="orderLine.useLGPricing == true">
+        <div class="col-sm-4" v-if="order.lgOrder || orderLine.useLGPricing == true">
           <label for="selectedConfig" class="small my-0">Config:</label>
           <select
             class="form-control form-control-sm"
@@ -78,6 +78,7 @@
             >{{config.extendedDescription}}</option>
           </select>
         </div>
+
         <div class="col-sm-3">StyleCode: {{item.styleCode}}</div>
         <div class="col-sm-2">JBA: {{item.jbaCode}}</div>
       </div>
@@ -347,8 +348,21 @@
           <span>$ {{formatPrice(unitPrice)}}</span>
         </div>
 
+        <div class="col-2 text-center">
+          <label for="itemDiscountType" class="small my-0">Discount Type:</label>
+          <select
+            class="form-control form-control-sm text-center"
+            id="itemDiscountType"
+            v-model="item.itemDiscountType"
+            @change="finalUnitPrice"
+          >
+            <option value="%">%</option>
+            <option value="$">$</option>
+          </select>
+        </div>
+
         <div class="col">
-          <label for="itemDiscount" class="small my-0">Discount % - ${{formatPrice(discountAmount)}}</label>
+          <label for="itemDiscount" class="small my-0">Discount - ${{formatPrice(discountAmount)}}</label>
           <input
             type="number"
             class="form-control form-control-sm text-center"
@@ -413,6 +427,13 @@ export default {
     item() {
       return this.$store.state.order.orderLines[this.lineIndex].items[this.itemIndex]
     },
+    itemDiscountType() {
+      if (this.$store.state.order.orderLines[this.linIndex].items[this.itemIndex].itemDiscountType === '$') {
+        return '$'
+      }
+
+      return '%'
+    },
     styles() {
       return this.$store.state.styles
     },
@@ -429,7 +450,11 @@ export default {
       return this.$store.state.order.orderLines[this.lineIndex].items[this.itemIndex].unitPrice
     },
     discountAmount() {
-      return this.item.unitPrice * (this.item.itemDiscount / 100)
+      if (this.$store.state.order.orderLines[this.lineIndex].items[this.itemIndex].itemDiscountType === '%') {
+        return this.item.unitPrice * (this.item.itemDiscount / 100)
+      } else {
+        return this.item.itemDiscount
+      }
     }
   },
   methods: {
@@ -473,10 +498,7 @@ export default {
       })
 
       if (this.$refs.colour1 != undefined) {
-        if (
-          this.$refs.colour1.value === 'ELECTRIC SALMON' ||
-          this.$refs.colour1.value.includes('Flo ')
-        ) {
+        if (this.$refs.colour1.value === 'ELECTRIC SALMON' || this.$refs.colour1.value.includes('Flo ')) {
           this.$store.commit('SET_FLO', {
             lineIndex: this.lineIndex,
             itemIndex: this.itemIndex,
@@ -484,11 +506,9 @@ export default {
           })
         }
       }
+
       if (this.$refs.colour2 != undefined) {
-        if (
-          this.$refs.colour2.value === 'ELECTRIC SALMON' ||
-          this.$refs.colour2.value.includes('Flo ')
-        ) {
+        if (this.$refs.colour2.value === 'ELECTRIC SALMON' || this.$refs.colour2.value.includes('Flo ')) {
           this.$store.commit('SET_FLO', {
             lineIndex: this.lineIndex,
             itemIndex: this.itemIndex,
@@ -498,10 +518,7 @@ export default {
       }
 
       if (this.$refs.colour3 != undefined) {
-        if (
-          this.$refs.colour3.value === 'ELECTRIC SALMON' ||
-          this.$refs.colour3.value.includes('Flo ')
-        ) {
+        if (this.$refs.colour3.value === 'ELECTRIC SALMON' || this.$refs.colour3.value.includes('Flo ')) {
           this.$store.commit('SET_FLO', {
             lineIndex: this.lineIndex,
             itemIndex: this.itemIndex,
@@ -644,7 +661,7 @@ span {
   font-size: 14px;
 }
 
-.sizeinput{
+.sizeinput {
   max-width: 200px;
 }
 </style>
