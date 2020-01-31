@@ -451,6 +451,17 @@ router.get(
           }
         }
       }
+      if (
+        !order.use2020Pricing ||
+        order.use2020Pricing === "" ||
+        order.use2020Pricing === undefined ||
+        order.use2020Pricing === false
+      ) {
+        order.use2020Pricing = false;
+      } else {
+        order.use2020Pricing = true;
+      }
+
       const customArtists = await CustomArtist.find();
       res.render("orders/edit", { order, customArtists, artDirection });
     } catch (err) {
