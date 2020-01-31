@@ -64,6 +64,15 @@
                     </select>
                     <label for="currency">Currency:</label>
                   </div>
+                  <div class="input-field col s12">
+                    <select name="use2020Pricing" id="use2020Pricing">
+                      {{#select order.use2020Pricing}}
+                      <option value="true">2020 Pricing</option>
+                      <option value="false">2019 Pricing</option>
+                      {{/select}}
+                    </select>
+                    <label for="use2020Pricing">Pricebreak</label>
+                  </div>
                 </div>
                 <div class="col s12 m6 lime lighten-5" style="padding: 5px;">
                   <h6>Art / Production Entry Fields:</h6>
