@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const SwatchSchema = new Schema({
-  swatchName: {
-    type: String
-  }
+	swatchName: {
+		type: String
+	}
 });
 
 module.exports = mongoose.model('swatches', SwatchSchema);

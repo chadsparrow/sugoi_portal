@@ -1,11 +1,11 @@
 # do not use "latest" here, if you want this to work in the future
 image: docker:18
 
-stages:
-  - build
-
 services:
   - docker:dind
+
+stages:
+  - build
 
 before_script:
   # docker login asks for the password to be passed through stdin for security
@@ -16,6 +16,9 @@ Build latest:
   stage: build
   only:
     - tags
+  cache:
+    paths:
+      - node_modules/
   script:
     # fetches the latest image (not failing if image is not found)
     - docker pull $CI_REGISTRY_IMAGE/app:latest || true
@@ -39,6 +42,9 @@ Build staging:
   stage: build
   only:
     - staging
+  cache:
+    paths:
+      - node_modules/
   script:
     # fetches the latest image (not failing if image is not found)
     - docker pull $CI_REGISTRY_IMAGE/app:staging || true
