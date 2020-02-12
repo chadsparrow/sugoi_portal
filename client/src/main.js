@@ -8,12 +8,12 @@ import Routes from './routes';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes: Routes,
-  mode: 'history'
+	routes: Routes,
+	mode: 'history'
 });
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app');
