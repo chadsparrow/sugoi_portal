@@ -79,6 +79,7 @@ const connectWithRetry = function() {
 			useNewUrlParser: true,
 			autoReconnect: true,
 			useFindAndModify: false,
+			useCreateIndex: true,
 			useUnifiedTopology: true
 		})
 		.then(() => logger.info('MongoDB Connected...'))
