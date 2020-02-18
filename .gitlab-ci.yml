@@ -16,9 +16,6 @@ Build latest:
   stage: build
   only:
     - tags
-  cache:
-    paths:
-      - node_modules/
   script:
     # fetches the latest image (not failing if image is not found)
     - docker pull $CI_REGISTRY_IMAGE/app:latest || true
@@ -42,9 +39,6 @@ Build staging:
   stage: build
   only:
     - staging
-  cache:
-    paths:
-      - node_modules/
   script:
     # fetches the latest image (not failing if image is not found)
     - docker pull $CI_REGISTRY_IMAGE/app:staging || true
