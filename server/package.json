@@ -4,8 +4,8 @@
 	"description": "Sugoi Custom Portal",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js",
-		"dev": "nodemon -L server.js"
+		"start": "cross-env NODE_ENV=production node server.js",
+		"dev": "cross-env NODE_ENV=development nodemon -L server.js"
 	},
 	"author": "Chad Sparrow",
 	"license": "Unlicensed",
@@ -17,6 +17,7 @@
 		"cookie-session": "^2.0.0-beta.3",
 		"cors": "^2.8.5",
 		"cron": "^1.5.0",
+		"cross-env": "^7.0.0",
 		"csvtojson": "^2.0.10",
 		"date-diff": "^0.2.1",
 		"dayjs": "^1.8.9",
