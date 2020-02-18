@@ -147,7 +147,7 @@ const sessionOptions = {
 	name: 'session',
 	secret: process.env.SESSION_SECRET,
 	httpOnly: true,
-	maxAge: 24 * 60 * 60 * 1000 //24 hours
+	maxAge: 12 * 60 * 60 * 1000 //12 hours
 };
 
 app.use(session(sessionOptions));
