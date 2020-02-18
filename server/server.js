@@ -262,5 +262,5 @@ const httpsServer = https.createServer(credentials, app);
 
 //start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
-	logger.info(`App listening on port ${port}...`);
+	logger.info(`App listening on port ${port} - mode: ${process.env.NODE_ENV}`);
 });
