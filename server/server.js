@@ -72,17 +72,19 @@ const {
 	getStatusforPayments
 } = require('./helpers/hbs');
 
+const connectString = `mongodb://customproofs:${process.env.MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/sugoi-proofs?authSource=admin&retryWrites=true&w=majority`;
+
 // MongoDB Connection using .env in docker for credentials
 const connectWithRetry = function() {
 	return mongoose
-		.connect(process.env.DB_HOST, {
+		.connect(connectString, {
 			useNewUrlParser: true,
 			autoReconnect: true,
 			useFindAndModify: false,
 			useCreateIndex: true,
 			useUnifiedTopology: true
 		})
-		.then(() => logger.info('MongoDB Connected...'))
+		.then(() => logger.info(`MongoDB Connected...${connectString}`))
 		.catch(err => {
 			logger.error(err);
 			setTimeout(connectWithRetry, 5000);
