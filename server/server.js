@@ -81,7 +81,7 @@ const connectWithRetry = function() {
 			useFindAndModify: false,
 			useUnifiedTopology: true
 		})
-		.then(() => logger.info('MongoDB Connected...'))
+		.then(() => logger.info(`MongoDB Connected... ${process.env.DB_HOST}`))
 		.catch(err => {
 			logger.error(err);
 			setTimeout(connectWithRetry, 5000);
