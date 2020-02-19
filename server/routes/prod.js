@@ -1,14 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
-const {
-	getProdOrders,
-	getProdOpenOrders,
-	getProdPendingOrders,
-	getProdCancelledOrders,
-	getProdEditPage,
-	updateProdOrder
-} = require('../controllers/prod');
+const prodController = require('../controllers/prod');
 
 const {
 	ensureAuthenticated,
@@ -16,23 +8,33 @@ const {
 	ensureEditProd
 } = require('../helpers/auth');
 
-router.route('/').get(ensureAuthenticated, ensureViewProd, getProdOrders);
+router
+	.route('/')
+	.get(ensureAuthenticated, ensureViewProd, prodController.getProdOrders);
 
 router
 	.route('/open')
-	.get(ensureAuthenticated, ensureViewProd, getProdOpenOrders);
+	.get(ensureAuthenticated, ensureViewProd, prodController.getProdOpenOrders);
 
 router
 	.route('/pending')
-	.get(ensureAuthenticated, ensureViewProd, getProdPendingOrders);
+	.get(
+		ensureAuthenticated,
+		ensureViewProd,
+		prodController.getProdPendingOrders
+	);
 
 router
 	.route('/cancelled')
-	.get(ensureAuthenticated, ensureViewProd, getProdCancelledOrders);
+	.get(
+		ensureAuthenticated,
+		ensureViewProd,
+		prodController.getProdCancelledOrders
+	);
 
 router
 	.route('/edit/:id')
-	.get(ensureAuthenticated, ensureEditProd, getProdEditPage)
-	.put(ensureAuthenticated, ensureEditProd, updateProdOrder);
+	.get(ensureAuthenticated, ensureEditProd, prodController.getProdEditPage)
+	.put(ensureAuthenticated, ensureEditProd, prodController.updateProdOrder);
 
 module.exports = router;

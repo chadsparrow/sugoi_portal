@@ -1,44 +1,64 @@
 const express = require('express');
 const router = express.Router();
-
-const {
-	getAllPayments,
-	getOutstanding,
-	getOutstandingPreProd,
-	getOutstandingProd,
-	getOutstandingShipped,
-	getPaymentsEditPage,
-	updatePayment,
-	getPaymentLogs
-} = require('../controllers/payments');
+const paymentsController = require('../controllers/payments');
 
 const { ensureAuthenticated, ensureEditOrders } = require('../helpers/auth');
 
-router.route('/').get(ensureAuthenticated, ensureEditOrders, getAllPayments);
+router
+	.route('/')
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getAllPayments
+	);
 
 router
 	.route('/outstanding')
-	.get(ensureAuthenticated, ensureEditOrders, getOutstanding);
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getOutstanding
+	);
 
 router
 	.route('/outstanding/preprod')
-	.get(ensureAuthenticated, ensureEditOrders, getOutstandingPreProd);
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getOutstandingPreProd
+	);
 
 router
 	.route('/outstanding/prod')
-	.get(ensureAuthenticated, ensureEditOrders, getOutstandingProd);
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getOutstandingProd
+	);
 
 router
 	.route('/outstanding/shipped')
-	.get(ensureAuthenticated, ensureEditOrders, getOutstandingShipped);
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getOutstandingShipped
+	);
 
 router
 	.route('/edit/:id')
-	.get(ensureAuthenticated, ensureEditOrders, getPaymentsEditPage)
-	.put(ensureAuthenticated, ensureEditOrders, updatePayment);
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getPaymentsEditPage
+	)
+	.put(ensureAuthenticated, ensureEditOrders, paymentsController.updatePayment);
 
 router
 	.route('/logs/:id')
-	.get(ensureAuthenticated, ensureEditOrders, getPaymentLogs);
+	.get(
+		ensureAuthenticated,
+		ensureEditOrders,
+		paymentsController.getPaymentLogs
+	);
 
 module.exports = router;

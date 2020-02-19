@@ -1,20 +1,19 @@
 const express = require('express');
 const router = express.Router();
-
-const {
-	getAdminDashboard,
-	getStylesDashboard,
-	getUsersDashboard
-} = require('../controllers/admin');
+const adminController = require('../controllers/admin');
 
 const { ensureAuthenticated, ensureAdmin } = require('../helpers/auth');
 
-router.route('/dash').get(ensureAuthenticated, ensureAdmin, getAdminDashboard);
+router
+	.route('/dash')
+	.get(ensureAuthenticated, ensureAdmin, adminController.getAdminDashboard);
 
 router
 	.route('/styles')
-	.get(ensureAuthenticated, ensureAdmin, getStylesDashboard);
+	.get(ensureAuthenticated, ensureAdmin, adminController.getStylesDashboard);
 
-router.route('/users').get(ensureAuthenticated, ensureAdmin, getUsersDashboard);
+router
+	.route('/users')
+	.get(ensureAuthenticated, ensureAdmin, adminController.getUsersDashboard);
 
 module.exports = router;

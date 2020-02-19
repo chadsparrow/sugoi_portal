@@ -1,32 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const {
-	getReport,
-	getItemsSold,
-	getLineChart,
-	getWeekReport,
-	getPreProdReport,
-	getProductionReport
-} = require('../controllers/reports');
+const reportsController = require('../controllers/reports');
 
 const { ensureAuthenticated, ensureAdmin } = require('../helpers/auth');
 
-router.route('/').get(ensureAuthenticated, ensureAdmin, getReport);
+router
+	.route('/')
+	.get(ensureAuthenticated, ensureAdmin, reportsController.getReport);
 
-router.route('/items').get(ensureAuthenticated, ensureAdmin, getItemsSold);
+router
+	.route('/items')
+	.get(ensureAuthenticated, ensureAdmin, reportsController.getItemsSold);
 
-router.route('/linechart').get(ensureAuthenticated, ensureAdmin, getLineChart);
+router
+	.route('/linechart')
+	.get(ensureAuthenticated, ensureAdmin, reportsController.getLineChart);
 
 router
 	.route('/week/:weekNum')
-	.get(ensureAuthenticated, ensureAdmin, getWeekReport);
+	.get(ensureAuthenticated, ensureAdmin, reportsController.getWeekReport);
 
 router
 	.route('/preprod')
-	.get(ensureAuthenticated, ensureAdmin, getPreProdReport);
+	.get(ensureAuthenticated, ensureAdmin, reportsController.getPreProdReport);
 
 router
 	.route('/production')
-	.get(ensureAuthenticated, ensureAdmin, getProductionReport);
+	.get(ensureAuthenticated, ensureAdmin, reportsController.getProductionReport);
 
 module.exports = router;
