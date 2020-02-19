@@ -81,6 +81,7 @@ const connectWithRetry = function() {
 			useNewUrlParser: true,
 			autoReconnect: true,
 			useFindAndModify: false,
+			useCreateIndex: true,
 			useUnifiedTopology: true
 		})
 		.then(() => logger.info(`MongoDB Connected... ${connectString}`))
@@ -146,7 +147,7 @@ const sessionOptions = {
 	name: 'session',
 	secret: process.env.SESSION_SECRET,
 	httpOnly: true,
-	maxAge: 24 * 60 * 60 * 1000 //24 hours
+	maxAge: 12 * 60 * 60 * 1000 //12 hours
 };
 
 app.use(session(sessionOptions));
@@ -261,5 +262,5 @@ const httpsServer = https.createServer(credentials, app);
 
 //start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
-	logger.info(`App listening on port ${port}...`);
+	logger.info(`App listening on port ${port} - mode: ${process.env.NODE_ENV}`);
 });

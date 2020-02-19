@@ -1,46 +1,37 @@
 const express = require('express');
 const router = express.Router();
 
-const {
-	getLoginForm,
-	loginUser,
-	getAdminPage,
-	getUserEditPage,
-	updateUser,
-	deleteUser,
-	getUserRegister,
-	registerUser,
-	logoutUser,
-	getPasswordChangePage,
-	updatePassword
-} = require('../controllers/users');
-
+const usersController = require('../controllers/users');
 const { ensureAuthenticated, ensureAdmin } = require('../helpers/auth');
 
 router
 	.route('/login')
-	.get(getLoginForm)
-	.post(loginUser);
+	.get(usersController.getLoginForm)
+	.post(usersController.loginUser);
 
-router.route('/admin/dash').get(ensureAuthenticated, ensureAdmin, getAdminPage);
+router
+	.route('/admin/dash')
+	.get(ensureAuthenticated, ensureAdmin, usersController.getAdminPage);
 
 router
 	.route('/edit/:id')
-	.get(ensureAuthenticated, ensureAdmin, getUserEditPage)
-	.put(ensureAuthenticated, ensureAdmin, updateUser);
+	.get(ensureAuthenticated, ensureAdmin, usersController.getUserEditPage)
+	.put(ensureAuthenticated, ensureAdmin, usersController.updateUser);
 
-router.route('/delete/:id').get(ensureAuthenticated, ensureAdmin, deleteUser);
+router
+	.route('/delete/:id')
+	.get(ensureAuthenticated, ensureAdmin, usersController.deleteUser);
 
 router
 	.route('/register')
-	.get(ensureAuthenticated, ensureAdmin, getUserRegister)
-	.post(ensureAuthenticated, ensureAdmin, registerUser);
+	.get(ensureAuthenticated, ensureAdmin, usersController.getUserRegister)
+	.post(ensureAuthenticated, ensureAdmin, usersController.registerUser);
 
-router.route('/logout').get(logoutUser);
+router.route('/logout').get(usersController.logoutUser);
 
 router
 	.route('/password')
-	.get(ensureAuthenticated, getPasswordChangePage)
-	.put(ensureAuthenticated, updatePassword);
+	.get(ensureAuthenticated, usersController.getPasswordChangePage)
+	.put(ensureAuthenticated, usersController.updatePassword);
 
 module.exports = router;

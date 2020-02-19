@@ -1,34 +1,26 @@
 const express = require('express');
 const router = express.Router();
-
-const {
-	getProofPage,
-	getQCPage,
-	getQCEditPage,
-	updateQC,
-	archiveQCNote,
-	viewQCArchives
-} = require('../controllers/proofs');
+const proofsController = require('../controllers/proofs');
 
 const { ensureAuthenticated, ensureEditProofs } = require('../helpers/auth');
 
-router.route('/:id').get(ensureAuthenticated, getProofPage);
+router.route('/:id').get(ensureAuthenticated, proofsController.getProofPage);
 
 router
 	.route('/qc/:orderNum')
-	.get(ensureAuthenticated, ensureEditProofs, getQCPage);
+	.get(ensureAuthenticated, ensureEditProofs, proofsController.getQCPage);
 
 router
 	.route('/qc/edit/:id')
-	.get(ensureAuthenticated, ensureEditProofs, getQCEditPage)
-	.put(ensureAuthenticated, ensureAuthenticated, updateQC);
+	.get(ensureAuthenticated, ensureEditProofs, proofsController.getQCEditPage)
+	.put(ensureAuthenticated, ensureAuthenticated, proofsController.updateQC);
 
 router
 	.route('/qc/archive/:id')
-	.get(ensureAuthenticated, ensureEditProofs, archiveQCNote);
+	.get(ensureAuthenticated, ensureEditProofs, proofsController.archiveQCNote);
 
 router
 	.route('/qc/archive/view/:orderNum')
-	.get(ensureAuthenticated, ensureEditProofs, viewQCArchives);
+	.get(ensureAuthenticated, ensureEditProofs, proofsController.viewQCArchives);
 
 module.exports = router;
