@@ -54,41 +54,41 @@ const apiSwatchRoutes = require('./routes/api/swatches');
 
 // Handlebars Helpers
 const {
-	getHandle,
-	select,
-	formatDate,
-	setStatusDiv,
-	getInstructions,
-	checkForQCStatus,
-	checkForRevisionStatus,
-	catNotes,
-	stripStatusCode,
-	setPaymentStatus,
-	setConfirmDeliveryStatus,
-	setShipStatus,
-	checkForSignOff,
-	netAmount,
-	formatPrice,
-	getStatusforPayments
+  getHandle,
+  select,
+  formatDate,
+  setStatusDiv,
+  getInstructions,
+  checkForQCStatus,
+  checkForRevisionStatus,
+  catNotes,
+  stripStatusCode,
+  setPaymentStatus,
+  setConfirmDeliveryStatus,
+  setShipStatus,
+  checkForSignOff,
+  netAmount,
+  formatPrice,
+  getStatusforPayments
 } = require('./helpers/hbs');
 
 const connectString = `mongodb://customproofs:${process.env.MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/sugoi-proofs?authSource=admin&retryWrites=true&w=majority`;
 
 // MongoDB Connection using .env in docker for credentials
 const connectWithRetry = function() {
-	return mongoose
-		.connect(connectString, {
-			useNewUrlParser: true,
-			autoReconnect: true,
-			useFindAndModify: false,
-			useCreateIndex: true,
-			useUnifiedTopology: true
-		})
-		.then(() => logger.info(`MongoDB Connected... ${connectString}`))
-		.catch(err => {
-			logger.error(err);
-			setTimeout(connectWithRetry, 5000);
-		});
+  return mongoose
+    .connect(connectString, {
+      useNewUrlParser: true,
+      autoReconnect: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      useUnifiedTopology: true
+    })
+    .then(() => logger.info(`MongoDB Connected... ${connectString}`))
+    .catch(err => {
+      logger.error(err);
+      setTimeout(connectWithRetry, 5000);
+    });
 };
 connectWithRetry();
 
@@ -97,28 +97,28 @@ const Order = require('./models/Order');
 
 // initializes Handlebars middleware
 app.engine(
-	'handlebars',
-	exphbs({
-		helpers: {
-			getHandle,
-			select,
-			formatDate,
-			setStatusDiv,
-			getInstructions,
-			checkForQCStatus,
-			checkForRevisionStatus,
-			catNotes,
-			stripStatusCode,
-			setPaymentStatus,
-			setConfirmDeliveryStatus,
-			setShipStatus,
-			checkForSignOff,
-			netAmount,
-			formatPrice,
-			getStatusforPayments
-		},
-		defaultLayout: 'main'
-	})
+  'handlebars',
+  exphbs({
+    helpers: {
+      getHandle,
+      select,
+      formatDate,
+      setStatusDiv,
+      getInstructions,
+      checkForQCStatus,
+      checkForRevisionStatus,
+      catNotes,
+      stripStatusCode,
+      setPaymentStatus,
+      setConfirmDeliveryStatus,
+      setShipStatus,
+      checkForSignOff,
+      netAmount,
+      formatPrice,
+      getStatusforPayments
+    },
+    defaultLayout: 'main'
+  })
 );
 
 //sets the handlebars engine
@@ -130,11 +130,11 @@ require('./config/passport')(passport);
 // Body Parser middleware
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(
-	bodyParser.urlencoded({
-		limit: '50mb',
-		extended: true,
-		parameterLimit: 50000
-	})
+  bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true,
+    parameterLimit: 50000
+  })
 );
 
 // Method Override
@@ -144,10 +144,10 @@ app.use(methodOverride('_method'));
 app.use(flash());
 
 const sessionOptions = {
-	name: 'session',
-	secret: process.env.SESSION_SECRET,
-	httpOnly: true,
-	maxAge: 12 * 60 * 60 * 1000 //12 hours
+  name: 'session',
+  secret: process.env.SESSION_SECRET,
+  httpOnly: true,
+  maxAge: 12 * 60 * 60 * 1000 //12 hours
 };
 
 app.use(session(sessionOptions));
@@ -158,65 +158,65 @@ app.use(passport.session());
 
 // Global variables
 app.use((req, res, next) => {
-	res.locals.success_msg = req.flash('success_msg');
-	res.locals.error_msg = req.flash('error_msg');
-	res.locals.error = req.flash('error');
-	res.locals.user = req.user || null;
-	next();
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
 });
 
 // cron job to run every hour to update all tracking numbers status in the Orders db.
 var cronJob = cron.job('0 */4 * * *', function() {
-	Order.find({
-		tracking: { $nin: ['', null] },
-		confirmDeliveryStatus: { $ne: 'Delivered' }
-	}).then(foundOrders => {
-		if (foundOrders.length > 0) {
-			logger.info(
-				`Updating shipment tracking information on ${foundOrders.length} orders...`
-			);
-			foundOrders.forEach(foundOrder => {
-				courier.trace(foundOrder.tracking, function(err, result) {
-					if (err) {
-						logger.error(err);
-					} else {
-						foundOrder.confirmDeliveryStatus = result.status;
-						foundOrder.checkpoints = result.checkpoints;
-						if (foundOrder.confirmDeliveryStatus === 'Delivered') {
-							foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
-							let date1 = dayjs(foundOrder.confirmDeliveryDate);
-							let date2 = dayjs(foundOrder.vendorConfirmShip);
-							let diff = new DateDiff(date1, date2);
-							const shippingLeadTime = diff.days();
-							foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
-							if (
-								foundOrder.prodLeadTime !== 0 &&
-								foundOrder.shippingLeadTime !== 0
-							) {
-								foundOrder.totalLeadTime =
-									foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
-							}
-						}
-						foundOrder.save(function(err, updatedOrder) {
-							if (err) {
-								logger.error(err);
-							}
-						});
-					}
-				});
-			});
-			logger.info(`Shipment Tracking information updated`);
-		}
-	});
+  Order.find({
+    tracking: { $nin: ['', null] },
+    confirmDeliveryStatus: { $ne: 'Delivered' }
+  }).then(foundOrders => {
+    if (foundOrders.length > 0) {
+      logger.info(
+        `Updating shipment tracking information on ${foundOrders.length} orders...`
+      );
+      foundOrders.forEach(foundOrder => {
+        courier.trace(foundOrder.tracking, function(err, result) {
+          if (err) {
+            logger.error(err);
+          } else {
+            foundOrder.confirmDeliveryStatus = result.status;
+            foundOrder.checkpoints = result.checkpoints;
+            if (foundOrder.confirmDeliveryStatus === 'Delivered') {
+              foundOrder.confirmDeliveryDate = foundOrder.checkpoints[0].time;
+              let date1 = dayjs(foundOrder.confirmDeliveryDate);
+              let date2 = dayjs(foundOrder.vendorConfirmShip);
+              let diff = new DateDiff(date1, date2);
+              const shippingLeadTime = diff.days();
+              foundOrder.shippingLeadTime = parseInt(shippingLeadTime);
+              if (
+                foundOrder.prodLeadTime !== 0 &&
+                foundOrder.shippingLeadTime !== 0
+              ) {
+                foundOrder.totalLeadTime =
+                  foundOrder.prodLeadTime + foundOrder.shippingLeadTime;
+              }
+            }
+            foundOrder.save(function(err, updatedOrder) {
+              if (err) {
+                logger.error(err);
+              }
+            });
+          }
+        });
+      });
+      logger.info(`Shipment Tracking information updated`);
+    }
+  });
 });
 
 cronJob.start();
 
 // Set static folder
 app.use(
-	express.static(path.join(__dirname, 'public'), {
-		maxage: '2m'
-	})
+  express.static(path.join(__dirname, 'public'), {
+    maxage: '2m'
+  })
 );
 
 // Use Routes from above
@@ -237,21 +237,21 @@ app.use('/api/swatches', apiSwatchRoutes);
 
 //Vue.js front-end router - uncomment when going to production
 app.get(/.*/, [ensureAuthenticated, ensureEditOrders], (req, res) => {
-	res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 // if the req doesnt match any route above, set an error
 app.use((req, res, next) => {
-	const error = new Error('Resource Not Found');
-	error.status = 404;
-	next(error);
+  const error = new Error('Resource Not Found');
+  error.status = 404;
+  next(error);
 });
 
 // if there is an error it will render the error page
 app.use((error, req, res, next) => {
-	logger.error(error);
-	res.status(error.status || 500);
-	res.render('error', { error });
+  logger.error(error);
+  res.status(error.status || 500);
+  res.render('error', { error });
 });
 
 // sets the port to environment variable PORT or 5000 if not available
@@ -262,5 +262,5 @@ const httpsServer = https.createServer(credentials, app);
 
 //start the secure server and listen for requests
 httpsServer.listen(port, (req, res) => {
-	logger.info(`App listening on port ${port} - mode: ${process.env.NODE_ENV}`);
+  logger.info(`App listening on port ${port} - mode: ${process.env.NODE_ENV}`);
 });
